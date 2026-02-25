@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 基础信息 -->
+    <meta charset="utf-8">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="force-rendering" content="webkit" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" lang="zh-cn" content="雨梦Official，探索未来，触及梦想。我们以创意设计与前沿科技打造不平凡的数字体验，为你带来创新的解决方案与灵感。关注我们，见证每一次突破与未来的诞生。">
+    <meta name="description" lang="zh-tw" content="雨夢Official，探索未來，觸及夢想。我們以創意設計與前沿科技打造非凡的數位體驗，為你帶來創新的解決方案與靈感。關注我們，見證每一次突破與未來的誕生。">
+    <meta name="description" lang="ja-jp" content="雨夢Officialは未来を探求し、夢に触れる場所です。創造的なデザインと先端技術で特別なデジタル体験を生み出し、革新的なソリューションとインスピレーションを届けます。共に進化を重ね、未来の誕生を見届けましょう。">
+    <meta name="description" lang="fr-fr" content="Yume Official explore l’avenir et touche aux rêves. Grâce à la créativité et aux technologies de pointe, nous créons des expériences numériques uniques et offrons des solutions innovantes et inspirantes. Suivez-nous pour vivre chaque avancée et la naissance de nouveaux futurs.">
+    <meta name="description" lang="en-us" content="Yume Official explores the future and reaches for dreams. Through creative design and cutting‑edge technology, we craft exceptional digital experiences and deliver innovative solutions and inspiration. Follow us to witness every breakthrough and the birth of new futures.">
+    <meta name="author" content="雨夢 Yume">
+    <title key="OFFICIAL">雨夢Official - Yume Official</title>
+    <!-- jQuery -->
+    <script src="./js/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <!-- OpenCC -->
+    <script src="./js/full.min.js"></script>
+    <!-- 引入样式 -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="./css/font.css">
+    <link rel="stylesheet" type="text/css" href="./css/loading.css">
+    <link rel="stylesheet" type="text/css" href="./css/animation.css">
+    <link rel="stylesheet" type="text/css" href="./css/cursor.css">
+    <link rel="icon" href="./favicon.ico">
+    <link rel="apple-touch-icon" href="./img/icon/apple-touch-icon.png">
+    <!-- Izitoast -->
+    <link rel="stylesheet" href="./css/iziToast.min.css">
+    <script type="text/javascript"
+        src="https://www.yume.zone/js/iziToast.min.js">
+    </script>
+    <!-- Aplayer -->
+    <link rel="stylesheet" href="./css/APlayer.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="./js/APlayer.min.js" crossorigin="anonymous"
+        referrerpolicy="no-referrer"></script>
+    <!-- IE Out -->
+    <script>
+        if ( /*@cc_on!@*/ false || (!!window.MSInputMethodContext && !!document.documentMode)) window.location.href =
+            "/upgrade-your-browser/index.html?referrer=" + encodeURIComponent(window.location.href);
+    </script>
+</head>
+
+<body>
+    <!--加载动画-->
+    <script type="text/javascript" src="./js/lang.js"></script>
+    <div id="loading-box">
+        <div class="loading-left-bg"></div>
+        <div class="loading-right-bg"></div>
+        <div class="spinner-box">
+            <div class="loader">
+                <div class="inner one"></div>
+                <div class="inner two"></div>
+                <div class="inner three"></div>
+            </div>
+            <div class="loading-word">
+                <p class="loading-title" key="OFFICIAL">雨夢Official</p>
+                <span id="loading-text" key="LOADING">加载中</span>
+            </div>
+        </div>
+    </div>
+    <section id="section" class="section">
+		<!-- 横向提示 -->
+		<div id="orientation-warning" style="display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.75); color: white; padding: 1rem; border-radius: 5px; z-index: 1000; text-align: center;">
+			<span key="HENGXIANG">请将设备横向放置以浏览完整版网站。</span>
+			<div style="margin-top: 10px;">
+				<button id="close-warning" style="background: transparent; color: white; border: none; cursor: pointer;" key="CLOSE">关闭</button>
+			</div>
+		</div>
+        <!-- 功能 -->
+        <div class="top-left-icons">
+	        <!-- 语言选择框 -->
+            <div class="language-placeholder"></div>
+	        <div class="language-container">
+	            <button class="language-icon" aria-label="Select Language">
+	                <img src="./img/lang.png" alt="Languages">
+	            </button>
+				<!-- 语言选择下拉框 -->
+	            <div class="language-dropdown">
+	                <div class="translate" id="en">English(United States)</div>
+					<div class="translate" id="fr">Français(France)</div>
+					<div class="translate" id="ja">日本語(日本)</div>
+	                <div class="translate" id="zh-tw">繁體中文(臺灣)</div>
+	                <div class="translate" id="zh-cn">简体中文(中国大陆)</div>
+	            </div>
+	        </div>
+			<!-- 应用下载 -->
+			<div class="app-container">
+				<a href="https://drive.yume.zone/f/d/D8HR/yumeofficial.mobileconfig" target="_blank">
+					<button class="app-icon" aria-label="Download iOS">
+						<img src="./img/icon/ios-icon.png" alt="Download iOS">
+					</button>
+				</a>
+				<a href="https://drive.yume.zone/f/d/ejty/yume-official-release.apk" target="_blank">
+					<button class="app-icon" aria-label="Download Android">
+						<img src="./img/icon/android-icon.png" alt="Download Android">
+					</button>
+				</a>
+			</div>
+        </div>
+        <!-- 背景图片 -->
+        <div class="bg-all">
+            <img id="bg" onerror="this.classList.add('error');"></img>
+            <div class="cover"></div>
+        </div>
+        <!--主体内容-->
+        <main id="main" class="main">
+            <div class="container" id="container">
+                <div class="row" id="row">
+                    <div class="col left">
+                        <!--基本信息-->
+                        <div class="main-left">
+                            <!--Logo-->
+                            <div class="main-img">
+                                <img src="./img/icon/logo.png" alt="img" id="changemore1">
+                                <div class="img-title">
+                                    <span class="img-title">yume</span>
+                                    <span class="img-text">.zone</span>
+                                </div>
+                            </div>
+                            <!--介绍信息-->
+                            <div class="message cards" id="switchmore">
+                                <div class="des" id="des"><i class="iconfont icon-yinhao-copy-copy"></i>
+                                    <div class="des-title"><span id="change">Hello&nbsp;World&nbsp;!</span><br /><span
+                                            id="change1">雨夢Official，一个建立于平成二十四年的小站。</span></div>
+                                    <i class="iconfont icon-yinhao-copy"></i>
+                                </div>
+                            </div>
+                            <!--社交链接-->
+                            <div class="social" id="social">
+                                <a href="https://github.com/YumePrincess" class="link" id="github" show-lang="fr,en,ja,zh-tw" target="_blank">
+                                    <i class="iconfont icon-github"></i>
+                                </a>
+                                <button class="link" id="phone" show-lang="zh-cn,zh-tw,fr,en,ja">
+                                    <i class="iconfont2 icon-phone"></i>
+                                </button>
+                                <a href="https://qm.qq.com/cgi-bin/qm/qr?k=TZsNAa_Lo7-WfwiXsBkCgVZA6vFeVjRp&noverify=0&personal_qrcode_source=4" class="link"
+                                    id="qq" show-lang="zh-cn" target="_blank">
+                                    <i class="iconfont icon-QQ"></i>
+                                </a>
+								<a href="weixin://contacts/profile/Yume_521" class="link"
+                                    id="wechat" show-lang="zh-cn,zh-tw" target="_blank">
+                                    <i class="iconfont2 icon-wechat"></i>
+                                </a>
+                                <a href="mailto:admin@yume.zone" class="link" show-lang="zh-cn,zh-tw,fr,en,ja" id="email">
+                                    <i class="iconfont icon-youxiang"></i>
+                                </a>
+                                <a href="https://t.me/yumeprincess" class="link" id="telegram" show-lang="fr,en,ja,zh-tw" target="_blank">
+                                    <i class="iconfont2 icon-telegram"></i>
+                                </a>
+                                <a href="https://twitter.com/AmaYumePrincess" class="link" id="twitter" show-lang="fr,en,ja,zh-tw" target="_blank">
+                                    <i class="iconfont2 icon-x"></i>
+                                </a>
+                                <a href="https://facebook.com/YumePrincess" class="link" id="facebook" show-lang="fr,en,ja,zh-tw" target="_blank">
+                                    <i class="iconfont2 icon-facebook"></i>
+                                </a>
+                                <a id="link-text" key="LINE">通过这里联系我</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 弹窗 -->
+                    <div class="popup" id="popup">
+                        <div class="popup-content">
+                            <h3 key="YCARE">雨梦Care</h3>
+                            <p key="FUWUSHIJIAN">服务时间：00:00 - 11:30 (ET)</p>
+                            <p key="DIANHUAHAOMA">电话号码：+86 (22) 8869 2668</p>
+                            <div class="button-group">
+                                <button class="btn cancel-btn" id="cancel-button" key="QUXIAO">取消</button>
+                                <button class="btn confirm-btn" id="confirm-button" key="QUEDINGHUJIAO">确定呼叫</button>
+                            </div>
+                        </div>
+                    </div>       
+                    <!--第二屏 Logo-->
+                    <div class="logo cards" style="display: none" id="changemore">
+                        <a class="logo-text">Yume</a>
+                    </div>
+                    <div class="col right">
+                        <div class="main-right">
+                            <!--功能区-->
+                            <div class="row rightone" id="rightone">
+                                <div class="col hitokotos">
+                                    <!--一言-->
+                                    <div class="hitokoto cards" id="hitokoto">
+                                        <!--切换音乐-->
+                                        <div class="open-music fixed-top" id="open-music">
+                                            <i class="iconfont icon-music"></i>
+                                            <span key="MUSICOPEN">&nbsp;打开音乐播放器</span>
+                                        </div>
+                                        <!--切换音乐结束-->
+                                        <div class="hitokoto-all">
+                                            <div class="hitokoto-text"><span id="hitokoto_text" key="YIYAN">每一个人都应该明确自己的方向和位置。</span>
+                                            </div>
+                                            <div class="hitokoto-from">-「&nbsp;<span id="from_text" key="YUME">雨夢</span>&nbsp;」
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--音乐-->
+                                    <div class="music cards" id="music">
+                                        <div class="music-all">
+                                            <div class="music-button">
+                                                <div id="openmore" key="MUSICLIST">音乐列表</div>
+                                                <div id="music-close" key="MUSICCLOSE">回到一言</div>
+                                            </div>
+                                            <div class="music-control">
+                                                <i class="iconfont icon-next-one-copy" id="last"></i>
+                                                <div id="play">
+                                                    <i class="iconfont icon-play"></i>
+                                                </div>
+                                                <i class="iconfont icon-next-one" id="next"></i>
+                                            </div>
+                                            <div class="music-menu">
+                                                <div class="music-text">
+                                                    <span id="music-name" key="MUSICNAME">未播放音乐</span>
+                                                </div>
+                                                <div class="music-volume" style="display: none;">
+                                                    <div id="volume-ico">
+                                                        <i class="iconfont icon-volume-1"></i>
+                                                    </div>
+                                                    <input type="range" min="0" max="1" step="0.01" id="volume"
+                                                        oninput="changevolume()">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col times">
+                                    <!--时间-->
+                                    <div class="time cards">
+                                        <!--切换服务条款-->
+                                        <div class="open-terms fixed-top" id="open-terms">
+                                            <i class="iconfont2 icon-newspaper"></i>
+                                            <span key="LAW">&nbsp;打开服务条款</span>
+                                        </div>
+                                        <div class="timeshow" id="time">
+                                            平成 24&nbsp;年&nbsp;0&nbsp;月&nbsp;00&nbsp;日&nbsp;<span
+                                                class="weekday">月曜日</span><br><span class="time-text">00:00:00</span>
+                                        </div>
+                                        <div class="weather">
+                                            <span id="city_text" key="TIANQI">天气</span>
+                                            <span id="wea_text" key="SHIBAI">加载失败</span>
+                                            <span id="tem_night"></span>°C~<span id="tem_day"></span>°C
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--分隔线-->
+                            <div class="line">
+                                <i class="iconfont icon-link"></i>
+                                <span class="line-text" key="WEBLIST">网站列表</span>
+                            </div>
+                            <!--网站链接-->
+                            <div class="link">
+                                <!--第一组-->
+                                <div class="row" style="margin-top: -0.7rem;">
+                                    <div class="col">
+                                        <a href="https://message.yume.zone/" target="_blank">
+                                            <div class="link-card cards">
+                                                <i class="iconfont icon-blog-solid"></i>
+                                                <span class="link-name" key="MESSAGE">雨夢Message</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col 2">
+                                        <a href="https://nav.yume.zone/" target="_blank">
+                                            <div class="link-card cards">
+                                                <i class="iconfont icon-a-daohangzhiyindingwei-05"></i>
+                                                <span class="link-name" key="NAV">雨夢搜索</span>  
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="https://wiki.yume.zone/" target="_blank">
+                                            <div class="link-card cards">
+									            <i class="iconfont2 icon-doc-text"></i>
+                                                <span class="link-name" key="YWIKI">雨梦Wiki</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <!--第二组-->
+                                <div class="row" style="margin-top: -0.7rem;">
+                                    <div class="col">
+                                        <a href="https://social.yume.zone/" target="_blank">
+                                            <div class="link-card cards">
+									            <i class="iconfont2 icon-google-circles"></i>
+                                                <span class="link-name" key="YSOCIAL">雨梦Social</span>        
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col 2">
+                                        <a href="https://drive.yume.zone/" target="_blank">
+                                            <div class="link-card cards">
+                                                <i class="iconfont icon-cloud"></i>
+                                                <span class="link-name" key="CLOUD">雨夢网盘</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="https://one.yume.zone/realms/yume/account" target="_blank">
+                                            <div class="link-card cards">
+									            <i class="iconfont2 icon-id-badge"></i>
+                                                <span class="link-name" key="YACCOUNT">雨梦One</span>       
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+								<!--第3组-->
+                                <div class="row" style="margin-top: -0.7rem;" show-lang="zh-tw,fr,en,ja">
+                                    <div class="col">
+                                        <a href="https://ai.yume.zone/" target="_blank">
+                                            <div class="link-card cards">
+                                                <i class="iconfont icon-z_shangpinheji"></i>
+                                                <span class="link-name" key="AI">雨夢AI</span>        
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col 2">
+                                        <a href="https://akiame.yume.zone/" target="_blank">
+                                            <div class="link-card cards">
+                                                <i class="iconfont2 icon-data-science"></i>
+                                                <span class="link-name" key="YAAA">雨梦秋雨加速器</span>        
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="https://store.yume.zone/" target="_blank">
+                                            <div class="link-card cards">
+                                                <i class="iconfont2 icon-shop"></i>
+                                                <span class="link-name" key="STORE">雨夢Store</span>     
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--展开菜单按钮-->
+                <div class="menu" id="switchmenu">
+                    <a class="munu-button cards" id="menu"><i class="iconfont icon-bars"></i></a>
+                </div>
+                <!--更多内容-->
+                <div class="more" id="more">
+                    <!--关闭按钮-->
+                    <div class="close fixed-top" id="close">
+                        <i class="iconfont icon-close"></i>
+                    </div>
+                    <div class="line" style="margin-top: 1rem;">
+                        <i class="iconfont icon-right-copy"></i>
+                        <span class="line-text" key="SHIJIANJIAONANG">时间胶囊</span>
+                        <i class="iconfont icon-right"></i>
+                    </div>
+						<div class="date" id="date">
+						<div class="item" id="dayProgress">
+							<div class="date-text">
+								<span key="DAY_PROGRESS">今日已经度过了</span> 
+								<span id="dayProgressValue"></span> 
+								<span key="DAY_PROGRESS1">小时</span>
+							</div>
+						<div class="progress">
+							<div class="progress-bar"></div>
+							</div>
+						</div>
+                        <div class="item" id="weekProgress">
+							<div class="date-text">
+								<span key="WEEK_PROGRESS">本周已经度过了</span> 
+								<span id="weekProgressValue"></span> 
+								<span key="WEEK_PROGRESS1">天</span>
+						</div>
+						<div class="progress">
+							<div class="progress-bar"></div>
+							</div>
+						</div>
+                        <div class="item" id="monthProgress">
+							<div class="date-text">
+								<span key="MONTH_PROGRESS">本月已经度过了</span> 
+								<span id="monthProgressValue"></span> 
+								<span key="MONTH_PROGRESS1">天</span>
+							</div>
+						<div class="progress">
+							<div class="progress-bar"></div>
+							</div>
+						</div>
+                        <div class="item" id="yearProgress">
+							<div class="date-text">
+								<span key="YEAR_PROGRESS">今年已经度过了</span> 
+								<span id="yearProgressValue"></span> 
+								<span key="YEAR_PROGRESS1">个月</span>
+							</div>
+						<div class="progress">
+							<div class="progress-bar"></div>
+							</div>
+						</div>
+                    </div>
+                    <div class="line">
+                        <i class="iconfont icon-right-copy"></i>
+                        <span class="line-text" key="ZAQIZABA">杂七杂八</span>
+                        <i class="iconfont icon-right"></i>
+                    </div>
+                    <!--网站链接-->
+                    <div class="row" style="margin-top: -0.7rem;">
+                        <div class="col">
+                            <a id="openmore1">
+                                <div class="link-card cards">
+									<i class="iconfont2 icon-ipod"></i>
+                                    <span class="link-name" key="BOFANGQI">播放器</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col 2">
+                            <a href="https://phpmyadmin.yume.zone/" target="_blank">
+                                <div class="link-card cards">
+									<i class="iconfont2 icon-database"></i>
+                                    <span class="link-name" key="SQL">数据库</span>        
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="https://docuseal.yume.zone/" target="_blank">
+                                <div class="link-card cards">
+									<i class="iconfont2 icon-edit"></i>
+                                    <span class="link-name">DocuSeal</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: -0.7rem;">
+                        <div class="col">
+                            <a href="https://drop.yume.zone/" target="_blank">
+                                <div class="link-card cards">
+									<i class="iconfont2 icon-menu-outline"></i>
+                                    <span class="link-name" key="YFDROP">雨梦Drop</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col 2" show-lang="fr,en,ja,zh-tw">
+                            <a href="https://pay.yume.zone/" target="_blank">
+                                <div class="link-card cards">
+									<i class="iconfont2 icon-wallet"></i>
+                                    <span class="link-name" key="YPAY">雨梦支付</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col 2" show-lang="zh-cn">
+                            <a href="#" target="_blank">
+                                <div class="link-card cards">
+									<i class="iconfont2 icon-clock"></i>
+                                    <span class="link-name" key="NOOPEN">暂未开放</span>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col">
+                            <a href="#" target="_blank">
+                                <div class="link-card cards">
+									<i class="iconfont2 icon-clock"></i>
+                                    <span class="link-name" key="NOOPEN">暂未开放</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!--更多页面-->
+                <div class="box" id="box" style="display: none">
+                    <div class="box-wrapper">
+                        <!--关闭按钮-->
+                        <div class="closebox fixed-top" id="closemore">
+                            <i class="iconfont icon-close"></i>
+                        </div>
+                        <!--左侧内容-->
+                        <div class="box-left">
+                            <div class="img-title">
+                                <span class="img-title">yume</span>
+                                <span class="img-text">.zone</span><br />
+                                <span class="img-text">&nbsp;&nbsp;v&nbsp;26.1</span>
+                                <a href="https://github.com/YumePrincess" target="_blank"><i
+                                        class="iconfont icon-github1" show-lang="fr,en,ja"></i></a>
+                            </div>
+                            <!--更多内容-->
+                            <div class="accordion" id="accordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne" key="BIZHISHEZHI">
+                                            壁纸设置
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <div class="set">
+                                                <div class="wallpaper" id="wallpaper">
+                                                    <div class="form-radio">
+                                                        <input type="radio" class="set-wallpaper" style="display: none;"
+                                                            id="radio1" value="1" name="wallpaper-type">
+                                                        <label for="radio1" key="NIKKI">闪耀暖暖</label>
+                                                    </div>
+                                                    <div class="form-radio">
+                                                        <input type="radio" class="set-wallpaper" style="display: none;"
+                                                            id="radio2" value="2" name="wallpaper-type">
+                                                        <label for="radio2" key="MEIRIYITU">每日一图</label>
+                                                    </div>
+                                                    <div class="form-radio">
+                                                        <input type="radio" class="set-wallpaper" style="display: none;"
+                                                            id="radio3" value="3" name="wallpaper-type">
+                                                        <label for="radio3" key="SUIJIFENGJING">随机风景</label>
+                                                    </div>
+                                                    <div class="form-radio">
+                                                        <input type="radio" class="set-wallpaper" style="display: none;"
+                                                            id="radio4" value="4" name="wallpaper-type">
+                                                        <label for="radio4" key="SUIJIDONGMAN">随机动漫</label>
+                                                    </div>
+													<div class="form-radio">
+                                                        <input type="radio" class="set-wallpaper" style="display: none;"
+                                                            id="radio5" value="5" name="wallpaper-type">
+                                                        <label for="radio5" key="MENGHUANFENGJING">梦幻风景</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--更新日志-->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                            aria-expanded="false" aria-controls="collapseTwo" key="LOG">
+                                            更新日志
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse"
+                                        aria-labelledby="headingTwo" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <div class="upnote">
+												<span class="uptext"><i class="iconfont2 icon-plus"></i><a class="uptext-inner-wrap" key="UPTEXTL1">&nbsp;新增繁体中文支持</a></span>
+                                                <span class="uptext"><i class="iconfont2 icon-plus"></i><a class="uptext-inner-wrap" key="UPTEXTL2">&nbsp;新增服务条款页面</a></span>
+                                                <span class="uptext"><i class="iconfont2 icon-plus"></i><a class="uptext-inner-wrap" key="UPTEXTL3">&nbsp;新增可用功能</a></span>
+                                                <span class="uptext"><i class="iconfont2 icon-wrench"></i><a class="uptext-inner-wrap" key="UPTEXTL4">&nbsp;修复部分语言时间格式显示错误</a></span>
+                                                <span class="uptext"><i class="iconfont2 icon-wrench"></i><a class="uptext-inner-wrap" key="UPTEXTL5">&nbsp;优化移动端动画及细节</a></span>
+                                                <span class="uptext"><i class="iconfont2 icon-wrench"></i><a class="uptext-inner-wrap" key="UPTEXTL6">&nbsp;优化部分动画及细节</a></span>
+                                                <!-- <span class="uptext"><i class="iconfont icon-undo"></i>&nbsp;<a href="https://www.yume.zone/" style="color:#efefef" key="BACKOLD">点击此处返回旧版站点</a></span> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Aplayer-->
+                        <div class="box-right">
+                            <div id="aplayer"></div>
+                        </div>
+                    </div>
+                </div>
+                <!--服务条款-->
+                <div class="terms-box" id="termsBox" style="display:none;">
+                    <div class="terms-wrapper">
+                        <!-- 关闭按钮 -->
+                        <div class="terms-close" id="termsCloseBtn">
+                            <i class="iconfont icon-close"></i>
+                        </div>
+                        <!-- 上区：Logo + 标题 + 版本号 -->
+                        <div class="terms-header">
+                            <div class="terms-header-logo">
+                                <img src="./img/logo.png" class="terms-header-logo-img" alt="logo">
+                                <div class="terms-header-title">
+                                    <span class="terms-header-title-main">yume</span>
+                                    <span class="terms-header-title-sub">.zone</span>
+                                    <span class="terms-header-version">v 26.1</span>
+                                </div>
+                            </div>
+                            <!-- 选项菜单（自动换行） -->
+                            <div class="terms-menu">
+                                <button class="terms-tab active" data-target="terms-user" key="TERMS">用户条款</button>
+                                <button class="terms-tab" data-target="terms-privacy" key="PRIVACY">隐私政策</button>
+                                <button class="terms-tab" data-target="terms-refunds" key="REFUNDS">退款政策</button>
+                            </div>
+                        </div>
+                        <!-- 下区：动态内容 -->
+                        <div class="terms-content">
+                            <script src="./js/marked.min.js"></script>
+                            <div class="terms-panel show" id="terms-user"></div>
+                            <div class="terms-panel" id="terms-privacy"></div>
+                            <div class="terms-panel" id="terms-refunds"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <!-- 版权信息 -->
+        <footer id="footer" class="fixed-bottom footer">
+            <div class="power">Copyright &copy; 2012 
+                <script>
+                    document.write(' - ' + (new Date()).getFullYear())
+                </script>&nbsp;<a href="https://www.yume.zone/">Yume</a>. All Rights Reserved
+            </div>
+            <!-- 歌词显示 -->
+            <div id="lrc"></div>
+        </footer>
+    </section>
+    <!-- noscript -->
+    <noscript>
+        <div class="noscript fixed-top" key="OPENJS">请开启 JavaScript</div>
+    </noscript>
+    <!-- JS -->
+    <script type="text/javascript" src="./js/main.js"></script>
+    <script type="text/javascript" src="./js/time.js"></script>
+    <script type="text/javascript" src="./js/js.cookie.js"></script>
+    <script type="text/javascript" src="./js/set.js"></script>
+    <script type="text/javascript" src="./js/cursor.js"></script>
+    <script src="./js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>

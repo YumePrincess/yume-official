@@ -1,0 +1,251 @@
+@font-face {
+    font-family: "Pacifico-Regular";
+    src: url('../font/Pacifico-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "UnidreamLED";
+    src: url('../font/UnidreamLED.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "MiSans";
+    src: url('../font/MiSans-Regular.woff') format('woff');
+}
+
+@font-face {
+    font-family: "iconfont";
+    /* Project id 2831425 */
+    src: url('../font/iconfont.woff2') format('woff2'),
+        url('../font/iconfont.woff') format('woff'),
+        url('../font/iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-z_shangpinheji:before {
+    content: "\e683";
+}
+
+.icon-a-daohangzhiyindingwei-05:before {
+    content: "\e970";
+}
+
+.icon-volume-x:before {
+    content: "\e67a";
+}
+
+.icon-volume-1:before {
+    content: "\e67b";
+}
+
+.icon-volume:before {
+    content: "\e67c";
+}
+
+.icon-volume-2:before {
+    content: "\e67d";
+}
+
+.icon-music:before {
+    content: "\e986";
+}
+
+.icon-next-one:before {
+    content: "\e609";
+}
+
+.icon-next-one-copy:before {
+    content: "\ebd5";
+}
+
+.icon-pause:before {
+    content: "\e733";
+}
+
+.icon-play:before {
+    content: "\e65c";
+}
+
+.icon-undo:before {
+    content: "\e875";
+}
+
+.icon-right:before {
+    content: "\e613";
+}
+
+.icon-right-copy:before {
+    content: "\ebd4";
+}
+
+.icon-times:before {
+    content: "\e857";
+}
+
+.icon-bars:before {
+    content: "\e61f";
+}
+
+.icon-link:before {
+    content: "\e603";
+}
+
+.icon-close:before {
+    content: "\e656";
+}
+
+.icon-photo:before {
+    content: "\ebd3";
+}
+
+.icon-navigation1:before {
+    content: "\e637";
+}
+
+.icon-cloud:before {
+    content: "\e624";
+}
+
+.icon-lab:before {
+    content: "\e88d";
+}
+
+.icon-blog-solid:before {
+    content: "\e631";
+}
+
+.icon-comment-alt-lines:before {
+    content: "\e679";
+}
+
+.icon-music-list:before {
+    content: "\e699";
+}
+
+.icon-youxiang:before {
+    content: "\e605";
+}
+
+.icon-github:before {
+    content: "\e691";
+}
+
+.icon-QQ:before {
+    content: "\e882";
+}
+
+.icon-twitter:before {
+    content: "\e883";
+}
+
+.icon-github1:before {
+    content: "\e799";
+}
+
+.icon-yinhao-copy:before {
+    content: "\e608";
+}
+
+.icon-yinhao-copy-copy:before {
+    content: "\e62e";
+}
+
+@font-face {
+    font-family: "fontello";
+    /* Project id 2831425 */
+    src: url('../font/iconfont2.woff2') format('woff2'),
+        url('../font/iconfont2.woff') format('woff'),
+        url('../font/iconfont2.ttf') format('truetype');
+}
+
+.iconfont2 {
+    font-family: "fontello" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+.icon-x:before {
+    content: "𝕏";
+}
+
+.icon-shop:before {
+    content: "\f290";
+}
+
+.icon-wechat:before {
+    content: "\f1d7";
+}
+
+.icon-telegram:before {
+    content: "\f2c6";
+}
+
+.icon-ipod:before {
+    content: "\e801";
+}
+
+.icon-clock:before {
+    content: "\e802";
+}
+
+.icon-database:before {
+    content: "\e803";
+}
+
+.icon-doc-text:before {
+    content: "\e804";
+}
+
+.icon-facebook:before {
+    content: "\f09a";
+}
+
+.icon-phone:before {
+    content: "\e805";
+}
+
+.icon-data-science:before {
+    content: "\f016";
+}
+
+.icon-id-badge:before {
+    content: "\f2c1";
+}
+
+.icon-menu-outline:before {
+    content: "\e806";
+}
+
+.icon-google-circles:before {
+    content: "\f351";
+}
+
+.icon-wallet:before {
+    content: "\e800";
+}
+
+.icon-edit:before {
+    content: "\e808";
+}
+
+.icon-newspaper:before {
+    content: "\f4f0";
+}
+
+.icon-plus:before {
+    content: "\e807";
+}
+
+.icon-wrench:before {
+    content: "\e809";
+}
