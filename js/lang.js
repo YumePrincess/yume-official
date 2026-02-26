@@ -3,6 +3,7 @@ var arrLang = {
 	"en": {
 		"OFFICIAL": "Yume Official",
 		"OFFICIAL2": "Yume Official, a small website established in Heisei 24.",
+		"DESCRIPTION": "Yume Official — Discover the shape of dreams in the digital age. With innovation at our core, we integrate AI, cloud storage, social interaction, instant messaging, and global acceleration into a unified future ecosystem. Whether you are exploring, creating, sharing, or connecting, Yume opens the gateway to tomorrow. Join us and witness the convergence of technology and dreams.",
 		"LAW": "Open Terms of Service",
 		"YUME": "Yume",
 		"CLOSE": "Close",
@@ -99,6 +100,7 @@ var arrLang = {
     "zh-cn": {
         "OFFICIAL": "雨梦Official",
 		"OFFICIAL2": "雨梦Official，一个建立于平成二十四年的小站。",
+		"DESCRIPTION": "雨梦Official —— 在数字时代寻找梦想的形状。我们以创新为核心，将AI、云存储、社交互动、即时通讯、全球加速等融合为统一的未来生态。无论是探索、创作、分享还是连接，雨梦都为你打开通往未来的入口。与我们一起，见证科技与梦想的交汇。",
 		"LAW": "打开服务条款",
 		"YUME": "雨梦",
 		"CLOSE": "关闭",
@@ -195,6 +197,7 @@ var arrLang = {
 	"zh-tw": {
 		"OFFICIAL": "雨夢Official",
 		"OFFICIAL2": "雨夢Official，一個建立於平成二十四年的小站。",
+		"DESCRIPTION": "雨夢Official —— 在數位時代尋找夢想的形狀。我們以創新為核心，將 AI、雲端儲存、社交互動、即時通訊、全球加速等服務融合成一體化的未來生態。無論是探索、創作、分享還是連結，雨夢都為你開啟通往未來的入口。與我們一起，見證科技與夢想的交會。",
 		"LAW": "打開服務條款",
 		"YUME": "雨夢",
 		"CLOSE": "關閉",
@@ -291,6 +294,7 @@ var arrLang = {
 	"fr": {
 		"OFFICIAL": "Yume Official",
 		"OFFICIAL2": "Yume Official, un petit site créé lors de la 24ᵉ année de l’ère Heisei.",
+		"DESCRIPTION": "Yume Official — À la recherche de la forme des rêves à l’ère numérique. Animés par l’innovation, nous unifions l’IA, le stockage cloud, l’interaction sociale, la messagerie instantanée et l’accélération globale au sein d’un écosystème tourné vers l’avenir. Qu’il s’agisse d’explorer, de créer, de partager ou de se connecter, Yume ouvre la porte vers demain. Rejoignez‑nous et soyez témoins de la rencontre entre technologie et rêves.",
 		"LAW": "Ouvrir les Conditions d’utilisation",
 		"YUME": "Yume",
 		"CLOSE": "Fermer",
@@ -387,6 +391,7 @@ var arrLang = {
 	"ja": {
 		"OFFICIAL": "雨夢Official",
 		"OFFICIAL2": "雨夢Officialは、平成24年に設立されたウェブサイトです。",
+		"DESCRIPTION": "雨夢Official —— デジタル時代における夢のかたちを探し求めて。私たちは革新を中心に据え、AI、クラウドストレージ、ソーシャル交流、インスタントメッセージング、グローバル加速などを統合し、未来のエコシステムを構築しています。探索、創造、共有、つながり——そのすべての瞬間で、雨夢はあなたに未来への入口を開きます。テクノロジーと夢が交わる瞬間を共に見届けましょう。",
 		"LAW": "利用規約を開く",
 		"YUME": "雨夢",
 		"CLOSE": "閉じる",
@@ -517,6 +522,15 @@ function translate(key) {
     return arrLang[lang][key] || key; // 如果没有找到对应的翻译，则返回原键
 }
 
+// 更新META描述
+function updateMetaDescription() {
+    var desc = translate('DESCRIPTION');
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+        metaDesc.setAttribute('content', desc);
+    }
+}
+
 // 更新页面中的文本内容
 function updateTextContent() {
     $('[key]').each(function() {
@@ -545,7 +559,7 @@ function updateTextContent() {
         $('#footer').html(`
             <div class="power">
                 版权所有 &copy; ${currentYear}
-                <a href="https://www.yume.zone/">美国雨梦互联网有限公司</a> 保留所有权利。本页面为在中国大陆地区使用而特别设计之版本。
+                <a href="https://www.yume.zone/">美国雨梦互联网有限公司</a> 保留所有权利。本页面为在中国大陆使用而设计。
             </div>
 			<div id="lrc"></div>
         `);
@@ -565,6 +579,7 @@ function updateTextContent() {
 $(document).ready(function() {
 
     // 页面加载时更新文本内容
+	updateMetaDescription();
     updateTextContent();
     updatePageContent();
     updateContent();
@@ -583,6 +598,7 @@ $(document).ready(function() {
         lang = selectedLang;
 
         // 更新页面中的文本
+		updateMetaDescription();
         updateTextContent();
         updatePageContent();
         updateContent();

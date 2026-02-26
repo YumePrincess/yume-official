@@ -42,7 +42,7 @@ setTimeout(function () {
 //延迟加载音乐播放器
 function downloadJSAtOnload() {
     var element = document.createElement("script");
-    element.src = "./js/music.js";
+    element.src = "/js/music.js";
     document.body.appendChild(element);
 }
 if (window.addEventListener)
@@ -112,12 +112,12 @@ function updateLantern() {
             let link = document.createElement("link");
             link.id = "lantern-css";
             link.rel = "stylesheet";
-            link.href = "./css/lantern.css";
+            link.href = "/css/lantern.css";
             document.body.appendChild(link);
 
             let script = document.createElement("script");
             script.id = "lantern-js";
-            script.src = "./js/lantern.js";
+            script.src = "/js/lantern.js";
             document.body.appendChild(script);
         }
     } else {
@@ -132,14 +132,14 @@ function updateLantern() {
 if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
     var head = document.getElementsByTagName('head')[0];
     var link = document.createElement('link');
-    link.href = './css/firefox.css';
+    link.href = '/css/firefox.css';
     link.rel = 'stylesheet';
     link.type = 'text/css';
     head.appendChild(link);
     window.addEventListener('load', function () {
         iziToast.show({
             timeout: 8000,
-            iconUrl: './img/icon/warn.png',
+            iconUrl: '/img/icon/warn.png',
             message: translate('FIREFOX')
         });
     }, false)
@@ -526,7 +526,7 @@ $("#more").hover(function () {
 document.addEventListener('contextmenu', function (event) {
     iziToast.show({
         timeout: 2000,
-        iconUrl: './img/icon/warn.png',
+        iconUrl: '/img/icon/warn.png',
         message: translate('NOYOUJIAN')
     });
     event.preventDefault(); // 取消右键菜单
@@ -548,7 +548,7 @@ for (var day of days) {
         window.addEventListener('load', function () {
             iziToast.show({
                 timeout: 14000,
-                iconUrl: './img/icon/candle.png',
+                iconUrl: '/img/icon/candle.png',
                 message: translate('SILENCE1')
             });
         }, false);
@@ -681,7 +681,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let fileLang = lang;  // 使用 lang 作为当前语言
 
         // 正确路径
-        let url = `./terms/${type}/${fileLang}.md`;
+        let url = `/terms/${type}/${fileLang}.md`;
 
         try {
             let response = await fetch(url);

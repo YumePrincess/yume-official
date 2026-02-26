@@ -35,27 +35,27 @@ function setBgImgInit() {
         case "1":
             var pictures = new Array();
             /*
-			pictures[0] = './img/background1.webp';
-            pictures[1] = './img/background2.webp';
-            pictures[2] = './img/background3.webp';
-            pictures[3] = './img/background4.webp';
-            pictures[4] = './img/background5.webp';
-            pictures[5] = './img/background6.webp';
-            pictures[6] = './img/background7.webp';
-            pictures[7] = './img/background8.webp';
-            pictures[8] = './img/background9.webp';
-            pictures[9] = './img/background10.webp';
+			pictures[0] = '/img/background1.webp';
+            pictures[1] = '/img/background2.webp';
+            pictures[2] = '/img/background3.webp';
+            pictures[3] = '/img/background4.webp';
+            pictures[4] = '/img/background5.webp';
+            pictures[5] = '/img/background6.webp';
+            pictures[6] = '/img/background7.webp';
+            pictures[7] = '/img/background8.webp';
+            pictures[8] = '/img/background9.webp';
+            pictures[9] = '/img/background10.webp';
 			*/
-			pictures[0] = './img/NIKKI/1.jpg';
-            pictures[1] = './img/NIKKI/2.jpg';
-            pictures[2] = './img/NIKKI/3.jpg';
-            pictures[3] = './img/NIKKI/4.jpg';
-            pictures[4] = './img/NIKKI/5.jpg';
-            pictures[5] = './img/NIKKI/6.jpg';
-            pictures[6] = './img/NIKKI/7.jpg';
-            pictures[7] = './img/NIKKI/8.jpg';
-            pictures[8] = './img/NIKKI/9.jpg';
-            pictures[9] = './img/NIKKI/10.jpg';
+			pictures[0] = '/img/NIKKI/1.jpg';
+            pictures[1] = '/img/NIKKI/2.jpg';
+            pictures[2] = '/img/NIKKI/3.jpg';
+            pictures[3] = '/img/NIKKI/4.jpg';
+            pictures[4] = '/img/NIKKI/5.jpg';
+            pictures[5] = '/img/NIKKI/6.jpg';
+            pictures[6] = '/img/NIKKI/7.jpg';
+            pictures[7] = '/img/NIKKI/8.jpg';
+            pictures[8] = '/img/NIKKI/9.jpg';
+            pictures[9] = '/img/NIKKI/10.jpg';
             var rd = Math.floor(Math.random() * 10);
             $('#bg').attr('src', pictures[rd]) //随机默认壁纸
             break;
@@ -70,16 +70,16 @@ function setBgImgInit() {
             break;
 		case "5":
             var pictures = new Array();
-			pictures[0] = './img/MHFJ/1.jpg';
-            pictures[1] = './img/MHFJ/2.jpg';
-            pictures[2] = './img/MHFJ/3.jpg';
-            pictures[3] = './img/MHFJ/4.jpg';
-            pictures[4] = './img/MHFJ/5.jpg';
-            pictures[5] = './img/MHFJ/6.jpg';
-            pictures[6] = './img/MHFJ/7.jpg';
-            pictures[7] = './img/MHFJ/8.jpg';
-            pictures[8] = './img/MHFJ/9.jpg';
-            pictures[9] = './img/MHFJ/10.jpg';
+			pictures[0] = '/img/MHFJ/1.jpg';
+            pictures[1] = '/img/MHFJ/2.jpg';
+            pictures[2] = '/img/MHFJ/3.jpg';
+            pictures[3] = '/img/MHFJ/4.jpg';
+            pictures[4] = '/img/MHFJ/5.jpg';
+            pictures[5] = '/img/MHFJ/6.jpg';
+            pictures[6] = '/img/MHFJ/7.jpg';
+            pictures[7] = '/img/MHFJ/8.jpg';
+            pictures[8] = '/img/MHFJ/9.jpg';
+            pictures[9] = '/img/MHFJ/10.jpg';
             var rd = Math.floor(Math.random() * 10);
             $('#bg').attr('src', pictures[rd]) //随机默认壁纸
             break;	
@@ -99,27 +99,27 @@ $(document).ready(function () {
             setBgImg(bg_img);
             var pictures = new Array();
 			/*
-            pictures[0] = './img/background1.webp';
-            pictures[1] = './img/background2.webp';
-            pictures[2] = './img/background3.webp';
-            pictures[3] = './img/background4.webp';
-            pictures[4] = './img/background5.webp';
-            pictures[5] = './img/background6.webp';
-            pictures[6] = './img/background7.webp';
-            pictures[7] = './img/background8.webp';
-            pictures[8] = './img/background9.webp';
-            pictures[9] = './img/background10.webp';
+            pictures[0] = '/img/background1.webp';
+            pictures[1] = '/img/background2.webp';
+            pictures[2] = '/img/background3.webp';
+            pictures[3] = '/img/background4.webp';
+            pictures[4] = '/img/background5.webp';
+            pictures[5] = '/img/background6.webp';
+            pictures[6] = '/img/background7.webp';
+            pictures[7] = '/img/background8.webp';
+            pictures[8] = '/img/background9.webp';
+            pictures[9] = '/img/background10.webp';
 			*/
-			pictures[0] = './img/NIKKI/1.jpg';
-            pictures[1] = './img/NIKKI/2.jpg';
-            pictures[2] = './img/NIKKI/3.jpg';
-            pictures[3] = './img/NIKKI/4.jpg';
-            pictures[4] = './img/NIKKI/5.jpg';
-            pictures[5] = './img/NIKKI/6.jpg';
-            pictures[6] = './img/NIKKI/7.jpg';
-            pictures[7] = './img/NIKKI/8.jpg';
-            pictures[8] = './img/NIKKI/9.jpg';
-            pictures[9] = './img/NIKKI/10.jpg';
+			pictures[0] = '/img/NIKKI/1.jpg';
+            pictures[1] = '/img/NIKKI/2.jpg';
+            pictures[2] = '/img/NIKKI/3.jpg';
+            pictures[3] = '/img/NIKKI/4.jpg';
+            pictures[4] = '/img/NIKKI/5.jpg';
+            pictures[5] = '/img/NIKKI/6.jpg';
+            pictures[6] = '/img/NIKKI/7.jpg';
+            pictures[7] = '/img/NIKKI/8.jpg';
+            pictures[8] = '/img/NIKKI/9.jpg';
+            pictures[9] = '/img/NIKKI/10.jpg';
             var rd = Math.floor(Math.random() * 10);
             $('#bg').attr('src', pictures[rd]) //随机默认壁纸
             iziToast.show({
@@ -154,16 +154,16 @@ $(document).ready(function () {
 		if (type === "5") {
             setBgImg(bg_img);
             var pictures = new Array();
-            pictures[0] = './img/MHFJ/1.jpg';
-            pictures[1] = './img/MHFJ/2.jpg';
-            pictures[2] = './img/MHFJ/3.jpg';
-            pictures[3] = './img/MHFJ/4.jpg';
-            pictures[4] = './img/MHFJ/5.jpg';
-            pictures[5] = './img/MHFJ/6.jpg';
-            pictures[6] = './img/MHFJ/7.jpg';
-            pictures[7] = './img/MHFJ/8.jpg';
-            pictures[8] = './img/MHFJ/9.jpg';
-            pictures[9] = './img/MHFJ/10.jpg';
+            pictures[0] = '/img/MHFJ/1.jpg';
+            pictures[1] = '/img/MHFJ/2.jpg';
+            pictures[2] = '/img/MHFJ/3.jpg';
+            pictures[3] = '/img/MHFJ/4.jpg';
+            pictures[4] = '/img/MHFJ/5.jpg';
+            pictures[5] = '/img/MHFJ/6.jpg';
+            pictures[6] = '/img/MHFJ/7.jpg';
+            pictures[7] = '/img/MHFJ/8.jpg';
+            pictures[8] = '/img/MHFJ/9.jpg';
+            pictures[9] = '/img/MHFJ/10.jpg';
             var rd = Math.floor(Math.random() * 10);
             $('#bg').attr('src', pictures[rd]) //随机默认壁纸
             iziToast.show({
