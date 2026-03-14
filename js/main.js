@@ -60,7 +60,6 @@ function isChineseLang() {
 // 春节灯笼展示区间（农历腊月二十六 ~ 正月十五）
 // 公历日期表：2026 ~ 2050
 const springFestivalRanges = {
-    2026: { start: "2026-02-13", end: "2026-03-02" },
     2027: { start: "2027-02-02", end: "2027-02-21" },
     2028: { start: "2028-01-22", end: "2028-02-10" },
     2029: { start: "2029-02-09", end: "2029-02-28" },
@@ -555,10 +554,6 @@ for (var day of days) {
     }
 }
 
-function translate(key) {
-    return arrLang[lang][key] || key;  // 默认返回原始 key
-}
-
 function checkOrientation() {
     if (window.innerWidth < 720) {
         document.getElementById('orientation-warning').style.display = 'block';
@@ -578,37 +573,58 @@ checkOrientation();
 // 监听窗口大小变化
 window.addEventListener('resize', checkOrientation);
 
-// 获取相关元素
+// 电话弹窗元素
 const phoneButton = document.getElementById('phone');
 const popup = document.getElementById('popup');
 const confirmButton = document.getElementById('confirm-button');
 const cancelButton = document.getElementById('cancel-button');
 
-// 点击电话按钮时显示弹窗
-phoneButton.addEventListener('click', () => {
-  popup.style.display = 'flex';
-});
+// 微信弹窗元素
+const wechatButton = document.getElementById('wechat');
+const wechatPopup = document.getElementById('wechat-popup');
+const wechatCancel = document.getElementById('wechat-cancel');
+const wechatLink = document.getElementById('wechat-link');
 
-// 点击确定按钮后跳转到拨号链接
-confirmButton.addEventListener('click', () => {
-  window.location.href = 'tel:+862288692668';
-});
-
-// 点击取消按钮时关闭弹窗
-cancelButton.addEventListener('click', () => {
-  popup.style.display = 'none';
-});
-
-// 如果点击弹窗外部区域，关闭弹窗
-window.addEventListener('click', (event) => {
-  if (event.target === popup) {
-    popup.style.display = 'none';
-  }
-});
-
+// ======================
+// 电话弹窗
+// ======================
 phoneButton.addEventListener('click', (event) => {
-  event.preventDefault();  // 阻止默认行为
-  popup.style.display = 'flex';
+    event.preventDefault();
+    popup.classList.add('show');
+});
+
+confirmButton.addEventListener('click', () => {
+    window.location.href = 'tel:+862288692668';
+});
+
+cancelButton.addEventListener('click', () => {
+    popup.classList.remove('show');
+});
+
+// 点击遮罩关闭
+popup.addEventListener('click', (event) => {
+    if (event.target === popup) popup.classList.remove('show');
+});
+
+// ======================
+// 微信弹窗
+// ======================
+wechatButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    wechatPopup.classList.add('show');
+});
+
+wechatCancel.addEventListener('click', () => {
+    wechatPopup.classList.remove('show');
+});
+
+wechatLink.addEventListener('click', () => {
+    window.location.href = 'http://weixin.qq.com/r/mp/diDr8ynE73SQrW2Q93Vk';
+});
+
+// 点击遮罩关闭
+wechatPopup.addEventListener('click', (event) => {
+    if (event.target === wechatPopup) wechatPopup.classList.remove('show');
 });
 
 window.addEventListener('resize', adjustAplayerDisplay);
@@ -641,12 +657,20 @@ function adjustAplayerDisplay() {
     }
 }
 
-// 获取当前 URL 参数
+// 解析 URL 参数
 const urlParams = new URLSearchParams(window.location.search);
 
-// 检查是否存在 appmode=true 参数
+// -----------------------------
+// 1. support=email → 自动跳转 mailto
+// -----------------------------
+if (urlParams.get('support') === 'email') {
+  window.location.href = "mailto:support@yume.zone";
+}
+
+// -----------------------------
+// 2. appmode=true → 隐藏 app 下载区域
+// -----------------------------
 if (urlParams.get('appmode') === 'true') {
-  // 隐藏应用下载区域
   const appContainer = document.querySelector('.app-container');
   if (appContainer) {
     appContainer.style.display = 'none';

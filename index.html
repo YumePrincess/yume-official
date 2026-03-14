@@ -8,11 +8,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="force-rendering" content="webkit" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="雨夢 Yume">
-    <title key="OFFICIAL">雨夢Official - Yume Official</title>
     <!-- jQuery -->
     <script src="/js/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="/js/lang.js"></script>
+    <meta name="description" content="">
+    <meta name="author" content="ゆめ Yume">
+    <title key="OFFICIAL">雨夢Official</title>
     <!-- OpenCC -->
     <script src="/js/full.min.js"></script>
     <!-- 引入样式 -->
@@ -42,7 +43,6 @@
 
 <body>
     <!--加载动画-->
-    <script type="text/javascript" src="/js/lang.js"></script>
     <div id="loading-box">
         <div class="loading-left-bg"></div>
         <div class="loading-right-bg"></div>
@@ -120,8 +120,10 @@
                             <!--介绍信息-->
                             <div class="message cards" id="switchmore">
                                 <div class="des" id="des"><i class="iconfont icon-yinhao-copy-copy"></i>
-                                    <div class="des-title"><span id="change">Hello&nbsp;World&nbsp;!</span><br /><span
-                                            id="change1">雨夢Official，一个建立于平成二十四年的小站。</span></div>
+                                    <div class="des-title">
+                                        <span id="change">Hello&nbsp;World&nbsp;!</span><br />
+                                        <span id="change1" key="DEFAULT_PAGE_SUBHEADING">雨夢Official，一个建立于平成二十四年的小站。</span>
+                                    </div>
                                     <i class="iconfont icon-yinhao-copy"></i>
                                 </div>
                             </div>
@@ -137,11 +139,11 @@
                                     id="qq" show-lang="zh-cn" target="_blank">
                                     <i class="iconfont icon-QQ"></i>
                                 </a>
-								<a href="weixin://contacts/profile/Yume_521" class="link"
-                                    id="wechat" show-lang="zh-cn,zh-tw" target="_blank">
+                                <button class="link" id="wechat" show-lang="zh-cn,zh-tw">
                                     <i class="iconfont2 icon-wechat"></i>
+                                </button>
                                 </a>
-                                <a href="mailto:admin@yume.zone" class="link" show-lang="zh-cn,zh-tw,fr,en,ja" id="email">
+                                <a href="https://www.yume.zone/?support=email" class="link" show-lang="zh-cn,zh-tw,fr,en,ja" id="email">
                                     <i class="iconfont icon-youxiang"></i>
                                 </a>
                                 <a href="https://t.me/yumeprincess" class="link" id="telegram" show-lang="fr,en,ja,zh-tw" target="_blank">
@@ -157,18 +159,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- 弹窗 -->
-                    <div class="popup" id="popup">
-                        <div class="popup-content">
-                            <h3 key="YCARE">雨梦Care</h3>
-                            <p key="FUWUSHIJIAN">服务时间：00:00 - 11:30 (ET)</p>
-                            <p key="DIANHUAHAOMA">电话号码：+86 (22) 8869 2668</p>
-                            <div class="button-group">
-                                <button class="btn cancel-btn" id="cancel-button" key="QUXIAO">取消</button>
-                                <button class="btn confirm-btn" id="confirm-button" key="QUEDINGHUJIAO">确定呼叫</button>
-                            </div>
-                        </div>
-                    </div>       
                     <!--第二屏 Logo-->
                     <div class="logo cards" style="display: none" id="changemore">
                         <a class="logo-text">Yume</a>
@@ -432,19 +422,11 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col 2" show-lang="fr,en,ja,zh-tw">
+                        <div class="col 2">
                             <a href="https://pay.yume.zone/" target="_blank">
                                 <div class="link-card cards">
 									<i class="iconfont2 icon-wallet"></i>
                                     <span class="link-name" key="YPAY">雨梦支付</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col 2" show-lang="zh-cn">
-                            <a href="#" target="_blank">
-                                <div class="link-card cards">
-									<i class="iconfont2 icon-clock"></i>
-                                    <span class="link-name" key="NOOPEN">暂未开放</span>
                                 </div>
                             </a>
                         </div>
@@ -584,6 +566,31 @@
                         </div>
                     </div>
                 </div>
+                <!-- 雨梦Care弹窗 -->
+                <div class="popup" id="popup">
+                    <div class="popup-content">
+                        <h3 key="YCARE">雨梦Care</h3>
+                        <p key="FUWUSHIJIAN">服务时间：02:00 - 12:00 (EDT)</p>
+                        <p key="DIANHUAHAOMA">电话号码：+86 (22) 8869 2668</p>
+                        <div class="button-group">
+                            <button class="btn cancel-btn" id="cancel-button" key="QUXIAO">取消</button>
+                            <button class="btn confirm-btn" id="confirm-button" key="QUEDINGHUJIAO">确定呼叫</button>
+                        </div>
+                    </div>
+                </div>   
+                <!-- 微信弹窗 -->
+                <div class="popup" id="wechat-popup">
+                    <div class="popup-content">
+                        <h3 key="YOVXFWH">雨梦Official服务号</h3>
+                        <p key="SMGZFWH">请扫描以下二维码或点击跳转链接按钮关注雨梦Official服务号</p>
+                        <!-- 二维码图片 -->
+                        <img src="/img/officialwx.png" class="wechat-qrcode">
+                        <div class="button-group">
+                            <button class="btn cancel-btn" id="wechat-cancel" key="QUXIAO">取消</button>
+                            <button class="btn confirm-btn" id="wechat-link" key="TIAOZHUANVXLIANJIE">跳转链接</button>
+                        </div>
+                    </div>
+                </div>    
             </div>
         </main>
         <!-- 版权信息 -->

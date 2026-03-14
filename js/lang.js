@@ -34,7 +34,7 @@ var arrLang = {
 		"YPAY": "Yume Pay",
 		"NOOPEN": "Not yet open",
 		"MORE_PAGE_SUBHEADING": "Oh, you found this! (Click again to close)",
-		"DEFAULT_PAGE_SUBHEADING": "A small website established in Heisei 24, showcasing Yume's development journey",
+		"DEFAULT_PAGE_SUBHEADING": "Yume Official was founded in 2012 (Heisei 24). Over time, it became the starting point of the Yume ecosystem, with every product design and technical breakthrough leaving its mark here. It has witnessed the growth of the Yume brand and continues to chronicle its ongoing journey.",
 		"LOADTEXT": "Font and file loading may take some time.",
 		"FIREFOX": "You are using Firefox; some features may not be supported.",
 		"REIWA": "Reiwa",
@@ -67,7 +67,7 @@ var arrLang = {
 		"GOX": "You know ~",
 		"GOTEL": "You know ~",
 		"YCARE": "Yume Care",
-		"FUWUSHIJIAN": "Service Hours: 00:00 - 11:30 (ET)",
+		"FUWUSHIJIAN": "Service Hours: 02:00 - 12:00 (EDT)",
 		"DIANHUAHAOMA": "Phone Number: +86 (22) 8869 2668",
 		"QUXIAO": "Cancel",
 		"QUEDINGHUJIAO": "Confirm call",
@@ -95,6 +95,9 @@ var arrLang = {
 		"REFUNDS": "Refund Policy",
 		"BIZHISHEDINGCHENGGONG": "Wallpaper set successfully",
 		"OPENJS": "Please enable JavaScript",
+		"YOVXFWH": "Yume Official Service Account",
+		"SMGZFWH": "Please scan the QR code below or click the redirect button to follow the Yume Official Service Account",
+		"TIAOZHUANVXLIANJIE": "Redirect Link",
 		"TERMS_LOAD_ERROR": "Failed to load terms file"
 	},
     "zh-cn": {
@@ -131,7 +134,7 @@ var arrLang = {
 		"YPAY": "雨梦支付",
 		"NOOPEN": "暂未开放",
 		"MORE_PAGE_SUBHEADING": "哎呀，这都被你发现了（ 再点击一次可关闭 ）",
-		"DEFAULT_PAGE_SUBHEADING": "一个建立平成24年的小站，展现着雨梦的开发历程",
+		"DEFAULT_PAGE_SUBHEADING": "雨梦Official创立于平成24年，随着时间推移，它成为雨梦生态的起点，每一次产品设计与技术突破都在此留下足迹。它见证了雨梦品牌的成长，也是雨梦持续前行的记录者。",
 		"FIREFOX": "您正在使用火狐浏览器，部分功能可能不支持",
 		"LOADTEXT": "字体及文件加载可能需要一定时间",
 		"REIWA": "令和",
@@ -164,7 +167,7 @@ var arrLang = {
 		"GOX": "你懂的 ~",
 		"GOTEL": "你懂的 ~",
 		"YCARE": "雨梦Care",
-		"FUWUSHIJIAN": "服务时间：00:00 - 11:30 (ET)",
+		"FUWUSHIJIAN": "服务时间：02:00 - 12:00 (EDT)",
 		"DIANHUAHAOMA": "电话号码：+86 (22) 8869 2668",
 		"QUXIAO": "取消",
 		"QUEDINGHUJIAO": "确定呼叫",
@@ -192,6 +195,9 @@ var arrLang = {
 		"REFUNDS": "退款政策",
 		"BIZHISHEDINGCHENGGONG": "壁纸设置成功",
 		"OPENJS": "请开启 JavaScript",
+		"YOVXFWH": "雨梦Official服务号",
+		"SMGZFWH": "请扫描以下二维码或点击跳转链接按钮关注雨梦Official服务号",
+		"TIAOZHUANVXLIANJIE": "跳转链接",
 		"TERMS_LOAD_ERROR": "无法加载条款文件"
     },
 	"zh-tw": {
@@ -228,7 +234,7 @@ var arrLang = {
 		"YPAY": "雨梦支付",
 		"NOOPEN": "暫未開放",
 		"MORE_PAGE_SUBHEADING": "哎呀，被你發現了（ 再點一次可關閉 ）",
-		"DEFAULT_PAGE_SUBHEADING": "一個建立於平成24年的小站，展現著雨夢的開發歷程",
+		"DEFAULT_PAGE_SUBHEADING": "雨夢Official創立於平成24年，隨著時間推移，它成為雨夢生態的起點，每一次產品設計與技術突破都在此留下足跡。它見證了雨夢品牌的成長，也是雨夢持續前行的記錄者。",
 		"FIREFOX": "您正在使用 Firefox，部分功能可能不支援",
 		"LOADTEXT": "字體與檔案載入可能需要一些時間",
 		"REIWA": "令和",
@@ -261,7 +267,7 @@ var arrLang = {
 		"GOX": "你懂的 ~",
 		"GOTEL": "你懂的 ~",
 		"YCARE": "雨夢Care",
-		"FUWUSHIJIAN": "服務時間：00:00 - 11:30 (ET)",
+		"FUWUSHIJIAN": "服務時間：02:00 - 12:00 (EDT)",
 		"DIANHUAHAOMA": "電話號碼：+86 (22) 8869 2668",
 		"QUXIAO": "取消",
 		"QUEDINGHUJIAO": "確定撥打",
@@ -289,6 +295,9 @@ var arrLang = {
 		"REFUNDS": "退款政策",
 		"BIZHISHEDINGCHENGGONG": "桌布設定成功",
 		"OPENJS": "請啟用 JavaScript",
+		"YOVXFWH": "雨夢Official服務號",
+		"SMGZFWH": "請掃描下方 QR Code 或點擊跳轉連結按鈕關注雨夢Official服務號",
+		"TIAOZHUANVXLIANJIE": "跳轉連結",
 		"TERMS_LOAD_ERROR": "無法載入條款文件"
 	},
 	"fr": {
@@ -325,7 +334,7 @@ var arrLang = {
 		"YPAY": "Paiement Yume",
 		"NOOPEN": "Pas encore disponible",
 		"MORE_PAGE_SUBHEADING": "Oh, vous l’avez trouvé (cliquez encore pour fermer)",
-		"DEFAULT_PAGE_SUBHEADING": "Un petit site créé lors de la 24ᵉ année de l’ère Heisei, montrant le parcours de développement de Yume",
+		"DEFAULT_PAGE_SUBHEADING": "Yume Official a été fondé en ère Heisei 24. Avec le temps, il est devenu le point de départ de l’écosystème Yume, où chaque conception de produit et chaque avancée technique a laissé son empreinte. Il a été le témoin de la croissance de la marque Yume et continue d’en accompagner le parcours.",
 		"FIREFOX": "Vous utilisez Firefox, certaines fonctionnalités peuvent ne pas être prises en charge",
 		"LOADTEXT": "Le chargement des polices et des fichiers peut prendre un certain temps",
 		"REIWA": "Reiwa",
@@ -358,7 +367,7 @@ var arrLang = {
 		"GOX": "Vous savez ~",
 		"GOTEL": "Vous savez ~",
 		"YCARE": "Yume Care",
-		"FUWUSHIJIAN": "Heures de service : 00:00 - 11:30 (ET)",
+		"FUWUSHIJIAN": "Heures de service : 02:00 - 12:00 (EDT)",
 		"DIANHUAHAOMA": "Numéro de téléphone : +86 (22) 8869 2668",
 		"QUXIAO": "Annuler",
 		"QUEDINGHUJIAO": "Confirmer l’appel",
@@ -386,6 +395,9 @@ var arrLang = {
 		"REFUNDS": "Politique de Remboursement",
 		"BIZHISHEDINGCHENGGONG": "Fond d’écran défini avec succès",
 		"OPENJS": "Veuillez activer JavaScript",
+		"YOVXFWH": "Compte de service Yume Official",
+		"SMGZFWH": "Veuillez scanner le QR code ci-dessous ou cliquer sur le bouton de lien pour suivre le compte de service Yume Official",
+		"TIAOZHUANVXLIANJIE": "Lien de redirection",
 		"TERMS_LOAD_ERROR": "Impossible de charger le fichier des conditions"
 	},
 	"ja": {
@@ -422,7 +434,7 @@ var arrLang = {
 		"YPAY": "雨夢ペイ",
 		"NOOPEN": "まだ公開されていません",
 		"MORE_PAGE_SUBHEADING": "あっ、見つかってしまいました（もう一度クリックで閉じます）",
-		"DEFAULT_PAGE_SUBHEADING": "平成24年に設立された小さなサイトで、雨夢の開発過程を紹介しています",
+		"DEFAULT_PAGE_SUBHEADING": "雨夢Officialは平成24年に創立され、時を経て雨夢エコシステムの起点となりました。あらゆる製品設計や技術的な進歩がここに刻まれています。雨夢Officialはブランドの成長を見守り、今もその歩みを記録し続けています。",
 		"LOADTEXT": "フォントやファイルの読み込みには時間がかかる場合があります。",
 		"FIREFOX": "Firefoxを使用しています。一部の機能がサポートされない可能性があります。",
 		"REIWA": "令和",
@@ -455,7 +467,7 @@ var arrLang = {
 		"GOX": "わかるでしょ〜",
 		"GOTEL": "わかるでしょ〜",
 		"YCARE": "雨夢ケア",
-		"FUWUSHIJIAN": "サービス時間：00:00 - 11:30 (ET)",
+		"FUWUSHIJIAN": "サービス時間：02:00 - 12:00 (EDT)",
 		"DIANHUAHAOMA": "電話番号：+86 (22) 8869 2668",
 		"QUXIAO": "キャンセル",
 		"QUEDINGHUJIAO": "発信を確認",
@@ -483,6 +495,9 @@ var arrLang = {
 		"REFUNDS": "返金ポリシー",
 		"BIZHISHEDINGCHENGGONG": "壁紙が正常に設定されました",
 		"OPENJS": "JavaScriptを有効にしてください",
+		"YOVXFWH": "雨夢Officialサービスアカウント",
+		"SMGZFWH": "以下のQRコードをスキャンするか、リンクボタンをクリックして雨夢Officialサービスアカウントをフォローしてください",
+		"TIAOZHUANVXLIANJIE": "リンクへ移動",
 		"TERMS_LOAD_ERROR": "利用規約ファイルを読み込めませんでした"
 	}
 };
@@ -581,7 +596,6 @@ $(document).ready(function() {
     // 页面加载时更新文本内容
 	updateMetaDescription();
     updateTextContent();
-    updatePageContent();
     updateContent();
     updateLantern();
 
@@ -600,7 +614,6 @@ $(document).ready(function() {
         // 更新页面中的文本
 		updateMetaDescription();
         updateTextContent();
-        updatePageContent();
         updateContent();
         updateLantern();
     });
@@ -643,12 +656,6 @@ document.addEventListener('DOMContentLoaded', function () {
         languageDropdown.classList.remove('show-dropdown');
     });
 });
-
-function updatePageContent() {
-    // 更新页面上的所有需要翻译的内容
-    $('#change1').html(translate('DEFAULT_PAGE_SUBHEADING'));
-    // 继续添加更多内容更新
-}
 
 // DeepL 翻译函数（支持减少 API 调用）
 function translateText(text, targetLang, isCity = false) {
