@@ -1,59 +1,48 @@
-function init_life_time() {
-    function getAsideLifeTime() {
-        let nowDate = +new Date();
-        let todayStartDate = new Date(new Date().toLocaleDateString()).getTime();
-        let todayPassHours = (nowDate - todayStartDate) / 1000 / 60 / 60;
-        let todayPassHoursPercent = (todayPassHours / 24) * 100;
+function updateProgress(id, value, percent, remainingValue, unitKey) {
+    document.getElementById(id + 'Value').innerHTML = value;
 
-        // 填充今日进度
-        document.getElementById('dayProgressValue').innerHTML = parseInt(todayPassHours);
-        document.querySelector('#dayProgress .progress-bar').style.width = parseInt(todayPassHoursPercent) + '%';
-        document.querySelector('#dayProgress .progress-bar').innerHTML = parseInt(todayPassHoursPercent) + '%';
+    let bar = document.querySelector(`#${id} .progress-bar`);
+    bar.style.width = percent + '%';
+    bar.innerHTML = percent + '%';
 
-        let weeks = {
-            "en": ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
-            "zh-cn": ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-            "zh-tw": ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"],
-			"fr": ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
-            "ja": ["日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"]
-        };
-        let currentLang = localStorage.getItem('lang') || 'en';
-        let weekDays = weeks[currentLang];
-        
-        let weekDay = new Date().getDay();
-        let weekDayPassPercent = (weekDay / 7) * 100;
-
-        // 填充本周进度
-        document.getElementById('weekProgressValue').innerHTML = weekDay;
-        document.querySelector('#weekProgress .progress-bar').style.width = parseInt(weekDayPassPercent) + '%';
-        document.querySelector('#weekProgress .progress-bar').innerHTML = parseInt(weekDayPassPercent) + '%';
-
-        let year = new Date().getFullYear();
-        let date = new Date().getDate();
-        let month = new Date().getMonth() + 1;
-        let monthAll = new Date(year, month, 0).getDate();
-        let monthPassPercent = (date / monthAll) * 100;
-
-        // 填充本月进度
-        document.getElementById('monthProgressValue').innerHTML = date;
-        document.querySelector('#monthProgress .progress-bar').style.width = parseInt(monthPassPercent) + '%';
-        document.querySelector('#monthProgress .progress-bar').innerHTML = parseInt(monthPassPercent) + '%';
-
-        let yearPass = (month / 12) * 100;
-
-        // 填充今年进度
-        document.getElementById('yearProgressValue').innerHTML = month;
-        document.querySelector('#yearProgress .progress-bar').style.width = parseInt(yearPass) + '%';
-        document.querySelector('#yearProgress .progress-bar').innerHTML = parseInt(yearPass) + '%';
-    }
-
-    getAsideLifeTime();
-    setInterval(() => {
-        getAsideLifeTime();
-    }, 1000);
+    // 剩余时间多语言
+    let text = translate("REMAINING") + " " + remainingValue + " " + translate(unitKey);
+    document.getElementById(id.replace("Progress", "Remaining")).innerHTML = text;
 }
 
-init_life_time();
+// 初始化并每秒刷新
+function initLifeTime() {
+    function getTime() {
+        const now = new Date();
+        const startOfDay = new Date(now.toLocaleDateString());
+        const hoursPassed = (now - startOfDay) / 1000 / 60 / 60;
+
+        const dayPercent = (hoursPassed / 24) * 100;
+        updateProgress("dayProgress", Math.floor(hoursPassed), dayPercent.toFixed(1), Math.floor(24 - hoursPassed), "DAY_PROGRESS1");
+
+        const weekDay = now.getDay();
+        const weekPercent = (weekDay / 7) * 100;
+        updateProgress("weekProgress", weekDay, weekPercent.toFixed(1), 7 - weekDay, "WEEK_PROGRESS1");
+
+        const date = now.getDate();
+        const month = now.getMonth() + 1;
+        const daysInMonth = new Date(now.getFullYear(), month, 0).getDate();
+        const monthPercent = (date / daysInMonth) * 100;
+        updateProgress("monthProgress", date, monthPercent.toFixed(1), daysInMonth - date, "MONTH_PROGRESS1");
+
+        const yearPercent = (month / 12) * 100;
+        updateProgress("yearProgress", month, yearPercent.toFixed(1), 12 - month, "YEAR_PROGRESS1");
+    }
+
+    getTime();
+    setInterval(getTime, 1000);
+}
+
+// 页面加载
+$(document).ready(function() {
+    updateTextContent(); // 更新页面文本
+    initLifeTime();       // 初始化时间胶囊
+});
 
 // 获取当前问候语
 now = new Date(), hour = now.getHours()

@@ -73,6 +73,7 @@ var arrLang = {
 		"QUEDINGHUJIAO": "Confirm call",
 		"SHIJIANJIAONANG": "Time Capsule",
 		"ZAQIZABA": "Miscellaneous",
+		"REMAINING": "Remaining",
 		"ZHANDIANJIANCE": "Site Monitoring",
 		"BOFANGQI": "Player",
 		"MORE": "More",
@@ -173,6 +174,7 @@ var arrLang = {
 		"QUEDINGHUJIAO": "确定呼叫",
 		"SHIJIANJIAONANG": "时间胶囊",
 		"ZAQIZABA": "杂七杂八",
+		"REMAINING": "剩余",
 		"ZHANDIANJIANCE": "站点监测",
 		"BOFANGQI": "播放器",
 		"MORE": "更多",
@@ -272,6 +274,7 @@ var arrLang = {
 		"QUXIAO": "取消",
 		"QUEDINGHUJIAO": "確定撥打",
 		"SHIJIANJIAONANG": "時間膠囊",
+		"REMAINING": "剩餘",
 		"ZAQIZABA": "雜七雜八",
 		"ZHANDIANJIANCE": "站點監測",
 		"BOFANGQI": "播放器",
@@ -372,6 +375,7 @@ var arrLang = {
 		"QUXIAO": "Annuler",
 		"QUEDINGHUJIAO": "Confirmer l’appel",
 		"SHIJIANJIAONANG": "Capsule temporelle",
+		"REMAINING": "Restant",
 		"ZAQIZABA": "Divers",
 		"ZHANDIANJIANCE": "Surveillance du site",
 		"BOFANGQI": "Lecteur",
@@ -449,14 +453,14 @@ var arrLang = {
 		"GOOD_EVENING": "こんばんは",
 		"GOOD_NIGHT": "おやすみなさい",
 		"EARLY_MORNING": "おはようございます",
-		"DAY_PROGRESS": "今日はすでに",
-		"DAY_PROGRESS1": "時間が経過しました",
-		"WEEK_PROGRESS": "今週はすでに",
-		"WEEK_PROGRESS1": "日が経過しました",
-		"MONTH_PROGRESS": "今月はすでに",
-		"MONTH_PROGRESS1": "日が経過しました",
-		"YEAR_PROGRESS": "今年はすでに",
-		"YEAR_PROGRESS1": "ヶ月が経過しました",
+		"DAY_PROGRESS": "本日経過",
+        "DAY_PROGRESS1": "時間",
+        "WEEK_PROGRESS": "今週経過",
+        "WEEK_PROGRESS1": "日",
+        "MONTH_PROGRESS": "今月経過",
+        "MONTH_PROGRESS1": "日",
+        "YEAR_PROGRESS": "今年経過",
+        "YEAR_PROGRESS1": "ヶ月",
 		"SILENCE": "今日は国民記念日です。サイト全体が白黒モードに切り替わりました。",
 		"SILENCE1": "今日は国民記念日です。",
 		"NOYOUJIAN": "より良い閲覧体験のため、右クリックは無効になっています。",
@@ -473,6 +477,7 @@ var arrLang = {
 		"QUEDINGHUJIAO": "発信を確認",
 		"SHIJIANJIAONANG": "タイムカプセル",
 		"ZAQIZABA": "いろいろ",
+		"REMAINING": "残り",
 		"ZHANDIANJIANCE": "サイト監視",
 		"BOFANGQI": "プレーヤー",
 		"MORE": "もっと見る",
@@ -598,6 +603,7 @@ $(document).ready(function() {
     updateTextContent();
     updateContent();
     updateLantern();
+	renderSwiper();
 
     // 绑定下拉菜单的点击事件处理器
     $(".translate").click(function() {
@@ -616,6 +622,7 @@ $(document).ready(function() {
         updateTextContent();
         updateContent();
         updateLantern();
+		renderSwiper();
     });
 });
 

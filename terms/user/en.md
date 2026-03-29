@@ -1,60 +1,57 @@
-# Terms of Service
-**Yume Internet LLC**  
-(Registered in Wyoming, USA)
+# Terms of Service  
+**Applicable Entity: Yume Internet LLC (a limited liability company registered in the State of Wyoming, USA)**  
+**Governing Law: These Terms of Service are governed by and interpreted in accordance with the laws of the United States.**  
+**Language Priority: In the event of any inconsistency between language versions, the English version shall prevail.**
 
 ---
 
 ## I. General Provisions
-
 These Terms of Service (“Terms”) constitute a legally binding agreement between you (“User”) and **Yume Internet LLC** (“the Company” or “the Platform”) regarding your use of the services provided by the Platform.
 
 Please read these Terms carefully before using the Platform. By accessing or using the Platform, you acknowledge that you have read, understood, and agreed to be bound by these Terms.
 
-These Terms are governed by **United States law**.  
-In the event of any inconsistency between different language versions of these Terms, the **English version shall prevail**.
-
 ---
 
-## II. Account Registration and Usage
+## II. Account Registration and Use
 
 ### 1. User Information Requirements
 Users must ensure that all registration information is truthful, accurate, and complete, and must update such information promptly when changes occur.
 
 ### 2. Account Security
-Users are responsible for safeguarding their account credentials and for all activities conducted under their account. If unauthorized access or security issues are detected, users must notify the Company immediately.
+Users are responsible for safeguarding their account and password and for all activities conducted under their account. If unauthorized use or security risks are detected, users must notify the Company immediately.
 
 ### 3. Prohibited Conduct
-Users may not impersonate others, register accounts using false identities, or use illegal, inappropriate, or offensive usernames.
+Users may not impersonate others when registering an account, nor may they use illegal, inappropriate, or offensive usernames.
 
 ---
 
-## III. Service Content
+## III. Services Provided
 
 ### 1. Scope of Services
 The Platform provides services including but not limited to account management, content browsing, interactive features, and integration with third‑party services.
 
 ### 2. Service Modifications
-The Company reserves the right to modify, update, or discontinue any part of the services as needed for business purposes, with reasonable notice to users when applicable.
+The Company reserves the right to adjust, update, or discontinue any service based on business needs and will notify users within a reasonable scope.
 
 ---
 
-## IV. User Conduct
+## IV. User Conduct Requirements
 
-Users must not engage in any of the following activities while using the Platform:
+Users must not engage in the following activities while using the Platform:
 
-### 1. Illegal Activities
-- Violating applicable laws or regulations  
-- Posting or distributing illegal, violent, pornographic, or infringing content  
+### 1. Illegal or Prohibited Activities
+- Violating any applicable laws or regulations  
+- Publishing or distributing illegal, violent, pornographic, or infringing content  
 
-### 2. Security Violations
+### 2. Security‑Compromising Activities
 - Unauthorized access, attacks, or attempts to disrupt the Platform  
-- Distributing viruses, malware, or engaging in other harmful cyber activities  
+- Distributing viruses, malware, or other harmful code  
 
 ### 3. Infringement of Rights
-- Violating others’ privacy, intellectual property rights, or other legal rights  
-- Impersonating others or spreading false or misleading information  
+- Violating others’ privacy, intellectual property, or legal rights  
+- Impersonating others or spreading false information  
 
-If a user violates these rules, the Company may take actions including warnings, feature restrictions, account suspension, content removal, or termination of services.
+If violations occur, the Company may take actions including warnings, feature restrictions, account suspension, content removal, or service termination.
 
 ---
 
@@ -64,7 +61,7 @@ If a user violates these rules, the Company may take actions including warnings,
 Users are solely responsible for the content they publish on the Platform.
 
 ### 2. License Grant
-Users grant the Company a worldwide, transferable, sublicensable, royalty‑free license to display, distribute, store, back up, and improve the services using such content.
+Users grant the Company a worldwide, free, sublicensable license to display, distribute, store, back up, and improve services using their content.
 
 ### 3. Platform Intellectual Property
 All intellectual property related to the Platform—including software, interface design, trademarks, and documentation—belongs to the Company.
@@ -72,13 +69,11 @@ All intellectual property related to the Platform—including software, interfac
 ---
 
 ## VI. Privacy Protection
-
-The Company collects, uses, stores, and protects user information in accordance with its Privacy Policy. Except as required by law or authorized by the user, the Company will not disclose personal information to third parties.
+The Company collects, uses, stores, and protects user information in accordance with its Privacy Policy. The Company will not disclose personal information to third parties unless required by law or authorized by the user.
 
 ---
 
 ## VII. Third‑Party Services
-
 The Platform may integrate third‑party services. Users must comply with the terms and policies of such third parties. The Company is not responsible for the availability, stability, or content of third‑party services.
 
 ---
@@ -88,39 +83,35 @@ The Platform may integrate third‑party services. Users must comply with the te
 To the extent permitted by law, the Company is not liable for:
 
 ### 1. Force Majeure
-Service interruptions or data loss caused by events beyond the Company’s control.
+Service interruptions or data loss caused by force majeure events.
 
 ### 2. User‑Related Issues
-Account breaches or losses resulting from user negligence.
+Account leaks or losses caused by the user’s own actions.
 
-### 3. Third‑Party Issues
+### 3. Third‑Party Responsibility
 Disputes arising from third‑party services or content.
 
-### 4. Misuse
-User misuse of or inappropriate reliance on the Platform.
+### 4. Improper Use
+Misuse or inappropriate reliance on the Platform’s services.
 
 ---
 
-## IX. Service Modification and Termination
-
-The Company may modify, suspend, or terminate services as needed for business operations. If a user violates these Terms, the Company may immediately terminate service access.
+## IX. Service Changes and Termination
+The Company may modify, suspend, or terminate services as needed for business development. If users violate these Terms, the Company may immediately terminate service access.
 
 ---
 
 ## X. Governing Law and Dispute Resolution
-
-These Terms are governed by **United States law**.  
-Disputes arising from these Terms shall first be resolved through friendly negotiation. If unresolved, disputes shall be submitted to a court with jurisdiction in **Wyoming, USA**, where the Company is registered.
+These Terms are governed by **U.S. law**.  
+Disputes arising from these Terms shall first be resolved through friendly negotiation; if unresolved, they shall be submitted to a **court with jurisdiction in the Company’s registration location (Wyoming, USA)**.
 
 ---
 
-## XI. Amendments
-
+## XI. Updates to the Terms
 The Company may update these Terms as necessary and will notify users through announcements or other reasonable means. Updated Terms take effect upon publication.
 
 ---
 
 ## XII. Contact Information
-
 If you have any questions regarding these Terms, please contact us at:  
 **Email: support@yume.zone**

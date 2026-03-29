@@ -239,86 +239,11 @@
                             </div>
                             <!--网站链接-->
                             <div class="link">
-                                <!--第一组-->
-                                <div class="row" style="margin-top: -0.7rem;">
-                                    <div class="col">
-                                        <a href="https://message.yume.zone/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i class="iconfont icon-blog-solid"></i>
-                                                <span class="link-name" key="MESSAGE">雨夢Message</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col 2">
-                                        <a href="https://nav.yume.zone/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i class="iconfont icon-a-daohangzhiyindingwei-05"></i>
-                                                <span class="link-name" key="NAV">雨夢搜索</span>  
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a href="https://wiki.yume.zone/" target="_blank">
-                                            <div class="link-card cards">
-									            <i class="iconfont2 icon-doc-text"></i>
-                                                <span class="link-name" key="YWIKI">雨梦Wiki</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-                                <!--第二组-->
-                                <div class="row" style="margin-top: -0.7rem;">
-                                    <div class="col">
-                                        <a href="https://social.yume.zone/" target="_blank">
-                                            <div class="link-card cards">
-									            <i class="iconfont2 icon-google-circles"></i>
-                                                <span class="link-name" key="YSOCIAL">雨梦Social</span>        
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col 2">
-                                        <a href="https://drive.yume.zone/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i class="iconfont icon-cloud"></i>
-                                                <span class="link-name" key="CLOUD">雨夢网盘</span>
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a href="https://one.yume.zone/realms/yume/account" target="_blank">
-                                            <div class="link-card cards">
-									            <i class="iconfont2 icon-id-badge"></i>
-                                                <span class="link-name" key="YACCOUNT">雨梦One</span>       
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-								<!--第3组-->
-                                <div class="row" style="margin-top: -0.7rem;" show-lang="zh-tw,fr,en,ja">
-                                    <div class="col">
-                                        <a href="https://ai.yume.zone/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i class="iconfont icon-z_shangpinheji"></i>
-                                                <span class="link-name" key="AI">雨夢AI</span>        
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col 2">
-                                        <a href="https://akiame.yume.zone/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i class="iconfont2 icon-data-science"></i>
-                                                <span class="link-name" key="YAAA">雨梦秋雨加速器</span>        
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <a href="https://store.yume.zone/" target="_blank">
-                                            <div class="link-card cards">
-                                                <i class="iconfont2 icon-shop"></i>
-                                                <span class="link-name" key="STORE">雨夢Store</span>     
-                                            </div>
-                                        </a>
-                                    </div>
+                                <script src="/js/swiper-bundle.min.js"></script>
+                                <script src="/js/link.js"></script>
+                                <div class="swiper">
+                                    <div class="swiper-wrapper" id="link-wrapper"></div>
+                                    <div class="swiper-pagination"></div>
                                 </div>
                             </div>
                         </div>
@@ -328,118 +253,106 @@
                 <div class="menu" id="switchmenu">
                     <a class="munu-button cards" id="menu"><i class="iconfont icon-bars"></i></a>
                 </div>
-                <!--更多内容-->
-                <div class="more" id="more">
-                    <!--关闭按钮-->
-                    <div class="close fixed-top" id="close">
+                    <!--更多内容-->
+                    <div class="more" id="more">
+                        <!-- 关闭按钮 -->
+                        <div class="close fixed-top" id="close">
                         <i class="iconfont icon-close"></i>
                     </div>
-                    <div class="line" style="margin-top: 1rem;">
-                        <i class="iconfont icon-right-copy"></i>
-                        <span class="line-text" key="SHIJIANJIAONANG">时间胶囊</span>
-                        <i class="iconfont icon-right"></i>
-                    </div>
-						<div class="date" id="date">
-						<div class="item" id="dayProgress">
-							<div class="date-text">
-								<span key="DAY_PROGRESS">今日已经度过了</span> 
-								<span id="dayProgressValue"></span> 
-								<span key="DAY_PROGRESS1">小时</span>
-							</div>
-						<div class="progress">
-							<div class="progress-bar"></div>
-							</div>
-						</div>
-                        <div class="item" id="weekProgress">
-							<div class="date-text">
-								<span key="WEEK_PROGRESS">本周已经度过了</span> 
-								<span id="weekProgressValue"></span> 
-								<span key="WEEK_PROGRESS1">天</span>
-						</div>
-						<div class="progress">
-							<div class="progress-bar"></div>
-							</div>
-						</div>
-                        <div class="item" id="monthProgress">
-							<div class="date-text">
-								<span key="MONTH_PROGRESS">本月已经度过了</span> 
-								<span id="monthProgressValue"></span> 
-								<span key="MONTH_PROGRESS1">天</span>
-							</div>
-						<div class="progress">
-							<div class="progress-bar"></div>
-							</div>
-						</div>
-                        <div class="item" id="yearProgress">
-							<div class="date-text">
-								<span key="YEAR_PROGRESS">今年已经度过了</span> 
-								<span id="yearProgressValue"></span> 
-								<span key="YEAR_PROGRESS1">个月</span>
-							</div>
-						<div class="progress">
-							<div class="progress-bar"></div>
-							</div>
-						</div>
-                    </div>
-                    <div class="line">
-                        <i class="iconfont icon-right-copy"></i>
-                        <span class="line-text" key="ZAQIZABA">杂七杂八</span>
-                        <i class="iconfont icon-right"></i>
-                    </div>
-                    <!--网站链接-->
-                    <div class="row" style="margin-top: -0.7rem;">
-                        <div class="col">
-                            <a id="openmore1">
-                                <div class="link-card cards">
-									<i class="iconfont2 icon-ipod"></i>
-                                    <span class="link-name" key="BOFANGQI">播放器</span>
-                                </div>
-                            </a>
+                        <!-- 时间胶囊整体 -->
+                        <div class="time-capsule">
+                        <!-- 标题（左上对齐） -->
+                        <div class="title">
+                            <i class="iconfont icon-right-copy"></i>
+                            ⏳ <span key="SHIJIANJIAONANG">时光胶囊</span>
+                            <i class="iconfont icon-right"></i>
                         </div>
-                        <div class="col 2">
-                            <a href="https://phpmyadmin.yume.zone/" target="_blank">
-                                <div class="link-card cards">
-									<i class="iconfont2 icon-database"></i>
-                                    <span class="link-name" key="SQL">数据库</span>        
-                                </div>
-                            </a>
+                        <!-- 时间进度 -->
+                        <div class="all-capsule">
+                            <!-- 今日 -->
+                            <div class="capsule-item" id="dayProgress">
+                            <div class="item-title">
+                                <span>
+                                    <span key="DAY_PROGRESS">今日已度过</span> 
+                                    <strong id="dayProgressValue"></strong> 
+                                    <span key="DAY_PROGRESS1">小时</span>
+                                </span>
+                                <span class="remaining" id="dayRemaining" key="REMAINING"></span>
+                            </div>
+                            <div class="progress"><div class="progress-bar"></div></div>
+                            </div>
+                            <!-- 本周 -->
+                            <div class="capsule-item" id="weekProgress">
+                            <div class="item-title">
+                                <span>
+                                    <span key="WEEK_PROGRESS">本周已度过</span> 
+                                    <strong id="weekProgressValue"></strong> 
+                                    <span key="WEEK_PROGRESS1">天</span>
+                                </span>
+                                <span class="remaining" id="weekRemaining" key="REMAINING"></span>
+                            </div>
+                            <div class="progress"><div class="progress-bar"></div></div>
+                            </div>
+                            <!-- 本月 -->
+                            <div class="capsule-item" id="monthProgress">
+                            <div class="item-title">
+                                <span>
+                                    <span key="MONTH_PROGRESS">本月已度过</span> 
+                                    <strong id="monthProgressValue"></strong> 
+                                    <span key="MONTH_PROGRESS1">天</span>
+                                </span>
+                                <span class="remaining" id="monthRemaining" key="REMAINING"></span>
+                            </div>
+                            <div class="progress"><div class="progress-bar"></div></div>
+                            </div>
+                            <!-- 本年 -->
+                            <div class="capsule-item" id="yearProgress">
+                            <div class="item-title">
+                                <span>
+                                    <span key="YEAR_PROGRESS">今年已度过</span> 
+                                    <strong id="yearProgressValue"></strong> 
+                                    <span key="YEAR_PROGRESS1">个月</span>
+                                </span>
+                                <span class="remaining" id="yearRemaining" key="REMAINING"></span>
+                            </div>
+                            <div class="progress"><div class="progress-bar"></div></div>
+                            </div>
                         </div>
-                        <div class="col">
-                            <a href="https://docuseal.yume.zone/" target="_blank">
-                                <div class="link-card cards">
-									<i class="iconfont2 icon-edit"></i>
-                                    <span class="link-name">DocuSeal</span>
-                                </div>
-                            </a>
+                        <!-- 👇 杂项直接接在时间胶囊下面 -->
+                        <div class="line">
+                            <i class="iconfont icon-right-copy"></i>
+                            <span class="line-text" key="ZAQIZABA">杂七杂八</span>
+                            <i class="iconfont icon-right"></i>
                         </div>
-                    </div>
-                    <div class="row" style="margin-top: -0.7rem;">
-                        <div class="col">
-                            <a href="https://drop.yume.zone/" target="_blank">
-                                <div class="link-card cards">
-									<i class="iconfont2 icon-menu-outline"></i>
-                                    <span class="link-name" key="YFDROP">雨梦Drop</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col 2">
-                            <a href="https://pay.yume.zone/" target="_blank">
-                                <div class="link-card cards">
-									<i class="iconfont2 icon-wallet"></i>
-                                    <span class="link-name" key="YPAY">雨梦支付</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col">
-                            <a href="#" target="_blank">
-                                <div class="link-card cards">
-									<i class="iconfont2 icon-clock"></i>
-                                    <span class="link-name" key="NOOPEN">暂未开放</span>
-                                </div>
-                            </a>
+                        <!--网站链接-->
+                        <div class="row" style="margin-top: -0.7rem;">
+                            <div class="col">
+                                <a id="openmore1">
+                                    <div class="link-card cards">
+						    			<i class="iconfont2 icon-ipod"></i>
+                                        <span class="link-name" key="BOFANGQI">播放器</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col 2">
+                                <a href="https://phpmyadmin.yume.zone/" target="_blank">
+                                    <div class="link-card cards">
+					    				<i class="iconfont2 icon-database"></i>
+                                        <span class="link-name" key="SQL">数据库</span>        
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="https://docuseal.yume.zone/" target="_blank">
+                                    <div class="link-card cards">
+					    				<i class="iconfont2 icon-edit"></i>
+                                        <span class="link-name">DocuSeal</span>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </div>        
                 <!--更多页面-->
                 <div class="box" id="box" style="display: none">
                     <div class="box-wrapper">
@@ -452,7 +365,7 @@
                             <div class="img-title">
                                 <span class="img-title">yume</span>
                                 <span class="img-text">.zone</span><br />
-                                <span class="img-text">&nbsp;&nbsp;v&nbsp;26.1</span>
+                                <span class="img-text">&nbsp;&nbsp;v&nbsp;26.2</span>
                                 <a href="https://github.com/YumePrincess" target="_blank"><i
                                         class="iconfont icon-github1" show-lang="fr,en,ja"></i></a>
                             </div>
@@ -547,7 +460,7 @@
                                 <div class="terms-header-title">
                                     <span class="terms-header-title-main">yume</span>
                                     <span class="terms-header-title-sub">.zone</span>
-                                    <span class="terms-header-version">v 26.1</span>
+                                    <span class="terms-header-version">v 26.2</span>
                                 </div>
                             </div>
                             <!-- 选项菜单（自动换行） -->
@@ -594,7 +507,7 @@
             </div>
         </main>
         <!-- 版权信息 -->
-        <footer id="footer" class="fixed-bottom footer">
+        <footer id="footer" class="footer">
             <div class="power">Copyright &copy; 2012 
                 <script>
                     document.write(' - ' + (new Date()).getFullYear())
