@@ -1,16 +1,16 @@
 // 站点数据
 const siteLinks = [
     { nameKey: "MESSAGE", name: "雨夢Message", link: "https://message.yume.zone/", iconType: "iconfont", icon: "icon-blog-solid" },
-	{ nameKey: "AI", name: "雨夢AI", link: "https://ai.yume.zone/", icon: "icon-z_shangpinheji" },
-	{ nameKey: "YSOCIAL", name: "雨梦Social", link: "https://social.yume.zone/", iconType: "iconfont2", icon: "icon-google-circles" },
-	{ nameKey: "CLOUD", name: "雨夢网盘", link: "https://drive.yume.zone/", icon: "icon-cloud" },
-	{ nameKey: "STORE", name: "雨夢Store", link: "https://store.yume.zone/", iconType: "iconfont2", icon: "icon-shop" },
-	{ nameKey: "YAAA", name: "雨梦秋雨加速器", link: "https://akiame.yume.zone/", iconType: "iconfont2", icon: "icon-data-science", showLang: ["fr","ja","zh-tw"] },
-    { nameKey: "YPAY", name: "雨梦支付", link: "https://pay.yume.zone/", iconType: "iconfont2", icon: "icon-wallet", showLang: ["fr","ja","zh-tw"] },
-	{ nameKey: "NAV", name: "雨夢搜索", link: "https://nav.yume.zone/", iconType: "iconfont", icon: "icon-a-daohangzhiyindingwei-05" },
-	{ nameKey: "YFDROP", name: "雨梦Drop", link: "https://drop.yume.zone/", iconType: "iconfont2", icon: "icon-menu-outline" },
+	  { nameKey: "YSOCIAL", name: "雨梦Social", link: "https://social.yume.zone/", iconType: "iconfont2", icon: "icon-google-circles" },
+	  { nameKey: "AI", name: "雨夢AI", link: "https://ai.yume.zone/", icon: "icon-z_shangpinheji" },
+	  { nameKey: "CLOUD", name: "雨夢网盘", link: "https://drive.yume.zone/", icon: "icon-cloud" },
+	  { nameKey: "STORE", name: "雨夢Store", link: "https://store.yume.zone/", iconType: "iconfont2", icon: "icon-shop" },
+	  { nameKey: "YPAY", name: "雨梦支付", link: "https://pay.yume.zone/", iconType: "iconfont2", icon: "icon-wallet", showLang: ["fr","ja","zh-tw"] },
+	  { nameKey: "YAAA", name: "雨梦秋雨加速器", link: "https://akiame.yume.zone/", iconType: "iconfont2", icon: "icon-data-science", showLang: ["fr","ja","zh-tw"] },
+    { nameKey: "NAV", name: "雨夢搜索", link: "https://nav.yume.zone/", iconType: "iconfont", icon: "icon-a-daohangzhiyindingwei-05" },
+	  { nameKey: "YFDROP", name: "雨梦Drop", link: "https://drop.yume.zone/", iconType: "iconfont2", icon: "icon-menu-outline" },
     { nameKey: "YWIKI", name: "雨梦Wiki", link: "https://wiki.yume.zone/", iconType: "iconfont2", icon: "icon-doc-text" },
-	{ nameKey: "YACCOUNT", name: "雨梦One", link: "https://one.yume.zone/realms/yume/account", iconType: "iconfont2", icon: "icon-id-badge" }
+    { nameKey: "YACCOUNT", name: "雨梦One", link: "https://one.yume.zone/realms/yume/account", iconType: "iconfont2", icon: "icon-id-badge" }
 ];
 
 // 分页（每页 6 个）
