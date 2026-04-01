@@ -350,12 +350,12 @@ $("#phone").mouseover(function () {
     $("#link-text").html(translate('LINE'));
 });
 $("#qq").mouseover(function () {
-    $("#link-text").html(translate('GOQQWX'));
+    $("#link-text").html(translate('GOQQ'));
 }).mouseout(function () {
     $("#link-text").html(translate('LINE'));
 });
 $("#wechat").mouseover(function () {
-    $("#link-text").html(translate('GOQQWX'));
+    $("#link-text").html(translate('YOVXFWH'));
 }).mouseout(function () {
     $("#link-text").html(translate('LINE'));
 });
@@ -365,17 +365,17 @@ $("#email").mouseover(function () {
     $("#link-text").html(translate('LINE'));
 });
 $("#telegram").mouseover(function () {
-    $("#link-text").html(translate('GOX'));
+    $("#link-text").html(translate('GOXTELFACE'));
 }).mouseout(function () {
     $("#link-text").html(translate('LINE'));
 });
 $("#twitter").mouseover(function () {
-    $("#link-text").html(translate('GOTEL'));
+    $("#link-text").html(translate('GOXTELFACE'));
 }).mouseout(function () {
     $("#link-text").html(translate('LINE'));
 });
 $("#facebook").mouseover(function () {
-    $("#link-text").html(translate('GOTEL'));
+    $("#link-text").html(translate('GOXTELFACE'));
 }).mouseout(function () {
     $("#link-text").html(translate('LINE'));
 });
@@ -630,33 +630,6 @@ wechatPopup.addEventListener('click', (event) => {
 window.addEventListener('resize', adjustAplayerDisplay);
 window.addEventListener('DOMContentLoaded', adjustAplayerDisplay);
 
-function adjustAplayerDisplay() {
-    const aplayerDiv = document.getElementById('aplayer');
-    const boxLeft = document.querySelector('.box-left');
-    const boxRight = document.querySelector('.box-right');
-
-    // 判断屏幕宽度
-    if (window.innerWidth < 840) {
-        // 如果是小于840px，将 Aplayer 显示在 (1) 位置（左侧）
-        if (!boxLeft.contains(aplayerDiv)) {
-            boxLeft.appendChild(aplayerDiv);  // 将 aplayer 移到左侧
-        }
-        // 确保右侧的 aplayer 隐藏
-        if (boxRight.contains(aplayerDiv)) {
-            boxRight.removeChild(aplayerDiv);
-        }
-    } else {
-        // 如果是大于840px，将 Aplayer 显示在 (2) 位置（右侧）
-        if (!boxRight.contains(aplayerDiv)) {
-            boxRight.appendChild(aplayerDiv);  // 将 aplayer 移到右侧
-        }
-        // 确保左侧的 aplayer 隐藏
-        if (boxLeft.contains(aplayerDiv)) {
-            boxLeft.removeChild(aplayerDiv);
-        }
-    }
-}
-
 // 解析 URL 参数
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -824,15 +797,15 @@ var title2 = `
  YUME INTERNET LLC.                                               
 `
 var content = `
-版 本 号：26.1
-更新日期：2026-02-22
+版 本 号：26.2
+更新日期：2026-03-30
 
 更新说明：
-1. 新增 服务条款、隐私政策、退款政策
-2. 新增 繁体中文支持
-3. 移除 简体中文部分功能
+1. 修订 服务条款、隐私政策、退款政策
+2. 优化 页面布局
+3. 合规 根据访问来源国家提供差异化服务
 4. 优化 页面加载缓慢
-5. 优化 音乐延迟加载
+5. 调整 音乐列表
 、
 `
 console.log(`%c${title1} %c${title2}

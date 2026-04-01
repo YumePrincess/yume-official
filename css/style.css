@@ -803,8 +803,8 @@ input[type="radio"]:checked+label {
     flex-direction: column; /* 垂直排列 */
     justify-content: flex-start; /* 靠上显示 */
     align-items: flex-end; /* 靠右显示 */
-    overflow-y: auto; /* 超出内容显示滚动条 */
-    min-height: 600px;
+    min-height: 460px;
+    overflow-y: auto;
 }
 
 .aplayer {
@@ -812,7 +812,7 @@ input[type="radio"]:checked+label {
     width: 100%;
     border-radius: 6px !important;
     margin-right: 18px;
-	height: auto; /* 根据内容自适应 */
+	overflow-y: auto;
     min-height: 336px
 }
 
@@ -898,6 +898,12 @@ span.aplayer-list-index {
     background: transparent !important;
 }
 
+#aplayer.left-mode {
+    width: 360px !important;
+    max-width: 360px !important;
+    min-width: 360px !important;
+    margin-left: 15px;
+}
 /*Aplayer结束*/
 
 /*移动端页面切换按钮*/

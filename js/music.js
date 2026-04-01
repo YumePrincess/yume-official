@@ -2,7 +2,6 @@ const ap = new APlayer({
     container: document.getElementById('aplayer'),
     order: 'random',
     preload: 'auto',
-    listMaxHeight: '936px',
     volume: '0.5',
     mutex: true,
     lrcType: 1,
@@ -251,3 +250,49 @@ $('#music-open').on('click', function () {
         $('#more').css("cssText", "display:none !important");
     }
 });
+
+function adjustAplayerDisplay() {
+    const aplayerDiv = document.getElementById('aplayer');
+    const boxLeft = document.querySelector('.box-left');
+    const boxRight = document.querySelector('.box-right');
+    const list = document.querySelector('.aplayer-list');
+    const ol = document.querySelector('.aplayer-list ol');
+
+    if (!aplayerDiv || !list || !ol) return;
+
+    if (window.innerWidth < 840) {
+        // 移到左侧
+        if (!boxLeft.contains(aplayerDiv)) {
+            boxLeft.appendChild(aplayerDiv);
+        }
+        aplayerDiv.classList.add('left-mode'); // 左侧模式
+
+        // 左侧高度固定 230px
+        list.style.height = '230px';
+        list.style.maxHeight = '230px';
+        ol.style.height = '230px';
+        ol.style.maxHeight = '230px';
+    } else {
+        // 移到右侧
+        if (!boxRight.contains(aplayerDiv)) {
+            boxRight.appendChild(aplayerDiv);
+        }
+        aplayerDiv.classList.remove('left-mode'); // 右侧模式
+
+        // 右侧高度动态计算
+        let h = window.innerHeight * 0.55;
+        if (h < 230) h = 230;
+        if (h > 1000) h = 1000;
+
+        list.style.height = h + 'px';
+        list.style.maxHeight = h + 'px';
+        ol.style.height = h + 'px';
+        ol.style.maxHeight = h + 'px';
+    }
+}
+
+// 初始化
+setTimeout(adjustAplayerDisplay, 300);
+
+// 窗口变化
+window.addEventListener('resize', adjustAplayerDisplay);
