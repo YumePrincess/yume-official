@@ -60,11 +60,12 @@
     </div>
     <section id="section" class="section">
 		<!-- 横向提示 -->
-		<div id="orientation-warning" style="display: none; position: fixed; top: 10%; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.75); color: white; padding: 1rem; border-radius: 5px; z-index: 1000; text-align: center;">
-			<span key="HENGXIANG">请将设备横向放置以浏览完整版网站。</span>
-			<div style="margin-top: 10px;">
-				<button id="close-warning" style="background: transparent; color: white; border: none; cursor: pointer;" key="CLOSE">关闭</button>
-			</div>
+		<!-- 横向提示 -->
+		<div id="orientation-warning">
+		    <span key="HENGXIANG">请将设备横向放置以浏览完整版网站。</span>
+  		    <div class="warning-actions">
+  		        <button id="close-warning" key="CLOSE">关闭</button>
+  		    </div>
 		</div>
         <!-- 功能 -->
         <div class="top-left-icons">

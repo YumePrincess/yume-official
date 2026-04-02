@@ -554,23 +554,26 @@ for (var day of days) {
     }
 }
 
+// 小宽度弹窗
 function checkOrientation() {
+    const warning = document.getElementById('orientation-warning');
+
     if (window.innerWidth < 720) {
-        document.getElementById('orientation-warning').style.display = 'block';
+        warning.classList.add('show');
     } else {
-        document.getElementById('orientation-warning').style.display = 'none';
+        warning.classList.remove('show');
     }
 }
 
-// 关闭按钮功能
-    document.getElementById('close-warning').addEventListener('click', function() {
-        document.getElementById('orientation-warning').style.display = 'none';
-    });
+// 关闭按钮
+document.getElementById('close-warning').addEventListener('click', () => {
+    document.getElementById('orientation-warning').classList.remove('show');
+});
 
 // 初始检查
 checkOrientation();
 
-// 监听窗口大小变化
+// 监听窗口变化（可选）
 window.addEventListener('resize', checkOrientation);
 
 // 电话弹窗元素

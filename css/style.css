@@ -990,19 +990,6 @@ footer {
     background-color: #eeeeee;
 }
 
-#orientation-warning {
-    display: none; /* 默认隐藏 */
-    position: fixed;
-    top: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 0, 0, 0.75);
-    color: white;
-    padding: 1rem;
-    border-radius: 5px;
-    z-index: 20000; /* 确保在最上层 */
-}
-
 /* 手机按钮样式 */
 #phone-button {
   display: inline-flex;
@@ -1606,4 +1593,74 @@ body.lantern-active .app-container {
 /* 卡片区域 */
 .link-row {
     margin-top: 0.5rem;
+}
+
+/* 小宽度警告 */
+/* 横向提示框：可换行 + 不会太宽 */
+#orientation-warning {
+    display: none;
+    position: fixed;
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, -5px);
+
+    /* 背景玻璃拟态 */
+    background: rgb(0 0 0 / 35%);
+    backdrop-filter: blur(12px);
+
+    /* 自动适应内容，不会太宽 */
+    max-width: 65%;
+    width: max-content;
+    min-width: 45%;
+
+    padding: 16px 22px;
+    border-radius: 8px;
+
+    color: #e8e8e8;
+    font-size: 1rem;
+    text-align: center;
+
+    /* 允许换行 */
+    white-space: normal;
+    word-break: break-word;
+
+    /* 阴影 + 动画 */
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+    z-index: 999;
+
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+/* 显示状态 */
+#orientation-warning.show {
+    display: block;
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* 按钮区域 */
+#orientation-warning .warning-actions {
+    margin-top: 12px;
+}
+
+/* 关闭按钮：始终有按钮样式 */
+#orientation-warning #close-warning {
+    background: rgb(255 255 255 / 12%);
+    border: 1px solid rgb(255 255 255 / 25%);
+    color: #e8e8e8;
+
+    cursor: pointer;
+    font-size: 0.95rem;
+
+    padding: 6px 14px;
+    border-radius: 6px;
+
+    transition: 0.25s ease;
+}
+
+/* hover：轻微亮起 + 微放大 */
+#orientation-warning #close-warning:hover {
+    background: rgb(255 255 255 / 20%);
+    transform: scale(1.05);
 }
