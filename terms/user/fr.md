@@ -114,4 +114,10 @@ La Société peut mettre à jour les Conditions et en informera les utilisateurs
 
 ## XII. Contact
 Pour toute question concernant ces Conditions, veuillez nous contacter :  
-**Email : support@yume.zone**
+- **Email : support@yume.zone**
+- **Adresse :**  
+  **Yume Internet LLC**  
+  1401 Pennsylvania Ave  
+  Ste 105 Apt 1906  
+  Wilmington, DE 19806  
+  USA

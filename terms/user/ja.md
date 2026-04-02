@@ -114,4 +114,10 @@
 
 ## XII. お問い合わせ
 本規約に関するご質問は、以下の方法でお問い合わせください：  
-**メール：support@yume.zone**
+- **メール：support@yume.zone**
+- **住所：**  
+  **Yume Internet LLC**  
+  1401 Pennsylvania Ave  
+  Ste 105 Apt 1906  
+  Wilmington, DE 19806  
+  USA

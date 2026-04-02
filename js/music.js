@@ -207,25 +207,6 @@ $('#music-close').on('click', function () {
     $('#hitokoto').css("display", "flex");
 });
 
-/* 时间与法律切换 */
-$('#open-law').on('click', function () {
-    $('#time').css("display", "none");
-	$('#weather').css("display", "none");
-    $('#law').css("display", "flex");
-});
-
-$("#time").hover(function () {
-    $('#open-law').css("display", "flex");
-}, function () {
-    $('#open-law').css("display", "none");
-})
-
-$('#law-close').on('click', function () {
-    $('#law').css("display", "none");
-    $('#time').css("display", "flex");
-	$('#weather').css("display", "flex");
-});
-
 /* 上下曲 */
 $('#play').on('click', function () {
     ap.toggle();
@@ -250,6 +231,9 @@ $('#music-open').on('click', function () {
         $('#more').css("cssText", "display:none !important");
     }
 });
+
+window.addEventListener('resize', adjustAplayerDisplay);
+window.addEventListener('DOMContentLoaded', adjustAplayerDisplay);
 
 function adjustAplayerDisplay() {
     const aplayerDiv = document.getElementById('aplayer');

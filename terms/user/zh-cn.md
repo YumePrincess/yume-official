@@ -114,4 +114,10 @@
 
 ## XII. 联系方式
 如您对本条款有任何疑问，可通过以下方式联系我们：  
-**邮箱：support@yume.zone**
+- **邮箱：support@yume.zone**
+- **通讯地址：**  
+  **Yume Internet LLC**  
+  1401 Pennsylvania Ave  
+  Ste 105 Apt 1906  
+  Wilmington, DE 19806  
+  USA

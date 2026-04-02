@@ -1,49 +1,47 @@
-# Politique de Remboursement
-**Entité : Yume Internet LLC (société à responsabilité limitée enregistrée dans l’État du Wyoming, États‑Unis)**  
-**Droit applicable : La présente politique est régie et interprétée conformément au droit américain.**  
+# Politique de Remboursement  
+**Entité concernée : Yume Internet LLC (société à responsabilité limitée enregistrée dans l’État du Wyoming, États‑Unis)**  
+**Loi applicable : La présente politique de remboursement est régie et interprétée conformément au droit américain.**  
 **Priorité linguistique : En cas de divergence entre les versions linguistiques, la version anglaise prévaut.**
 
 ---
 
 ## I. Dispositions Générales
-La présente politique de remboursement s’applique aux services et produits fournis par Yume Internet LLC (« la Société »).  
-Toute commande passée par l’utilisateur constitue une acceptation complète et sans réserve de cette politique.
+La présente Politique de Remboursement s’applique aux demandes de remboursement liées à l’utilisation des services ou à l’achat de produits fournis par **Yume Internet LLC** (« la Société »). En passant commande, l’utilisateur reconnaît avoir lu, compris et accepté cette Politique.
 
 ---
 
-## II. Cas Éligibles au Remboursement
+## II. Situations Éligibles au Remboursement
 
-### 1. Paiement en Double  
-Si une commande est facturée plusieurs fois en raison d’une erreur du système ou de l’utilisateur, la Société remboursera le montant facturé en trop.
+### 1. Paiement en Double
+En cas de double facturation due à un problème système ou à une erreur de manipulation, la Société remboursera le montant dupliqué après vérification.
 
-### 2. Service Non Fonctionnel  
-Si le service acheté ne peut pas être utilisé en raison d’une faute de la Société et qu’il ne peut être rétabli dans un délai raisonnable, un remboursement partiel ou total pourra être accordé.
+### 2. Service Non Fournit Correctement
+Si un service acheté ne peut pas fonctionner correctement en raison d’un problème imputable à la Société et ne peut être réparé dans un délai raisonnable, un remboursement total ou partiel sera accordé selon la situation.
 
-### 3. Remboursement d’Insatisfaction pour les Abonnements  
-L’utilisateur peut demander un remboursement de la valeur restante dans un délai de **5 jours** suivant l’achat, à condition que les seuils d’utilisation du produit concerné n’aient pas été dépassés.
+### 3. Insatisfaction concernant les Services d’Abonnement
+Pour les services d’abonnement listés à la Section III‑4, l’utilisateur peut demander un remboursement **dans les 5 jours** suivant l’achat, sous réserve que l’utilisation n’ait pas dépassé les seuils définis.
 
-### 4. Exigences Légales  
-Tout remboursement imposé par la loi sera respecté par la Société.
+### 4. Exigences Légales
+Si la loi impose un remboursement, la Société s’y conformera.
 
 ---
 
-## III. Cas Non Remboursables
+## III. Situations Non Remboursables
 
-### 1. Services Déjà Utilisés ou Partiellement Utilisés  
-- Abonnements déjà activés  
+### 1. Services déjà utilisés ou partiellement utilisés
+- Services d’abonnement activés et indiqués comme non remboursables  
 - Produits numériques téléchargés ou utilisés  
 - Services personnalisés déjà commencés  
+- Avantages spéciaux de création de compte déjà utilisés  
 
-### 2. Impossibilité d’Utilisation due à l’Utilisateur  
-- Incompatibilité du matériel, du réseau ou de l’environnement  
+### 2. Impossibilité d’utiliser le service due à l’utilisateur
+- Incompatibilité du matériel, réseau ou environnement  
 - Non‑respect des instructions d’utilisation  
 
-### 3. Demande de Remboursement Hors Délai  
-Toute demande effectuée après la période autorisée ne sera pas acceptée.
+### 3. Dépassement du délai de demande de remboursement
+Les demandes effectuées après la période autorisée ne seront pas acceptées.
 
-### 4. Dépassement des Seuils d’Utilisation  
-Les situations suivantes sont considérées comme une utilisation substantielle du service et ne sont pas remboursables :
-
+### 4. Dépassement des seuils d’utilisation
 | Produit | Type d’Abonnement | Condition Non Remboursable |
 |---------|-------------------|----------------------------|
 | Drive Yume | Amaame | Utilisation du stockage **> 10 %** |
@@ -51,38 +49,42 @@ Les situations suivantes sont considérées comme une utilisation substantielle 
 | Accélérateur Yume | Akiame | Trafic utilisé **> 10 Go** |
 | Paiement Yume | Sakuraame | Montant reçu **> 50 USD** |
 
-### 5. Plus de Deux Demandes pour le Même Produit  
-Si l’utilisateur a déjà demandé un remboursement **plus de deux fois** pour un même produit, la Société peut refuser toute nouvelle demande.
+### 5. Dépassement du nombre de remboursements autorisés
+Si l’utilisateur a demandé un remboursement **plus de 2 fois** pour le même produit, la Société peut refuser toute nouvelle demande.
 
 ---
 
-## IV. Procédure de Remboursement
+## IV. Procédure de Demande de Remboursement
 
-### 1. Soumission de la Demande  
-L’utilisateur doit soumettre une demande de remboursement via le service client par téléphone ou par e‑mail, en fournissant le numéro de commande, la preuve de paiement et les informations nécessaires.
+### 1. Soumission  
+Envoyer un e‑mail à **support@yume.zone** avec le numéro de commande, la preuve de paiement et les explications nécessaires.
 
-### 2. Examen de la Demande  
-La Société examinera la demande dans un délai de **3 à 7 jours ouvrables** et informera l’utilisateur du résultat.
+### 2. Vérification  
+La Société examinera la demande dans un délai de **3 à 7 jours ouvrables**.
 
-### 3. Traitement du Remboursement  
-Une fois approuvé, le remboursement sera effectué selon le mode de paiement initial.  
-Le délai de réception dépend du prestataire de paiement, généralement **3 à 15 jours ouvrables**.
+### 3. Délai de Remboursement  
+Le remboursement sera effectué via le mode de paiement initial dans un délai de **3 à 15 jours ouvrables**.
 
 ---
 
 ## V. Notes Spéciales
-
-- **Sauf en cas de faute imputable à la Société, tous les remboursements seront déduits des frais non remboursables**, notamment :  
-  - frais de plateforme de paiement,  
-  - frais des réseaux de cartes,  
-  - frais de conversion de devise.  
-
-- La Société se réserve le droit d’évaluer l’éligibilité au remboursement sur la base des données d’utilisation, de l’historique des commandes et des preuves fournies.
-
-- En cas de comportement abusif ou de tentative de fraude, la Société peut refuser le remboursement et prendre les mesures nécessaires.
+- **Sauf en cas de faute de la Société, les frais non remboursables facturés par les plateformes de paiement ou les réseaux de cartes (frais de transaction, conversion de devise, etc.) seront déduits du montant remboursé.**  
+- La Société se réserve le droit d’évaluer l’éligibilité au remboursement selon les enregistrements d’utilisation et les preuves fournies.  
+- En cas d’abus ou de demande frauduleuse, la Société peut refuser le remboursement et prendre des mesures appropriées.
 
 ---
 
 ## VI. Mise à Jour de la Politique
-La Société peut modifier la présente politique à tout moment en fonction des besoins opérationnels.  
-Toute mise à jour prend effet immédiatement après sa publication.
+La Société peut mettre à jour cette Politique selon les besoins. La version mise à jour prend effet immédiatement après sa publication.
+
+---
+
+## VII. Contact
+Pour toute question concernant cette Politique :  
+- **E‑mail : support@yume.zone**  
+- **Adresse :**  
+  **Yume Internet LLC**  
+  1401 Pennsylvania Ave  
+  Ste 105 Apt 1906  
+  Wilmington, DE 19806  
+  USA

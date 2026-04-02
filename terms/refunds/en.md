@@ -1,44 +1,47 @@
-# Refund Policy
-**Entity: Yume Internet LLC (a limited liability company registered in Wyoming, USA)**  
-**Governing Law: This Refund Policy is governed by and interpreted under U.S. law.**  
-**Language Priority: In case of discrepancies, the English version shall prevail.**
+# Refund Policy  
+**Applicable Entity: Yume Internet LLC (a limited liability company registered in Wyoming, USA)**  
+**Governing Law: This Refund Policy is governed by and interpreted in accordance with U.S. law.**  
+**Language Priority: In case of discrepancies between language versions, the English version shall prevail.**
 
 ---
 
 ## I. General
-This Refund Policy applies to refunds related to services or products provided by Yume Internet LLC (“the Company”). By placing an order, the user acknowledges and agrees to all terms of this policy.
+This Refund Policy applies to refund matters arising from users’ use of services or purchase of products provided by **Yume Internet LLC** (“the Company”). By submitting an order, the user acknowledges that they have read, understood, and agreed to this Policy.
 
 ---
 
 ## II. Refundable Situations
+Users may request a refund under the following circumstances:
 
 ### 1. Duplicate Payment
-If an order is charged more than once due to system or user error, the Company will refund the duplicated amount.
+If the same order is charged multiple times due to system issues or user operations, the Company will refund the duplicated amount after verification.
 
 ### 2. Service Not Provided Properly
-If the purchased service cannot be used due to the Company’s fault and cannot be restored within a reasonable time, a partial or full refund may be issued.
+If a purchased service cannot function properly due to the Company’s reasons and cannot be restored within a reasonable time, the Company will provide a partial or full refund based on the actual situation.
 
-### 3. Membership Dissatisfaction Refund
-Users may request a refund of the remaining value within **5 days** of purchase if usage thresholds have not been exceeded.
+### 3. Dissatisfaction with Membership Services
+If the user is dissatisfied with a membership service listed under Section III‑4 and requests a refund **within 5 days** of purchase, and the usage amount meets the refund conditions, the remaining value may be refunded.
 
 ### 4. Legal Requirements
-Refunds required by applicable laws will be honored.
+If applicable laws or regulations require a refund, the Company will comply accordingly.
 
 ---
 
 ## III. Non‑Refundable Situations
+Refunds are not supported in the following situations, including but not limited to:
 
 ### 1. Services Already Used or Partially Used
-- Activated memberships  
-- Downloaded or used digital goods  
-- Custom services already initiated  
+- Activated membership services marked as non‑refundable at the time of sale  
+- Downloaded or used virtual goods  
+- Customized services already in progress  
+- Special account registration privileges already used or activated  
 
-### 2. User‑Caused Inability to Use Service
-- Device or network incompatibility  
+### 2. Inability to Use Due to User Reasons
+- Device, network, or environment incompatibility  
 - Failure to follow usage instructions  
 
-### 3. Refund Request Submitted After Deadline
-Refunds will not be accepted after the specified period.
+### 3. Exceeding Refund Time Limits
+If a refund request is submitted after the specified refund period for certain services, it will not be accepted.
 
 ### 4. Usage Exceeds Refund Thresholds
 | Product | Membership | Non‑Refundable Condition |
@@ -46,31 +49,44 @@ Refunds will not be accepted after the specified period.
 | Yume Drive | Amaame | Storage usage **over 10%** |
 | Yume Intelligence | Hanaame | AI conversations **over 20 times** |
 | Yume Akiame Accelerator | Akiame | Traffic usage **over 10GB** |
-| Yume Payment | Sakuraame | Received payments **over 50 USD** |
+| Yume Pay | Sakuraame | Received payments **over 50 USD** |
 
-### 5. More Than Two Refund Requests for the Same Product
-If a user has requested refunds **more than twice** for the same product, further requests may be denied.
+### 5. Exceeding Refund Frequency Limit
+If the user has requested refunds for the same product **more than 2 times**, the Company may refuse further refund requests.
 
 ---
 
-## IV. Refund Procedure
+## IV. Refund Application Process
+
 ### 1. Submit Request  
-Via phone or email customer support.
+Within the refundable period, send an email to **support@yume.zone** with the order number, payment proof, and relevant details.
 
 ### 2. Review  
-Within **3–7 business days**.
+The Company will review the request within **3–7 business days** and notify the user of the result.
 
-### 3. Refund Processing  
-Refunds will be returned to the original payment method within **3–15 business days**.
+### 3. Refund Processing Time  
+Refunds will be returned via the original payment method, typically within **3–15 business days**.
 
 ---
 
 ## V. Special Notes
-- **Except when caused by the Company, all refunds will have payment processor fees, card organization fees, and currency conversion fees deducted.**  
-- The Company reserves the right to determine refund eligibility.  
-- Fraudulent or abusive refund behavior may result in denial and further action.
+- **Except for issues caused by the Company, all refunds will deduct non‑refundable fees charged by payment platforms and/or card organizations, including transaction fees and currency conversion fees.**  
+- The Company reserves the right to determine whether the user meets refund conditions based on usage records, order status, and relevant evidence.  
+- In cases of malicious refund attempts or abuse of refund policies, the Company may refuse refunds and take appropriate measures.
 
 ---
 
 ## VI. Policy Updates
-The Company may update this policy at any time. Updates take effect immediately upon publication.
+The Company may update this Refund Policy as needed. Updated versions take effect immediately upon publication.
+
+---
+
+## VII. Contact
+If you have any questions regarding this Policy, please contact us:  
+- **Email:** support@yume.zone  
+- **Mailing Address:**  
+  **Yume Internet LLC**  
+  1401 Pennsylvania Ave  
+  Ste 105 Apt 1906  
+  Wilmington, DE 19806  
+  USA

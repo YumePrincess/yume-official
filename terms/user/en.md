@@ -114,4 +114,10 @@ The Company may update these Terms as necessary and will notify users through an
 
 ## XII. Contact Information
 If you have any questions regarding these Terms, please contact us at:  
-**Email: support@yume.zone**
+- **Email: support@yume.zone**
+- **Mailing Address:**  
+  **Yume Internet LLC**  
+  1401 Pennsylvania Ave  
+  Ste 105 Apt 1906  
+  Wilmington, DE 19806  
+  USA

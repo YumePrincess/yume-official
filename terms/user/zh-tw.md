@@ -114,4 +114,10 @@
 
 ## XII. 聯絡方式
 如您對本條款有任何疑問，可透過以下方式聯絡我們：  
-**電子郵件：support@yume.zone**
+- **電子郵件：support@yume.zone**
+- **通訊地址：**  
+  **Yume Internet LLC**  
+  1401 Pennsylvania Ave  
+  Ste 105 Apt 1906  
+  Wilmington, DE 19806  
+  USA

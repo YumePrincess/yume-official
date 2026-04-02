@@ -627,9 +627,6 @@ wechatPopup.addEventListener('click', (event) => {
     if (event.target === wechatPopup) wechatPopup.classList.remove('show');
 });
 
-window.addEventListener('resize', adjustAplayerDisplay);
-window.addEventListener('DOMContentLoaded', adjustAplayerDisplay);
-
 // 解析 URL 参数
 const urlParams = new URLSearchParams(window.location.search);
 
