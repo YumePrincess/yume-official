@@ -554,17 +554,6 @@ for (var day of days) {
     }
 }
 
-// 关闭按钮
-document.getElementById('close-warning').addEventListener('click', () => {
-    document.getElementById('orientation-warning').classList.remove('show');
-});
-
-// 初始检查
-checkOrientation();
-
-// 监听窗口变化（可选）
-window.addEventListener('resize', checkOrientation);
-
 // 电话弹窗元素
 const phoneButton = document.getElementById('phone');
 const popup = document.getElementById('popup');
@@ -626,41 +615,48 @@ const urlParams = new URLSearchParams(window.location.search);
 // 1. support=email → 自动跳转 mailto
 // -----------------------------
 if (urlParams.get('support') === 'email') {
-  window.location.href = "mailto:support@yume.zone";
+    window.location.href = "mailto:support@yume.zone";
 }
 
 // -----------------------------
 // 2. appmode=true → 隐藏 app 下载区域
 // -----------------------------
 if (urlParams.get('appmode') === 'true') {
-  const appContainer = document.querySelector('.app-container');
-  if (appContainer) {
-    appContainer.style.setProperty("display", "none", "important");
-  }
+    const appContainer = document.querySelector('.app-container');
+    if (appContainer) {
+        appContainer.style.display = 'none';
+    }
 }
 
 // -----------------------------
-// 3. screen=locked → 禁用 orientation-warning
+// 3. 小宽度弹窗
 // -----------------------------
-const screenLocked = urlParams.get('screen') === 'locked';
-
-// 小宽度弹窗
 function checkOrientation() {
     const warning = document.getElementById('orientation-warning');
 
-    // 如果 screen=locked，则永远不显示
-    if (screenLocked) {
+    // 如果 URL 中有 screen=locked，则不显示警告
+    if (urlParams.get('screen') === 'locked') {
         warning.classList.remove('show');
         return;
     }
 
-    // 正常逻辑：宽度 < 720 才显示
     if (window.innerWidth < 720) {
         warning.classList.add('show');
     } else {
         warning.classList.remove('show');
     }
 }
+
+// 关闭按钮
+document.getElementById('close-warning').addEventListener('click', () => {
+    document.getElementById('orientation-warning').classList.remove('show');
+});
+
+// 初始检查
+checkOrientation();
+
+// 监听窗口变化
+window.addEventListener('resize', checkOrientation);
 
 //服务条款
 document.addEventListener("DOMContentLoaded", () => {
