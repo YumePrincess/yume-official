@@ -635,7 +635,7 @@ if (urlParams.get('support') === 'email') {
 if (urlParams.get('appmode') === 'true') {
   const appContainer = document.querySelector('.app-container');
   if (appContainer) {
-    appContainer.style.display = 'none';
+    appContainer.style.setProperty("display", "none", "important");
   }
 }
 
