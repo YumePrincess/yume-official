@@ -611,6 +611,9 @@ wechatPopup.addEventListener('click', (event) => {
 // 解析 URL 参数
 const urlParams = new URLSearchParams(window.location.search);
 
+// 判断是否锁屏
+const screenLocked = urlParams.get('screen') === 'locked';
+
 // -----------------------------
 // 1. support=email → 自动跳转 mailto
 // -----------------------------
@@ -634,8 +637,8 @@ if (urlParams.get('appmode') === 'true') {
 function checkOrientation() {
     const warning = document.getElementById('orientation-warning');
 
-    // 如果 URL 中有 screen=locked，则不显示警告
-    if (urlParams.get('screen') === 'locked') {
+    // 如果屏幕被锁，直接隐藏警告
+    if (screenLocked) {
         warning.classList.remove('show');
         return;
     }
