@@ -1198,6 +1198,7 @@ body.lantern-active .app-container {
 /* 关闭按钮 */
 .terms-close {
     position: absolute;
+    z-index: 888888;
     right: 20px;
     top: 20px;
     cursor: pointer;

@@ -554,17 +554,6 @@ for (var day of days) {
     }
 }
 
-// 小宽度弹窗
-function checkOrientation() {
-    const warning = document.getElementById('orientation-warning');
-
-    if (window.innerWidth < 720) {
-        warning.classList.add('show');
-    } else {
-        warning.classList.remove('show');
-    }
-}
-
 // 关闭按钮
 document.getElementById('close-warning').addEventListener('click', () => {
     document.getElementById('orientation-warning').classList.remove('show');
@@ -648,6 +637,29 @@ if (urlParams.get('appmode') === 'true') {
   if (appContainer) {
     appContainer.style.display = 'none';
   }
+}
+
+// -----------------------------
+// 3. screen=locked → 禁用 orientation-warning
+// -----------------------------
+const screenLocked = urlParams.get('screen') === 'locked';
+
+// 小宽度弹窗
+function checkOrientation() {
+    const warning = document.getElementById('orientation-warning');
+
+    // 如果 screen=locked，则永远不显示
+    if (screenLocked) {
+        warning.classList.remove('show');
+        return;
+    }
+
+    // 正常逻辑：宽度 < 720 才显示
+    if (window.innerWidth < 720) {
+        warning.classList.add('show');
+    } else {
+        warning.classList.remove('show');
+    }
 }
 
 //服务条款
