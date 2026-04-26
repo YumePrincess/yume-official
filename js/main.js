@@ -678,7 +678,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let fileLang = lang;  // 使用 lang 作为当前语言
 
         // 正确路径
-        let url = `/terms/${type}/${fileLang}.md`;
+        let url = `https://www.yume.zone/terms/${type}/${fileLang}.md`;
 
         try {
             let response = await fetch(url);
