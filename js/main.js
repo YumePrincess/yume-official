@@ -203,7 +203,7 @@ function updateContent() {
     };
 
     // 主流程：使用 ipwho.is 获取经纬度（支持 HTTPS，不会被浏览器拦截）
-    fetch('https://yumeofficialapi.yume.zone/geoip')
+    fetch('https://yume-official-api.yume.zone/geoip')
         .then(res => res.json())
         .then(ipInfo => {
             const lat = ipInfo.latitude;
@@ -790,6 +790,111 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+//系统公告
+document.addEventListener("DOMContentLoaded", () => {
+
+    const box = document.getElementById("announcementBox");
+    const closeBtn = document.getElementById("announcementCloseBtn");
+    const contentPanel = document.getElementById("announcement-content");
+
+    // -----------------------------
+    // 打开与关闭弹窗
+    // -----------------------------
+    window.openAnnouncement = function () {
+        box.style.display = "block";
+    };
+
+    closeBtn.addEventListener("click", () => {
+        box.style.display = "none";
+    });
+
+    // -----------------------------
+    // 加载公告 Markdown（多语言）
+    // -----------------------------
+    async function loadAnnouncement(mdUrl) {
+        try {
+            const res = await fetch(mdUrl);
+            if (!res.ok) throw new Error();
+
+            const mdText = await res.text();
+            const html = marked.parse(mdText);
+            contentPanel.innerHTML = html;
+
+        } catch (e) {
+            contentPanel.innerHTML =
+                `<p style="color:#ffdddd">${translate("NO_ANNOUNCEMENT")}</p>`;
+        }
+    }
+
+    // -----------------------------
+    // 判断是否在公告时间段（ET → 本地）
+    // -----------------------------
+    function isInTimeRange(startET, endET) {
+        const now = new Date();
+
+        const start = new Date(
+            new Date(startET).toLocaleString("en-US", { timeZone: "America/New_York" })
+        );
+        const end = new Date(
+            new Date(endET).toLocaleString("en-US", { timeZone: "America/New_York" })
+        );
+
+        return now >= start && now <= end;
+    }
+
+    // -----------------------------
+    // 从 Worker 获取公告信息
+    // -----------------------------
+    async function fetchAnnouncement() {
+        try {
+            const res = await fetch("https://yume-official-api.yume.zone/announcement", { cache: "no-store" });
+            const data = await res.json();
+
+            const { md, start, end } = data;
+
+            // 选择对应语言的 md 文件
+            const mdUrl = md[lang] || md["en"];
+
+            if (!isInTimeRange(start, end)) {
+                contentPanel.innerHTML = `<p>${translate("NO_ANNOUNCEMENT")}</p>`;
+                return false;
+            }
+
+            await loadAnnouncement(mdUrl + "?t=" + Date.now()); // 强制不缓存
+            return true;
+
+        } catch (e) {
+            contentPanel.innerHTML = `<p>${translate("NO_ANNOUNCEMENT")}</p>`;
+            return false;
+        }
+    }
+
+    // -----------------------------
+    // 页面加载时自动检查公告
+    // -----------------------------
+    (async () => {
+        const ok = await fetchAnnouncement();
+        if (ok) window.openAnnouncement();
+    })();
+
+    // -----------------------------
+    // 监听语言切换
+    // -----------------------------
+    $(".translate").click(async function () {
+        const selectedLang = $(this).attr("id");
+
+        if ('localStorage' in window) {
+            localStorage.setItem('lang', selectedLang);
+        }
+
+        lang = selectedLang;
+
+        // 重新加载公告
+        await fetchAnnouncement();
+    });
+
+});
+
 //控制台输出
 var styleTitle1 = `
 font-size: 20px;
@@ -808,15 +913,13 @@ var title2 = `
  YUME INTERNET LLC.                                               
 `
 var content = `
-版 本 号：26.2
-更新日期：2026-03-30
+版 本 号：26.3
+更新日期：2026-05-02
 
 更新说明：
-1. 修订 服务条款、隐私政策、退款政策
+1. 新增 系统公告模块
 2. 优化 页面布局
-3. 合规 根据访问来源国家提供差异化服务
-4. 优化 页面加载缓慢
-5. 调整 音乐列表
+3. 优化 页面加载缓慢
 、
 `
 console.log(`%c${title1} %c${title2}

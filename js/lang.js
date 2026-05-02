@@ -84,7 +84,7 @@ var arrLang = {
 		"MENGHUANFENGJING": "Dreamlike Landscape",
 		"LOG": "Changelog",
 		"UPTEXTL1": " Added Traditional Chinese support",
-		"UPTEXTL2": " Add songs to playlist",
+		"UPTEXTL2": " Added system announcement module",
 		"UPTEXTL3": " Provide compliance‑based differentiated services according to the user’s country of access",
 		"UPTEXTL4": " Revise the Terms of Service",
 		"UPTEXTL5": " Optimized mobile animations and details",
@@ -98,6 +98,7 @@ var arrLang = {
 		"YOVXFWH": "Yume Official Service Account",
 		"SMGZFWH": "Please scan the QR code below or click the redirect button to follow the Yume Official Service Account",
 		"TIAOZHUANVXLIANJIE": "Redirect Link",
+		"NO_ANNOUNCEMENT": "There are currently no system announcements, maintenance notices, or update announcements. Thank you for supporting Yume Official!",
 		"TERMS_LOAD_ERROR": "Failed to load terms file"
 	},
     "zh-cn": {
@@ -184,7 +185,7 @@ var arrLang = {
 		"MENGHUANFENGJING": "梦幻风景",
 		"LOG": "更新日志",
 		"UPTEXTL1": " 新增繁体中文支持",
-		"UPTEXTL2": " 新增歌单曲目",
+		"UPTEXTL2": " 新增系统公告模块",
 		"UPTEXTL3": " 根据访问来源国家提供合规化差异化服务",
 		"UPTEXTL4": " 修订服务条款",
 		"UPTEXTL5": " 优化移动端动画及细节",
@@ -198,6 +199,7 @@ var arrLang = {
 		"YOVXFWH": "雨梦Official服务号",
 		"SMGZFWH": "请扫描以下二维码或点击跳转链接按钮关注雨梦Official服务号",
 		"TIAOZHUANVXLIANJIE": "跳转链接",
+		"NO_ANNOUNCEMENT": "当前没有系统公告、系统维护通知或更新公告，感谢您对雨梦Official的支持！",
 		"TERMS_LOAD_ERROR": "无法加载条款文件"
     },
 	"zh-tw": {
@@ -284,7 +286,7 @@ var arrLang = {
 		"MENGHUANFENGJING": "夢幻風景",
 		"LOG": "更新日誌",
 		"UPTEXTL1": " 新增繁體中文支援",
-		"UPTEXTL2": " 新增歌單曲目",
+		"UPTEXTL2": " 新增系統公告模組",
 		"UPTEXTL3": " 根據訪問來源國家提供合規化的差異化服務",
 		"UPTEXTL4": " 修訂服務條款",
 		"UPTEXTL5": " 優化行動端動畫及細節",
@@ -298,6 +300,7 @@ var arrLang = {
 		"YOVXFWH": "雨夢Official服務號",
 		"SMGZFWH": "請掃描下方 QR Code 或點擊跳轉連結按鈕關注雨夢Official服務號",
 		"TIAOZHUANVXLIANJIE": "跳轉連結",
+		"NO_ANNOUNCEMENT": "當前沒有系統公告、系統維護通知或更新公告，感謝您對雨夢Official的支持！",
 		"TERMS_LOAD_ERROR": "無法載入條款文件"
 	},
 	"fr": {
@@ -384,7 +387,7 @@ var arrLang = {
 		"MENGHUANFENGJING": "Paysage fantastique",
 		"LOG": "Journal des mises à jour",
 		"UPTEXTL1": " Ajout de la prise en charge du chinois traditionnel",
-		"UPTEXTL2": " Ajouter des titres à la playlist",
+		"UPTEXTL2": " Module d’annonce système ajouté",
 		"UPTEXTL3": " Fournir des services différenciés conformes aux exigences du pays d’accès",
 		"UPTEXTL4": " Réviser les conditions de service",
 		"UPTEXTL5": " Optimisation des animations et des détails sur mobile",
@@ -398,6 +401,7 @@ var arrLang = {
 		"YOVXFWH": "Compte de service Yume Official",
 		"SMGZFWH": "Veuillez scanner le QR code ci-dessous ou cliquer sur le bouton de lien pour suivre le compte de service Yume Official",
 		"TIAOZHUANVXLIANJIE": "Lien de redirection",
+		"NO_ANNOUNCEMENT": "Il n'y a actuellement aucun avis système, notification de maintenance ou annonce de mise à jour. Merci de soutenir Yume Official !",
 		"TERMS_LOAD_ERROR": "Impossible de charger le fichier des conditions"
 	},
 	"ja": {
@@ -484,7 +488,7 @@ var arrLang = {
 		"MENGHUANFENGJING": "幻想的な風景",
 		"LOG": "更新ログ",
 		"UPTEXTL1": " 繁体字中国語のサポートを追加しました",
-		"UPTEXTL2": " プレイリストに曲を追加",
+		"UPTEXTL2": " システム公告モジュールを追加",
 		"UPTEXTL3": " アクセス元の国に基づき、コンプライアンスに沿った差別化サービスを提供する",
 		"UPTEXTL4": " 利用規約を改訂する",
 		"UPTEXTL5": " モバイル版のアニメーションと細部を最適化しました",
@@ -498,6 +502,7 @@ var arrLang = {
 		"YOVXFWH": "雨夢Officialサービスアカウント",
 		"SMGZFWH": "以下のQRコードをスキャンするか、リンクボタンをクリックして雨夢Officialサービスアカウントをフォローしてください",
 		"TIAOZHUANVXLIANJIE": "リンクへ移動",
+		"NO_ANNOUNCEMENT": "現在、システムのお知らせ、メンテナンス通知、または更新通知はありません。雨夢Officialをサポートしていただき、ありがとうございます！",
 		"TERMS_LOAD_ERROR": "利用規約ファイルを読み込めませんでした"
 	}
 };
@@ -669,7 +674,7 @@ function translateText(text, targetLang, isCity = false) {
     }
 
     // 城市名称 → DeepL 简体中文
-    return fetch('https://yumeofficialapi.yume.zone/translate', {
+    return fetch('https://yume-official-api.yume.zone/translate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
@@ -693,7 +698,7 @@ function translateText(text, targetLang, isCity = false) {
     }
 
     // 城市名称 → DeepL 繁体中文
-    return fetch('https://yumeofficialapi.yume.zone/translate', {
+    return fetch('https://yume-official-api.yume.zone/translate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
@@ -710,7 +715,7 @@ function translateText(text, targetLang, isCity = false) {
   }
 
   // ⭐ 其他语言：正常 DeepL 翻译
-  return fetch('https://yumeofficialapi.yume.zone/translate', {
+  return fetch('https://yume-official-api.yume.zone/translate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({

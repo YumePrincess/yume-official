@@ -335,18 +335,18 @@
                                 </a>
                             </div>
                             <div class="col 2">
-                                <a href="https://system-mac-studio.yume.zone/" target="_blank">
-                                    <div class="link-card cards">
-					    				<i class="iconfont2 icon-database"></i>
-                                        <span class="link-name" key="SQL">数据库</span>        
-                                    </div>
-                                </a>
-                            </div>
-                            <div class="col">
                                 <a href="https://docuseal.yume.zone/" target="_blank">
                                     <div class="link-card cards">
 					    				<i class="iconfont2 icon-edit"></i>
                                         <span class="link-name">DocuSeal</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="col">
+                                <a href="https://www.yume.zone/" target="_blank">
+                                    <div class="link-card cards">
+					    				<i class="iconfont2 icon-clock"></i>
+                                        <span class="link-name" key="NOOPEN">暂未开放</span>        
                                     </div>
                                 </a>
                             </div>
@@ -365,7 +365,7 @@
                             <div class="img-title">
                                 <span class="img-title">yume</span>
                                 <span class="img-text">.zone</span><br />
-                                <span class="img-text">&nbsp;&nbsp;v&nbsp;26.2</span>
+                                <span class="img-text">&nbsp;&nbsp;v&nbsp;26.3</span>
                                 <a href="https://github.com/YumePrincess" target="_blank"><i
                                         class="iconfont icon-github1" show-lang="fr,en,ja"></i></a>
                             </div>
@@ -427,8 +427,8 @@
                                         aria-labelledby="headingTwo" data-bs-parent="#accordion">
                                         <div class="accordion-body">
                                             <div class="upnote">
+                                                <span class="uptext"><i class="iconfont2 icon-plus"></i><a class="uptext-inner-wrap" key="UPTEXTL2">&nbsp;新增系统公告模块</a></span>
 												<span class="uptext"><i class="iconfont2 icon-plus"></i><a class="uptext-inner-wrap" key="UPTEXTL1">&nbsp;新增繁体中文支持</a></span>
-                                                <span class="uptext"><i class="iconfont2 icon-plus"></i><a class="uptext-inner-wrap" key="UPTEXTL2">&nbsp;新增歌单曲目</a></span>
                                                 <span class="uptext"><i class="iconfont2 icon-plus"></i><a class="uptext-inner-wrap" key="UPTEXTL3">&nbsp;根据访问来源国家提供合规化差异化服务</a></span>
                                                 <span class="uptext"><i class="iconfont2 icon-wrench"></i><a class="uptext-inner-wrap" key="UPTEXTL4">&nbsp;修订服务条款</a></span>
                                                 <span class="uptext"><i class="iconfont2 icon-wrench"></i><a class="uptext-inner-wrap" key="UPTEXTL5">&nbsp;优化移动端动画及细节</a></span>
@@ -475,6 +475,27 @@
                             <div class="terms-panel show" id="terms-user"></div>
                             <div class="terms-panel" id="terms-privacy"></div>
                             <div class="terms-panel" id="terms-refunds"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 系统公告 -->
+                <div class="announcement-box" id="announcementBox" style="display:none;">
+                    <div class="announcement-wrapper">
+                        <div class="announcement-close" id="announcementCloseBtn">
+                            <i class="iconfont icon-close"></i>
+                        </div>
+                        <div class="announcement-header">
+                            <div class="announcement-header-logo">
+                                <img src="/img/logo.png" class="announcement-header-logo-img" alt="logo">
+                                <div class="announcement-header-title">
+                                    <span class="announcement-header-title-main">yume</span>
+                                    <span class="announcement-header-title-sub">.zone</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="announcement-content">
+                            <script src="/js/marked.min.js"></script>
+                            <div id="announcement-content"></div>
                         </div>
                     </div>
                 </div>

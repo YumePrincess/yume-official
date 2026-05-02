@@ -1664,3 +1664,114 @@ body.lantern-active .app-container {
     background: rgb(255 255 255 / 20%);
     transform: scale(1.05);
 }
+
+/* 公告系统 */
+/* 背景遮罩 */
+.announcement-box {
+    position: fixed;
+    inset: 0;
+    z-index: 1996;
+    background: rgba(0, 0, 0, .5);
+    backdrop-filter: blur(20px);
+    animation: fade .3s;
+}
+
+/* 主容器 */
+.announcement-wrapper {
+    position: absolute;
+    top: 8%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 84vh;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* 关闭按钮 */
+.announcement-close {
+    position: absolute;
+    z-index: 888888;
+    right: 20px;
+    top: 20px;
+    cursor: pointer;
+}
+.announcement-close:hover {
+    transform: scale(1.2);
+}
+
+/* Logo + 标题 */
+.announcement-header {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+}
+
+.announcement-header-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.announcement-header-logo-img {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+}
+
+.announcement-header-title {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.announcement-header-title-main {
+    font-size: 2.8rem;
+    color: white;
+    font-family: 'Pacifico-Regular' !important;
+    transform: translateY(-10px);
+}
+
+.announcement-header-title-sub {
+    font-size: 1.4rem;
+    color: white;
+    font-family: 'Pacifico-Regular' !important;
+    transform: translateY(-10px);
+}
+
+/* 内容区 */
+.announcement-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 10px;
+}
+
+.announcement-content h1,
+.announcement-content h2,
+.announcement-content h3,
+.announcement-content h4,
+.announcement-content h5,
+.announcement-content h6 {
+    font-family: 'MiSans', sans-serif;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
+.announcement-content p,
+.announcement-content li {
+    font-family: 'MiSans', sans-serif;
+    font-size: 0.9375rem;
+    line-height: 1.7;
+}
+
+@keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
