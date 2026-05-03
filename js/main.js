@@ -827,29 +827,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // -----------------------------
-    // 判断是否在公告时间段（ET → 本地）
-    // -----------------------------
-    function isInTimeRange(startET, endET) {
-        const now = new Date();
-        const start = new Date(startET); // ISO 自动按本地时区解析
-        const end = new Date(endET);
-        return now >= start && now <= end;
-    }
-
-    // -----------------------------
-    // 从 Worker 获取公告信息
+    // 从 Worker 获取公告信息（让 Worker 决定是否有效）
     // -----------------------------
     async function fetchAnnouncement() {
         try {
             const res = await fetch("https://yume-official-api.yume.zone/announcement", { cache: "no-store" });
             const data = await res.json();
 
-            const { md, start, end } = data;
+            const { md } = data;
 
-            // 选择对应语言的 md 文件
+            // 如果 Worker 判定当前没有有效公告，会返回 md: null
+            if (!md) {
+                contentPanel.innerHTML = `<p>${translate("NO_ANNOUNCEMENT")}</p>`;
+                return false;
+            }
+
+            // 选择对应语言的 md 文件（注意防御：md 存在才取字段）
             const mdUrl = md[lang] || md["en"];
 
-            if (!isInTimeRange(start, end)) {
+            if (!mdUrl) {
                 contentPanel.innerHTML = `<p>${translate("NO_ANNOUNCEMENT")}</p>`;
                 return false;
             }
