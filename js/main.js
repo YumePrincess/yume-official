@@ -831,14 +831,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // -----------------------------
     function isInTimeRange(startET, endET) {
         const now = new Date();
-
-        const start = new Date(
-            new Date(startET).toLocaleString("en-US", { timeZone: "America/New_York" })
-        );
-        const end = new Date(
-            new Date(endET).toLocaleString("en-US", { timeZone: "America/New_York" })
-        );
-
+        const start = new Date(startET); // ISO 自动按本地时区解析
+        const end = new Date(endET);
         return now >= start && now <= end;
     }
 
