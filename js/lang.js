@@ -99,6 +99,7 @@ var arrLang = {
 		"SMGZFWH": "Please scan the QR code below or click the redirect button to follow the Yume Official Service Account",
 		"TIAOZHUANVXLIANJIE": "Redirect Link",
 		"NO_ANNOUNCEMENT": "There are currently no system announcements, maintenance notices, or update announcements. Thank you for supporting Yume Official!",
+		"ZUOZHEBUXIANG": "Author unknown",
 		"TERMS_LOAD_ERROR": "Failed to load terms file"
 	},
     "zh-cn": {
@@ -200,6 +201,7 @@ var arrLang = {
 		"SMGZFWH": "请扫描以下二维码或点击跳转链接按钮关注雨梦Official服务号",
 		"TIAOZHUANVXLIANJIE": "跳转链接",
 		"NO_ANNOUNCEMENT": "当前没有系统公告、系统维护通知或更新公告，感谢您对雨梦Official的支持！",
+		"ZUOZHEBUXIANG": "作者不详",
 		"TERMS_LOAD_ERROR": "无法加载条款文件"
     },
 	"zh-tw": {
@@ -301,6 +303,7 @@ var arrLang = {
 		"SMGZFWH": "請掃描下方 QR Code 或點擊跳轉連結按鈕關注雨夢Official服務號",
 		"TIAOZHUANVXLIANJIE": "跳轉連結",
 		"NO_ANNOUNCEMENT": "當前沒有系統公告、系統維護通知或更新公告，感謝您對雨夢Official的支持！",
+		"ZUOZHEBUXIANG": "作者不詳",
 		"TERMS_LOAD_ERROR": "無法載入條款文件"
 	},
 	"fr": {
@@ -402,6 +405,7 @@ var arrLang = {
 		"SMGZFWH": "Veuillez scanner le QR code ci-dessous ou cliquer sur le bouton de lien pour suivre le compte de service Yume Official",
 		"TIAOZHUANVXLIANJIE": "Lien de redirection",
 		"NO_ANNOUNCEMENT": "Il n'y a actuellement aucun avis système, notification de maintenance ou annonce de mise à jour. Merci de soutenir Yume Official !",
+		"ZUOZHEBUXIANG": "Auteur inconnu",
 		"TERMS_LOAD_ERROR": "Impossible de charger le fichier des conditions"
 	},
 	"ja": {
@@ -503,6 +507,7 @@ var arrLang = {
 		"SMGZFWH": "以下のQRコードをスキャンするか、リンクボタンをクリックして雨夢Officialサービスアカウントをフォローしてください",
 		"TIAOZHUANVXLIANJIE": "リンクへ移動",
 		"NO_ANNOUNCEMENT": "現在、システムのお知らせ、メンテナンス通知、または更新通知はありません。雨夢Officialをサポートしていただき、ありがとうございます！",
+		"ZUOZHEBUXIANG": "作者不明",
 		"TERMS_LOAD_ERROR": "利用規約ファイルを読み込めませんでした"
 	}
 };

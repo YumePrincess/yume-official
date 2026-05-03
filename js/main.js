@@ -153,15 +153,19 @@ function updateContent() {
             const hitokoto = data.hitokoto;
             let from = data.from;
 
-            // 如果 from 只有一个字，则在后面加上“（作者）”
+            // 作者名字只有一个字 → 不翻译，直接输出 translate('ZUOZHEBUXIANG')
             if (from.length === 1) {
-                from = from + '（作者）';
+                from = translate('ZUOZHEBUXIANG');
+                return Promise.all([
+                    translateText(hitokoto, lang, false),
+                    Promise.resolve(from)
+                ]);
             }
 
-            // 中文内容 → zh-cn 不翻译，zh-tw 用 OpenCC
+            // 多字作者 → 正常翻译
             return Promise.all([
-                translateText(hitokoto, lang, false), // 一言内容（非城市）
-                translateText(from, lang, false)      // 作者（非城市）
+                translateText(hitokoto, lang, false),
+                translateText(from, lang, false)
             ]);
         })
         .then(translations => {
@@ -172,11 +176,11 @@ function updateContent() {
 
     // 完整 WMO 天气代码映射（Open-Meteo 官方）
     const weatherMap = {
-        0: "晴",
+        0: "晴朗",
         1: "主要晴朗",
         2: "多云",
         3: "阴天",
-        45: "雾",
+        45: "大雾",
         48: "雾霾",
         51: "轻微毛毛雨",
         53: "中度毛毛雨",
@@ -227,11 +231,8 @@ function updateContent() {
             const tem_day = Number(weatherData.daily.temperature_2m_max[0]);
             const tem_night = Number(weatherData.daily.temperature_2m_min[0]);
 
-            // 如果天气描述只有一个字（如“晴”），加“天”
-            const modifiedWea = wea.length === 1 ? wea + "天" : wea;
-
             return Promise.all([
-                translateText(modifiedWea, lang, false), // 天气描述（非城市）
+                translateText(wea, lang, false), // 天气描述（非城市）
                 translateText(city, lang, true),         // 城市名称（需要 DeepL）
                 tem_day,
                 tem_night
