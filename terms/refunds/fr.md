@@ -46,7 +46,6 @@ Les demandes effectuées après la période autorisée ne seront pas acceptées.
 |---------|-------------------|----------------------------|
 | Yume Drive | Amaame | Utilisation du stockage **> 10 %** |
 | Yume IA | Hanaame | Nombre de conversations **> 20** |
-| Yume VPN | Akiame | Trafic utilisé **> 10 Go** |
 | Yume Paiement | Sakuraame | Montant reçu **> 50 USD** |
 
 ### 5. Dépassement du nombre de remboursements autorisés

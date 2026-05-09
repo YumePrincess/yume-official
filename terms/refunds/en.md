@@ -48,7 +48,6 @@ If a refund request is submitted after the specified refund period for certain s
 |---------|------------|--------------------------|
 | Yume Drive | Amaame | Storage usage **over 10%** |
 | Yume Intelligence | Hanaame | AI conversations **over 20 times** |
-| Yume VPN | Akiame | Traffic usage **over 10GB** |
 | Yume Pay | Sakuraame | Received payments **over 50 USD** |
 
 ### 5. Exceeding Refund Frequency Limit

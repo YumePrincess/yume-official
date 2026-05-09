@@ -1,15 +1,13 @@
 // 站点数据
 const siteLinks = [
-    { nameKey: "MESSAGE", name: "雨梦Message", link: "https://message.yume.zone/", iconType: "iconfont", icon: "icon-blog-solid" },
-	  { nameKey: "YSOCIAL", name: "雨梦Social", link: "https://social.yume.zone/", iconType: "iconfont2", icon: "icon-google-circles" },
+    { nameKey: "YCHAT", name: "雨梦Chat", link: "https://chat.yume.zone/", iconType: "iconfont", icon: "icon-blog-solid" },
+    { nameKey: "YWIKI", name: "雨梦Wiki", link: "https://wiki.yume.zone/", iconType: "iconfont2", icon: "icon-doc-text" },
 	  { nameKey: "AI", name: "雨梦AI", link: "https://ai.yume.zone/", icon: "icon-z_shangpinheji" },
 	  { nameKey: "CLOUD", name: "雨梦网盘", link: "https://drive.yume.zone/", icon: "icon-cloud" },
 	  { nameKey: "NAV", name: "雨梦搜索", link: "https://nav.yume.zone/", iconType: "iconfont", icon: "icon-a-daohangzhiyindingwei-05" },
 	  { nameKey: "STORE", name: "雨梦Store", link: "https://store.yume.zone/", iconType: "iconfont2", icon: "icon-shop" },
 	  { nameKey: "YPAY", name: "雨梦支付", link: "https://pay.yume.zone/", iconType: "iconfont2", icon: "icon-wallet", showLang: ["fr","ja","zh-tw"] },
 	  { nameKey: "YAAA", name: "雨梦秋雨加速器", link: "https://akiame.yume.zone/", iconType: "iconfont2", icon: "icon-data-science", showLang: ["fr","ja","zh-tw"] },
-    { nameKey: "YFDROP", name: "雨梦Drop", link: "https://drop.yume.zone/", iconType: "iconfont2", icon: "icon-menu-outline" },
-    { nameKey: "YWIKI", name: "雨梦Wiki", link: "https://wiki.yume.zone/", iconType: "iconfont2", icon: "icon-doc-text" },
     { nameKey: "YACCOUNT", name: "雨梦One", link: "https://one.yume.zone/realms/yume/account", iconType: "iconfont2", icon: "icon-id-badge" }
 ];
 
