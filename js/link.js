@@ -7,8 +7,7 @@ const siteLinks = [
 	  { nameKey: "NAV", name: "雨梦搜索", link: "https://nav.yume.zone/", iconType: "iconfont", icon: "icon-a-daohangzhiyindingwei-05" },
 	  { nameKey: "STORE", name: "雨梦Store", link: "https://store.yume.zone/", iconType: "iconfont2", icon: "icon-shop" },
 	  { nameKey: "YPAY", name: "雨梦支付", link: "https://pay.yume.zone/", iconType: "iconfont2", icon: "icon-wallet", showLang: ["fr","ja","zh-tw"] },
-	  { nameKey: "YAAA", name: "雨梦秋雨加速器", link: "https://akiame.yume.zone/", iconType: "iconfont2", icon: "icon-data-science", showLang: ["fr","ja","zh-tw"] },
-    { nameKey: "YACCOUNT", name: "雨梦One", link: "https://one.yume.zone/realms/yume/account", iconType: "iconfont2", icon: "icon-id-badge" }
+	  { nameKey: "YACCOUNT", name: "雨梦One", link: "https://one.yume.zone/realms/yume/account", iconType: "iconfont2", icon: "icon-id-badge" }
 ];
 
 // 分页（每页 6 个）
