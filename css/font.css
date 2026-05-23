@@ -21,6 +21,40 @@
         url('../font/iconfont.ttf') format('truetype');
 }
 
+.icon-28px{
+    width: 28px;
+    height: 28px;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.icon-16px-pd3{
+    width: 16px;
+    height: 16px;
+    padding: 3px;
+    box-sizing: content-box;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.icon-28px-pd8{
+    width: 28px;
+    height: 28px;
+    padding: 8px;
+    box-sizing: content-box;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.icon-35px-pd5{
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+    box-sizing: content-box;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
 .iconfont {
     font-family: "iconfont" !important;
     font-size: 16px;
@@ -155,97 +189,4 @@
 
 .icon-yinhao-copy-copy:before {
     content: "\e62e";
-}
-
-@font-face {
-    font-family: "fontello";
-    /* Project id 2831425 */
-    src: url('../font/iconfont2.woff2') format('woff2'),
-        url('../font/iconfont2.woff') format('woff'),
-        url('../font/iconfont2.ttf') format('truetype');
-}
-
-.iconfont2 {
-    font-family: "fontello" !important;
-    font-size: 16px;
-    font-style: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-
-.icon-x:before {
-    content: "𝕏";
-}
-
-.icon-shop:before {
-    content: "\f290";
-}
-
-.icon-wechat:before {
-    content: "\f1d7";
-}
-
-.icon-telegram:before {
-    content: "\f2c6";
-}
-
-.icon-ipod:before {
-    content: "\e801";
-}
-
-.icon-clock:before {
-    content: "\e802";
-}
-
-.icon-database:before {
-    content: "\e803";
-}
-
-.icon-doc-text:before {
-    content: "\e804";
-}
-
-.icon-facebook:before {
-    content: "\f09a";
-}
-
-.icon-phone:before {
-    content: "\e805";
-}
-
-.icon-data-science:before {
-    content: "\f016";
-}
-
-.icon-id-badge:before {
-    content: "\f2c1";
-}
-
-.icon-menu-outline:before {
-    content: "\e806";
-}
-
-.icon-google-circles:before {
-    content: "\f351";
-}
-
-.icon-wallet:before {
-    content: "\e800";
-}
-
-.icon-edit:before {
-    content: "\e808";
-}
-
-.icon-newspaper:before {
-    content: "\f4f0";
-}
-
-.icon-plus:before {
-    content: "\e807";
-}
-
-.icon-wrench:before {
-    content: "\e809";
 }

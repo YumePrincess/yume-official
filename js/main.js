@@ -555,6 +555,21 @@ for (var day of days) {
     }
 }
 
+//更多页面动态计算
+const more = document.getElementById('more');
+const rightCol = document.querySelector('.col.right');
+
+function syncMore() {
+    const rect = rightCol.getBoundingClientRect();
+
+    more.style.width = Math.round(rect.width) + 'px';
+    more.style.left = Math.round(rect.left) + 'px';
+}
+
+syncMore();
+
+window.addEventListener('resize', syncMore);
+
 // 电话弹窗元素
 const phoneButton = document.getElementById('phone');
 const popup = document.getElementById('popup');
@@ -904,13 +919,22 @@ var title2 = `
  YUME INTERNET LLC.                                               
 `
 var content = `
-版 本 号：26.3
-更新日期：2026-05-02
+版 本 号：26.4
+Version: 26.4
+更新日期：2026-05-23
+Release Date: 2026‑05‑23
 
 更新说明：
-1. 新增 系统公告模块
-2. 优化 页面布局
-3. 优化 页面加载缓慢
+Update Notes:
+
+1. 新增 点对点加密
+1. Added peer‑to‑peer encryption
+2. 优化 美术设计
+2. Optimized art design
+
+更多详见更新日志板块。
+For more details, please refer to the update log section.
+
 、
 `
 console.log(`%c${title1} %c${title2}
