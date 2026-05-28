@@ -44,9 +44,9 @@ Les demandes effectuées après la période autorisée ne seront pas acceptées.
 ### 4. Dépassement des seuils d’utilisation
 | Produit | Type d’Abonnement | Condition Non Remboursable |
 |---------|-------------------|----------------------------|
-| Yume Drive | Amaame | Utilisation du stockage **> 10 %** |
+| Yume Drive | Amaame | Utilisation du stockage **> 20 %** |
 | Yume IA | Hanaame | Nombre de conversations **> 20** |
-| Yume Paiement | Sakuraame | Montant reçu **> 50 USD** |
+| Yume Mail | Sakuraame | Nombre total d’e‑mails reçus et envoyés **> 20** |
 
 ### 5. Dépassement du nombre de remboursements autorisés
 Si l’utilisateur a demandé un remboursement **plus de 2 fois** pour le même produit, la Société peut refuser toute nouvelle demande.

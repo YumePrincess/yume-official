@@ -46,9 +46,9 @@ If a refund request is submitted after the specified refund period for certain s
 ### 4. Usage Exceeds Refund Thresholds
 | Product | Membership | Non‑Refundable Condition |
 |---------|------------|--------------------------|
-| Yume Drive | Amaame | Storage usage **over 10%** |
+| Yume Drive | Amaame | Storage usage **over 20%** |
 | Yume Intelligence | Hanaame | AI conversations **over 20 times** |
-| Yume Pay | Sakuraame | Received payments **over 50 USD** |
+| Yume Mail | Sakuraame | Total emails received and sent **exceed 20** |
 
 ### 5. Exceeding Refund Frequency Limit
 If the user has requested refunds for the same product **more than 2 times**, the Company may refuse further refund requests.

@@ -34,20 +34,8 @@ const siteLinks = [
     nameKey: "STORE",
     name: "雨梦Store",
     link: "https://store.yume.zone/",
+    showLang: ["fr", "ja", "en", "zh-cn", "zh-tw"],
     Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7V6a4 4 0 1 1 8 0v1h3c.552 0 1 .449 1 1.007v12.001c0 1.1-.895 1.992-1.994 1.992H5.994A1.994 1.994 0 0 1 4 20.008v-12C4 7.45 4.445 7 5 7zm1.2 0h5.6V6a2.8 2.8 0 0 0-5.6 0zM8 8.2H5.2v11.808c0 .436.356.792.794.792h12.012a.794.794 0 0 0 .794-.792V8.2H16V11h-1.2V8.2H9.2V11H8z"/></svg>`
-  },
-  {
-    nameKey: "YWIKI",
-    name: "雨梦Wiki",
-    link: "https://wiki.yume.zone/",
-    Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" d="M6.027.29c-.424.143-.776.418-1.106.707C.434 5.314.254 5.497.254 5.497c-.236.22-.257.537-.254.859l.021 1.819s2.07-2.013 5.164-4.99c1.665 4.337 3.405 8.651 5.116 12.974c.234.653-.329 1.188-1.04 1.902c-.982.958-3.034 2.93-5.136 5.561h2.107l5.067-5.554c.482-.662 1.077-1.309.824-1.909L8.145 5.806c.924-.785 1.763-1.676 2.618-2.531l5.252 13.173c.303.891-.175 1.684-1.134 2.549c-1.148.922-3.508 3.073-4.58 4.712h1.631c1.71-1.758 2.017-1.994 3.964-3.68c1.308-1.334 2.488-2.022 1.871-3.731l-4.13-10.325c1.007-.99 2.013-1.875 2.98-2.852c2.113 4.643 3.559 8.384 5.33 13.33c.58 1.607.458 1.682-.928 2.55c-2.228 1.107-2.929 1.834-5.585 4.66h1.815c2.22-2.008 3.045-2.716 5.825-4.18c.983-.569 1.116-1.285.713-2.4c-1.3-3.616-4.116-11.41-6.719-16.755l-4.103 3.971l-1.569-3.92C9.912 1.38 8.74 2.78 7.466 4.04z"/></svg>`
-  },
-  {
-    nameKey: "YPAY",
-    name: "雨梦支付",
-    link: "https://pay.yume.zone/",
-    showLang: ["fr", "ja", "zh-tw"],
-    Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 8h4"/><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M22 10.5c0-.077 0-.533-.002-.565c-.036-.501-.465-.9-1.005-.933C20.959 9 20.918 9 20.834 9h-2.602C16.446 9 15 10.343 15 12s1.447 3 3.23 3h2.603c.084 0 .125 0 .16-.002c.54-.033.97-.432 1.005-.933c.002-.032.002-.488.002-.565"/><circle cx="18" cy="12" r="1" fill="currentColor"/><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M13 4c3.771 0 5.657 0 6.828 1.172c.809.808 1.06 1.956 1.137 3.828M10 20h3c3.771 0 5.657 0 6.828-1.172c.809-.808 1.06-1.956 1.137-3.828M9 4c-3.114.01-4.765.108-5.828 1.172C2 6.343 2 8.229 2 12s0 5.657 1.172 6.828c.653.654 1.528.943 2.828 1.07"/></g></svg>`
   },
   {
     nameKey: "YACCOUNT",
