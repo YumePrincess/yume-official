@@ -385,14 +385,16 @@ $("#facebook").mouseover(function () {
 var shoemore = false;
 var previousWidth = null;
 
+// 修复 more 错位的最终稳定版
 $('#switchmore').on('click', function () {
     shoemore = !shoemore;
 
-    // 获取当前的宽度
+    // 获取当前按钮宽度
     if (shoemore) {
-        previousWidth = $(this).outerWidth(); // 存储当前宽度
+        previousWidth = $(this).outerWidth();
     }
 
+    // 切换页面样式
     if (shoemore && $(document).width() >= 720) {
         $('#container').attr('class', 'container mores');
         $("#change").html("Oops&nbsp;!");
@@ -403,13 +405,40 @@ $('#switchmore').on('click', function () {
         $("#change1").html(translate('DEFAULT_PAGE_SUBHEADING'));
     }
 
-    // 设置切换后的宽度，使用 max 和 min 宽度进行动态调整
+    // 按钮宽度锁定
     if (shoemore) {
-        $(this).css('width', previousWidth + 'px'); // 应用之前的宽度
+        $(this).css('width', previousWidth + 'px');
     } else {
-        $(this).css('width', ''); // 清除自定义宽度以便恢复自适应
+        $(this).css('width', '');
+    }
+
+    // --- 关键：打开 more 时强制同步位置 ---
+    if (shoemore) {
+        syncMore();            // 第一次同步
+        setTimeout(syncMore, 50);  // 延迟同步，确保布局稳定
     }
 });
+
+//更多页面动态计算
+const more = document.getElementById('more');
+const rightCol = document.querySelector('.col.right');
+
+function syncMore() {
+    // 如果 more 或 rightCol 不可见，跳过
+    if (more.offsetParent === null || rightCol.offsetParent === null) return;
+
+    const rect = rightCol.getBoundingClientRect();
+
+    // rect 为 0 时不更新，避免错位
+    if (rect.width === 0 || rect.left === 0) return;
+
+    more.style.width = Math.round(rect.width) + 'px';
+    more.style.left = Math.round(rect.left) + 'px';
+}
+
+syncMore();
+
+window.addEventListener('resize', syncMore);
 
 //更多页面关闭按钮
 $('#close').on('click', function () {
@@ -554,21 +583,6 @@ for (var day of days) {
         }, false);
     }
 }
-
-//更多页面动态计算
-const more = document.getElementById('more');
-const rightCol = document.querySelector('.col.right');
-
-function syncMore() {
-    const rect = rightCol.getBoundingClientRect();
-
-    more.style.width = Math.round(rect.width) + 'px';
-    more.style.left = Math.round(rect.left) + 'px';
-}
-
-syncMore();
-
-window.addEventListener('resize', syncMore);
 
 // 电话弹窗元素
 const phoneButton = document.getElementById('phone');
