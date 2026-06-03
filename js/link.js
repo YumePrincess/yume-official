@@ -16,7 +16,7 @@ const siteLinks = [
     nameKey: "AI",
     name: "雨梦智能",
     link: "https://ai.yume.zone/",
-    Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none"><path d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M20 12q0-.452-.049-.89a1 1 0 0 1 1.988-.22Q22 11.437 22 12c0 5.523-4.477 10-10 10H4a2 2 0 0 1-2-2v-8C2 6.477 6.477 2 12 2q.563 0 1.11.06a1 1 0 0 1-.22 1.989A8 8 0 0 0 4 12v8h8a8 8 0 0 0 8-8m-8 2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2zm3-4a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2zm4-9a1 1 0 0 1 .946.677l.13.378c.3.879.99 1.57 1.87 1.87l.377.129a1 1 0 0 1 0 1.892l-.378.13c-.879.3-1.57.99-1.87 1.87l-.129.377a1 1 0 0 1-1.892 0l-.13-.378a3 3 0 0 0-1.87-1.87l-.377-.129a1 1 0 0 1 0-1.892l.378-.13c.879-.3 1.57-.99 1.87-1.87l.129-.377l.062-.146A1 1 0 0 1 19 1m0 3.196a5 5 0 0 1-.804.804q.449.355.804.803q.356-.447.803-.803A5 5 0 0 1 19 4.196"/></g></svg>`
+    Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" d="M11.5 6C7.022 6 4.782 6 3.391 7.172S2 10.229 2 14s0 5.657 1.391 6.828S7.021 22 11.5 22c4.478 0 6.718 0 8.109-1.172S21 17.771 21 14c0-1.17 0-2.158-.041-3"/><path stroke-linejoin="round" d="m18.5 2l.258.697c.338.914.507 1.371.84 1.704c.334.334.791.503 1.705.841L22 5.5l-.697.258c-.914.338-1.371.507-1.704.84c-.334.334-.503.791-.841 1.705L18.5 9l-.258-.697c-.338-.914-.507-1.371-.84-1.704c-.334-.334-.791-.503-1.705-.841L15 5.5l.697-.258c.914-.338 1.371-.507 1.704-.84c.334-.334.503-.791.841-1.705z"/><path stroke-linecap="round" stroke-linejoin="round" d="m15.5 12l1.227 1.057c.515.445.773.667.773.943s-.258.498-.773.943L15.5 16m-8-4l-1.227 1.057c-.515.445-.773.667-.773.943s.258.498.773.943L7.5 16m5-5l-2 6"/></g></svg>`
   },
   {
     nameKey: "YCHAT",
@@ -34,7 +34,6 @@ const siteLinks = [
     nameKey: "STORE",
     name: "雨梦Store",
     link: "https://store.yume.zone/",
-    showLang: ["fr", "ja", "en", "zh-cn", "zh-tw"],
     Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7V6a4 4 0 1 1 8 0v1h3c.552 0 1 .449 1 1.007v12.001c0 1.1-.895 1.992-1.994 1.992H5.994A1.994 1.994 0 0 1 4 20.008v-12C4 7.45 4.445 7 5 7zm1.2 0h5.6V6a2.8 2.8 0 0 0-5.6 0zM8 8.2H5.2v11.808c0 .436.356.792.794.792h12.012a.794.794 0 0 0 .794-.792V8.2H16V11h-1.2V8.2H9.2V11H8z"/></svg>`
   },
   {
@@ -42,10 +41,17 @@ const siteLinks = [
     name: "雨梦Account",
     link: "https://account.yume.zone/",
     Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M2 12c0-3.771 0-5.657 1.172-6.828S6.229 4 10 4h4c3.771 0 5.657 0 6.828 1.172S22 8.229 22 12s0 5.657-1.172 6.828S17.771 20 14 20h-4c-3.771 0-5.657 0-6.828-1.172S2 15.771 2 12"/><path d="M9 12.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5m0 0a4 4 0 0 1 4 4m-4-4a4 4 0 0 0-4 4M15 9h4m-4 3h4"/></g></svg>`
+  },
+  {
+    nameKey: "YESIGN",
+    name: "雨梦E-Sign",
+    link: "https://esign.yume.zone/",
+    showLang: ["fr", "ja", "en", "zh-cn", "zh-tw"],
+    Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 16.5s.501-2.5 1-2.5s1.07 2.5 1.5 2.5s.535-1 1-1s.564 1 1 1s1.5-1 1.5-1M9 7.04h6M9 9.25h6M9 11.5h6"/><rect width="11" height="15" x="6.5" y="4.5" rx="1.5"/></g></svg>`
   }
 ];
 
-// 分页（每页 6 个）
+// 分页
 function paginate(arr, size) {
   const result = [];
   for (let i = 0; i < arr.length; i += size) {
@@ -123,7 +129,6 @@ function renderSwiper() {
       clickable: true,
     },
 
-    // ===== 核心移动端修复 =====
     simulateTouch: true,
     allowTouchMove: true,
 

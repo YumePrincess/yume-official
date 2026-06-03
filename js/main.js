@@ -51,7 +51,7 @@ else if (window.attachEvent)
     window.attachEvent("onload", downloadJSAtOnload);
 else window.onload = downloadJSAtOnload;
 
-// ======== 新春灯笼自动展示（农历腊月三十 ~ 正月十五） ========
+// ======== 新春灯笼自动展示 ========
 // 判断当前语言是否为中文
 function isChineseLang() {
     return lang === "zh-cn" || lang === "zh-tw";
@@ -86,7 +86,7 @@ const springFestivalRanges = {
     2050: { start: "2050-02-17", end: "2050-03-08" }
 };
 
-// 判断是否在春节区间（不使用农历算法）
+// 判断是否在春节区间
 function isSpringFestival() {
     const today = new Date();
     const year = today.getFullYear();
@@ -100,7 +100,7 @@ function isSpringFestival() {
     return today >= start && today <= end;
 }
 
-// 主灯笼控制函数（唯一入口）
+// 主灯笼控制函数
 function updateLantern() {
     const showLantern = isChineseLang() && isSpringFestival();
 
@@ -153,7 +153,7 @@ function updateContent() {
             const hitokoto = data.hitokoto;
             let from = data.from;
 
-            // 作者名字只有一个字 → 不翻译，直接输出 translate('ZUOZHEBUXIANG')
+            // 作者名字只有一个字，直接输出 translate('ZUOZHEBUXIANG')
             if (from.length === 1) {
                 from = translate('ZUOZHEBUXIANG');
                 return Promise.all([
@@ -174,7 +174,7 @@ function updateContent() {
         })
         .catch(console.error);
 
-    // 完整 WMO 天气代码映射（Open-Meteo 官方）
+    // WMO 天气代码映射
     const weatherMap = {
         0: "晴朗",
         1: "主要晴朗",
@@ -206,7 +206,7 @@ function updateContent() {
         99: "强雷雨伴冰雹"
     };
 
-    // 主流程：使用 ipwho.is 获取经纬度（支持 HTTPS，不会被浏览器拦截）
+    // 主流程
     fetch('https://yume-official-api.yume.zone/geoip')
         .then(res => res.json())
         .then(ipInfo => {
@@ -214,7 +214,7 @@ function updateContent() {
             const lon = ipInfo.longitude;
             const city = ipInfo.city;
 
-            // 请求 Open-Meteo：当前天气 + 当天最高/最低温度
+            // 请求Open-Meteo天气
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,temperature_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
 
             return Promise.all([
@@ -278,16 +278,16 @@ function time() {
     if (s < 10) s = "0" + s;
 
     // 当前语言
-    var currentLang = lang;  // ⭐ 直接使用 lang.js 处理好的语言
+    var currentLang = lang;
     var weekDays = weekday[currentLang] || weekday['en'];
 
-    // ⭐ 月份简写（仅英语/法语）
+    // 月份简写
     var monthShort = {
         en: ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],
         fr: ["Janv.","Févr.","Mars","Avr.","Mai","Juin","Juil.","Août","Sept.","Oct.","Nov.","Déc."]
     };
 
-    // ⭐ 在 time() 内部定义日期格式（最小改动）
+    // 在 time() 内部定义日期格式
     function formatEraDate(lang, era, y, mm, d) {
         switch (lang) {
             case "ja":
@@ -306,10 +306,10 @@ function time() {
         }
     }
 
-    // ⭐ 使用年号格式
+    // 使用年号格式
     var dateStr = formatEraDate(currentLang, translate('REIWA'), y, mm, d);
 
-    // ⭐ 输出（星期几完全保留）
+    // 输出
     $("#time").html(
         dateStr + "&nbsp;" +
         "<span class='weekday'>" + weekDays[day] + "</span><br>" +
@@ -385,7 +385,6 @@ $("#facebook").mouseover(function () {
 var shoemore = false;
 var previousWidth = null;
 
-// 修复 more 错位的最终稳定版
 $('#switchmore').on('click', function () {
     shoemore = !shoemore;
 
@@ -412,7 +411,7 @@ $('#switchmore').on('click', function () {
         $(this).css('width', '');
     }
 
-    // --- 关键：打开 more 时强制同步位置 ---
+    // --- 打开 more 时强制同步位置 ---
     if (shoemore) {
         syncMore();            // 第一次同步
         setTimeout(syncMore, 50);  // 延迟同步，确保布局稳定
@@ -565,7 +564,7 @@ document.addEventListener('contextmenu', function (event) {
 var myDate = new Date;
 var mon = myDate.getMonth() + 1;
 var date = myDate.getDate();
-var days = ['3.11', '8.15'];
+var days = ['3.11', '6.04', '8.15'];
 for (var day of days) {
     var d = day.split('.');
     if (mon == d[0] && date == d[1]) {
@@ -596,9 +595,7 @@ const wechatPopup = document.getElementById('wechat-popup');
 const wechatCancel = document.getElementById('wechat-cancel');
 const wechatLink = document.getElementById('wechat-link');
 
-// ======================
 // 电话弹窗
-// ======================
 phoneButton.addEventListener('click', (event) => {
     event.preventDefault();
     popup.classList.add('show');
@@ -617,9 +614,7 @@ popup.addEventListener('click', (event) => {
     if (event.target === popup) popup.classList.remove('show');
 });
 
-// ======================
 // 微信弹窗
-// ======================
 wechatButton.addEventListener('click', (event) => {
     event.preventDefault();
     wechatPopup.classList.add('show');
@@ -644,16 +639,12 @@ const urlParams = new URLSearchParams(window.location.search);
 // 判断是否锁屏
 const screenLocked = urlParams.get('screen') === 'locked';
 
-// -----------------------------
 // 1. support=email → 自动跳转 mailto
-// -----------------------------
 if (urlParams.get('support') === 'email') {
     window.location.href = "mailto:support@yume.zone";
 }
 
-// -----------------------------
 // 2. appmode=true → 隐藏 app 下载区域
-// -----------------------------
 if (urlParams.get('appmode') === 'true') {
     const appContainer = document.querySelector('.app-container');
     if (appContainer) {
@@ -661,9 +652,7 @@ if (urlParams.get('appmode') === 'true') {
     }
 }
 
-// -----------------------------
 // 3. 小宽度弹窗
-// -----------------------------
 function checkOrientation() {
     const warning = document.getElementById('orientation-warning');
 
@@ -698,10 +687,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const openTermsBtn = document.getElementById("open-terms");
     const closeBtn = document.getElementById("termsCloseBtn");
 
-    // -----------------------------
-    // 打开与关闭弹窗
-    // -----------------------------
-    window.openTerms = function () {
+        // 打开与关闭弹窗
+        window.openTerms = function () {
         termsBox.style.display = "block";
     };
 
@@ -711,11 +698,8 @@ document.addEventListener("DOMContentLoaded", () => {
         termsBox.style.display = "none";
     });
 
-    // -----------------------------
-    // 多语言 Markdown 加载
-    // -----------------------------
-    async function loadTermsContent(type) {
-        // 使用 lang.js 中的 lang 变量，lang.js 会确保 lang 是有效的语言
+        // 多语言 Markdown 加载
+        async function loadTermsContent(type) {
         let fileLang = lang;  // 使用 lang 作为当前语言
 
         // 正确路径
@@ -744,10 +728,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // -----------------------------
-    // Tab 切换
-    // -----------------------------
-    const tabs = document.querySelectorAll(".terms-tab");
+        // Tab 切换
+        const tabs = document.querySelectorAll(".terms-tab");
     const panels = document.querySelectorAll(".terms-panel");
 
     tabs.forEach(tab => {
@@ -766,10 +748,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // -----------------------------
-    // URL 参数自动打开条款
-    // -----------------------------
-    function openTermsFromURL() {
+        // URL 参数自动打开条款
+        function openTermsFromURL() {
         const params = new URLSearchParams(window.location.search);
         const term = params.get("terms");
 
@@ -798,10 +778,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // URL 参数解析
     openTermsFromURL();
 
-    // -----------------------------
-    // 监听语言切换（与你的语言系统完全兼容）
-    // -----------------------------
-    $(".translate").click(function () {
+        // 监听语言切换（与你的语言系统完全兼容）
+        $(".translate").click(function () {
         const selectedLang = $(this).attr("id");
 
         if ('localStorage' in window) {
@@ -827,10 +805,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const closeBtn = document.getElementById("announcementCloseBtn");
     const contentPanel = document.getElementById("announcement-content");
 
-    // -----------------------------
-    // 打开与关闭弹窗
-    // -----------------------------
-    window.openAnnouncement = function () {
+        // 打开与关闭弹窗
+        window.openAnnouncement = function () {
         box.style.display = "block";
     };
 
@@ -838,10 +814,8 @@ document.addEventListener("DOMContentLoaded", () => {
         box.style.display = "none";
     });
 
-    // -----------------------------
-    // 加载公告 Markdown（多语言）
-    // -----------------------------
-    async function loadAnnouncement(mdUrl) {
+        // 加载公告 Markdown（多语言）
+        async function loadAnnouncement(mdUrl) {
         try {
             const res = await fetch(mdUrl);
             if (!res.ok) throw new Error();
@@ -856,10 +830,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // -----------------------------
-    // 从 Worker 获取公告信息（让 Worker 决定是否有效）
-    // -----------------------------
-    async function fetchAnnouncement() {
+        // 从 Worker 获取公告信息（让 Worker 决定是否有效）
+        async function fetchAnnouncement() {
         try {
             const res = await fetch("https://yume-official-api.yume.zone/announcement", { cache: "no-store" });
             const data = await res.json();
@@ -889,18 +861,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // -----------------------------
-    // 页面加载时自动检查公告
-    // -----------------------------
-    (async () => {
+        // 页面加载时自动检查公告
+        (async () => {
         const ok = await fetchAnnouncement();
         if (ok) window.openAnnouncement();
     })();
 
-    // -----------------------------
-    // 监听语言切换
-    // -----------------------------
-    $(".translate").click(async function () {
+        // 监听语言切换
+        $(".translate").click(async function () {
         const selectedLang = $(this).attr("id");
 
         if ('localStorage' in window) {

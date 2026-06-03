@@ -129,13 +129,13 @@
 
     /*功能选项*/
     body.lantern-active .top-left-icons {
-        flex-direction: row;   /* ⭐ 小屏幕横排 */
+        flex-direction: row;
         gap: 8px;
         align-items: center;
     }
 
     body.lantern-active .app-container {
-        flex-direction: row;   /* ⭐ iOS/Android 横排 */
+        flex-direction: row;
         gap: 8px;
     }
 

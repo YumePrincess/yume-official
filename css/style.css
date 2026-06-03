@@ -89,7 +89,7 @@ img.error {
 section {
     display: flex;
     flex-direction: column;
-    min-height: 100vh; /* 内容少时 footer 贴底 */
+    min-height: 100vh;
     position: relative !important;
     height: auto !important;
     transform: none !important;
@@ -212,21 +212,21 @@ i.iconfont.icon-yinhao-copy {
     font-size: 1.75rem;
     margin: 0px 10px;
 }
-/* 去掉按钮的默认样式 */
+
 button.link {
-  all: unset; /* 重置所有默认样式 */
-  cursor: pointer; /* 设置鼠标指针样式 */
-  display: inline-flex; /* 保持按钮的内联显示并允许图标水平排列 */
-  align-items: center; /* 让图标垂直居中 */
-  text-decoration: none; /* 去掉下划线 */
-  background: transparent; /* 使按钮背景透明 */
-  border: none; /* 去掉边框 */
-  padding: 0; /* 去掉内边距 */
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
 button.link i {
-  font-size: 1.75rem; /* 设置图标大小 */
-  color: inherit; /* 继承父元素的字体颜色 */
+  font-size: 1.75rem;
+  color: inherit;
 }
 
 /*
@@ -610,11 +610,11 @@ i.iconfont.icon-z_shangpinheji {
 
 /*更多页面*/
 .box-left {
-    flex: 0 44%; /* 左侧占44%宽度 */
-    min-width: 400px; /* 最小宽度 */
+    flex: 0 44%;
+    min-width: 400px;
     display: flex;
     flex-direction: column;
-    height: 100%; /* 确保高度占满父元素 */
+    height: 100%;
 }
 
 .box {
@@ -636,12 +636,12 @@ i.iconfont.icon-z_shangpinheji {
     transform: translate(-50%, 0);
     z-index: 1997;
     width: 80%;
-    height: 80vh; /* 保持为80%视口高度 */
+    height: 80vh;
     background: rgba(255, 255, 255, 0.4);
     border-radius: 6px;
     animation: fade 0.3s;
     padding: 40px;
-    display: flex; /* 确保为flex布局 */
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     overflow: auto;
@@ -805,11 +805,11 @@ input[type="radio"]:checked+label {
 
 /*Aplayer*/
 .box-right {
-    flex: 0 54%; /* 右侧占54%宽度 */
+    flex: 0 54%;
     display: flex;
-    flex-direction: column; /* 垂直排列 */
-    justify-content: flex-start; /* 靠上显示 */
-    align-items: flex-end; /* 靠右显示 */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
     min-height: 460px;
     overflow-y: auto;
 }
@@ -1041,17 +1041,17 @@ footer {
 
 .app-container {
     display: flex;
-    flex-direction: row; /* 如果你想让 iOS/Android 竖排 */
+    flex-direction: row;
     gap: 8px;
 }
 
-/* 灯笼启用时（仅中文用户 + 春节期间） */
+/* 灯笼启用时 */
 body.lantern-active .top-left-icons {
-    flex-direction: column; /* 改为竖排 */
+    flex-direction: column;
 }
 
 body.lantern-active .app-container {
-    flex-direction: column; /* 改为竖排 */
+    flex-direction: column;
 }
 
 .app-icon {
@@ -1068,10 +1068,10 @@ body.lantern-active .app-container {
 
 /* 应用图标的图片样式 */
 .app-icon img {
-    max-width: 100%; /* 图标图片最大宽度 */
-    max-height: 100%; /* 图标图片最大高度 */
-    height: 32px; /* 高度自动 */
-    width: 32px; /* 宽度自动 */
+    max-width: 100%;
+    max-height: 100%;
+    height: 32px;
+    width: 32px;
 }
 
 /* 语言选择容器 */
@@ -1117,21 +1117,14 @@ body.lantern-active .app-container {
     position: absolute;
     top: 110%;
     left: 0;
-
-    /* ⭐ 与 link-card 风格一致 */
     background: rgb(0 0 0 / 25%);
     backdrop-filter: blur(10px);
     border-radius: 6px;
-
     padding: 8px 0;
     min-width: 200px;
     white-space: nowrap;
     box-sizing: border-box;
-
-    /* 悬浮阴影 */
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-
-    /* 动画 */
     opacity: 0;
     transform: translateY(5px);
     transition: 0.25s ease;
@@ -1247,14 +1240,14 @@ body.lantern-active .app-container {
     font-size: 2.8rem;
     color: white;
     font-family: 'Pacifico-Regular' !important;
-    transform: translateY(-10px); /* 这里的 4px 可以改成 2px / 6px 试效果 */
+    transform: translateY(-10px);
 }
 
 .terms-header-title-sub {
     font-size: 1.4rem;
     color: white;
     font-family: 'Pacifico-Regular' !important;
-    transform: translateY(-10px); /* 这里的 4px 可以改成 2px / 6px 试效果 */
+    transform: translateY(-10px);
 }
 
 .terms-header-version {
@@ -1262,7 +1255,7 @@ body.lantern-active .app-container {
     color: #eee;
     margin-left: 6px;
     font-family: 'Pacifico-Regular' !important;
-    transform: translateY(-5px); /* 这里的 4px 可以改成 2px / 6px 试效果 */
+    transform: translateY(-5px);
 }
 
 /* 选项菜单：自动换行 */
@@ -1312,7 +1305,7 @@ body.lantern-active .app-container {
 .terms-panel h6 {
     font-family: 'MiSans', sans-serif;
     font-weight: 600;
-    margin-top: 0.5rem; /* 约等于 20px */
+    margin-top: 0.5rem;
     line-height: 1.4;
 }
 
@@ -1361,10 +1354,9 @@ body.lantern-active .app-container {
     background: rgb(0 0 0 / 30%);
 }
 
-/*客服热线弹窗 弹窗遮罩层 */
-/* 遮罩层：默认不显示 */
+/*客服热线弹窗 */
 .popup {
-    display: none;              /* 默认不渲染，避免挡住按钮 */
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -1424,9 +1416,7 @@ body.lantern-active .app-container {
     font-size: 1rem;
 }
 
-/* ============================
-   无彩色毛玻璃按钮
-   ============================ */
+/* 无彩色毛玻璃按钮 */
 .popup-content .btn,
 .cancel-btn {
     padding: 10px 20px;
@@ -1463,7 +1453,6 @@ body.lantern-active .app-container {
 }
 
 /* v26.2 LINK翻页 */
-/* 关键修复 1：让 Swiper 在 link 内部不被撑开 */
 .link .swiper {
     width: 100%;
     overflow: hidden;
@@ -1473,7 +1462,6 @@ body.lantern-active .app-container {
     touch-action: pan-y;
 }
 
-/* 关键修复 2：让 slide 宽度固定，不要被 row/col 撑开 */
 .link .swiper-slide {
     width: 100% !important;
     display: block !important;
@@ -1481,19 +1469,17 @@ body.lantern-active .app-container {
     box-sizing: border-box;
 }
 
-/* 关键修复 3：分页按钮居中 */
 .link .swiper-pagination {
     text-align: center !important;
     display: block !important;
     justify-content: center !important;
 }
 
-/* 关键修复 4：分页按钮不换行 */
 .link .swiper-pagination .swiper-pagination-bullet {
     display: inline-block !important;
 }
 
-/* 分页按钮美化（可选） */
+/* 分页按钮美化 */
 .link .swiper-pagination-bullet {
   display: inline-block;
   width: 20px;
@@ -1520,14 +1506,13 @@ body.lantern-active .app-container {
 /* 每一行 */
 .link .row {
   display: flex;
-  gap: 16px; /* ⭐ 卡片间距 */
+  gap: 16px;
   margin-bottom: 16px;
 }
 
 /* 每个卡片容器 */
 .link .col-3 {
   flex: 0 0 calc(33.333% - 10.67px); 
-  /* ⭐ 三列 + 扣掉 gap */
   box-sizing: border-box;
 }
 
@@ -1546,7 +1531,7 @@ body.lantern-active .app-container {
     align-items: center;
     font-size: 1.1rem;
     margin: 0.5rem 0 1.2rem;
-    justify-content: flex-start; /* 关键 */
+    justify-content: flex-start;
 }
 
 /* 时间块 */
@@ -1607,38 +1592,26 @@ body.lantern-active .app-container {
 }
 
 /* 小宽度警告 */
-/* 横向提示框：可换行 + 不会太宽 */
 #orientation-warning {
     display: none;
     position: fixed;
     top: 12%;
     left: 50%;
     transform: translate(-50%, -5px);
-
-    /* 背景玻璃拟态 */
     background: rgb(0 0 0 / 35%);
     backdrop-filter: blur(12px);
-
-    /* 自动适应内容，不会太宽 */
     max-width: 65%;
     width: max-content;
     min-width: 45%;
-
     padding: 16px 22px;
     border-radius: 8px;
-
     color: #e8e8e8;
     font-size: 1rem;
     text-align: center;
-
-    /* 允许换行 */
     white-space: normal;
     word-break: break-word;
-
-    /* 阴影 + 动画 */
     box-shadow: 0 4px 14px rgba(0,0,0,0.25);
     z-index: 999;
-
     opacity: 0;
     transition: opacity 0.25s ease, transform 0.25s ease;
 }
@@ -1660,13 +1633,10 @@ body.lantern-active .app-container {
     background: rgb(255 255 255 / 12%);
     border: 1px solid rgb(255 255 255 / 25%);
     color: #e8e8e8;
-
     cursor: pointer;
     font-size: 0.95rem;
-
     padding: 6px 14px;
     border-radius: 6px;
-
     transition: 0.25s ease;
 }
 
