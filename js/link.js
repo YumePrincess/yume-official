@@ -31,24 +31,18 @@ const siteLinks = [
     Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><path fill="currentColor" d="M8 .8A7.2 7.2 0 1 0 15.2 8A7.21 7.21 0 0 0 8 .8m0 13.553A6.353 6.353 0 1 1 14.355 8A6.36 6.36 0 0 1 8 14.353m3.2-10.12L6.682 6.492a.42.42 0 0 0-.19.19l-2.259 4.517a.423.423 0 0 0 .569.568L9.319 9.51a.42.42 0 0 0 .19-.19L11.77 4.8a.423.423 0 0 0-.57-.568m-2.385 4.58l-3.255 1.63l1.623-3.255l3.255-1.623z"/></svg>`
   },
   {
-    nameKey: "STORE",
-    name: "雨梦Store",
-    link: "https://store.yume.zone/",
-    Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M8 7V6a4 4 0 1 1 8 0v1h3c.552 0 1 .449 1 1.007v12.001c0 1.1-.895 1.992-1.994 1.992H5.994A1.994 1.994 0 0 1 4 20.008v-12C4 7.45 4.445 7 5 7zm1.2 0h5.6V6a2.8 2.8 0 0 0-5.6 0zM8 8.2H5.2v11.808c0 .436.356.792.794.792h12.012a.794.794 0 0 0 .794-.792V8.2H16V11h-1.2V8.2H9.2V11H8z"/></svg>`
-  },
-  {
     nameKey: "YACCOUNT",
     name: "雨梦Account",
     link: "https://account.yume.zone/",
     Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M2 12c0-3.771 0-5.657 1.172-6.828S6.229 4 10 4h4c3.771 0 5.657 0 6.828 1.172S22 8.229 22 12s0 5.657-1.172 6.828S17.771 20 14 20h-4c-3.771 0-5.657 0-6.828-1.172S2 15.771 2 12"/><path d="M9 12.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5m0 0a4 4 0 0 1 4 4m-4-4a4 4 0 0 0-4 4M15 9h4m-4 3h4"/></g></svg>`
   },
   {
-    nameKey: "YESIGN",
-    name: "雨梦E-Sign",
-    link: "https://esign.yume.zone/",
+    nameKey: "YPUBLIC",
+    name: "雨梦Public",
     showLang: ["fr", "ja", "en", "zh-cn", "zh-tw"],
-    Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9 16.5s.501-2.5 1-2.5s1.07 2.5 1.5 2.5s.535-1 1-1s.564 1 1 1s1.5-1 1.5-1M9 7.04h6M9 9.25h6M9 11.5h6"/><rect width="11" height="15" x="6.5" y="4.5" rx="1.5"/></g></svg>`
-  }
+    link: "https://public.yume.zone/",
+    Svg: `<svg class="icon-35px-pd5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16"><g fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="#000000" d="M4.5 4.5H12A1.5 1.5 0 0 1 13.5 6v.5m-7.5 7H2A1.5 1.5 0 0 1 .5 12V3.5a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v1"/><path stroke="#020202" d="M8.5 12h7M12 15.5c-1.933 0-3.5-1.5-3.5-3.5s1.567-3.5 3.5-3.5c2 0 3.5 1.5 3.5 3.5S14 15.5 12 15.5M11.556 9c-1.379 2.01-1.448 4.01.087 6.34M12.454 9c1.361 1.98 1.45 3.98-.062 6.34"/></g></svg>`
+  },
 ];
 
 // 分页
