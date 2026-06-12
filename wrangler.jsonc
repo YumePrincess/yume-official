@@ -15,7 +15,18 @@
       "bucket_name": "yume-public"
     }
   ],
+  "routes": [
+    {
+      "pattern": "www.yume.zone",
+      "custom_domain": true
+    },
+    {
+      "pattern": "yume.zone",
+      "custom_domain": true
+    }
+  ],
   "vars": {
-    "ANNOUNCEMENTS_CONFIG_KEY": "announcements/config.json"
+    "ANNOUNCEMENTS_CONFIG_KEY": "announcements/config.json",
+    "DEEPL_API_KEY": "[DEEPL_API_KEY 已脱敏]"
   }
 }
