@@ -207,7 +207,7 @@ function updateContent() {
     };
 
     // 主流程
-    fetch('https://yume-official-api.yume.zone/geoip')
+    fetch('/api/geoip')
         .then(res => res.json())
         .then(ipInfo => {
             const lat = ipInfo.latitude;
@@ -833,7 +833,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 从 Worker 获取公告信息（让 Worker 决定是否有效）
         async function fetchAnnouncement() {
         try {
-            const res = await fetch("https://yume-official-api.yume.zone/announcement", { cache: "no-store" });
+            const res = await fetch("/api/announcement", { cache: "no-store" });
             const data = await res.json();
 
             const { md } = data;

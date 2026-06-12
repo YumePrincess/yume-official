@@ -663,7 +663,7 @@ function translateText(text, targetLang, isCity = false) {
     }
 
     // 城市名称 → DeepL 简体中文
-    return fetch('https://yume-official-api.yume.zone/translate', {
+    return fetch('/api/translate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
@@ -687,7 +687,7 @@ function translateText(text, targetLang, isCity = false) {
     }
 
     // 城市名称 → DeepL 繁体中文
-    return fetch('https://yume-official-api.yume.zone/translate', {
+    return fetch('/api/translate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
@@ -704,7 +704,7 @@ function translateText(text, targetLang, isCity = false) {
   }
 
   // ⭐ 其他语言：正常 DeepL 翻译
-  return fetch('https://yume-official-api.yume.zone/translate', {
+  return fetch('/api/translate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({

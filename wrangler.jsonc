@@ -1,0 +1,21 @@
+{
+  "name": "yume-official",
+  "main": "backend/worker.js",
+  "compatibility_date": "2026-06-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./frontend",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "r2_buckets": [
+    {
+      "binding": "r2",
+      "bucket_name": "yume-public"
+    }
+  ],
+  "vars": {
+    "ANNOUNCEMENTS_CONFIG_KEY": "announcements/config.json"
+  }
+}
