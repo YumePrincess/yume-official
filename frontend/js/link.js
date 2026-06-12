@@ -148,8 +148,3 @@ function renderSwiper() {
     mousewheel: true,
   });
 }
-
-// 初始化 Swiper
-document.addEventListener("DOMContentLoaded", () => {
-  renderSwiper();
-});

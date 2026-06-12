@@ -1,37 +1,42 @@
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     try {
       const url = new URL(request.url);
-      const origin = request.headers.get("Origin") || "";
-
-      // ----------------------
-      // CORS 配置
-      // ----------------------
-      const allowedDomains = [
-        /^(?:.+\.)?yume\.zone$/,
-        /^(?:.+\.)?princess\.work$/,
-      ];
-      let allowOrigin = "";
-      try {
-        const hostname = new URL(origin).hostname;
-        if (allowedDomains.some((regex) => regex.test(hostname))) {
-          allowOrigin = origin;
-        }
-      } catch {}
+      const protectedOrigin = getProtectedApiOrigin(request, url);
+      const isProtectedApi = PROTECTED_API_PATHS.has(url.pathname);
 
       // OPTIONS 预检
       if (url.pathname.startsWith("/api/") && request.method === "OPTIONS") {
-        return buildResponse(null, 204, allowOrigin, true);
+        if (isProtectedApi && !protectedOrigin.allowed) {
+          return buildResponse({ error: "Forbidden" }, 403, "");
+        }
+
+        return buildResponse(
+          null,
+          204,
+          isProtectedApi ? protectedOrigin.corsOrigin : getPublicCorsOrigin(request),
+          true
+        );
       }
 
       // ----------------------
       // 路由分发
       // ----------------------
       if (url.pathname.startsWith("/api/")) {
-        return handleApiRequest(request, env, allowOrigin);
+        if (isProtectedApi && !protectedOrigin.allowed) {
+          return buildResponse({ error: "Forbidden" }, 403, "");
+        }
+
+        return handleApiRequest(
+          request,
+          env,
+          isProtectedApi ? protectedOrigin.corsOrigin : getPublicCorsOrigin(request),
+          ctx
+        );
       }
 
-      return env.ASSETS.fetch(request);
+      const assetResponse = await env.ASSETS.fetch(request);
+      return withAssetCacheHeaders(assetResponse, url);
     } catch (err) {
       return buildResponse({ error: err.message || "Internal Error" }, 500);
     }
@@ -39,8 +44,11 @@ export default {
 };
 
 const ANNOUNCEMENTS_CONFIG_KEY = "announcements/config.json";
+const PROTECTED_API_PATHS = new Set(["/api/geoip", "/api/translate"]);
+const ALLOWED_ORIGIN_DOMAINS = ["yume.zone", "princess.work"];
+const INTERNAL_CACHE_URL = "https://cache.yume.zone";
 
-async function handleApiRequest(request, env, allowOrigin) {
+async function handleApiRequest(request, env, allowOrigin, ctx) {
   const url = new URL(request.url);
   const route = url.pathname.slice("/api".length);
 
@@ -49,11 +57,11 @@ async function handleApiRequest(request, env, allowOrigin) {
   }
 
   if (route === "/translate" && request.method === "POST") {
-    return handleTranslate(request, env, allowOrigin);
+    return handleTranslate(request, env, allowOrigin, ctx);
   }
 
   if (route === "/geoip" && request.method === "GET") {
-    return handleGeoIP(request, allowOrigin);
+    return handleGeoIP(request, allowOrigin, ctx);
   }
 
   return buildResponse(
@@ -69,17 +77,116 @@ async function handleApiRequest(request, env, allowOrigin) {
 function buildResponse(data, status = 200, allowOrigin = "*", isOptions = false) {
   const headers = {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": allowOrigin || "*",
-    "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type,Authorization",
     Vary: "Origin",
   };
+
+  if (allowOrigin) {
+    headers["Access-Control-Allow-Origin"] = allowOrigin;
+    headers["Access-Control-Allow-Methods"] = "GET,POST,OPTIONS";
+    headers["Access-Control-Allow-Headers"] = "Content-Type,Authorization";
+  }
 
   if (isOptions) {
     return new Response(null, { status: status, headers });
   }
 
   return new Response(JSON.stringify(data), { status, headers });
+}
+
+function getPublicCorsOrigin(request) {
+  const origin = request.headers.get("Origin");
+  return getAllowedOrigin(origin) || "*";
+}
+
+function getProtectedApiOrigin(request, url) {
+  const origin = request.headers.get("Origin");
+  const allowedOrigin = getAllowedOrigin(origin);
+
+  if (origin) {
+    return {
+      allowed: Boolean(allowedOrigin),
+      corsOrigin: allowedOrigin || "",
+    };
+  }
+
+  const referer = request.headers.get("Referer");
+  if (referer) {
+    return {
+      allowed: Boolean(getAllowedOrigin(referer)),
+      corsOrigin: "",
+    };
+  }
+
+  return {
+    allowed: isAllowedHostname(url.hostname),
+    corsOrigin: "",
+  };
+}
+
+function getAllowedOrigin(origin) {
+  if (!origin) {
+    return "";
+  }
+
+  try {
+    const originUrl = new URL(origin);
+    if (
+      (originUrl.protocol === "https:" || originUrl.protocol === "http:") &&
+      isAllowedHostname(originUrl.hostname)
+    ) {
+      return originUrl.origin;
+    }
+  } catch {}
+
+  return "";
+}
+
+function isAllowedHostname(hostname) {
+  const normalizedHostname = hostname.toLowerCase().replace(/\.$/, "");
+  return ALLOWED_ORIGIN_DOMAINS.some((domain) => {
+    return normalizedHostname === domain || normalizedHostname.endsWith(`.${domain}`);
+  });
+}
+
+function withAssetCacheHeaders(response, url) {
+  if (!response.ok) {
+    return response;
+  }
+
+  const pathname = url.pathname;
+  const extension = pathname.split(".").pop()?.toLowerCase();
+  const immutableExtensions = new Set([
+    "avif",
+    "gif",
+    "ico",
+    "jpg",
+    "jpeg",
+    "mp3",
+    "png",
+    "svg",
+    "ttf",
+    "webp",
+    "woff",
+    "woff2",
+  ]);
+  const shortCacheExtensions = new Set(["css", "js", "json", "map", "md"]);
+
+  if (!extension || pathname.endsWith(".html")) {
+    return response;
+  }
+
+  const headers = new Headers(response.headers);
+  if (immutableExtensions.has(extension)) {
+    headers.set("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
+  } else if (shortCacheExtensions.has(extension)) {
+    headers.set("Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
+  }
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
 }
 
 // ----------------------
@@ -169,7 +276,7 @@ function isMarkdownMap(value) {
 // ----------------------
 // DeepL 翻译
 // ----------------------
-async function handleTranslate(request, env, allowOrigin) {
+async function handleTranslate(request, env, allowOrigin, ctx) {
   const DEEPL_API_KEY = env.DEEPL_API_KEY;
   if (!DEEPL_API_KEY) {
     return buildResponse({ error: "DEEPL_API_KEY not set" }, 500, allowOrigin);
@@ -200,6 +307,22 @@ async function handleTranslate(request, env, allowOrigin) {
     );
   }
 
+  const normalizedTargetLang = String(target_lang).toUpperCase();
+  const translateCache = getDefaultCache();
+  const cacheKey = translateCache
+    ? await buildInternalCacheRequest(
+        "translate",
+        `${normalizedTargetLang}\n${String(text)}`
+      )
+    : null;
+
+  if (translateCache && cacheKey) {
+    const cached = await translateCache.match(cacheKey);
+    if (cached) {
+      return buildResponse(await cached.json(), 200, allowOrigin);
+    }
+  }
+
   const apiUrl = "https://api-free.deepl.com/v2/translate";
   try {
     const deeplRes = await fetch(apiUrl, {
@@ -211,11 +334,20 @@ async function handleTranslate(request, env, allowOrigin) {
       body: new URLSearchParams({
         auth_key: DEEPL_API_KEY,
         text,
-        target_lang: target_lang.toUpperCase(),
+        target_lang: normalizedTargetLang,
       }),
     });
 
     const data = await deeplRes.json();
+    if (deeplRes.ok && translateCache && cacheKey) {
+      ctx?.waitUntil(
+        translateCache.put(
+          cacheKey,
+          buildCacheResponse(data, 86400)
+        )
+      );
+    }
+
     return buildResponse(data, deeplRes.ok ? 200 : 500, allowOrigin);
   } catch (err) {
     return buildResponse({ error: err.message || "DeepL API Error" }, 500, allowOrigin);
@@ -225,13 +357,52 @@ async function handleTranslate(request, env, allowOrigin) {
 // ----------------------
 // IP 查询
 // ----------------------
-async function handleGeoIP(request, allowOrigin) {
+async function handleGeoIP(request, allowOrigin, ctx) {
   const ip = request.headers.get("CF-Connecting-IP") || "8.8.8.8"; // fallback
+  const geoCache = getDefaultCache();
+  const cacheKey = geoCache ? await buildInternalCacheRequest("geoip", ip) : null;
+
+  if (geoCache && cacheKey) {
+    const cached = await geoCache.match(cacheKey);
+    if (cached) {
+      return buildResponse(await cached.json(), 200, allowOrigin);
+    }
+  }
+
   try {
     const res = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}`);
     const data = await res.json();
+    if (res.ok && geoCache && cacheKey) {
+      ctx?.waitUntil(geoCache.put(cacheKey, buildCacheResponse(data, 3600)));
+    }
+
     return buildResponse(data, 200, allowOrigin);
   } catch (err) {
     return buildResponse({ error: err.message || "GeoIP lookup failed" }, 500, allowOrigin);
   }
+}
+
+function getDefaultCache() {
+  return typeof caches !== "undefined" ? caches.default : null;
+}
+
+async function buildInternalCacheRequest(scope, value) {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(value)
+  );
+  const hash = [...new Uint8Array(digest)]
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+
+  return new Request(`${INTERNAL_CACHE_URL}/${scope}/${hash}`);
+}
+
+function buildCacheResponse(data, maxAge) {
+  return new Response(JSON.stringify(data), {
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": `public, max-age=${maxAge}`,
+    },
+  });
 }

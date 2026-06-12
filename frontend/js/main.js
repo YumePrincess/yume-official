@@ -15,6 +15,100 @@ iziToast.settings({
     iconColor: '#efefef',
 });
 
+const loadedScripts = new Map();
+const loadedStylesheets = new Set();
+
+function loadScriptOnce(src) {
+    if (loadedScripts.has(src)) {
+        return loadedScripts.get(src);
+    }
+
+    const promise = new Promise((resolve, reject) => {
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) {
+            existing.addEventListener('load', () => resolve(existing), { once: true });
+            existing.addEventListener('error', reject, { once: true });
+            if (existing.dataset.loaded === 'true') resolve(existing);
+            return;
+        }
+
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = true;
+        script.onload = () => {
+            script.dataset.loaded = 'true';
+            resolve(script);
+        };
+        script.onerror = reject;
+        document.body.appendChild(script);
+    });
+
+    loadedScripts.set(src, promise);
+    return promise;
+}
+
+function loadStylesheetOnce(href) {
+    if (loadedStylesheets.has(href) || document.querySelector(`link[href="${href}"]`)) {
+        loadedStylesheets.add(href);
+        return;
+    }
+
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = href;
+    document.head.appendChild(link);
+    loadedStylesheets.add(href);
+}
+
+function ensureMarked() {
+    if (window.marked) {
+        return Promise.resolve(window.marked);
+    }
+
+    return loadScriptOnce('/js/marked.min.js').then(() => window.marked);
+}
+
+async function renderMarkdown(mdText) {
+    const markedLib = await ensureMarked();
+    return markedLib.parse(mdText);
+}
+
+function getJsonWithSessionCache(cacheKey, url, maxAgeMs) {
+    const storageKey = `yume-json-cache:${cacheKey}`;
+
+    try {
+        const cached = sessionStorage.getItem(storageKey);
+        if (cached) {
+            const entry = JSON.parse(cached);
+            if (Date.now() - entry.time < maxAgeMs) {
+                return Promise.resolve(entry.data);
+            }
+        }
+    } catch (err) {
+        console.warn('Session cache read failed', err);
+    }
+
+    return fetch(url)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`Request failed: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            try {
+                sessionStorage.setItem(
+                    storageKey,
+                    JSON.stringify({ time: Date.now(), data })
+                );
+            } catch (err) {
+                console.warn('Session cache write failed', err);
+            }
+
+            return data;
+        });
+}
+
 //加载完成后执行
 window.addEventListener('load', function () {
 
@@ -41,9 +135,10 @@ setTimeout(function () {
 
 //延迟加载音乐播放器
 function downloadJSAtOnload() {
-    var element = document.createElement("script");
-    element.src = "/js/music.js";
-    document.body.appendChild(element);
+    loadStylesheetOnce('/css/APlayer.min.css');
+    loadScriptOnce('/js/APlayer.min.js')
+        .then(() => loadScriptOnce('/js/music.js'))
+        .catch(console.error);
 }
 if (window.addEventListener)
     window.addEventListener("load", downloadJSAtOnload, false);
@@ -147,11 +242,14 @@ if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
 // 更新一言和天气
 function updateContent() {
     // 获取一言
-    fetch('https://international.v1.hitokoto.cn?max_length=20')
-        .then(response => response.json())
+    getJsonWithSessionCache(
+        'hitokoto',
+        'https://international.v1.hitokoto.cn?max_length=20',
+        5 * 60 * 1000
+    )
         .then(data => {
             const hitokoto = data.hitokoto;
-            let from = data.from;
+            let from = data.from || translate('ZUOZHEBUXIANG');
 
             // 作者名字只有一个字，直接输出 translate('ZUOZHEBUXIANG')
             if (from.length === 1) {
@@ -207,8 +305,7 @@ function updateContent() {
     };
 
     // 主流程
-    fetch('/api/geoip')
-        .then(res => res.json())
+    getJsonWithSessionCache('geoip', '/api/geoip', 30 * 60 * 1000)
         .then(ipInfo => {
             const lat = ipInfo.latitude;
             const lon = ipInfo.longitude;
@@ -218,7 +315,7 @@ function updateContent() {
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,temperature_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
 
             return Promise.all([
-                fetch(url).then(res => res.json()),
+                getJsonWithSessionCache(`weather:${lat}:${lon}`, url, 10 * 60 * 1000),
                 city
             ]);
         })
@@ -687,9 +784,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const openTermsBtn = document.getElementById("open-terms");
     const closeBtn = document.getElementById("termsCloseBtn");
 
-        // 打开与关闭弹窗
-        window.openTerms = function () {
+    // 打开与关闭弹窗
+    function getActiveTermType() {
+        const activeTab = document.querySelector(".terms-tab.active");
+        return activeTab ? activeTab.dataset.target.replace("terms-", "") : "user";
+    }
+
+    window.openTerms = function () {
         termsBox.style.display = "block";
+        loadTermsContent(getActiveTermType());
     };
 
     openTermsBtn.addEventListener("click", openTerms);
@@ -698,8 +801,8 @@ document.addEventListener("DOMContentLoaded", () => {
         termsBox.style.display = "none";
     });
 
-        // 多语言 Markdown 加载
-        async function loadTermsContent(type) {
+    // 多语言 Markdown 加载
+    async function loadTermsContent(type) {
         let fileLang = lang;  // 使用 lang 作为当前语言
 
         // 正确路径
@@ -711,7 +814,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // 如果文件存在，加载内容
             if (response.ok) {
                 const mdText = await response.text();
-                const html = marked.parse(mdText);
+                const html = await renderMarkdown(mdText);
                 document.getElementById(`terms-${type}`).innerHTML = html;
             } else {
                 // 如果文件不存在，显示错误信息
@@ -728,8 +831,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-        // Tab 切换
-        const tabs = document.querySelectorAll(".terms-tab");
+    // Tab 切换
+    const tabs = document.querySelectorAll(".terms-tab");
     const panels = document.querySelectorAll(".terms-panel");
 
     tabs.forEach(tab => {
@@ -748,14 +851,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-        // URL 参数自动打开条款
-        function openTermsFromURL() {
+    // URL 参数自动打开条款
+    function openTermsFromURL() {
         const params = new URLSearchParams(window.location.search);
         const term = params.get("terms");
 
         if (!term) return;
-
-        window.openTerms();
 
         const targetTab = document.querySelector(`.terms-tab[data-target="terms-${term}"]`);
         const targetPanel = document.getElementById(`terms-${term}`);
@@ -768,18 +869,15 @@ document.addEventListener("DOMContentLoaded", () => {
             targetPanel.classList.add("show");
 
             // 加载对应的 Markdown 文件
-            loadTermsContent(term);
+            window.openTerms();
         }
     }
-
-    // 默认加载用户条款
-    loadTermsContent("user");
 
     // URL 参数解析
     openTermsFromURL();
 
-        // 监听语言切换（与你的语言系统完全兼容）
-        $(".translate").click(function () {
+    // 监听语言切换（与你的语言系统完全兼容）
+    $(".translate").click(function () {
         const selectedLang = $(this).attr("id");
 
         if ('localStorage' in window) {
@@ -789,10 +887,8 @@ document.addEventListener("DOMContentLoaded", () => {
         lang = selectedLang;
 
         // 重新加载当前条款
-        const activeTab = document.querySelector(".terms-tab.active");
-        if (activeTab) {
-            const type = activeTab.dataset.target.replace("terms-", "");
-            loadTermsContent(type);
+        if (termsBox.style.display !== "none") {
+            loadTermsContent(getActiveTermType());
         }
     });
 
@@ -821,7 +917,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!res.ok) throw new Error();
 
             const mdText = await res.text();
-            const html = marked.parse(mdText);
+            const html = await renderMarkdown(mdText);
             contentPanel.innerHTML = html;
 
         } catch (e) {

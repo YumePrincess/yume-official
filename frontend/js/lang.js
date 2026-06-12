@@ -653,58 +653,36 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// DeepL 翻译函数（支持减少 API 调用）
-function translateText(text, targetLang, isCity = false) {
+const translationCache = new Map();
+let openCCLoader = null;
+let openCCTwConverter = null;
 
-  // ⭐ zh-cn：只有城市名称才调用 DeepL，其余直接返回中文原文
-  if (targetLang === "zh-cn") {
-    if (!isCity) {
-      return Promise.resolve(text); // 天气描述 & 每日一句 → 不翻译
-    }
+function loadOpenCC() {
+  if (window.OpenCC) {
+    return Promise.resolve(window.OpenCC);
+  }
 
-    // 城市名称 → DeepL 简体中文
-    return fetch('/api/translate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        text: text,
-        target_lang: "ZH"
-      })
-    })
-    .then(res => res.json())
-    .then(data => data.translations[0].text)
-    .catch(err => {
-      console.error("Translate error", err);
-      return undefined;
+  if (!openCCLoader) {
+    openCCLoader = new Promise((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = '/js/full.min.js';
+      script.async = true;
+      script.onload = () => resolve(window.OpenCC);
+      script.onerror = reject;
+      document.body.appendChild(script);
     });
   }
 
-  // ⭐ zh-tw：城市名称用 DeepL，其他中文内容用 OpenCC
-  if (targetLang === "zh-tw") {
-    if (!isCity) {
-      const converter = OpenCC.Converter({ from: 'cn', to: 'tw' });
-      return Promise.resolve(converter(text)); // 天气描述 & 每日一句 → OpenCC
-    }
+  return openCCLoader;
+}
 
-    // 城市名称 → DeepL 繁体中文
-    return fetch('/api/translate', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({
-        text: text,
-        target_lang: "ZH-HANT"
-      })
-    })
-    .then(res => res.json())
-    .then(data => data.translations[0].text)
-    .catch(err => {
-      console.error("Translate error", err);
-      return undefined;
-    });
+function requestDeepLTranslation(text, targetLang) {
+  const cacheKey = `${targetLang}\n${text}`;
+  if (translationCache.has(cacheKey)) {
+    return translationCache.get(cacheKey);
   }
 
-  // ⭐ 其他语言：正常 DeepL 翻译
-  return fetch('/api/translate', {
+  const promise = fetch('/api/translate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
@@ -712,10 +690,52 @@ function translateText(text, targetLang, isCity = false) {
       target_lang: targetLang
     })
   })
-  .then(res => res.json())
-  .then(data => data.translations[0].text)
+  .then(res => {
+    if (!res.ok) {
+      throw new Error(`Translate request failed: ${res.status}`);
+    }
+    return res.json();
+  })
+  .then(data => data.translations?.[0]?.text || text)
   .catch(err => {
     console.error("Translate error", err);
-    return undefined;
+    return text;
   });
+
+  translationCache.set(cacheKey, promise);
+  return promise;
+}
+
+// DeepL 翻译函数（支持减少 API 调用）
+function translateText(text, targetLang, isCity = false) {
+  if (!text) {
+    return Promise.resolve(text);
+  }
+
+  // zh-cn：只有城市名称才调用 DeepL，其余直接返回中文原文
+  if (targetLang === "zh-cn") {
+    return isCity ? requestDeepLTranslation(text, "ZH") : Promise.resolve(text);
+  }
+
+  // zh-tw：城市名称用 DeepL，其他中文内容按需加载 OpenCC
+  if (targetLang === "zh-tw") {
+    if (isCity) {
+      return requestDeepLTranslation(text, "ZH-HANT");
+    }
+
+    return loadOpenCC()
+      .then((OpenCCLib) => {
+        if (!openCCTwConverter) {
+          openCCTwConverter = OpenCCLib.Converter({ from: 'cn', to: 'tw' });
+        }
+        return openCCTwConverter(text);
+      })
+      .catch(err => {
+        console.error("OpenCC load error", err);
+        return text;
+      });
+  }
+
+  // 其他语言：正常 DeepL 翻译
+  return requestDeepLTranslation(text, targetLang);
 }
