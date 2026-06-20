@@ -350,13 +350,13 @@ button.link i {
 }
 
 .music-button {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: auto;
+    display: flex;
+    flex-wrap: nowrap;
     align-items: stretch;
     justify-content: center;
     gap: 6px;
     width: 100%;
+    min-width: 0;
     margin-bottom: 0;
 }
 
@@ -431,6 +431,14 @@ i#next {
     align-items: center;
     justify-content: center;
     align-self: stretch;
+}
+
+.music-button > #openmore,
+.music-button > #music-close {
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
+    box-sizing: border-box;
 }
 
 #music-open:hover,
