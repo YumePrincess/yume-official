@@ -91,28 +91,29 @@
     }
 
     .box-wrapper {
-        top: 28px;
-        transform: translateX(-50%);
-        width: calc(100% - 28px);
-        height: auto;
-        min-height: calc(100vh - 56px);
-        min-height: calc(100dvh - 56px);
-        max-height: calc(100vh - 56px);
-        max-height: calc(100dvh - 56px);
+        top: 10%;
+        transform: translate(-50%, 0);
+        width: 80%;
+        height: 80vh;
+        height: 80dvh;
+        min-height: 0;
+        max-height: 80vh;
+        max-height: 80dvh;
         padding: 18px;
+        box-sizing: border-box;
         flex-direction: column;
         justify-content: flex-start;
+        align-items: stretch;
         overflow-x: hidden;
         overflow-y: auto;
     }
 
     .box-left {
-        flex: 1 0 auto;
+        flex: 1 1 auto;
         width: 100%;
         max-width: 100%;
         min-width: 0;
-        min-height: calc(100vh - 92px);
-        min-height: calc(100dvh - 92px);
+        min-height: 0;
         height: auto;
         overflow-x: hidden;
     }
