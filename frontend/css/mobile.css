@@ -93,14 +93,18 @@
     .box-wrapper {
         top: 28px;
         width: calc(100% - 28px);
-        height: calc(100vh - 56px);
+        height: auto;
+        max-height: calc(100vh - 56px);
+        max-height: calc(100dvh - 56px);
         padding: 18px;
         flex-direction: column;
+        justify-content: flex-start;
         overflow-x: hidden;
+        overflow-y: auto;
     }
 
     .box-left {
-        flex: 1 1 auto;
+        flex: 0 0 auto;
         width: 100%;
         max-width: 100%;
         min-width: 0;
@@ -114,6 +118,7 @@
     }
 
     .box-right {
+        flex: 0 0 auto;
         width: 100%;
         max-width: 100%;
         min-width: 0;

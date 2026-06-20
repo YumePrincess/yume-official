@@ -435,8 +435,9 @@ i#next {
 
 .music-button > #openmore,
 .music-button > #music-close {
-    flex: 1 1 0;
-    width: auto;
+    flex: 0 1 var(--music-button-width, auto);
+    width: var(--music-button-width, fit-content);
+    max-width: calc((100% - 6px) / 2);
     min-width: 0;
     box-sizing: border-box;
 }

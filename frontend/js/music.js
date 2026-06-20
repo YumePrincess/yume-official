@@ -194,6 +194,9 @@ $("#music").hover(function () {
 $('#open-music').on('click', function () {
     $('#hitokoto').css("display", "none");
     $('#music').css("display", "flex");
+    window.requestAnimationFrame(function () {
+        window.syncMusicButtonSize?.();
+    });
 });
 
 $("#hitokoto").hover(function () {

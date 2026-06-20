@@ -603,12 +603,67 @@ function updateTextContent() {
     }
 }
 
+function syncMusicButtonSize() {
+    var buttonGroup = document.querySelector('.music-button');
+    if (!buttonGroup) return;
+
+    var buttons = [
+        document.getElementById('openmore'),
+        document.getElementById('music-close')
+    ].filter(Boolean);
+
+    if (buttons.length < 2) return;
+
+    buttonGroup.style.removeProperty('--music-button-width');
+
+    var groupWidth = buttonGroup.clientWidth;
+    if (!groupWidth) return;
+
+    var groupStyle = window.getComputedStyle(buttonGroup);
+    var gap = parseFloat(groupStyle.columnGap || groupStyle.gap) || 0;
+    var maxButtonWidth = Math.max(0, Math.floor((groupWidth - gap) / 2));
+    var previousStyles = buttons.map(function(button) {
+        return {
+            width: button.style.width,
+            maxWidth: button.style.maxWidth
+        };
+    });
+
+    buttons.forEach(function(button) {
+        button.style.width = 'max-content';
+        button.style.maxWidth = 'none';
+    });
+
+    var contentWidth = buttons.reduce(function(maxWidth, button) {
+        return Math.max(maxWidth, Math.ceil(button.scrollWidth));
+    }, 0);
+    var buttonWidth = Math.min(maxButtonWidth, contentWidth);
+
+    buttons.forEach(function(button, index) {
+        button.style.width = previousStyles[index].width;
+        button.style.maxWidth = previousStyles[index].maxWidth;
+    });
+
+    if (buttonWidth > 0) {
+        buttonGroup.style.setProperty('--music-button-width', buttonWidth + 'px');
+    }
+}
+
+window.syncMusicButtonSize = syncMusicButtonSize;
+window.addEventListener('resize', function() {
+    window.requestAnimationFrame(syncMusicButtonSize);
+});
+if (document.fonts) {
+    document.fonts.ready.then(syncMusicButtonSize);
+}
+
 // 页面加载完成时，设置当前语言的文本内容
 $(document).ready(function() {
 
     // 页面加载时更新文本内容
 	updateMetaDescription();
     updateTextContent();
+    syncMusicButtonSize();
     const contentReady = updateContent();
     window.yumeLoading?.track(contentReady, 58, translate('LOADTEXT'));
     updateLantern();
@@ -629,6 +684,7 @@ $(document).ready(function() {
         // 更新页面中的文本
 		updateMetaDescription();
         updateTextContent();
+        syncMusicButtonSize();
         updateContent();
         updateLantern();
 		renderSwiper();
