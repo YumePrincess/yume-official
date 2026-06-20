@@ -90,8 +90,10 @@ section {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: 100dvh;
     position: relative !important;
-    height: auto !important;
+    height: 100vh !important;
+    height: 100dvh !important;
     transform: none !important;
     opacity: 1 !important;
     filter: none !important;
@@ -99,7 +101,9 @@ section {
 
 main {
     width: 100%;
-    height: calc(100vh - 46px); 
+    height: auto;
+    min-height: 0;
+    flex: 1 1 auto;
 	padding-top: 1.0rem;
     overflow: auto;
     background: rgb(0 0 0 / 20%);
@@ -132,7 +136,7 @@ main {
 
 .row.rightone {
     display: flex;
-    align-items: center;
+    align-items: stretch;
 }
 
 /*头像*/
@@ -190,6 +194,9 @@ span.img-text {
     margin: 1rem 1rem;
     line-height: 1.6rem;
     /*font-size: 1.10rem;*/
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: normal;
 }
 
 span#change {
@@ -252,16 +259,21 @@ button.link i {
     backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 6px;
+    min-height: 165px;
     height: 165px;
+    max-height: 165px;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .hitokoto-all {
-    margin-top: 10px;
+    margin-top: 0;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    min-height: 0;
 }
 
 .hitokoto-text {
@@ -313,10 +325,13 @@ button.link i {
     backdrop-filter: blur(10px);
     padding: 20px;
     border-radius: 6px;
+    min-height: 165px;
     height: 165px;
+    max-height: 165px;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    overflow: hidden;
     animation: fade;
     -webkit-animation: fade 0.3s;
     -moz-animation: fade 0.3s;
@@ -328,14 +343,21 @@ button.link i {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 8px;
     height: 100%;
+    min-height: 0;
 }
 
 .music-button {
-    display: flex;
-    align-items: center;
-    margin-bottom: 6px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: auto;
+    align-items: stretch;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    margin-bottom: 0;
 }
 
 .music-control {
@@ -347,9 +369,12 @@ button.link i {
 }
 
 .music-menu {
-    height: 26px;
+    min-height: 26px;
+    height: auto;
     display: flex;
     align-items: center;
+    justify-content: center;
+    max-width: 100%;
 }
 
 i.iconfont.icon-play,
@@ -374,10 +399,12 @@ i#next {
 .music-text {
     margin-top: 6px;
     font-size: 1.10rem;
-    text-overflow: ellipsis;
     max-width: 220px;
-    overflow-x: hidden;
-    white-space: nowrap;
+    overflow: hidden;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+    text-align: center;
     animation: fade;
     -webkit-animation: fade 0.5s;
     -moz-animation: fade 0.5s;
@@ -389,12 +416,21 @@ i#next {
 #openmore,
 #music-close {
     background: rgb(255 255 255 / 15%);
-    padding: 2px 8px;
+    padding: 4px 8px;
     border-radius: 6px;
-    margin: 0px 6px;
-    text-overflow: ellipsis;
-    overflow-x: hidden;
-    white-space: nowrap;
+    margin: 0;
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: anywhere;
+    text-align: center;
+    line-height: 1.25;
+    min-height: 28px;
+    height: auto;
+    max-width: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
 }
 
 #music-open:hover,
@@ -460,6 +496,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 
 .time {
+    --time-card-gap: 0.58rem;
     width: 100%;
     background: rgb(0 0 0 / 25%);
     backdrop-filter: blur(10px);
@@ -468,12 +505,44 @@ input[type=range]::-webkit-slider-thumb {
     text-align: center;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--time-card-gap);
+    min-height: 165px;
     height: 165px;
+    max-height: 165px;
     font-size: 1.10rem;
+    overflow: hidden;
+}
+
+.timeshow {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--time-card-gap);
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.weather {
+    width: 100%;
+    margin-top: 0;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.time-date {
+    display: block;
+    max-width: 100%;
 }
 
 span.time-text {
-    font-size: 3.25rem;
+    display: inline-block;
+    max-width: 100%;
+    font-size: clamp(2.2rem, 4.4vw, 3.25rem);
+    line-height: 1;
     letter-spacing: 2px;
     font-family: 'UnidreamLED' !important;
 }
@@ -589,7 +658,7 @@ i.iconfont.icon-z_shangpinheji {
 .progress-bar {
     font-family: 'UnidreamLED' !important;
     background-color: #efefef !important;
-    color: rgb(86 77 89) !important;
+    color: #111111 !important;
     font-size: 0.95rem;
     height: 20px;
 }
@@ -922,14 +991,27 @@ i.iconfont.icon-times {
 /*页脚样式*/
 footer {
     text-align: center;
-    height: 46px;
+    min-height: 46px;
+    height: auto;
+    flex: 0 0 auto;
     backdrop-filter: blur(10px);
     background: rgb(0 0 0 / 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    box-sizing: border-box;
 }
 
 .power {
-    line-height: 46px;
+    line-height: 1.45;
     color: #eeeeee;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
     animation: fade;
     -webkit-animation: fade 0.75s;
     -moz-animation: fade 0.75s;
@@ -940,8 +1022,13 @@ footer {
 /*播放音乐时底栏歌词*/
 #lrc {
     display: none;
-    line-height: 46px;
+    line-height: 1.45;
     color: #eeeeee;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
     animation: fade;
     -webkit-animation: fade 0.75s;
     -moz-animation: fade 0.75s;
@@ -1093,6 +1180,21 @@ body.lantern-active .app-container {
     cursor: pointer;
 }
 
+.language-container::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: -8px;
+    width: min(230px, calc(100vw - 20px));
+    height: 14px;
+    display: none;
+}
+
+.language-container:hover::after,
+.language-container.open::after {
+    display: block;
+}
+
 /* 图标按钮 */
 .language-icon {
     width: 32px;
@@ -1113,21 +1215,24 @@ body.lantern-active .app-container {
 
 /* 下拉菜单 */
 .language-dropdown {
-    display: none;
+    display: block;
     position: absolute;
-    top: 110%;
+    top: calc(100% + 8px);
     left: 0;
     background: rgb(0 0 0 / 25%);
     backdrop-filter: blur(10px);
     border-radius: 6px;
     padding: 8px 0;
     min-width: 200px;
+    max-width: calc(100vw - 20px);
     white-space: nowrap;
     box-sizing: border-box;
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     opacity: 0;
     transform: translateY(5px);
     transition: 0.25s ease;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 /* 下拉菜单项 */
@@ -1136,20 +1241,22 @@ body.lantern-active .app-container {
     color: #e8e8e8;
     font-size: 0.95rem;
     cursor: pointer;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
     transition: 0.25s ease;
 }
 
 /* hover 效果：半透明亮起 + 微放大 */
 .language-dropdown .translate:hover {
     background: rgb(255 255 255 / 15%);
-    font-size: 1rem;
 }
 
 /* 显示状态 */
 .language-container:hover .language-dropdown,
+.language-container.open .language-dropdown,
 .language-container .language-dropdown.show-dropdown {
-    display: block;
+    visibility: visible;
+    pointer-events: auto;
     opacity: 1;
     transform: translateY(0);
 }
@@ -1570,9 +1677,9 @@ body.lantern-active .app-container {
 
 .progress-bar {
     height: 100%;
-    background: linear-gradient(90deg, #409eff, #66b1ff);
+    background: #efefef !important;
     text-align: center;
-    color: #fff;
+    color: #111111 !important;
     font-size: 12px;
     line-height: 20px;
     transition: width 0.5s;
@@ -1589,61 +1696,6 @@ body.lantern-active .app-container {
 /* 卡片区域 */
 .link-row {
     margin-top: 0.5rem;
-}
-
-/* 小宽度警告 */
-#orientation-warning {
-    display: none;
-    position: fixed;
-    top: 12%;
-    left: 50%;
-    transform: translate(-50%, -5px);
-    background: rgb(0 0 0 / 35%);
-    backdrop-filter: blur(12px);
-    max-width: 65%;
-    width: max-content;
-    min-width: 45%;
-    padding: 16px 22px;
-    border-radius: 8px;
-    color: #e8e8e8;
-    font-size: 1rem;
-    text-align: center;
-    white-space: normal;
-    word-break: break-word;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
-    z-index: 999;
-    opacity: 0;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-
-/* 显示状态 */
-#orientation-warning.show {
-    display: block;
-    opacity: 1;
-    transform: translate(-50%, 0);
-}
-
-/* 按钮区域 */
-#orientation-warning .warning-actions {
-    margin-top: 12px;
-}
-
-/* 关闭按钮：始终有按钮样式 */
-#orientation-warning #close-warning {
-    background: rgb(255 255 255 / 12%);
-    border: 1px solid rgb(255 255 255 / 25%);
-    color: #e8e8e8;
-    cursor: pointer;
-    font-size: 0.95rem;
-    padding: 6px 14px;
-    border-radius: 6px;
-    transition: 0.25s ease;
-}
-
-/* hover：轻微亮起 + 微放大 */
-#orientation-warning #close-warning:hover {
-    background: rgb(255 255 255 / 20%);
-    transform: scale(1.05);
 }
 
 /* 公告系统 */

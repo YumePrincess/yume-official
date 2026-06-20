@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <!-- 基础信息 -->
     <meta charset="utf-8">
@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="force-rendering" content="webkit" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="Yume Official — Discover the shape of dreams in the digital age. With innovation at our core, we integrate AI, cloud storage, social interaction, instant messaging, and global acceleration into a unified future ecosystem.">
+    <meta property="og:description" content="Yume Official — Discover the shape of dreams in the digital age. With innovation at our core, we integrate AI, cloud storage, social interaction, instant messaging, and global acceleration into a unified future ecosystem.">
+    <meta name="twitter:description" content="Yume Official — Discover the shape of dreams in the digital age. With innovation at our core, we integrate AI, cloud storage, social interaction, instant messaging, and global acceleration into a unified future ecosystem.">
     <meta name="author" content="ゆめ Yume">
     <title key="OFFICIAL">雨夢Official</title>
     <!-- 引入样式 -->
@@ -22,6 +24,12 @@
     <link rel="icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/img/icon/apple-touch-icon.png">
     <link rel="icon" type="image/png" href="/img/logo.png">
+    <link rel="alternate" hreflang="en" href="https://www.yume.zone/?lang=en">
+    <link rel="alternate" hreflang="fr" href="https://www.yume.zone/?lang=fr">
+    <link rel="alternate" hreflang="ja" href="https://www.yume.zone/?lang=ja">
+    <link rel="alternate" hreflang="zh-CN" href="https://www.yume.zone/?lang=zh-cn">
+    <link rel="alternate" hreflang="zh-TW" href="https://www.yume.zone/?lang=zh-tw">
+    <link rel="alternate" hreflang="x-default" href="https://www.yume.zone/">
     <!-- Izitoast -->
     <link rel="stylesheet" href="/css/iziToast.min.css">
     <!-- IE Out -->
@@ -45,23 +53,20 @@
             <div class="loading-word">
                 <p class="loading-title" key="OFFICIAL">雨夢Official</p>
                 <span id="loading-text" key="LOADING">加载中</span>
+                <div class="loading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div class="loading-progress-bar" id="loading-progress-bar"></div>
+                </div>
+                <span id="loading-percent">0%</span>
             </div>
         </div>
     </div>
     <section id="section" class="section">
-		<!-- 横向提示 -->
-		<div id="orientation-warning">
-		    <span key="HENGXIANG">请将设备横向放置以浏览完整版网站。</span>
-  		    <div class="warning-actions">
-  		        <button id="close-warning" key="CLOSE">关闭</button>
-  		    </div>
-		</div>
         <!-- 功能 -->
         <div class="top-left-icons">
 	        <!-- 语言选择框 -->
             <div class="language-placeholder"></div>
 	        <div class="language-container">
-	            <button class="language-icon" aria-label="Select Language">
+	            <button class="language-icon" aria-label="Select Language" aria-expanded="false">
 	                <svg class="icon-28px" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5.828h2.7m3.3 0H9.5m-1.8 0h1.8m-1.8 0V5m1.8.828c-.316 1.131-.98 2.201-1.736 3.141M5.836 11a19 19 0 0 0 1.928-2.03m0 0c-.385-.453-.925-1.184-1.08-1.515m1.08 1.514l1.157 1.203M13.5 19l.833-2m4.167 2l-.833-2m-3.334 0L16 13l1.667 4m-3.334 0h3.334"/><path stroke-linecap="round" d="M14 10V8c0-2.828 0-4.243-.879-5.121C12.243 2 10.828 2 8 2s-4.243 0-5.121.879C2 3.757 2 5.172 2 8s0 4.243.879 5.121C3.757 14 5.172 14 8 14h2"/><path d="M10 16c0-2.828 0-4.243.879-5.121C11.757 10 13.172 10 16 10s4.243 0 5.121.879C22 11.757 22 13.172 22 16s0 4.243-.879 5.121C20.243 22 18.828 22 16 22s-4.243 0-5.121-.879C10 20.243 10 18.828 10 16Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M4 16.5c0 1.404 0 2.107.337 2.611a2 2 0 0 0 .552.552C5.393 20 6.096 20 7.5 20M20 7.5c0-1.404 0-2.107-.337-2.611a2 2 0 0 0-.552-.552C18.607 4 17.904 4 16.5 4"/></g></svg>
 	            </button>
 				<!-- 语言选择下拉框 -->
@@ -208,8 +213,8 @@
                                             <span key="LAW">&nbsp;打开服务条款</span>
                                         </div>
                                         <div class="timeshow" id="time">
-                                            平成 24&nbsp;年&nbsp;0&nbsp;月&nbsp;00&nbsp;日&nbsp;<span
-                                                class="weekday">月曜日</span><br><span class="time-text">00:00:00</span>
+                                            <span class="time-date">平成 24&nbsp;年&nbsp;0&nbsp;月&nbsp;00&nbsp;日&nbsp;<span
+                                                class="weekday">月曜日</span></span><span class="time-text">00:00:00</span>
                                         </div>
                                         <div class="weather">
                                             <span id="city_text" key="TIANQI">天气</span>
@@ -317,7 +322,7 @@
                             <div class="img-title">
                                 <span class="img-title">yume</span>
                                 <span class="img-text">.zone</span><br />
-                                <span class="img-text">&nbsp;&nbsp;v&nbsp;26.5</span>
+                                <span class="img-text">&nbsp;&nbsp;v&nbsp;26.6</span>
                             </div>
                             <!--更多内容-->
                             <div class="accordion" id="accordion">

@@ -73,6 +73,20 @@ async function renderMarkdown(mdText) {
     return markedLib.parse(mdText);
 }
 
+function fetchWithTimeout(input, init = {}, timeoutMs = 9000) {
+    if (!window.AbortController) {
+        return fetch(input, init);
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    return fetch(input, {
+        ...init,
+        signal: controller.signal
+    }).finally(() => clearTimeout(timeoutId));
+}
+
 function getJsonWithSessionCache(cacheKey, url, maxAgeMs) {
     const storageKey = `yume-json-cache:${cacheKey}`;
 
@@ -88,7 +102,7 @@ function getJsonWithSessionCache(cacheKey, url, maxAgeMs) {
         console.warn('Session cache read failed', err);
     }
 
-    return fetch(url)
+    return fetchWithTimeout(url)
         .then((response) => {
             if (!response.ok) {
                 throw new Error(`Request failed: ${response.status}`);
@@ -109,11 +123,94 @@ function getJsonWithSessionCache(cacheKey, url, maxAgeMs) {
         });
 }
 
-//加载完成后执行
-window.addEventListener('load', function () {
+function safeLoadingText(key, fallback) {
+    try {
+        return translate(key);
+    } catch (err) {
+        return fallback;
+    }
+}
 
-    //载入动画
-    $('#loading-box').attr('class', 'loaded');
+function waitForImageLoad(img) {
+    if (!img || !img.getAttribute('src') || img.complete) {
+        return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+        img.addEventListener('load', resolve, { once: true });
+        img.addEventListener('error', resolve, { once: true });
+    });
+}
+
+const yumeLoading = (() => {
+    const pendingTasks = [];
+    let currentProgress = 0;
+    let finishing = false;
+
+    function setProgress(value, text) {
+        const nextProgress = Math.max(currentProgress, Math.min(100, Math.round(value)));
+        currentProgress = nextProgress;
+
+        const progressBar = document.getElementById('loading-progress-bar');
+        const progressWrap = document.querySelector('.loading-progress');
+        const percent = document.getElementById('loading-percent');
+        const loadingText = document.getElementById('loading-text');
+
+        if (progressBar) progressBar.style.width = `${nextProgress}%`;
+        if (progressWrap) progressWrap.setAttribute('aria-valuenow', String(nextProgress));
+        if (percent) percent.textContent = `${nextProgress}%`;
+        if (text && loadingText) loadingText.textContent = text;
+    }
+
+    function track(promise, doneProgress, text) {
+        const task = Promise.resolve(promise)
+            .catch((err) => {
+                console.error(err);
+                return null;
+            })
+            .finally(() => {
+                setProgress(doneProgress, text);
+            });
+
+        pendingTasks.push(task);
+        return task;
+    }
+
+    async function waitForTrackedTasks() {
+        let checkedCount = 0;
+        while (checkedCount < pendingTasks.length) {
+            const tasks = pendingTasks.slice(checkedCount);
+            checkedCount = pendingTasks.length;
+            await Promise.allSettled(tasks);
+        }
+    }
+
+    async function finish() {
+        if (finishing) return;
+        finishing = true;
+
+        setProgress(72, safeLoadingText('LOADTEXT', 'Loading files...'));
+        await waitForTrackedTasks();
+        setProgress(100, safeLoadingText('LOADCOMPLETE', 'Loading complete'));
+
+        setTimeout(function () {
+            $('#loading-box').attr('class', 'loaded');
+            revealPage();
+        }, 360);
+    }
+
+    setProgress(6, safeLoadingText('LOADING', 'Loading...'));
+
+    return {
+        setProgress,
+        track,
+        finish
+    };
+})();
+
+window.yumeLoading = yumeLoading;
+
+function revealPage() {
     $('#bg').css("cssText", "transform: scale(1);filter: blur(0px);transition: ease 1.5s;");
     $('.cover').css("cssText", "opacity: 1;transition: ease 1.5s;");
     $('#section').css("cssText", "transform: scale(1) !important;opacity: 1 !important;filter: blur(0px) !important");
@@ -127,24 +224,24 @@ window.addEventListener('load', function () {
             message: translate('WELCOME_MESSAGE')
         });
     }, 800);
-}, false)
-
-setTimeout(function () {
-    $('#loading-text').html(translate('LOADTEXT'))
-}, 3000);
+}
 
 //延迟加载音乐播放器
 function downloadJSAtOnload() {
     loadStylesheetOnce('/css/APlayer.min.css');
-    loadScriptOnce('/js/APlayer.min.js')
+    return loadScriptOnce('/js/APlayer.min.js')
         .then(() => loadScriptOnce('/js/music.js'))
         .catch(console.error);
 }
-if (window.addEventListener)
-    window.addEventListener("load", downloadJSAtOnload, false);
-else if (window.attachEvent)
-    window.attachEvent("onload", downloadJSAtOnload);
-else window.onload = downloadJSAtOnload;
+
+//加载完成后执行
+window.addEventListener('load', function () {
+    yumeLoading.setProgress(64, safeLoadingText('LOADTEXT', 'Loading files...'));
+    yumeLoading.track(document.fonts ? document.fonts.ready : Promise.resolve(), 78, safeLoadingText('LOADTEXT', 'Loading files...'));
+    yumeLoading.track(waitForImageLoad(document.getElementById('bg')), 86, safeLoadingText('LOADTEXT', 'Loading files...'));
+    yumeLoading.track(downloadJSAtOnload(), 94, safeLoadingText('LOADTEXT', 'Loading files...'));
+    yumeLoading.finish();
+}, false);
 
 // ======== 新春灯笼自动展示 ========
 // 判断当前语言是否为中文
@@ -242,7 +339,7 @@ if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
 // 更新一言和天气
 function updateContent() {
     // 获取一言
-    getJsonWithSessionCache(
+    const hitokotoTask = getJsonWithSessionCache(
         'hitokoto',
         'https://international.v1.hitokoto.cn?max_length=20',
         5 * 60 * 1000
@@ -270,7 +367,10 @@ function updateContent() {
             $('#hitokoto_text').html(translations[0]);
             $('#from_text').html(translations[1]);
         })
-        .catch(console.error);
+        .catch((err) => {
+            console.error(err);
+            return null;
+        });
 
     // WMO 天气代码映射
     const weatherMap = {
@@ -305,7 +405,7 @@ function updateContent() {
     };
 
     // 主流程
-    getJsonWithSessionCache('geoip', '/api/geoip', 30 * 60 * 1000)
+    const weatherTask = getJsonWithSessionCache('geoip', '/api/geoip', 30 * 60 * 1000)
         .then(ipInfo => {
             const lat = ipInfo.latitude;
             const lon = ipInfo.longitude;
@@ -342,7 +442,12 @@ function updateContent() {
             $('#tem_day').text(tem_day);
             $('#tem_night').text(tem_night);
         })
-        .catch(console.error);
+        .catch((err) => {
+            console.error(err);
+            return null;
+        });
+
+    return Promise.allSettled([hitokotoTask, weatherTask]);
 }
 
 //获取时间
@@ -408,8 +513,8 @@ function time() {
 
     // 输出
     $("#time").html(
-        dateStr + "&nbsp;" +
-        "<span class='weekday'>" + weekDays[day] + "</span><br>" +
+        "<span class='time-date'>" + dateStr + "&nbsp;" +
+        "<span class='weekday'>" + weekDays[day] + "</span></span>" +
         "<span class='time-text'>" + h + ":" + m + ":" + s + "</span>"
     );
 
@@ -733,9 +838,6 @@ wechatPopup.addEventListener('click', (event) => {
 // 解析 URL 参数
 const urlParams = new URLSearchParams(window.location.search);
 
-// 判断是否锁屏
-const screenLocked = urlParams.get('screen') === 'locked';
-
 // 1. support=email → 自动跳转 mailto
 if (urlParams.get('support') === 'email') {
     window.location.href = "mailto:support@yume.zone";
@@ -748,34 +850,6 @@ if (urlParams.get('appmode') === 'true') {
         appContainer.style.display = 'none';
     }
 }
-
-// 3. 小宽度弹窗
-function checkOrientation() {
-    const warning = document.getElementById('orientation-warning');
-
-    // 如果屏幕被锁，直接隐藏警告
-    if (screenLocked) {
-        warning.classList.remove('show');
-        return;
-    }
-
-    if (window.innerWidth < 720) {
-        warning.classList.add('show');
-    } else {
-        warning.classList.remove('show');
-    }
-}
-
-// 关闭按钮
-document.getElementById('close-warning').addEventListener('click', () => {
-    document.getElementById('orientation-warning').classList.remove('show');
-});
-
-// 初始检查
-checkOrientation();
-
-// 监听窗口变化
-window.addEventListener('resize', checkOrientation);
 
 //服务条款
 document.addEventListener("DOMContentLoaded", () => {
@@ -809,7 +883,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let url = `/terms/${type}/${fileLang}.md`;
 
         try {
-            let response = await fetch(url);
+            let response = await fetchWithTimeout(url);
 
             // 如果文件存在，加载内容
             if (response.ok) {
@@ -913,7 +987,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 加载公告 Markdown（多语言）
         async function loadAnnouncement(mdUrl) {
         try {
-            const res = await fetch(mdUrl);
+            const res = await fetchWithTimeout(mdUrl);
             if (!res.ok) throw new Error();
 
             const mdText = await res.text();
@@ -929,7 +1003,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 从 Worker 获取公告信息（让 Worker 决定是否有效）
         async function fetchAnnouncement() {
         try {
-            const res = await fetch("/api/announcement", { cache: "no-store" });
+            const res = await fetchWithTimeout("/api/announcement", { cache: "no-store" });
             const data = await res.json();
 
             const { md } = data;
@@ -958,10 +1032,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
         // 页面加载时自动检查公告
-        (async () => {
+        const announcementReady = (async () => {
         const ok = await fetchAnnouncement();
         if (ok) window.openAnnouncement();
     })();
+
+    window.yumeLoading?.track(
+        announcementReady,
+        90,
+        safeLoadingText('LOADTEXT', 'Loading files...')
+    );
 
         // 监听语言切换
         $(".translate").click(async function () {
@@ -997,10 +1077,10 @@ var title2 = `
  YUME INTERNET LLC.                                               
 `
 var content = `
-版 本 号：26.4
-Version: 26.4
-更新日期：2026-05-23
-Release Date: 2026‑05‑23
+版 本 号：26.6
+Version: 26.6
+更新日期：2026-06-20
+Release Date: 2026‑06‑20
 
 更新说明：
 Update Notes:

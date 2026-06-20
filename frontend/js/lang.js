@@ -32,6 +32,7 @@ var arrLang = {
 		"MORE_PAGE_SUBHEADING": "Oh, you found this! (Click again to close)",
 		"DEFAULT_PAGE_SUBHEADING": "Yume Official was founded in 2012 (Heisei 24). Over time, it became the starting point of the Yume ecosystem, with every product design and technical breakthrough leaving its mark here. It has witnessed the growth of the Yume brand and continues to chronicle its ongoing journey.",
 		"LOADTEXT": "Font and file loading may take some time.",
+		"LOADCOMPLETE": "Loading complete",
 		"FIREFOX": "You are using Firefox; some features may not be supported.",
 		"REIWA": "Reiwa",
 		"YEAR": ".",
@@ -131,6 +132,7 @@ var arrLang = {
 		"DEFAULT_PAGE_SUBHEADING": "雨梦Official创立于平成24年，随着时间推移，它成为雨梦生态的起点，每一次产品设计与技术突破都在此留下足迹。它见证了雨梦品牌的成长，也是雨梦持续前行的记录者。",
 		"FIREFOX": "您正在使用火狐浏览器，部分功能可能不支持",
 		"LOADTEXT": "字体及文件加载可能需要一定时间",
+		"LOADCOMPLETE": "加载完成",
 		"REIWA": "令和",
 		"YEAR": "年",
 		"MONTH": "月",
@@ -233,6 +235,7 @@ var arrLang = {
 		"DEFAULT_PAGE_SUBHEADING": "雨夢Official創立於平成24年，隨著時間推移，它成為雨夢生態的起點，每一次產品設計與技術突破都在此留下足跡。它見證了雨夢品牌的成長，也是雨夢持續前行的記錄者。",
 		"FIREFOX": "您正在使用 Firefox，部分功能可能不支援",
 		"LOADTEXT": "字體與檔案載入可能需要一些時間",
+		"LOADCOMPLETE": "載入完成",
 		"REIWA": "令和",
 		"YEAR": "年",
 		"MONTH": "月",
@@ -331,6 +334,7 @@ var arrLang = {
 		"DEFAULT_PAGE_SUBHEADING": "Yume Official a été fondé en ère Heisei 24. Avec le temps, il est devenu le point de départ de l’écosystème Yume, où chaque conception de produit et chaque avancée technique a laissé son empreinte. Il a été le témoin de la croissance de la marque Yume et continue d’en accompagner le parcours.",
 		"FIREFOX": "Vous utilisez Firefox, certaines fonctionnalités peuvent ne pas être prises en charge",
 		"LOADTEXT": "Le chargement des polices et des fichiers peut prendre un certain temps",
+		"LOADCOMPLETE": "Chargement terminé",
 		"REIWA": "Reiwa",
 		"YEAR": ".",
 		"MONTH": ".",
@@ -428,6 +432,7 @@ var arrLang = {
 		"MORE_PAGE_SUBHEADING": "あっ、見つかってしまいました（もう一度クリックで閉じます）",
 		"DEFAULT_PAGE_SUBHEADING": "雨夢Officialは平成24年に創立され、時を経て雨夢エコシステムの起点となりました。あらゆる製品設計や技術的な進歩がここに刻まれています。雨夢Officialはブランドの成長を見守り、今もその歩みを記録し続けています。",
 		"LOADTEXT": "フォントやファイルの読み込みには時間がかかる場合があります。",
+		"LOADCOMPLETE": "読み込み完了",
 		"FIREFOX": "Firefoxを使用しています。一部の機能がサポートされない可能性があります。",
 		"REIWA": "令和",
 		"YEAR": "年",
@@ -501,8 +506,11 @@ var supportedLangs = ["en", "zh-cn", "zh-tw", "ja", "fr"];
 
 // 获取默认语言（从 localStorage 或浏览器语言）
 var lang = 'en';
+var urlLang = new URLSearchParams(window.location.search).get('lang');
 if ('localStorage' in window) {
-    lang = localStorage.getItem('lang') || navigator.language;
+    lang = urlLang || localStorage.getItem('lang') || navigator.language;
+} else {
+    lang = urlLang || navigator.language;
 }
 
 // 统一小写
@@ -534,10 +542,21 @@ function translate(key) {
 // 更新META描述
 function updateMetaDescription() {
     var desc = translate('DESCRIPTION');
-    var metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) {
-        metaDesc.setAttribute('content', desc);
-    }
+    var htmlLang = {
+        "en": "en",
+        "fr": "fr",
+        "ja": "ja",
+        "zh-cn": "zh-CN",
+        "zh-tw": "zh-TW"
+    }[lang] || "en";
+
+    document.documentElement.setAttribute('lang', htmlLang);
+
+    document
+        .querySelectorAll('meta[name="description"], meta[property="og:description"], meta[name="twitter:description"]')
+        .forEach(function(metaDesc) {
+            metaDesc.setAttribute('content', desc);
+        });
 }
 
 // 更新页面中的文本内容
@@ -590,7 +609,8 @@ $(document).ready(function() {
     // 页面加载时更新文本内容
 	updateMetaDescription();
     updateTextContent();
-    updateContent();
+    const contentReady = updateContent();
+    window.yumeLoading?.track(contentReady, 58, translate('LOADTEXT'));
     updateLantern();
 	renderSwiper();
 
@@ -617,39 +637,63 @@ $(document).ready(function() {
 
 // 处理下拉菜单的显示和隐藏
 document.addEventListener('DOMContentLoaded', function () {
+    const languageContainer = document.querySelector('.language-container');
     const languageIcon = document.querySelector('.language-icon');
     const languageDropdown = document.querySelector('.language-dropdown');
+    let languageHideTimer = null;
+
+    if (!languageContainer || !languageIcon || !languageDropdown) return;
+
+    function openLanguageDropdown() {
+        clearTimeout(languageHideTimer);
+        languageContainer.classList.add('open');
+        languageDropdown.classList.add('show-dropdown');
+        languageIcon.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeLanguageDropdown(delay = 0) {
+        clearTimeout(languageHideTimer);
+        languageHideTimer = setTimeout(function () {
+            languageContainer.classList.remove('open');
+            languageDropdown.classList.remove('show-dropdown');
+            languageIcon.setAttribute('aria-expanded', 'false');
+        }, delay);
+    }
 
     // 点击图标切换下拉菜单
     languageIcon.addEventListener('click', function (event) {
         event.stopPropagation(); // 防止事件冒泡
-        languageDropdown.classList.toggle('show-dropdown');
+        if (languageDropdown.classList.contains('show-dropdown')) {
+            closeLanguageDropdown();
+        } else {
+            openLanguageDropdown();
+        }
     });
 
     // 点击下拉菜单外部隐藏菜单
     document.addEventListener('click', function (event) {
-        if (!languageIcon.contains(event.target) && !languageDropdown.contains(event.target)) {
-            languageDropdown.classList.remove('show-dropdown');
+        if (!languageContainer.contains(event.target)) {
+            closeLanguageDropdown();
         }
     });
 
     // 处理悬停显示下拉菜单
-    languageIcon.addEventListener('mouseover', function () {
-        languageDropdown.classList.add('show-dropdown');
+    languageContainer.addEventListener('mouseenter', openLanguageDropdown);
+    languageContainer.addEventListener('mouseleave', function () {
+        closeLanguageDropdown(180);
     });
 
-    languageIcon.addEventListener('mouseout', function () {
-        if (!languageDropdown.matches(':hover')) {
-            languageDropdown.classList.remove('show-dropdown');
+    languageContainer.addEventListener('focusin', openLanguageDropdown);
+    languageContainer.addEventListener('focusout', function (event) {
+        if (!languageContainer.contains(event.relatedTarget)) {
+            closeLanguageDropdown(120);
         }
     });
 
-    languageDropdown.addEventListener('mouseover', function () {
-        languageDropdown.classList.add('show-dropdown');
-    });
-
-    languageDropdown.addEventListener('mouseout', function () {
-        languageDropdown.classList.remove('show-dropdown');
+    languageDropdown.addEventListener('click', function (event) {
+        if (event.target.classList.contains('translate')) {
+            closeLanguageDropdown();
+        }
     });
 });
 
@@ -682,14 +726,17 @@ function requestDeepLTranslation(text, targetLang) {
     return translationCache.get(cacheKey);
   }
 
-  const promise = fetch('/api/translate', {
+  const translateFetch = typeof fetchWithTimeout === 'function'
+    ? fetchWithTimeout
+    : (input, init) => fetch(input, init);
+  const promise = translateFetch('/api/translate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
       text: text,
       target_lang: targetLang
     })
-  })
+  }, 9000)
   .then(res => {
     if (!res.ok) {
       throw new Error(`Translate request failed: ${res.status}`);
