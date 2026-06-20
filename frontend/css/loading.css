@@ -27,7 +27,7 @@
     position: absolute;
     color: #ffffff;
     font-size: 0.95rem;
-    transform: translateY(86px);
+    transform: translateY(92px);
     text-align: center;
     width: min(320px, calc(100vw - 48px));
     text-shadow: 0 2px 12px rgb(0 0 0 / 35%);
@@ -35,7 +35,7 @@
 
 p.loading-title {
     font-size: 1.25rem;
-    margin: 20px 10px 6px 10px;
+    margin: 22px 10px 8px 10px;
 }
 
 #loading-text {
@@ -45,14 +45,15 @@ p.loading-title {
 }
 
 .loading-progress {
+    position: relative;
     width: 100%;
-    height: 7px;
-    margin-top: 16px;
+    height: 20px;
+    margin-top: 20px;
     border-radius: 99px;
     overflow: hidden;
-    background: rgb(255 255 255 / 18%);
+    background: rgb(255 255 255 / 30%);
     box-shadow:
-        inset 0 0 0 1px rgb(255 255 255 / 12%),
+        inset 0 0 0 1px rgb(255 255 255 / 20%),
         0 8px 28px rgb(0 0 0 / 18%);
 }
 
@@ -60,17 +61,27 @@ p.loading-title {
     width: 0%;
     height: 100%;
     border-radius: inherit;
-    background: linear-gradient(90deg, #f6f1df 0%, #7fd6cb 48%, #ffffff 100%);
-    box-shadow: 0 0 16px rgb(127 214 203 / 55%);
+    background: #efefef;
+    box-shadow: none;
     transition: width 0.35s ease;
 }
 
 #loading-percent {
-    display: block;
-    margin-top: 8px;
-    font-size: 0.82rem;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0;
+    color: #111111;
+    font-family: "UnidreamLED", "HarmonyOS_Regular", sans-serif !important;
+    font-size: 0.9rem;
+    line-height: 20px;
     letter-spacing: 0;
-    opacity: 0.9;
+    opacity: 1;
+    text-shadow: 0 1px 2px rgb(255 255 255 / 45%);
+    pointer-events: none;
 }
 
 #loading-box .spinner-box .configure-core {
@@ -88,9 +99,7 @@ div.loaded div.loading-right-bg {
 }
 
 div.loaded div.spinner-box {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.35s ease;
+    display: none !important;
 }
 
 .loader {
@@ -104,25 +113,6 @@ div.loaded div.spinner-box {
     transition: all 0.7s cubic-bezier(0.42, 0, 0, 1.01);
 }
 
-.loader::before,
-.loader::after {
-    content: "";
-    position: absolute;
-    inset: 12px;
-    border-radius: 50%;
-    background: rgb(255 255 255 / 10%);
-    box-shadow:
-        0 0 22px rgb(127 214 203 / 35%),
-        inset 0 0 16px rgb(255 255 255 / 20%);
-    animation: loading-pulse 1.8s ease-in-out infinite;
-}
-
-.loader::after {
-    inset: 24px;
-    background: #ffffff;
-    animation-delay: -0.45s;
-}
-
 .inner {
     position: absolute;
     box-sizing: border-box;
@@ -134,22 +124,22 @@ div.loaded div.spinner-box {
 .inner.one {
     left: 0%;
     top: 0%;
-    animation: rotate-one 1.05s linear infinite;
-    border-bottom: 3px solid #ffffff;
+    animation: rotate-one 1s linear infinite;
+    border-bottom: 3px solid #EFEFFA;
 }
 
 .inner.two {
     right: 0%;
     top: 0%;
-    animation: rotate-two 1.25s linear infinite;
-    border-right: 3px solid #7fd6cb;
+    animation: rotate-two 1s linear infinite;
+    border-right: 3px solid #EFEFFA;
 }
 
 .inner.three {
     right: 0%;
     bottom: 0%;
-    animation: rotate-three 1.45s linear infinite;
-    border-top: 3px solid #f6f1df;
+    animation: rotate-three 1s linear infinite;
+    border-top: 3px solid #EFEFFA;
 }
 
 @keyframes rotate-one {
@@ -159,19 +149,6 @@ div.loaded div.spinner-box {
 
     100% {
         transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
-    }
-}
-
-@keyframes loading-pulse {
-    0%,
-    100% {
-        transform: scale(0.92);
-        opacity: 0.55;
-    }
-
-    50% {
-        transform: scale(1.08);
-        opacity: 1;
     }
 }
 
