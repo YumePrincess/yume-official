@@ -709,16 +709,17 @@ i.iconfont.icon-z_shangpinheji {
 
 .box-wrapper {
     position: absolute;
-    top: 10%;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, -50%);
     z-index: 1997;
-    width: 80%;
-    height: 80vh;
+    width: min(76%, 1040px);
+    height: min(72vh, 720px);
     background: rgba(255, 255, 255, 0.4);
     border-radius: 6px;
     animation: fade 0.3s;
     padding: 40px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

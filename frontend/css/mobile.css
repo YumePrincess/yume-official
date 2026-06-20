@@ -92,8 +92,11 @@
 
     .box-wrapper {
         top: 28px;
+        transform: translateX(-50%);
         width: calc(100% - 28px);
         height: auto;
+        min-height: calc(100vh - 56px);
+        min-height: calc(100dvh - 56px);
         max-height: calc(100vh - 56px);
         max-height: calc(100dvh - 56px);
         padding: 18px;
@@ -104,10 +107,12 @@
     }
 
     .box-left {
-        flex: 0 0 auto;
+        flex: 1 0 auto;
         width: 100%;
         max-width: 100%;
         min-width: 0;
+        min-height: calc(100vh - 92px);
+        min-height: calc(100dvh - 92px);
         height: auto;
         overflow-x: hidden;
     }
