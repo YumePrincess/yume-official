@@ -1,0 +1,11 @@
+<script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+<script>
+  Paddle.Initialize({ token: "test_4f29660742d0a0a97a72610aeab" });
+
+  const url = new URL(window.location.href);
+  const txn = url.searchParams.get("_ptxn");
+
+  if (txn) {
+    Paddle.Checkout.open({ transactionId: txn });
+  }
+</script>
