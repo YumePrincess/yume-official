@@ -358,7 +358,31 @@ async function handleTranslate(request, env, allowOrigin, ctx) {
 // IP 查询
 // ----------------------
 async function handleGeoIP(request, allowOrigin, ctx) {
-  const ip = request.headers.get("CF-Connecting-IP") || "8.8.8.8"; // fallback
+  const cf = request.cf || {};
+  const ip = request.headers.get("CF-Connecting-IP") || "";
+
+  // Cloudflare 自带 GeoIP：优先使用，不消耗第三方额度
+  if (cf.latitude && cf.longitude) {
+    return buildResponse({
+      success: true,
+      ip,
+
+      city: cf.city || null,
+      region: cf.region || null,
+      region_code: cf.regionCode || null,
+      country: cf.country || null,
+      continent: cf.continent || null,
+
+      latitude: Number(cf.latitude),
+      longitude: Number(cf.longitude),
+      timezone: cf.timezone || null,
+      postal: cf.postalCode || null,
+
+      source: "cloudflare"
+    }, 200, allowOrigin);
+  }
+
+  // 极少数情况下 Cloudflare 没有经纬度，再 fallback 到 ipwho.is
   const geoCache = getDefaultCache();
   const cacheKey = geoCache ? await buildInternalCacheRequest("geoip", ip) : null;
 
@@ -372,37 +396,19 @@ async function handleGeoIP(request, allowOrigin, ctx) {
   try {
     const res = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}`);
     const data = await res.json();
-    if (res.ok && geoCache && cacheKey) {
-      ctx?.waitUntil(geoCache.put(cacheKey, buildCacheResponse(data, 3600)));
+
+    if (res.ok && data?.success !== false && geoCache && cacheKey) {
+      ctx?.waitUntil(
+        geoCache.put(cacheKey, buildCacheResponse(data, 86400))
+      );
     }
 
-    return buildResponse(data, 200, allowOrigin);
+    return buildResponse(data, res.ok ? 200 : 500, allowOrigin);
   } catch (err) {
-    return buildResponse({ error: err.message || "GeoIP lookup failed" }, 500, allowOrigin);
+    return buildResponse(
+      { success: false, error: err.message || "GeoIP lookup failed" },
+      500,
+      allowOrigin
+    );
   }
-}
-
-function getDefaultCache() {
-  return typeof caches !== "undefined" ? caches.default : null;
-}
-
-async function buildInternalCacheRequest(scope, value) {
-  const digest = await crypto.subtle.digest(
-    "SHA-256",
-    new TextEncoder().encode(value)
-  );
-  const hash = [...new Uint8Array(digest)]
-    .map((byte) => byte.toString(16).padStart(2, "0"))
-    .join("");
-
-  return new Request(`${INTERNAL_CACHE_URL}/${scope}/${hash}`);
-}
-
-function buildCacheResponse(data, maxAge) {
-  return new Response(JSON.stringify(data), {
-    headers: {
-      "Content-Type": "application/json",
-      "Cache-Control": `public, max-age=${maxAge}`,
-    },
-  });
 }
