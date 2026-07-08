@@ -666,7 +666,6 @@ $(document).ready(function() {
     syncMusicButtonSize();
     const contentReady = updateContent();
     window.yumeLoading?.track(contentReady, 58, translate('LOADTEXT'));
-    updateLantern();
 	renderSwiper();
 
     // 绑定下拉菜单的点击事件处理器
@@ -686,7 +685,6 @@ $(document).ready(function() {
         updateTextContent();
         syncMusicButtonSize();
         updateContent();
-        updateLantern();
 		renderSwiper();
     });
 });

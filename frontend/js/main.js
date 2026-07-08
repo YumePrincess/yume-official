@@ -15,6 +15,74 @@ iziToast.settings({
     iconColor: '#efefef',
 });
 
+const themeStorageKey = 'yume-theme';
+const validThemes = new Set(['auto', 'dark', 'light']);
+
+function getStoredTheme() {
+    try {
+        const theme = localStorage.getItem(themeStorageKey);
+        return validThemes.has(theme) ? theme : 'auto';
+    } catch (err) {
+        return 'auto';
+    }
+}
+
+function applyTheme(theme) {
+    const nextTheme = validThemes.has(theme) ? theme : 'auto';
+
+    if (nextTheme === 'auto') {
+        document.documentElement.removeAttribute('data-theme');
+    } else {
+        document.documentElement.setAttribute('data-theme', nextTheme);
+    }
+
+    try {
+        localStorage.setItem(themeStorageKey, nextTheme);
+    } catch (err) {
+        console.warn('Theme preference write failed', err);
+    }
+
+    document.querySelectorAll('.theme-option').forEach(option => {
+        option.classList.toggle('active', option.dataset.themeOption === nextTheme);
+    });
+}
+
+applyTheme(getStoredTheme());
+
+function initThemeSelector() {
+    const themeContainer = document.querySelector('.theme-container');
+    const themeButton = document.querySelector('.theme-icon');
+    const themeOptions = document.querySelectorAll('.theme-option');
+
+    if (!themeContainer || !themeButton || !themeOptions.length) return;
+
+    applyTheme(getStoredTheme());
+
+    themeButton.addEventListener('click', (event) => {
+        event.stopPropagation();
+        const isOpen = themeContainer.classList.toggle('open');
+        themeButton.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    themeOptions.forEach(option => {
+        option.addEventListener('click', (event) => {
+            event.stopPropagation();
+            applyTheme(option.dataset.themeOption);
+            themeContainer.classList.remove('open');
+            themeButton.setAttribute('aria-expanded', 'false');
+        });
+    });
+
+    document.addEventListener('click', (event) => {
+        if (!themeContainer.contains(event.target)) {
+            themeContainer.classList.remove('open');
+            themeButton.setAttribute('aria-expanded', 'false');
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', initThemeSelector);
+
 const loadedScripts = new Map();
 const loadedStylesheets = new Set();
 
@@ -243,99 +311,6 @@ window.addEventListener('load', function () {
     yumeLoading.finish();
 }, false);
 
-// ======== 新春灯笼自动展示 ========
-// 判断当前语言是否为中文
-function isChineseLang() {
-    return lang === "zh-cn" || lang === "zh-tw";
-}
-
-// 春节灯笼展示区间（农历腊月二十六 ~ 正月十五）
-// 公历日期表：2026 ~ 2050
-const springFestivalRanges = {
-    2027: { start: "2027-02-02", end: "2027-02-21" },
-    2028: { start: "2028-01-22", end: "2028-02-10" },
-    2029: { start: "2029-02-09", end: "2029-02-28" },
-    2030: { start: "2030-01-31", end: "2030-02-19" },
-    2031: { start: "2031-02-18", end: "2031-03-09" },
-    2032: { start: "2032-02-07", end: "2032-02-26" },
-    2033: { start: "2033-01-27", end: "2033-02-15" },
-    2034: { start: "2034-02-14", end: "2034-03-05" },
-    2035: { start: "2035-02-04", end: "2035-02-23" },
-    2036: { start: "2036-01-24", end: "2036-02-12" },
-    2037: { start: "2037-02-11", end: "2037-03-02" },
-    2038: { start: "2038-01-31", end: "2038-02-19" },
-    2039: { start: "2039-02-19", end: "2039-03-10" },
-    2040: { start: "2040-02-08", end: "2040-02-27" },
-    2041: { start: "2041-01-28", end: "2041-02-16" },
-    2042: { start: "2042-02-15", end: "2042-03-06" },
-    2043: { start: "2043-02-05", end: "2043-02-24" },
-    2044: { start: "2044-01-25", end: "2044-02-13" },
-    2045: { start: "2045-02-12", end: "2045-03-03" },
-    2046: { start: "2046-02-01", end: "2046-02-20" },
-    2047: { start: "2047-01-22", end: "2047-02-10" },
-    2048: { start: "2048-02-10", end: "2048-03-01" },
-    2049: { start: "2049-01-29", end: "2049-02-17" },
-    2050: { start: "2050-02-17", end: "2050-03-08" }
-};
-
-// 判断是否在春节区间
-function isSpringFestival() {
-    const today = new Date();
-    const year = today.getFullYear();
-
-    if (!springFestivalRanges[year]) return false;
-
-    const range = springFestivalRanges[year];
-    const start = new Date(range.start);
-    const end = new Date(range.end);
-
-    return today >= start && today <= end;
-}
-
-// 主灯笼控制函数
-function updateLantern() {
-    const showLantern = isChineseLang() && isSpringFestival();
-
-    if (showLantern) {
-        document.body.classList.add("lantern-active");
-
-        if (!document.getElementById("lantern-css")) {
-            let link = document.createElement("link");
-            link.id = "lantern-css";
-            link.rel = "stylesheet";
-            link.href = "/css/lantern.css";
-            document.body.appendChild(link);
-
-            let script = document.createElement("script");
-            script.id = "lantern-js";
-            script.src = "/js/lantern.js";
-            document.body.appendChild(script);
-        }
-    } else {
-        document.body.classList.remove("lantern-active");
-
-        document.getElementById("lantern-css")?.remove();
-        document.getElementById("lantern-js")?.remove();
-    }
-}
-
-//火狐浏览器独立样式
-if (isFirefox = navigator.userAgent.indexOf("Firefox") > 0) {
-    var head = document.getElementsByTagName('head')[0];
-    var link = document.createElement('link');
-    link.href = '/css/firefox.css';
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    head.appendChild(link);
-    window.addEventListener('load', function () {
-        iziToast.show({
-            timeout: 8000,
-            iconUrl: '/img/icon/warn.png',
-            message: translate('FIREFOX')
-        });
-    }, false)
-}
-
 // 更新一言和天气
 function updateContent() {
     // 获取一言
@@ -523,20 +498,12 @@ function time() {
 
 //链接提示文字
 $("#social").mouseover(function () {
-    $("#social").css({
-        "background": "rgb(0 0 0 / 25%)",
-        'border-radius': '6px',
-        "backdrop-filter": "blur(5px)"
-    });
+    $("#social").addClass("social-glass");
     $("#link-text").css({
         "display": "block",
     });
 }).mouseout(function () {
-    $("#social").css({
-        "background": "none",
-        "border-radius": "6px",
-        "backdrop-filter": "none"
-    });
+    $("#social").removeClass("social-glass");
     $("#link-text").css({
         "display": "none"
     });
@@ -908,6 +875,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // Tab 切换
     const tabs = document.querySelectorAll(".terms-tab");
     const panels = document.querySelectorAll(".terms-panel");
+    const termsMenu = document.querySelector(".terms-menu");
+
+    if (termsMenu) {
+        termsMenu.addEventListener("wheel", (event) => {
+            if (termsMenu.scrollWidth <= termsMenu.clientWidth) return;
+            if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+
+            event.preventDefault();
+            termsMenu.scrollLeft += event.deltaY;
+        }, { passive: false });
+    }
 
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
@@ -1077,18 +1055,16 @@ var title2 = `
  YUME INTERNET LLC.                                               
 `
 var content = `
-版 本 号：26.6
-Version: 26.6
-更新日期：2026-06-20
-Release Date: 2026‑06‑20
+版 本 号：27.0
+Version: 27.0
+更新日期：2026-07-08
+Release Date: 2026‑07‑08
 
 更新说明：
 Update Notes:
 
-1. 新增 点对点加密
-1. Added peer‑to‑peer encryption
-2. 优化 美术设计
-2. Optimized art design
+1. 优化 美术设计
+1. Optimized art design
 
 更多详见更新日志板块。
 For more details, please refer to the update log section.

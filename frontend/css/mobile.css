@@ -268,18 +268,6 @@
         margin: 0px 20px;
     }
 
-    /*功能选项*/
-    body.lantern-active .top-left-icons {
-        flex-direction: row;
-        gap: 8px;
-        align-items: center;
-    }
-
-    body.lantern-active .app-container {
-        flex-direction: row;
-        gap: 8px;
-    }
-
     /*左侧栏高度*/
     .main-left {
         transform: translateY(20px);
@@ -349,9 +337,12 @@
 
     .munu-button {
         padding: 5px 20px;
-        background: rgb(0 0 0 / 20%);
-        backdrop-filter: blur(10px);
-        border-radius: 6px;
+        background: var(--glass-tint);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow), var(--glass-shine);
+        backdrop-filter: var(--glass-backdrop);
+        -webkit-backdrop-filter: var(--glass-backdrop);
+        border-radius: var(--glass-radius-pill);
         font-size: 1.25rem;
         transition: 0.5s;
         width: 60px;
@@ -528,4 +519,41 @@
 
 .mobile .col.times {
     display: block;
+}
+
+/* Liquid glass responsive fixes */
+@media (max-width: 840px) {
+    .box-wrapper,
+    .box-right,
+    #aplayer.left-mode,
+    #aplayer.left-mode .aplayer-list,
+    #aplayer.left-mode .aplayer-list ol {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .box-wrapper::-webkit-scrollbar,
+    .box-right::-webkit-scrollbar,
+    #aplayer.left-mode::-webkit-scrollbar,
+    #aplayer.left-mode .aplayer-list::-webkit-scrollbar,
+    #aplayer.left-mode .aplayer-list ol::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+
+    #aplayer.left-mode .aplayer-list {
+        overflow-x: visible !important;
+        overflow-y: auto !important;
+    }
+
+    #aplayer.left-mode .aplayer-list ol {
+        overflow-x: visible !important;
+        overflow-y: auto !important;
+        padding: 0 8px !important;
+    }
+
+    #aplayer.left-mode .aplayer-list ol li {
+        padding-right: 15px !important;
+    }
 }
