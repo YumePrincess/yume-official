@@ -354,6 +354,32 @@ async function handleTranslate(request, env, allowOrigin, ctx) {
   }
 }
 
+function getDefaultCache() {
+  return typeof caches !== "undefined" ? caches.default : null;
+}
+
+async function buildInternalCacheRequest(scope, value) {
+  const digest = await crypto.subtle.digest(
+    "SHA-256",
+    new TextEncoder().encode(value)
+  );
+
+  const hash = [...new Uint8Array(digest)]
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
+
+  return new Request(`https://worker-cache.invalid/${scope}/${hash}`);
+}
+
+function buildCacheResponse(data, maxAge) {
+  return new Response(JSON.stringify(data), {
+    headers: {
+      "Content-Type": "application/json",
+      "Cache-Control": `public, max-age=${maxAge}`,
+    },
+  });
+}
+
 // ----------------------
 // IP 查询
 // ----------------------
