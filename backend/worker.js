@@ -498,7 +498,7 @@ async function handleGeoWeather(request, allowOrigin, ctx) {
       continent: geo.continent || null,
       latitude,
       longitude,
-      timezone: geo.timezone || weatherData.timezone || null,
+      timezone: geo.timezone || weatherResult.weather.timezone || null,
       postal: geo.postal || geo.postalCode || null,
       source: {
         geo: geo.source || "ipwho.is",
