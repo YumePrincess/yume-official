@@ -1957,7 +1957,7 @@ footer {
     line-height: 1;
     color: var(--site-text);
     font-family: 'Pacifico-Regular' !important;
-    transform: none;
+    transform: translateY(-0.12em);
 }
 
 .announcement-header-title-sub {
@@ -1969,7 +1969,7 @@ footer {
     line-height: 1;
     color: var(--site-text);
     font-family: 'Pacifico-Regular' !important;
-    transform: none;
+    transform: translateY(-0.12em);
 }
 
 /* 内容区 */
