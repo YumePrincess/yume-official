@@ -311,6 +311,158 @@ window.addEventListener('load', function () {
     yumeLoading.finish();
 }, false);
 
+const weatherCodeTranslations = {
+    unknown: { en: "Unknown weather", "zh-cn": "未知天气", "zh-tw": "未知天氣", fr: "Météo inconnue", ja: "不明な天気" },
+    0: { en: "Clear sky", "zh-cn": "晴朗", "zh-tw": "晴朗", fr: "Ciel dégagé", ja: "晴れ" },
+    1: { en: "Mainly clear", "zh-cn": "主要晴朗", "zh-tw": "大致晴朗", fr: "Principalement dégagé", ja: "ほぼ晴れ" },
+    2: { en: "Partly cloudy", "zh-cn": "多云", "zh-tw": "多雲", fr: "Partiellement nuageux", ja: "一部曇り" },
+    3: { en: "Overcast", "zh-cn": "阴天", "zh-tw": "陰天", fr: "Couvert", ja: "曇り" },
+    45: { en: "Fog", "zh-cn": "大雾", "zh-tw": "大霧", fr: "Brouillard", ja: "霧" },
+    48: { en: "Depositing rime fog", "zh-cn": "雾霾", "zh-tw": "霧霾", fr: "Brouillard givrant", ja: "着氷性の霧" },
+    51: { en: "Light drizzle", "zh-cn": "轻微毛毛雨", "zh-tw": "輕微毛毛雨", fr: "Bruine légère", ja: "弱い霧雨" },
+    53: { en: "Moderate drizzle", "zh-cn": "中度毛毛雨", "zh-tw": "中度毛毛雨", fr: "Bruine modérée", ja: "霧雨" },
+    55: { en: "Dense drizzle", "zh-cn": "强毛毛雨", "zh-tw": "強毛毛雨", fr: "Bruine dense", ja: "強い霧雨" },
+    56: { en: "Light freezing drizzle", "zh-cn": "轻微冻毛毛雨", "zh-tw": "輕微凍毛毛雨", fr: "Bruine verglaçante légère", ja: "弱い着氷性霧雨" },
+    57: { en: "Dense freezing drizzle", "zh-cn": "强冻毛毛雨", "zh-tw": "強凍毛毛雨", fr: "Bruine verglaçante dense", ja: "強い着氷性霧雨" },
+    61: { en: "Slight rain", "zh-cn": "小雨", "zh-tw": "小雨", fr: "Pluie faible", ja: "小雨" },
+    63: { en: "Moderate rain", "zh-cn": "中雨", "zh-tw": "中雨", fr: "Pluie modérée", ja: "雨" },
+    65: { en: "Heavy rain", "zh-cn": "大雨", "zh-tw": "大雨", fr: "Forte pluie", ja: "大雨" },
+    66: { en: "Light freezing rain", "zh-cn": "轻微冻雨", "zh-tw": "輕微凍雨", fr: "Pluie verglaçante légère", ja: "弱い着氷性の雨" },
+    67: { en: "Heavy freezing rain", "zh-cn": "强冻雨", "zh-tw": "強凍雨", fr: "Forte pluie verglaçante", ja: "強い着氷性の雨" },
+    71: { en: "Slight snow", "zh-cn": "小雪", "zh-tw": "小雪", fr: "Faible neige", ja: "小雪" },
+    73: { en: "Moderate snow", "zh-cn": "中雪", "zh-tw": "中雪", fr: "Neige modérée", ja: "雪" },
+    75: { en: "Heavy snow", "zh-cn": "大雪", "zh-tw": "大雪", fr: "Forte neige", ja: "大雪" },
+    77: { en: "Snow grains", "zh-cn": "雪粒", "zh-tw": "雪粒", fr: "Grains de neige", ja: "雪粒" },
+    80: { en: "Slight rain showers", "zh-cn": "小阵雨", "zh-tw": "小陣雨", fr: "Averses faibles", ja: "弱いにわか雨" },
+    81: { en: "Moderate rain showers", "zh-cn": "中阵雨", "zh-tw": "中陣雨", fr: "Averses modérées", ja: "にわか雨" },
+    82: { en: "Violent rain showers", "zh-cn": "强阵雨", "zh-tw": "強陣雨", fr: "Averses violentes", ja: "激しいにわか雨" },
+    85: { en: "Slight snow showers", "zh-cn": "小阵雪", "zh-tw": "小陣雪", fr: "Averses de neige faibles", ja: "弱いにわか雪" },
+    86: { en: "Heavy snow showers", "zh-cn": "大阵雪", "zh-tw": "大陣雪", fr: "Fortes averses de neige", ja: "強いにわか雪" },
+    95: { en: "Thunderstorm", "zh-cn": "雷雨", "zh-tw": "雷雨", fr: "Orage", ja: "雷雨" },
+    96: { en: "Thunderstorm with slight hail", "zh-cn": "轻微雷雨伴冰雹", "zh-tw": "輕微雷雨伴冰雹", fr: "Orage avec faible grêle", ja: "弱いひょうを伴う雷雨" },
+    99: { en: "Thunderstorm with heavy hail", "zh-cn": "强雷雨伴冰雹", "zh-tw": "強雷雨伴冰雹", fr: "Orage avec forte grêle", ja: "強いひょうを伴う雷雨" }
+};
+
+const cityNameTranslations = {
+    "new york": { en: "New York", "zh-cn": "纽约", "zh-tw": "紐約", fr: "New York", ja: "ニューヨーク" },
+    "los angeles": { en: "Los Angeles", "zh-cn": "洛杉矶", "zh-tw": "洛杉磯", fr: "Los Angeles", ja: "ロサンゼルス" },
+    "san francisco": { en: "San Francisco", "zh-cn": "旧金山", "zh-tw": "舊金山", fr: "San Francisco", ja: "サンフランシスコ" },
+    "seattle": { en: "Seattle", "zh-cn": "西雅图", "zh-tw": "西雅圖", fr: "Seattle", ja: "シアトル" },
+    "chicago": { en: "Chicago", "zh-cn": "芝加哥", "zh-tw": "芝加哥", fr: "Chicago", ja: "シカゴ" },
+    "boston": { en: "Boston", "zh-cn": "波士顿", "zh-tw": "波士頓", fr: "Boston", ja: "ボストン" },
+    "washington": { en: "Washington", "zh-cn": "华盛顿", "zh-tw": "華盛頓", fr: "Washington", ja: "ワシントン" },
+    "miami": { en: "Miami", "zh-cn": "迈阿密", "zh-tw": "邁阿密", fr: "Miami", ja: "マイアミ" },
+    "dallas": { en: "Dallas", "zh-cn": "达拉斯", "zh-tw": "達拉斯", fr: "Dallas", ja: "ダラス" },
+    "houston": { en: "Houston", "zh-cn": "休斯敦", "zh-tw": "休士頓", fr: "Houston", ja: "ヒューストン" },
+    "austin": { en: "Austin", "zh-cn": "奥斯汀", "zh-tw": "奧斯汀", fr: "Austin", ja: "オースティン" },
+    "denver": { en: "Denver", "zh-cn": "丹佛", "zh-tw": "丹佛", fr: "Denver", ja: "デンバー" },
+    "las vegas": { en: "Las Vegas", "zh-cn": "拉斯维加斯", "zh-tw": "拉斯維加斯", fr: "Las Vegas", ja: "ラスベガス" },
+    "toronto": { en: "Toronto", "zh-cn": "多伦多", "zh-tw": "多倫多", fr: "Toronto", ja: "トロント" },
+    "vancouver": { en: "Vancouver", "zh-cn": "温哥华", "zh-tw": "溫哥華", fr: "Vancouver", ja: "バンクーバー" },
+    "montreal": { en: "Montreal", "zh-cn": "蒙特利尔", "zh-tw": "蒙特婁", fr: "Montréal", ja: "モントリオール" },
+    "london": { en: "London", "zh-cn": "伦敦", "zh-tw": "倫敦", fr: "Londres", ja: "ロンドン" },
+    "paris": { en: "Paris", "zh-cn": "巴黎", "zh-tw": "巴黎", fr: "Paris", ja: "パリ" },
+    "berlin": { en: "Berlin", "zh-cn": "柏林", "zh-tw": "柏林", fr: "Berlin", ja: "ベルリン" },
+    "munich": { en: "Munich", "zh-cn": "慕尼黑", "zh-tw": "慕尼黑", fr: "Munich", ja: "ミュンヘン" },
+    "frankfurt": { en: "Frankfurt", "zh-cn": "法兰克福", "zh-tw": "法蘭克福", fr: "Francfort", ja: "フランクフルト" },
+    "rome": { en: "Rome", "zh-cn": "罗马", "zh-tw": "羅馬", fr: "Rome", ja: "ローマ" },
+    "milan": { en: "Milan", "zh-cn": "米兰", "zh-tw": "米蘭", fr: "Milan", ja: "ミラノ" },
+    "madrid": { en: "Madrid", "zh-cn": "马德里", "zh-tw": "馬德里", fr: "Madrid", ja: "マドリード" },
+    "barcelona": { en: "Barcelona", "zh-cn": "巴塞罗那", "zh-tw": "巴塞隆納", fr: "Barcelone", ja: "バルセロナ" },
+    "amsterdam": { en: "Amsterdam", "zh-cn": "阿姆斯特丹", "zh-tw": "阿姆斯特丹", fr: "Amsterdam", ja: "アムステルダム" },
+    "brussels": { en: "Brussels", "zh-cn": "布鲁塞尔", "zh-tw": "布魯塞爾", fr: "Bruxelles", ja: "ブリュッセル" },
+    "zurich": { en: "Zurich", "zh-cn": "苏黎世", "zh-tw": "蘇黎世", fr: "Zurich", ja: "チューリッヒ" },
+    "vienna": { en: "Vienna", "zh-cn": "维也纳", "zh-tw": "維也納", fr: "Vienne", ja: "ウィーン" },
+    "dublin": { en: "Dublin", "zh-cn": "都柏林", "zh-tw": "都柏林", fr: "Dublin", ja: "ダブリン" },
+    "copenhagen": { en: "Copenhagen", "zh-cn": "哥本哈根", "zh-tw": "哥本哈根", fr: "Copenhague", ja: "コペンハーゲン" },
+    "stockholm": { en: "Stockholm", "zh-cn": "斯德哥尔摩", "zh-tw": "斯德哥爾摩", fr: "Stockholm", ja: "ストックホルム" },
+    "oslo": { en: "Oslo", "zh-cn": "奥斯陆", "zh-tw": "奧斯陸", fr: "Oslo", ja: "オスロ" },
+    "helsinki": { en: "Helsinki", "zh-cn": "赫尔辛基", "zh-tw": "赫爾辛基", fr: "Helsinki", ja: "ヘルシンキ" },
+    "warsaw": { en: "Warsaw", "zh-cn": "华沙", "zh-tw": "華沙", fr: "Varsovie", ja: "ワルシャワ" },
+    "prague": { en: "Prague", "zh-cn": "布拉格", "zh-tw": "布拉格", fr: "Prague", ja: "プラハ" },
+    "istanbul": { en: "Istanbul", "zh-cn": "伊斯坦布尔", "zh-tw": "伊斯坦堡", fr: "Istanbul", ja: "イスタンブール" },
+    "dubai": { en: "Dubai", "zh-cn": "迪拜", "zh-tw": "杜拜", fr: "Dubaï", ja: "ドバイ" },
+    "singapore": { en: "Singapore", "zh-cn": "新加坡", "zh-tw": "新加坡", fr: "Singapour", ja: "シンガポール" },
+    "kuala lumpur": { en: "Kuala Lumpur", "zh-cn": "吉隆坡", "zh-tw": "吉隆坡", fr: "Kuala Lumpur", ja: "クアラルンプール" },
+    "bangkok": { en: "Bangkok", "zh-cn": "曼谷", "zh-tw": "曼谷", fr: "Bangkok", ja: "バンコク" },
+    "jakarta": { en: "Jakarta", "zh-cn": "雅加达", "zh-tw": "雅加達", fr: "Jakarta", ja: "ジャカルタ" },
+    "manila": { en: "Manila", "zh-cn": "马尼拉", "zh-tw": "馬尼拉", fr: "Manille", ja: "マニラ" },
+    "seoul": { en: "Seoul", "zh-cn": "首尔", "zh-tw": "首爾", fr: "Séoul", ja: "ソウル" },
+    "tokyo": { en: "Tokyo", "zh-cn": "东京", "zh-tw": "東京", fr: "Tokyo", ja: "東京" },
+    "osaka": { en: "Osaka", "zh-cn": "大阪", "zh-tw": "大阪", fr: "Osaka", ja: "大阪" },
+    "kyoto": { en: "Kyoto", "zh-cn": "京都", "zh-tw": "京都", fr: "Kyoto", ja: "京都" },
+    "nagoya": { en: "Nagoya", "zh-cn": "名古屋", "zh-tw": "名古屋", fr: "Nagoya", ja: "名古屋" },
+    "sapporo": { en: "Sapporo", "zh-cn": "札幌", "zh-tw": "札幌", fr: "Sapporo", ja: "札幌" },
+    "fukuoka": { en: "Fukuoka", "zh-cn": "福冈", "zh-tw": "福岡", fr: "Fukuoka", ja: "福岡" },
+    "taipei": { en: "Taipei", "zh-cn": "台北", "zh-tw": "臺北", fr: "Taipei", ja: "台北" },
+    "hong kong": { en: "Hong Kong", "zh-cn": "香港", "zh-tw": "香港", fr: "Hong Kong", ja: "香港" },
+    "macau": { en: "Macau", "zh-cn": "澳门", "zh-tw": "澳門", fr: "Macao", ja: "マカオ" },
+    "beijing": { en: "Beijing", "zh-cn": "北京", "zh-tw": "北京", fr: "Pékin", ja: "北京" },
+    "shanghai": { en: "Shanghai", "zh-cn": "上海", "zh-tw": "上海", fr: "Shanghai", ja: "上海" },
+    "guangzhou": { en: "Guangzhou", "zh-cn": "广州", "zh-tw": "廣州", fr: "Canton", ja: "広州" },
+    "shenzhen": { en: "Shenzhen", "zh-cn": "深圳", "zh-tw": "深圳", fr: "Shenzhen", ja: "深圳" },
+    "chengdu": { en: "Chengdu", "zh-cn": "成都", "zh-tw": "成都", fr: "Chengdu", ja: "成都" },
+    "chongqing": { en: "Chongqing", "zh-cn": "重庆", "zh-tw": "重慶", fr: "Chongqing", ja: "重慶" },
+    "hangzhou": { en: "Hangzhou", "zh-cn": "杭州", "zh-tw": "杭州", fr: "Hangzhou", ja: "杭州" },
+    "nanjing": { en: "Nanjing", "zh-cn": "南京", "zh-tw": "南京", fr: "Nankin", ja: "南京" },
+    "wuhan": { en: "Wuhan", "zh-cn": "武汉", "zh-tw": "武漢", fr: "Wuhan", ja: "武漢" },
+    "tianjin": { en: "Tianjin", "zh-cn": "天津", "zh-tw": "天津", fr: "Tianjin", ja: "天津" },
+    "xian": { en: "Xi'an", "zh-cn": "西安", "zh-tw": "西安", fr: "Xi'an", ja: "西安" },
+    "suzhou": { en: "Suzhou", "zh-cn": "苏州", "zh-tw": "蘇州", fr: "Suzhou", ja: "蘇州" },
+    "qingdao": { en: "Qingdao", "zh-cn": "青岛", "zh-tw": "青島", fr: "Qingdao", ja: "青島" },
+    "xiamen": { en: "Xiamen", "zh-cn": "厦门", "zh-tw": "廈門", fr: "Xiamen", ja: "厦門" },
+    "shenyang": { en: "Shenyang", "zh-cn": "沈阳", "zh-tw": "瀋陽", fr: "Shenyang", ja: "瀋陽" },
+    "harbin": { en: "Harbin", "zh-cn": "哈尔滨", "zh-tw": "哈爾濱", fr: "Harbin", ja: "ハルビン" },
+    "zhengzhou": { en: "Zhengzhou", "zh-cn": "郑州", "zh-tw": "鄭州", fr: "Zhengzhou", ja: "鄭州" },
+    "kunming": { en: "Kunming", "zh-cn": "昆明", "zh-tw": "昆明", fr: "Kunming", ja: "昆明" },
+    "sydney": { en: "Sydney", "zh-cn": "悉尼", "zh-tw": "雪梨", fr: "Sydney", ja: "シドニー" },
+    "melbourne": { en: "Melbourne", "zh-cn": "墨尔本", "zh-tw": "墨爾本", fr: "Melbourne", ja: "メルボルン" },
+    "auckland": { en: "Auckland", "zh-cn": "奥克兰", "zh-tw": "奧克蘭", fr: "Auckland", ja: "オークランド" },
+    "delhi": { en: "Delhi", "zh-cn": "德里", "zh-tw": "德里", fr: "Delhi", ja: "デリー" },
+    "mumbai": { en: "Mumbai", "zh-cn": "孟买", "zh-tw": "孟買", fr: "Mumbai", ja: "ムンバイ" },
+    "bengaluru": { en: "Bengaluru", "zh-cn": "班加罗尔", "zh-tw": "班加羅爾", fr: "Bangalore", ja: "ベンガルール" }
+};
+
+function localizeWeatherCode(code) {
+    const entry = weatherCodeTranslations[String(code)] || weatherCodeTranslations.unknown;
+    return entry[lang] || entry.en;
+}
+
+function normalizeCityName(city) {
+    return String(city || "")
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[’']/g, "")
+        .replace(/\s+/g, " ")
+        .toLowerCase();
+}
+
+function localizeCityName(city) {
+    const originalCity = String(city || "").trim();
+    if (!originalCity) return translate("TIANQI");
+
+    const normalizedCity = normalizeCityName(originalCity);
+    const candidates = [
+        normalizedCity,
+        normalizedCity.replace(/\s+city$/, ""),
+        normalizedCity.replace(/\s+shi$/, "")
+    ];
+
+    for (const candidate of candidates) {
+        const entry = cityNameTranslations[candidate];
+        if (entry) return entry[lang] || entry.en || originalCity;
+    }
+
+    return originalCity;
+}
+
+function formatWeatherTemperature(value) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) return "";
+    return Number.isInteger(number) ? String(number) : number.toFixed(1).replace(/\.0$/, "");
+}
+
 // 更新一言和天气
 function updateContent() {
     // 获取一言
@@ -347,78 +499,29 @@ function updateContent() {
             return null;
         });
 
-    // WMO 天气代码映射
-    const weatherMap = {
-        0: "晴朗",
-        1: "主要晴朗",
-        2: "多云",
-        3: "阴天",
-        45: "大雾",
-        48: "雾霾",
-        51: "轻微毛毛雨",
-        53: "中度毛毛雨",
-        55: "强毛毛雨",
-        56: "轻微冻毛毛雨",
-        57: "强冻毛毛雨",
-        61: "小雨",
-        63: "中雨",
-        65: "大雨",
-        66: "轻微冻雨",
-        67: "强冻雨",
-        71: "小雪",
-        73: "中雪",
-        75: "大雪",
-        77: "雪粒",
-        80: "小阵雨",
-        81: "中阵雨",
-        82: "强阵雨",
-        85: "小阵雪",
-        86: "大阵雪",
-        95: "雷雨",
-        96: "轻微雷雨伴冰雹",
-        99: "强雷雨伴冰雹"
-    };
+    const weatherTask = getJsonWithSessionCache('geowea', '/api/geowea', 10 * 60 * 1000)
+        .then(data => {
+            const weather = data.weather || {};
+            const code = weather.code;
+            const tem_day = Number(weather.temperature_2m_max);
+            const tem_night = Number(weather.temperature_2m_min);
 
-    // 主流程
-    const weatherTask = getJsonWithSessionCache('geoip', '/api/geoip', 30 * 60 * 1000)
-        .then(ipInfo => {
-            const lat = ipInfo.latitude;
-            const lon = ipInfo.longitude;
-            const city = ipInfo.city;
+            if (!data.success || !Number.isFinite(tem_day) || !Number.isFinite(tem_night)) {
+                throw new Error(data.error || 'Weather data unavailable');
+            }
 
-            // 请求Open-Meteo天气
-            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=weather_code,temperature_2m&daily=temperature_2m_max,temperature_2m_min&timezone=auto`;
-
-            return Promise.all([
-                getJsonWithSessionCache(`weather:${lat}:${lon}`, url, 10 * 60 * 1000),
-                city
-            ]);
-        })
-        .then(([weatherData, city]) => {
-            // 当前天气代码
-            const code = weatherData.current.weather_code;
-            const wea = weatherMap[code] || "未知天气";
-
-            // 当天最高/最低温度
-            const tem_day = Number(weatherData.daily.temperature_2m_max[0]);
-            const tem_night = Number(weatherData.daily.temperature_2m_min[0]);
-
-            return Promise.all([
-                translateText(wea, lang, false), // 天气描述（非城市）
-                translateText(city, lang, true),         // 城市名称（需要 DeepL）
-                tem_day,
-                tem_night
-            ]);
-        })
-        .then(([translatedWea, translatedCity, tem_day, tem_night]) => {
             // 更新页面
-            $('#wea_text').html(translatedWea);
-            $('#city_text').html(translatedCity);
-            $('#tem_day').text(tem_day);
-            $('#tem_night').text(tem_night);
+            $('#weather').addClass('weather-ready');
+            $('#wea_text').text(localizeWeatherCode(code));
+            $('#city_text').text(localizeCityName(data.city));
+            $('#tem_day').text(formatWeatherTemperature(tem_day));
+            $('#tem_night').text(formatWeatherTemperature(tem_night));
         })
         .catch((err) => {
             console.error(err);
+            $('#weather').removeClass('weather-ready');
+            $('#weather_error').text(translate('WEATHER_LOAD_ERROR'));
+            $('#city_text, #wea_text, #tem_day, #tem_night').text('');
             return null;
         });
 
@@ -805,13 +908,25 @@ wechatPopup.addEventListener('click', (event) => {
 // 解析 URL 参数
 const urlParams = new URLSearchParams(window.location.search);
 
+function getUrlParamIgnoreCase(name) {
+    const expectedName = name.toLowerCase();
+
+    for (const [key, value] of urlParams.entries()) {
+        if (key.toLowerCase() === expectedName) {
+            return value;
+        }
+    }
+
+    return null;
+}
+
 // 1. support=email → 自动跳转 mailto
-if (urlParams.get('support') === 'email') {
+if ((getUrlParamIgnoreCase('support') || '').toLowerCase() === 'email') {
     window.location.href = "mailto:support@yume.zone";
 }
 
 // 2. appmode=true → 隐藏 app 下载区域
-if (urlParams.get('appmode') === 'true') {
+if ((getUrlParamIgnoreCase('appmode') || '').toLowerCase() === 'true') {
     const appContainer = document.querySelector('.app-container');
     if (appContainer) {
         appContainer.style.display = 'none';
@@ -876,6 +991,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabs = document.querySelectorAll(".terms-tab");
     const panels = document.querySelectorAll(".terms-panel");
     const termsMenu = document.querySelector(".terms-menu");
+    const termAliases = {
+        user: "user",
+        terms: "user",
+        privacy: "privacy",
+        refund: "refunds",
+        refunds: "refunds"
+    };
+
+    function normalizeTermType(value) {
+        return termAliases[(value || "").trim().toLowerCase()] || "";
+    }
 
     if (termsMenu) {
         termsMenu.addEventListener("wheel", (event) => {
@@ -905,8 +1031,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // URL 参数自动打开条款
     function openTermsFromURL() {
-        const params = new URLSearchParams(window.location.search);
-        const term = params.get("terms");
+        const term = normalizeTermType(getUrlParamIgnoreCase("terms"));
 
         if (!term) return;
 

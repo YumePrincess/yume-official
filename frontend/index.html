@@ -12,8 +12,8 @@
     <!-- 引入样式 -->
     <link rel="preload" href="/img/logo.png" as="image">
     <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css?v=liquid-glass-ui-6">
-    <link rel="stylesheet" type="text/css" href="/css/mobile.css?v=liquid-glass-ui-6">
+    <link rel="stylesheet" type="text/css" href="/css/style.css?v=liquid-glass-ui-7">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css?v=liquid-glass-ui-7">
     <link rel="stylesheet" type="text/css" href="/css/font.css">
     <link rel="stylesheet" type="text/css" href="/css/loading.css?v=liquid-glass-ui-6">
     <link rel="stylesheet" type="text/css" href="/css/animation.css">
@@ -52,6 +52,11 @@
             </div>
         </div>
     </div>
+    <!-- 背景图片 -->
+    <div class="bg-all">
+        <img id="bg" onerror="this.classList.add('error');"></img>
+        <div class="cover"></div>
+    </div>
     <section id="section" class="section">
         <!-- 功能 -->
         <div class="top-left-icons">
@@ -81,6 +86,10 @@
                     <button class="theme-option" type="button" data-theme-option="light" key="THEME_LIGHT">浅色</button>
                 </div>
             </div>
+            <div class="pricing-placeholder"></div>
+            <a class="pricing-container pricing-icon" href="/pricing/" aria-label="Pricing">
+                <svg class="icon-28px" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M5 12h14"/><path d="M7 7h10a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z"/><path d="M9 7V5.8A1.8 1.8 0 0 1 10.8 4h2.4A1.8 1.8 0 0 1 15 5.8V7"/><path d="M9 16h.01M12 16h3"/></g></svg>
+            </a>
 			<!-- 应用下载 -->
 			<div class="app-container">
                 <a href="https://cdn-public.yume.zone/public/app/yume-official-release.apk" target="_blank">
@@ -94,11 +103,6 @@
                     </button>
 				</a>
 			</div>
-        </div>
-        <!-- 背景图片 -->
-        <div class="bg-all">
-            <img id="bg" onerror="this.classList.add('error');"></img>
-            <div class="cover"></div>
         </div>
         <!--主体内容-->
         <main id="main" class="main">
@@ -219,10 +223,13 @@
                                             <span class="time-date">平成 24&nbsp;年&nbsp;0&nbsp;月&nbsp;00&nbsp;日&nbsp;<span
                                                 class="weekday">月曜日</span></span><span class="time-text">00:00:00</span>
                                         </div>
-                                        <div class="weather">
-                                            <span id="city_text" key="TIANQI">天气</span>
-                                            <span id="wea_text" key="SHIBAI">加载失败</span>
-                                            <span id="tem_night"></span>°C~<span id="tem_day"></span>°C
+                                        <div class="weather" id="weather">
+                                            <span class="weather-error" id="weather_error" key="WEATHER_LOAD_ERROR">天气载入失败</span>
+                                            <span class="weather-content" id="weather_content">
+                                                <span id="city_text" key="TIANQI">天气</span>
+                                                <span id="wea_text" key="SHIBAI">加载失败</span>
+                                                <span id="tem_night"></span>°C~<span id="tem_day"></span>°C
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -325,7 +332,7 @@
                             <div class="img-title">
                                 <span class="img-title">yume</span>
                                 <span class="img-text">.zone</span><br />
-                                <span class="img-text">&nbsp;&nbsp;v&nbsp;27.0</span>
+                                <span class="img-text">v&nbsp;27.0</span>
                             </div>
                             <!--更多内容-->
                             <div class="accordion" id="accordion">

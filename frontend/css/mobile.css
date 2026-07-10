@@ -133,7 +133,8 @@
 
     .box-left > .img-title {
         width: 100%;
-        margin-left: 0;
+        margin-top: 4px;
+        margin-left: 8px;
         transform: none;
     }
 
@@ -143,6 +144,12 @@
 
     .box-left span.img-text {
         font-size: 1.35rem;
+    }
+
+    .box-left > .img-title br + span.img-text {
+        display: block;
+        margin-top: 0.72em;
+        margin-left: 0;
     }
 
     #accordion {
