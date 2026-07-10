@@ -1,123 +1,184 @@
-# Conditions d’Utilisation  
-**Entité concernée : Yume Internet LLC (société à responsabilité limitée enregistrée dans l’État du Wyoming, États‑Unis)**  
-**Droit applicable : Les présentes Conditions d’Utilisation sont régies et interprétées conformément au droit américain.**  
-**Priorité linguistique : En cas de divergence entre les versions linguistiques, la version anglaise prévaut.**
+# Conditions d’Utilisation
+- **Entité concernée : Yume Internet LLC (société à responsabilité limitée enregistrée dans l’État du Wyoming, États-Unis)**
+- **Dernière mise à jour : 10 juillet 2026**
+- **Droit applicable : Les présentes Conditions sont régies par le droit de l’État du Wyoming, États-Unis, et par le droit fédéral américain applicable, sauf lorsque des règles impératives de protection des consommateurs en disposent autrement.**
+- **Priorité linguistique : En cas de divergence entre les versions linguistiques, la version anglaise prévaut.**
 
 ---
 
-## I. Dispositions Générales
-Les présentes Conditions d’Utilisation (« Conditions ») constituent un accord juridiquement contraignant entre vous (« Utilisateur ») et **Yume Internet LLC** (« la Société » ou « la Plateforme ») concernant l’utilisation des services fournis par la Plateforme.
+## I. Introduction
+Les présentes Conditions d’Utilisation (« Conditions ») constituent un accord juridiquement contraignant entre vous et **Yume Internet LLC** (« Yume », « nous », « notre ») concernant l’accès et l’utilisation de Yume Official et des services liés à l’écosystème Yume. Ces services incluent notamment les sites web, systèmes de compte, stockage cloud, fonctions d’IA, fonctions de messagerie, points d’entrée de recherche, support, abonnements payants, travaux personnalisés et tout autre produit ou service renvoyant aux présentes Conditions (collectivement, les « Services »).
 
-Veuillez lire attentivement ces Conditions avant d’utiliser la Plateforme. En accédant ou en utilisant la Plateforme, vous reconnaissez avoir lu, compris et accepté d’être lié par ces Conditions.
+Veuillez lire attentivement ces Conditions. En accédant aux Services, en vous inscrivant, en achetant, en vous abonnant ou en utilisant autrement les Services, vous confirmez avoir lu, compris et accepté les présentes Conditions, notre Politique de Confidentialité et toute règle additionnelle affichée pour un produit, une fonctionnalité, une commande ou un abonnement spécifique. Si vous n’acceptez pas ces Conditions, n’utilisez pas les Services.
 
----
-
-## II. Création et Utilisation du Compte
-
-### 1. Exactitude des Informations
-L’Utilisateur doit fournir des informations exactes, complètes et à jour lors de l’inscription, et les mettre à jour en cas de modification.
-
-### 2. Sécurité du Compte
-L’Utilisateur est responsable de la sécurité de son compte et de son mot de passe, ainsi que de toutes les activités effectuées via son compte. En cas d’utilisation non autorisée ou de risque de sécurité, l’Utilisateur doit en informer immédiatement la Société.
-
-### 3. Comportements Interdits
-Il est interdit à l’Utilisateur d’usurper l’identité d’autrui ou d’utiliser un nom d’utilisateur illégal, inapproprié ou offensant.
+Les Services peuvent évoluer. Certaines fonctionnalités peuvent être limitées selon la région, la langue, le statut du compte, l’appareil, l’environnement réseau, la loi applicable, la disponibilité de fournisseurs tiers ou la capacité du service.
 
 ---
 
-## III. Services Fournis
+## II. Éligibilité et comptes
+
+### 1. Éligibilité
+Vous devez avoir au moins 13 ans, ou l’âge minimum requis dans votre juridiction, pour créer un compte ou utiliser les Services nécessitant un compte. Si vous êtes mineur dans votre juridiction, vous ne pouvez utiliser les Services qu’avec le consentement et sous la supervision d’un parent ou représentant légal.
+
+### 2. Informations du compte
+Vous acceptez de fournir des informations exactes, complètes, actuelles et sincères, et de les mettre à jour lorsque nécessaire. Nous pouvons refuser, suspendre ou résilier tout compte contenant de fausses informations, usurpant l’identité d’autrui, portant atteinte à des droits ou créant un risque juridique ou de sécurité.
+
+### 3. Sécurité du compte
+Vous êtes responsable de la confidentialité de vos identifiants et de toute activité effectuée via votre compte. Vous devez nous informer rapidement à **support@yume.zone** si vous suspectez un accès non autorisé, une fuite d’identifiants ou un autre incident de sécurité. Sauf interdiction légale, nous ne sommes pas responsables des pertes résultant de votre défaut de protection de votre compte.
+
+### 4. Restrictions relatives au compte
+Sauf autorisation expresse de Yume, vous ne pouvez pas vendre, louer, transférer, partager ou sous-licencier votre compte ou votre abonnement payant. La création automatisée de comptes, l’inscription en masse, le credential stuffing et l’utilisation de comptes pour contourner des restrictions sont interdits.
+
+---
+
+## III. Services, disponibilité et modifications
 
 ### 1. Portée des Services
-La Plateforme propose notamment la gestion de compte, la consultation de contenu, des fonctionnalités interactives et l’intégration de services tiers.
+Selon la disponibilité, les Services peuvent inclure la gestion de compte, le contenu web, Yume Drive, Yume IA, Yume Mail, Yume Recherche, Yume Chat, Yume Store, les annonces de service, les pages tarifaires, le support, les travaux personnalisés et les intégrations tierces.
 
-### 2. Modifications des Services
-La Société se réserve le droit de modifier, mettre à jour ou interrompre tout service en fonction des besoins opérationnels et en informera les utilisateurs dans une mesure raisonnable.
+### 2. Exigences techniques
+Vous êtes responsable de disposer d’appareils, logiciels, accès Internet et frais de connexion nécessaires à l’utilisation des Services. Les performances peuvent dépendre de votre appareil, navigateur, réseau, localisation, configuration ou de systèmes tiers.
 
----
+### 3. Modifications des Services
+Nous pouvons mettre à jour, modifier, suspendre, limiter, remplacer ou interrompre tout Service ou toute partie d’un Service pour des raisons de sécurité, maintenance, conformité, activité, exploitation ou technique. Lorsque cela est raisonnablement possible, nous fournirons une notification via le site, l’interface du compte, l’e-mail ou tout autre moyen approprié.
 
-## IV. Règles de Conduite de l’Utilisateur
-
-L’Utilisateur ne doit pas :
-
-### 1. Enfreindre la Loi
-- Violer les lois ou réglementations applicables  
-- Publier ou diffuser du contenu illégal, violent, pornographique ou portant atteinte aux droits d’autrui  
-
-### 2. Compromettre la Sécurité
-- Accéder, attaquer ou tenter de perturber les systèmes de la Plateforme sans autorisation  
-- Diffuser des virus, logiciels malveillants ou tout code nuisible  
-
-### 3. Porter Atteinte aux Droits d’Autrui
-- Porter atteinte à la vie privée, aux droits de propriété intellectuelle ou à d’autres droits légitimes  
-- Usurper l’identité d’autrui ou diffuser de fausses informations  
-
-En cas de violation, la Société peut appliquer des mesures telles qu’avertissements, restrictions, suspension de compte, suppression de contenu ou résiliation du service.
+### 4. Fonctionnalités bêta et expérimentales
+Certaines fonctionnalités peuvent être fournies en version bêta, aperçu, accès anticipé ou expérimental. Elles peuvent être incomplètes, instables, limitées, modifiées ou supprimées sans préavis. Vous ne devez pas vous y fier pour des usages critiques, urgents ou à haut risque.
 
 ---
 
-## V. Contenu Utilisateur et Propriété Intellectuelle
+## IV. Achats, paiements, taxes et abonnements
 
-### 1. Responsabilité du Contenu
-L’Utilisateur est seul responsable du contenu qu’il publie sur la Plateforme.
+### 1. Commandes et transactions
+Lorsque vous soumettez une commande, achetez un abonnement, achetez un service numérique ou demandez un travail personnalisé, vous autorisez nous ou nos prestataires de paiement à facturer le prix, les taxes et les frais affichés lors du paiement ou dans le devis applicable. Chaque transaction est soumise aux présentes Conditions et aux conditions spécifiques affichées au moment de l’achat.
 
-### 2. Licence Accordée
-L’Utilisateur accorde à la Société une licence mondiale, gratuite et sous‑licenciable pour afficher, distribuer, stocker, sauvegarder et améliorer les services à l’aide de son contenu.
+### 2. Prix et taxes
+Les prix peuvent varier selon la région, la devise, l’étendue du produit, la promotion et le mode de paiement. Taxes, frais de paiement, frais de conversion, frais bancaires et frais de plateforme peuvent s’ajouter ou être déduits. Sauf indication contraire, vous êtes responsable des taxes et frais légalement à votre charge.
 
-### 3. Propriété Intellectuelle de la Plateforme
-Tous les droits de propriété intellectuelle liés à la Plateforme — logiciels, design, marques, documentation — appartiennent à la Société.
+### 3. Informations de paiement
+Les paiements peuvent être traités par des prestataires tiers. Nous ne stockons pas volontairement les numéros complets de carte bancaire, sauf fonctionnalité fournie par un prestataire conforme. Vous devez vous assurer que votre moyen de paiement est valide et que vous êtes autorisé à l’utiliser.
 
----
+### 4. Abonnements et renouvellements
+Certains Services peuvent être proposés sous forme d’abonnement ou d’adhésion. Sauf indication contraire, les abonnements se renouvellent selon le cycle de facturation indiqué lors de l’achat jusqu’à leur annulation. Vous devez annuler avant le renouvellement pour éviter la prochaine facturation. En cas d’échec de paiement, nous pouvons suspendre ou rétrograder le Service concerné, retenter le paiement ou demander une mise à jour du moyen de paiement.
 
-## VI. Protection de la Vie Privée
-La Société collecte, utilise, stocke et protège les informations des utilisateurs conformément à sa Politique de Confidentialité. Les informations personnelles ne seront pas divulguées à des tiers sauf obligation légale ou autorisation de l’Utilisateur.
+### 5. Essais, promotions et crédits
+Les essais, coupons, crédits, remises ou offres promotionnelles peuvent être soumis à des conditions supplémentaires, critères d’éligibilité, limites d’usage, dates d’expiration et règles de non-transférabilité. Nous pouvons refuser ou révoquer un avantage promotionnel en cas d’erreur, abus, fraude ou violation des présentes Conditions.
 
----
-
-## VII. Services Tiers
-La Plateforme peut intégrer des services tiers. L’Utilisateur doit respecter les conditions et politiques de ces tiers. La Société n’est pas responsable de la disponibilité, de la stabilité ou du contenu de ces services.
-
----
-
-## VIII. Clause de Non‑Responsabilité
-
-Dans les limites permises par la loi, la Société décline toute responsabilité concernant :
-
-### 1. Force Majeure
-Interruptions de service ou pertes de données dues à des événements de force majeure.
-
-### 2. Actions de l’Utilisateur
-Fuites ou pertes de compte causées par l’Utilisateur lui‑même.
-
-### 3. Responsabilité des Tiers
-Litiges liés aux services ou contenus fournis par des tiers.
-
-### 4. Mauvaise Utilisation
-Utilisation incorrecte ou dépendance inappropriée aux services de la Plateforme.
+### 6. Remboursements
+Les remboursements sont traités selon notre Politique de Remboursement et la loi applicable. Sauf exigence légale ou autorisation expresse de cette politique, les services numériques, abonnements activés, travaux personnalisés et avantages utilisés peuvent être non remboursables.
 
 ---
 
-## IX. Modification et Résiliation du Service
-La Société peut modifier, suspendre ou résilier les services selon les besoins opérationnels. En cas de violation des Conditions, la Société peut résilier immédiatement l’accès de l’Utilisateur.
+## V. Règles d’utilisation acceptable
+Vous vous engagez à ne pas abuser des Services. Les comportements interdits incluent notamment :
+
+- violer les lois, règlements, décisions de justice ou droits de tiers ;
+- publier, transmettre ou stocker du contenu illégal, nuisible, abusif, harcelant, diffamatoire, obscène, haineux, exploiteur, frauduleux ou contrefaisant ;
+- usurper une identité, tromper sur votre affiliation ou falsifier des informations de compte, commande ou paiement ;
+- perturber, attaquer, scanner, scraper, désassembler, surcharger, contourner ou tenter d’accéder sans autorisation aux Services ou systèmes liés ;
+- utiliser des bots, scripts, crawlers, outils automatisés ou modèles de trafic anormaux sans autorisation écrite ;
+- diffuser logiciels malveillants, hameçonnage, spam, publicités non sollicitées ou liens trompeurs ;
+- manipuler évaluations, métriques, quotas, parrainages, promotions, remboursements ou facturation ;
+- utiliser les Services pour développer, entraîner ou exploiter des systèmes concurrents d’une manière violant les présentes Conditions ou la loi ;
+- utiliser l’IA, la messagerie, le stockage ou les communications à des fins de surveillance illégale, vol d’identifiants, harcèlement, spam, malware ou contournement de sécurité ;
+- supprimer mentions de droit d’auteur, marques, attributions, fonctions de sécurité ou contrôles d’accès.
+
+Nous pouvons enquêter sur les violations présumées et prendre des mesures telles que suppression de contenu, avertissement, limitation de débit, restriction de fonctions, suspension, résiliation, refus de remboursement, conservation de preuves ou signalement aux autorités lorsque cela est approprié.
 
 ---
 
-## X. Droit Applicable et Règlement des Litiges
-Les présentes Conditions sont régies par le **droit américain**.  
-Tout litige sera d’abord soumis à une tentative de résolution amiable ; à défaut, il sera porté devant un **tribunal compétent du Wyoming (États‑Unis)**.
+## VI. Contenu utilisateur et soumissions
+
+### 1. Responsabilité du contenu
+Vous êtes responsable des fichiers, messages, prompts, sorties, textes, images, commentaires, documents de support et autres contenus que vous soumettez, stockez, transmettez ou générez via les Services (« Contenu Utilisateur »). Vous déclarez disposer des droits et autorisations nécessaires pour utiliser et soumettre ce Contenu Utilisateur.
+
+### 2. Licence nécessaire au fonctionnement
+Vous accordez à Yume une licence mondiale, non exclusive et sans redevance pour héberger, stocker, traiter, transmettre, afficher, reproduire, sauvegarder, formater et utiliser le Contenu Utilisateur dans la mesure raisonnablement nécessaire pour fournir, maintenir, sécuriser, dépanner, améliorer et soutenir les Services, respecter la loi et faire appliquer les présentes Conditions.
+
+### 3. Examen et retrait
+Nous ne nous engageons pas à examiner tout Contenu Utilisateur, mais nous pouvons supprimer, restreindre ou conserver du contenu si nous estimons qu’il viole les présentes Conditions, crée un risque, porte atteinte à des droits, menace la sécurité des Services ou est requis par la loi.
+
+### 4. Retours et suggestions
+Si vous fournissez idées, suggestions, rapports d’erreurs ou autres retours, vous nous autorisez à les utiliser sans restriction ni compensation, sauf accord écrit contraire.
 
 ---
 
-## XI. Mise à Jour des Conditions
-La Société peut mettre à jour les Conditions et en informera les utilisateurs par annonce ou autre moyen raisonnable. Les Conditions mises à jour prennent effet dès leur publication.
+## VII. Propriété intellectuelle
+Les Services, y compris logiciels, interfaces, logos, marques, textes, graphismes, éléments de conception, documentation, bases de données et architecture de service, appartiennent à Yume ou à ses concédants et sont protégés par les lois applicables.
+
+Sous réserve du respect des présentes Conditions, nous vous accordons une licence limitée, révocable, non exclusive et non transférable pour accéder aux Services et les utiliser à des fins personnelles ou professionnelles internes conformément à leur destination. Aucun droit de propriété ne vous est transféré. Sauf autorisation expresse, vous ne pouvez pas copier, modifier, distribuer, vendre, louer, sous-licencier ou créer des œuvres dérivées des Services.
 
 ---
 
-## XII. Contact
-Pour toute question concernant ces Conditions, veuillez nous contacter :  
-- **Email : support@yume.zone**
-- **Adresse :**  
-  **Yume Internet LLC**  
-  1401 Pennsylvania Ave  
-  Ste 105 Apt 1906  
-  Wilmington, DE 19806  
-  USA
+## VIII. Règles propres à l’IA, au cloud, à l’e-mail et aux services numériques
+
+### 1. Fonctions d’IA
+Les sorties d’IA peuvent être inexactes, incomplètes, obsolètes ou inadaptées à votre situation. Vous êtes responsable de les examiner avant de vous y fier. Les fonctions d’IA ne remplacent pas les conseils professionnels juridiques, médicaux, financiers, de sécurité ou d’urgence.
+
+### 2. Stockage cloud
+Vous êtes responsable de conserver des sauvegardes appropriées de vos fichiers importants. Bien que nous prenions des mesures raisonnables, aucun système de stockage en ligne n’est à l’abri d’interruptions, pertes, corruptions, accès non autorisés ou erreurs utilisateur.
+
+### 3. E-mail et communications
+Vous ne pouvez pas utiliser Yume Mail ou les fonctions de communication pour spam, hameçonnage, diffusion de malware, identité trompeuse, marketing illégal, harcèlement ou envois de masse violant les règles applicables. Nous pouvons appliquer des limites d’envoi, filtres, suspensions ou autres contrôles pour protéger la délivrabilité et la sécurité.
+
+### 4. Services personnalisés
+Les travaux personnalisés, l’aide au déploiement, la migration ou le support dédié peuvent être soumis à des devis, périmètres, calendriers, critères d’acceptation et conditions de paiement distincts. En cas de conflit, les conditions écrites plus spécifiques prévalent pour le service personnalisé concerné.
+
+---
+
+## IX. Services tiers
+Les Services peuvent contenir des liens vers, dépendre de ou intégrer des services tiers, prestataires de paiement, fournisseurs cloud, API, outils d’analyse, fournisseurs d’identité, bibliothèques logicielles ou contenus. Ces services sont régis par leurs propres conditions et politiques de confidentialité. Sauf disposition légale contraire, nous ne sommes pas responsables de leur disponibilité, décisions, contenu, sécurité, frais ou pratiques de données.
+
+---
+
+## X. Confidentialité et protection des données
+Votre utilisation des Services est soumise à notre Politique de Confidentialité. Vous reconnaissez que nous pouvons collecter, utiliser, stocker, divulguer, transférer et protéger les informations comme décrit dans cette politique. Si vous soumettez des données personnelles concernant autrui, vous êtes responsable d’obtenir les consentements ou autorisations nécessaires.
+
+---
+
+## XI. Suspension et résiliation
+Vous pouvez cesser d’utiliser les Services à tout moment. Vous pouvez demander la suppression de votre compte, sous réserve de vérification d’identité, obligations de conservation légale, transactions non résolues, prévention de fraude, besoins de sécurité et cycles de suppression des sauvegardes.
+
+Nous pouvons suspendre ou résilier votre accès si nous estimons raisonnablement que vous avez violé les présentes Conditions, créé un risque juridique ou de sécurité, omis de payer les sommes dues, abusé des remboursements ou promotions, ou utilisé les Services de manière nuisible. La résiliation peut entraîner la perte d’accès aux comptes, données, abonnements, crédits et contenus numériques. Vous restez responsable des montants dus avant la résiliation.
+
+---
+
+## XII. Exclusions de garantie
+Dans la mesure maximale permise par la loi, les Services sont fournis « en l’état » et « selon disponibilité ». Nous ne garantissons pas qu’ils seront ininterrompus, exempts d’erreurs, sécurisés, compatibles avec tous les appareils ou exempts de perte de données. Nous ne garantissons pas que contenus, sorties d’IA, résultats de recherche, disponibilité, stockage, livraison ou intégrations tierces répondront à vos attentes.
+
+Certaines juridictions n’autorisent pas certaines exclusions. Dans ces juridictions, les exclusions s’appliquent uniquement dans la mesure permise par la loi.
+
+---
+
+## XIII. Limitation de responsabilité
+Dans la mesure maximale permise par la loi, Yume et ses propriétaires, dirigeants, employés, contractants, fournisseurs et affiliés ne seront pas responsables des dommages indirects, accessoires, spéciaux, consécutifs, exemplaires ou punitifs, ni des pertes de profits, revenus, données, clientèle, opportunité commerciale ou interruption de service.
+
+Dans la mesure maximale permise par la loi, notre responsabilité totale pour toute réclamation liée aux Services ou aux présentes Conditions ne dépassera pas le montant payé à Yume pour le Service spécifique à l’origine de la réclamation au cours des trois mois précédant l’événement, ou 100 USD si aucun paiement n’a été effectué.
+
+Rien dans les présentes Conditions ne limite une responsabilité qui ne peut être limitée par la loi applicable.
+
+---
+
+## XIV. Indemnisation
+Dans la mesure permise par la loi, vous acceptez d’indemniser et de dégager de toute responsabilité Yume ainsi que ses propriétaires, dirigeants, employés, contractants, fournisseurs et affiliés contre les réclamations, pertes, responsabilités, dommages, coûts et dépenses, y compris honoraires raisonnables d’avocat, découlant de votre Contenu Utilisateur, de votre utilisation des Services, de votre violation des présentes Conditions, de votre violation de la loi ou de votre atteinte aux droits de tiers.
+
+---
+
+## XV. Droit applicable et règlement des litiges
+Les présentes Conditions sont régies par le droit de l’État du Wyoming et le droit fédéral américain applicable, sans égard aux règles de conflit de lois, sauf lorsque des règles impératives de protection des consommateurs dans votre juridiction en disposent autrement.
+
+Avant toute réclamation formelle, vous acceptez de nous contacter à **support@yume.zone** afin de tenter une résolution amiable. Si aucune résolution n’est possible, les litiges seront traités par les juridictions ou instances compétentes permises par la loi applicable. Chaque partie peut demander une injonction ou mesure équitable en cas d’usage abusif de propriété intellectuelle, accès non autorisé, menace de sécurité ou violation de confidentialité.
+
+---
+
+## XVI. Modifications des Conditions
+Nous pouvons mettre à jour ces Conditions. La version mise à jour entre en vigueur lors de sa publication, sauf date ultérieure indiquée. Pour les changements importants, nous pouvons notifier via les Services, le site, l’e-mail ou tout moyen raisonnable. L’utilisation continue des Services après la date d’effet vaut acceptation des Conditions mises à jour.
+
+---
+
+## XVII. Contact
+Pour toute question concernant ces Conditions, contactez-nous :
+
+- **E-mail :** support@yume.zone
+- **Entité :** Yume Internet LLC
+- **Site web :** https://www.yume.zone/
