@@ -114,13 +114,14 @@ p.loading-title {
     align-items: center;
     justify-content: center;
     margin-top: 0;
-    color: var(--page-background-color);
+    color: #4da3ff;
     font-size: 0.9rem;
     line-height: 20px;
     letter-spacing: 0;
     opacity: 1;
     text-shadow: none;
     pointer-events: none;
+    font-family: 'UnidreamLED' !important;
 }
 
 #loading-box .spinner-box .configure-core {

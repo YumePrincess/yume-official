@@ -71,6 +71,14 @@
         font-size: 1.75rem;
     }
 
+    span.img-sub-title {
+        font-size: 4.75rem;
+    }
+
+    span.img-sub-text {
+        font-size: 1.75rem;
+    }
+
     /*链接卡片文字*/
     span.link-name {
         display: none !important;
@@ -131,22 +139,22 @@
         min-height: 0;
     }
 
-    .box-left > .img-title {
+    .box-left > .img-sub-title {
         width: 100%;
         margin-top: 4px;
         margin-left: 8px;
         transform: none;
     }
 
-    .box-left span.img-title {
+    .box-left span.img-sub-title {
         font-size: 3.2rem;
     }
 
-    .box-left span.img-text {
+    .box-left span.img-sub-text {
         font-size: 1.35rem;
     }
 
-    .box-left > .img-title br + span.img-text {
+    .box-left > .img-sub-title br + span.img-sub-text {
         display: block;
         margin-top: 0.72em;
         margin-left: 0;
@@ -247,6 +255,10 @@
     span.img-text {
         font-size: 1.65rem;
     }
+
+    span.img-sub-text {
+        font-size: 1.65rem;
+    }
 }
 
 /*小于768px时*/
@@ -258,6 +270,10 @@
     }
 
     span.img-title {
+        font-size: 4.5rem;
+    }
+
+    span.img-sub-title {
         font-size: 4.5rem;
     }
 }
@@ -297,6 +313,10 @@
 
     /*标题文字*/
     span.img-text {
+        display: inline;
+    }
+
+    span.img-sub-text {
         display: inline;
     }
 

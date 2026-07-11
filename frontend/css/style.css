@@ -260,6 +260,28 @@ main {
     transform: rotate(360deg);
 }
 
+div.img-sub-title {
+    width: auto;
+    margin-left: 0;
+    transform: none;
+    display: block;
+    line-height: 1;
+}
+
+span.img-sub-title {
+    display: block;
+    font-size: 5rem;
+    line-height: 1;
+    font-family: 'Pacifico-Regular' !important;
+}
+
+span.img-sub-text {
+    display: block;
+    font-size: 2rem;
+    line-height: 1;
+    font-family: 'Pacifico-Regular' !important;
+}
+
 div.img-title {
     width: auto;
     margin-left: 0;
@@ -273,6 +295,7 @@ span.img-title {
     font-size: 5rem;
     line-height: 1;
     font-family: 'Pacifico-Regular' !important;
+    transform: translateY(-0.165em);
 }
 
 span.img-text {
@@ -280,6 +303,7 @@ span.img-text {
     font-size: 2rem;
     line-height: 1;
     font-family: 'Pacifico-Regular' !important;
+    transform: translateY(-0.33em);
 }
 
 .main-img > .img-title {
@@ -869,7 +893,7 @@ i.iconfont.icon-z_shangpinheji {
     overflow: auto;
 }
 
-.box-left > .img-title {
+.box-left > .img-sub-title {
     display: block;
     width: 100%;
     margin-top: -14px;
@@ -877,12 +901,12 @@ i.iconfont.icon-z_shangpinheji {
     line-height: 1;
 }
 
-.box-left > .img-title span.img-title {
+.box-left > .img-sub-title span.img-sub-title {
     display: inline-block;
     line-height: 1;
 }
 
-.box-left > .img-title span.img-title + span.img-text {
+.box-left > .img-sub-title span.img-sub-title + span.img-sub-text {
     display: inline-block;
     line-height: 1;
     margin-left: 0.12em;
@@ -890,7 +914,7 @@ i.iconfont.icon-z_shangpinheji {
     white-space: nowrap;
 }
 
-.box-left > .img-title br + span.img-text {
+.box-left > .img-sub-title br + span.img-sub-text {
     display: block;
     line-height: 1;
     margin-top: 0.78em;
