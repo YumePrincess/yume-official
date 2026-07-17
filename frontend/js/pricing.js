@@ -6,9 +6,24 @@ const pricingText = {
     en: {
         metaTitle: 'Yume Pricing',
         metaDescription: 'Yume pricing and service catalog.',
+        selectLanguage: 'Select Language',
+        selectTheme: 'Select Theme',
+        brandName: 'Yume Official',
+        loading: 'Loading...',
+        loadingFiles: 'Loading files...',
+        loadingComplete: 'Loading complete',
+        loadingProgress: 'Loading progress',
+        footerPrefix: 'Copyright © {year} ',
+        footerCompany: 'Yume Internet LLC',
+        footerSuffix: '. All Rights Reserved.',
         themeAuto: 'Auto',
         themeDark: 'Dark',
         themeLight: 'Light',
+        pageNavigation: 'Page navigation',
+        previousSection: 'Previous section',
+        nextSection: 'Next section',
+        previousCards: 'Previous product plans',
+        nextCards: 'Next product plans',
         kicker: 'Pricing',
         title: 'Products and services',
         subtitle: 'A clear catalog for public services, memberships, and custom work across the Yume ecosystem.',
@@ -30,7 +45,7 @@ const pricingText = {
         purchaseTitle: 'Purchase',
         purchaseIntro: 'Membership groups, sending quota, and sub-mailbox expansion packs.',
         tablePlan: 'Plan',
-        tableScope: 'Scope',
+        tableScope: 'Description',
         tablePeriod: 'Period',
         tablePrice: 'Price',
         tableUsage: 'Usage',
@@ -47,7 +62,7 @@ const pricingText = {
         free: 'Free',
         quote: 'Quote',
         openService: 'Open service',
-        askQuote: 'Ask for quote',
+        askQuote: 'Request a quote',
         priceFreeCadence: 'Public access',
         priceQuoteCadence: 'Contact us for current availability and billing details',
         badgePublic: 'Public',
@@ -56,7 +71,7 @@ const pricingText = {
         badgeProduct: 'Product',
         freePlan: 'Free Plan',
         permanent: 'Permanent',
-        perMonth: 'per month',
+        perMonth: 'Per month',
         oneYear: '1 year',
         freeMemberPlan: 'Free Member',
         driveMemberPlan: 'AmaAme Member',
@@ -73,8 +88,12 @@ const pricingText = {
         tableMailMemberPlan: 'Yume Mail / SakuraAme Member',
         tableMailQuotaPlan: 'Yume Mail / Sending Quota Package',
         tableMailSubEmailPlan: 'Yume Mail / Sub-Email Expansion Pack',
+        aiScope: 'Yume Intelligence membership',
         driveScope: 'Yume Drive membership',
-        sakuraScope: 'Mail membership',
+        sakuraScope: 'Yume Mail membership',
+        sendingQuotaScope: 'Additional Yume Mail sending quota',
+        subEmailScope: 'Additional Yume Mail sub-mailboxes',
+        notApplicable: 'Not applicable',
         quota20: '20 sending credits',
         subEmail3: '3 sub-mailboxes',
         usage2Cycle: '$2 / cycle',
@@ -123,11 +142,26 @@ const pricingText = {
         supportFeature3: 'Scope based estimate'
     },
     'zh-cn': {
-        metaTitle: 'Yume 价格',
+        metaTitle: '雨梦价格',
         metaDescription: '雨梦商品与服务价格目录。',
+        selectLanguage: '选择语言',
+        selectTheme: '选择主题',
+        brandName: '雨梦Official',
+        loading: '加载中……',
+        loadingFiles: '正在加载文件……',
+        loadingComplete: '加载完成',
+        loadingProgress: '加载进度',
+        footerPrefix: '版权所有 © {year} ',
+        footerCompany: '美国雨梦互联网有限公司',
+        footerSuffix: '。保留所有权利。本页面为在中国大陆使用而设计。',
         themeAuto: '自动',
         themeDark: '深色',
         themeLight: '浅色',
+        pageNavigation: '页面导航',
+        previousSection: '上一页',
+        nextSection: '下一页',
+        previousCards: '向左移动产品方案',
+        nextCards: '向右移动产品方案',
         kicker: '价格',
         title: '商品与服务内容',
         subtitle: '用于查看雨梦生态中公开服务、会员服务与定制服务的内容和价格状态。',
@@ -139,20 +173,20 @@ const pricingText = {
         summaryMemberValue: '报价',
         summaryCustomLabel: '定制服务',
         summaryCustomValue: '报价',
-        summaryFreeLabel: 'Free Plan',
+        summaryFreeLabel: '免费方案',
         summaryFreeValue: '全部产品',
         summaryDriveLabel: '雨梦网盘',
         summaryPlanLabel: '雨梦智能',
         summaryMailLabel: '雨梦邮箱',
         productsTitle: '产品方案',
-        productsIntro: '全部产品均提供 Free Plan，付费方案用于解锁更高额度或会员权益。',
+        productsIntro: '全部产品均提供免费方案，付费方案用于解锁更高额度或会员权益。',
         purchaseTitle: '购买',
-        purchaseIntro: '会员权限组、追加邮件发送件数和子邮箱包。',
+        purchaseIntro: '会员方案、追加邮件发送额度和子邮箱扩展包。',
         tablePlan: '套餐',
         tableScope: '说明',
         tablePeriod: '有效期',
         tablePrice: '价格',
-        tableUsage: '用量额度',
+        tableUsage: '用量',
         publicTitle: '公开服务',
         publicIntro: '面向日常访问开放的服务。',
         membershipTitle: '会员服务',
@@ -173,59 +207,63 @@ const pricingText = {
         badgeMember: '会员',
         badgeCustom: '定制',
         badgeProduct: '产品',
-        freePlan: 'Free Plan',
-        permanent: '永久',
+        freePlan: '免费方案',
+        permanent: '永久有效',
         perMonth: '每月',
         oneYear: '1 年',
-        freeMemberPlan: 'Free Member',
-        driveMemberPlan: '雨梦网盘 / 天雨会员',
-        hanaProPlan: 'HanaAme Pro',
-        hanaMaxPlan: 'HanaAme Max',
-        hanaUltraPlan: 'HanaAme Ultra',
-        sakuraMemberPlan: 'SakuraAme Member',
-        sendingQuotaPlan: 'Sending Quota Package',
-        subEmailPlan: 'Sub-Email Expansion Pack',
+        freeMemberPlan: '免费会员',
+        driveMemberPlan: '天雨会员',
+        hanaProPlan: '花雨会员 Pro',
+        hanaMaxPlan: '花雨会员 Max',
+        hanaUltraPlan: '花雨会员 Ultra',
+        sakuraMemberPlan: '樱雨会员',
+        sendingQuotaPlan: '邮件发送额度包',
+        subEmailPlan: '子邮箱扩展包',
         tableAiProPlan: '雨梦智能 / 花雨会员 Pro',
         tableAiMaxPlan: '雨梦智能 / 花雨会员 Max',
         tableAiUltraPlan: '雨梦智能 / 花雨会员 Ultra',
         tableDriveMemberPlan: '雨梦网盘 / 天雨会员',
-        tableMailMemberPlan: '雨梦邮箱 / 桜雨会员',
-        tableMailQuotaPlan: '雨梦邮箱 / 邮件发送包',
+        tableMailMemberPlan: '雨梦邮箱 / 樱雨会员',
+        tableMailQuotaPlan: '雨梦邮箱 / 邮件发送额度包',
         tableMailSubEmailPlan: '雨梦邮箱 / 子邮箱扩展包',
-        driveScope: '网盘会员',
-        sakuraScope: '邮箱会员',
-        quota20: '20 件',
-        subEmail3: '3 个',
-        usage2Cycle: '$2 / 周期',
-        usage30Cycle: '$30 / 周期',
-        usage75Cycle: '$75 / 周期',
-        usage200Cycle: '$200 / 周期',
+        aiScope: '雨梦智能会员',
+        driveScope: '雨梦网盘会员',
+        sakuraScope: '雨梦邮箱会员',
+        sendingQuotaScope: '雨梦邮箱追加发送额度',
+        subEmailScope: '雨梦邮箱子邮箱扩展',
+        notApplicable: '不适用',
+        quota20: '20 次发送额度',
+        subEmail3: '3 个子邮箱',
+        usage2Cycle: '每个计费周期 $2',
+        usage30Cycle: '每个计费周期 $30',
+        usage75Cycle: '每个计费周期 $75',
+        usage200Cycle: '每个计费周期 $200',
         searchName: '雨梦搜索',
         searchDesc: '雨梦生态的网站搜索入口。',
         searchFeature1: '网页搜索门户',
         searchFeature2: '适合日常访问使用',
         searchFeature3: '无需付费套餐',
-        accountName: '雨梦 Account',
+        accountName: '雨梦Account',
         accountDesc: '用于支持服务的身份与账号访问。',
         accountFeature1: '统一账号体验',
         accountFeature2: '连接相关产品使用',
         accountFeature3: '基础访问免费',
-        officialName: '雨梦 Official',
+        officialName: '雨梦Official',
         officialDesc: '官方信息、链接、公告与服务政策。',
         officialFeature1: '产品与服务入口',
         officialFeature2: '条款和公告查看',
         officialFeature3: '公开网站访问',
-        driveName: '雨梦网盘 / 天雨会员',
+        driveName: '雨梦网盘 / 天雨',
         driveDesc: '面向用户的云存储会员服务。',
         driveFeature1: '私有文件存储',
         driveFeature2: '按存储使用情况确定服务范围',
         driveFeature3: '退款阈值参考 20% 存储使用率',
-        aiName: '雨梦智能 / 花雨会员',
+        aiName: '雨梦智能 / 花雨',
         aiDesc: 'AI 对话与效率辅助会员服务。',
         aiFeature1: 'AI 对话访问',
         aiFeature2: '日常任务辅助支持',
         aiFeature3: '退款阈值参考 20 次对话',
-        mailName: '雨梦邮箱 / 桜雨会员',
+        mailName: '雨梦邮箱 / 樱雨',
         mailDesc: '面向雨梦用户的邮箱会员服务。',
         mailFeature1: '邮箱服务',
         mailFeature2: '收发邮件支持',
@@ -242,11 +280,26 @@ const pricingText = {
         supportFeature3: '按支持范围报价'
     },
     'zh-tw': {
-        metaTitle: 'Yume 價格',
+        metaTitle: '雨夢價格',
         metaDescription: '雨夢商品與服務價格目錄。',
+        selectLanguage: '選擇語言',
+        selectTheme: '選擇主題',
+        brandName: '雨夢Official',
+        loading: '載入中……',
+        loadingFiles: '正在載入檔案……',
+        loadingComplete: '載入完成',
+        loadingProgress: '載入進度',
+        footerPrefix: '版權所有 © {year} ',
+        footerCompany: '美國雨夢網際網路有限公司',
+        footerSuffix: '。保留所有權利。',
         themeAuto: '自動',
         themeDark: '深色',
         themeLight: '淺色',
+        pageNavigation: '頁面導覽',
+        previousSection: '上一頁',
+        nextSection: '下一頁',
+        previousCards: '向左移動產品方案',
+        nextCards: '向右移動產品方案',
         kicker: '價格',
         title: '商品與服務內容',
         subtitle: '用於查看雨夢生態中公開服務、會員服務與客製服務的內容和價格狀態。',
@@ -258,20 +311,20 @@ const pricingText = {
         summaryMemberValue: '報價',
         summaryCustomLabel: '客製服務',
         summaryCustomValue: '報價',
-        summaryFreeLabel: 'Free Plan',
+        summaryFreeLabel: '免費方案',
         summaryFreeValue: '全部產品',
         summaryDriveLabel: '雨夢雲盤',
         summaryPlanLabel: '雨夢智能',
         summaryMailLabel: '雨夢郵箱',
         productsTitle: '產品方案',
-        productsIntro: '全部產品均提供 Free Plan，付費方案用於解鎖更高額度或會員權益。',
+        productsIntro: '全部產品均提供免費方案，付費方案用於解鎖更高額度或會員權益。',
         purchaseTitle: '購買',
-        purchaseIntro: '會員權限群組、追加郵件傳送件數和子郵箱包。',
+        purchaseIntro: '會員方案、追加郵件發送額度和子郵箱擴充包。',
         tablePlan: '方案',
         tableScope: '說明',
         tablePeriod: '有效期',
         tablePrice: '價格',
-        tableUsage: '用量額度',
+        tableUsage: '用量',
         publicTitle: '公開服務',
         publicIntro: '面向日常訪問開放的服務。',
         membershipTitle: '會員服務',
@@ -292,59 +345,63 @@ const pricingText = {
         badgeMember: '會員',
         badgeCustom: '客製',
         badgeProduct: '產品',
-        freePlan: 'Free Plan',
-        permanent: '永久',
+        freePlan: '免費方案',
+        permanent: '永久有效',
         perMonth: '每月',
         oneYear: '1 年',
-        freeMemberPlan: 'Free Member',
-        driveMemberPlan: '雨夢雲盤 / 天雨會員',
-        hanaProPlan: 'HanaAme Pro',
-        hanaMaxPlan: 'HanaAme Max',
-        hanaUltraPlan: 'HanaAme Ultra',
-        sakuraMemberPlan: 'SakuraAme Member',
-        sendingQuotaPlan: 'Sending Quota Package',
-        subEmailPlan: 'Sub-Email Expansion Pack',
+        freeMemberPlan: '免費會員',
+        driveMemberPlan: '天雨會員',
+        hanaProPlan: '花雨會員 Pro',
+        hanaMaxPlan: '花雨會員 Max',
+        hanaUltraPlan: '花雨會員 Ultra',
+        sakuraMemberPlan: '櫻雨會員',
+        sendingQuotaPlan: '郵件發送額度包',
+        subEmailPlan: '子郵箱擴充包',
         tableAiProPlan: '雨夢智能 / 花雨會員 Pro',
         tableAiMaxPlan: '雨夢智能 / 花雨會員 Max',
         tableAiUltraPlan: '雨夢智能 / 花雨會員 Ultra',
         tableDriveMemberPlan: '雨夢雲盤 / 天雨會員',
-        tableMailMemberPlan: '雨夢郵箱 / 桜雨會員',
-        tableMailQuotaPlan: '雨夢郵箱 / 郵件傳送包',
+        tableMailMemberPlan: '雨夢郵箱 / 櫻雨會員',
+        tableMailQuotaPlan: '雨夢郵箱 / 郵件發送額度包',
         tableMailSubEmailPlan: '雨夢郵箱 / 子郵箱擴充包',
-        driveScope: '雲盤會員',
-        sakuraScope: '郵箱會員',
-        quota20: '20 件',
-        subEmail3: '3 個',
-        usage2Cycle: '$2 / 週期',
-        usage30Cycle: '$30 / 週期',
-        usage75Cycle: '$75 / 週期',
-        usage200Cycle: '$200 / 週期',
+        aiScope: '雨夢智能會員',
+        driveScope: '雨夢雲盤會員',
+        sakuraScope: '雨夢郵箱會員',
+        sendingQuotaScope: '雨夢郵箱追加發送額度',
+        subEmailScope: '雨夢郵箱子郵箱擴充',
+        notApplicable: '不適用',
+        quota20: '20 次發送額度',
+        subEmail3: '3 個子郵箱',
+        usage2Cycle: '每個計費週期 $2',
+        usage30Cycle: '每個計費週期 $30',
+        usage75Cycle: '每個計費週期 $75',
+        usage200Cycle: '每個計費週期 $200',
         searchName: '雨夢搜尋',
         searchDesc: '雨夢生態的網站搜尋入口。',
         searchFeature1: '網頁搜尋入口',
         searchFeature2: '適合日常訪問使用',
         searchFeature3: '無需付費方案',
-        accountName: '雨夢 Account',
+        accountName: '雨夢Account',
         accountDesc: '用於支援服務的身份與帳號訪問。',
         accountFeature1: '統一帳號體驗',
         accountFeature2: '連接相關產品使用',
         accountFeature3: '基礎訪問免費',
-        officialName: '雨夢 Official',
+        officialName: '雨夢Official',
         officialDesc: '官方資訊、連結、公告與服務政策。',
         officialFeature1: '產品與服務入口',
         officialFeature2: '條款和公告查看',
         officialFeature3: '公開網站訪問',
-        driveName: '雨夢雲盤 / 天雨會員',
+        driveName: '雨夢雲盤 / 天雨',
         driveDesc: '面向使用者的雲端儲存會員服務。',
         driveFeature1: '私有檔案儲存',
         driveFeature2: '依儲存使用情況確定服務範圍',
         driveFeature3: '退款門檻參考 20% 儲存使用率',
-        aiName: '雨夢智能 / 花雨會員',
+        aiName: '雨夢智能 / 花雨',
         aiDesc: 'AI 對話與效率輔助會員服務。',
         aiFeature1: 'AI 對話訪問',
         aiFeature2: '日常任務輔助支援',
         aiFeature3: '退款門檻參考 20 次對話',
-        mailName: '雨夢郵箱 / 桜雨會員',
+        mailName: '雨夢郵箱 / 櫻雨',
         mailDesc: '面向雨夢使用者的郵箱會員服務。',
         mailFeature1: '郵箱服務',
         mailFeature2: '收發郵件支援',
@@ -363,9 +420,24 @@ const pricingText = {
     fr: {
         metaTitle: 'Tarifs Yume',
         metaDescription: 'Catalogue des prix et services Yume.',
+        selectLanguage: 'Sélectionner la langue',
+        selectTheme: 'Sélectionner le thème',
+        brandName: 'Yume Official',
+        loading: 'Chargement…',
+        loadingFiles: 'Chargement des fichiers…',
+        loadingComplete: 'Chargement terminé',
+        loadingProgress: 'Progression du chargement',
+        footerPrefix: 'Copyright © {year} ',
+        footerCompany: 'Yume Internet LLC',
+        footerSuffix: '. Tous droits réservés.',
         themeAuto: 'Automatique',
         themeDark: 'Sombre',
         themeLight: 'Clair',
+        pageNavigation: 'Navigation de la page',
+        previousSection: 'Section précédente',
+        nextSection: 'Section suivante',
+        previousCards: 'Offres précédentes',
+        nextCards: 'Offres suivantes',
         kicker: 'Tarifs',
         title: 'Produits et services',
         subtitle: 'Un catalogue clair pour les services publics, les abonnements et les travaux personnalisés de l’écosystème Yume.',
@@ -373,28 +445,28 @@ const pricingText = {
         backHome: 'Retour à l’accueil',
         summaryPublicLabel: 'Accès public',
         summaryPublicValue: 'Gratuit',
-        summaryMemberLabel: 'Services membres',
+        summaryMemberLabel: 'Services d’abonnement',
         summaryMemberValue: 'Devis',
         summaryCustomLabel: 'Travaux personnalisés',
         summaryCustomValue: 'Devis',
-        summaryFreeLabel: 'Free Plan',
+        summaryFreeLabel: 'Offre gratuite',
         summaryFreeValue: 'Tous les produits',
         summaryDriveLabel: 'Yume Drive',
         summaryPlanLabel: 'Yume IA',
         summaryMailLabel: 'Yume Mail',
-        productsTitle: 'Offres produit',
-        productsIntro: 'Chaque produit inclut un Free Plan. Les offres payantes débloquent des limites supérieures ou des avantages membre.',
+        productsTitle: 'Offres de produits',
+        productsIntro: 'Chaque produit inclut une offre gratuite. Les offres payantes débloquent des limites supérieures ou des avantages réservés aux membres.',
         purchaseTitle: 'Achat',
-        purchaseIntro: 'Groupes membres, quota d’envoi et packs d’extension de sous-boîtes mail.',
+        purchaseIntro: 'Abonnements, quotas d’envoi et packs d’extension de sous-boîtes mail.',
         tablePlan: 'Offre',
-        tableScope: 'Portée',
+        tableScope: 'Description',
         tablePeriod: 'Période',
         tablePrice: 'Prix',
-        tableUsage: 'Usage',
+        tableUsage: 'Utilisation',
         publicTitle: 'Services publics',
         publicIntro: 'Services disponibles pour un usage quotidien.',
-        membershipTitle: 'Services membres',
-        membershipIntro: 'Les noms de membres suivent les références actuelles de la politique de remboursement.',
+        membershipTitle: 'Services d’abonnement',
+        membershipIntro: 'Les noms des abonnements suivent les références actuelles de la politique de remboursement.',
         customTitle: 'Services personnalisés',
         customIntro: 'Pour les intégrations, l’aide au déploiement et le support dédié.',
         noteTitle: 'Note de facturation',
@@ -411,33 +483,37 @@ const pricingText = {
         badgeMember: 'Membre',
         badgeCustom: 'Sur mesure',
         badgeProduct: 'Produit',
-        freePlan: 'Free Plan',
-        permanent: 'Permanent',
-        perMonth: 'par mois',
+        freePlan: 'Offre gratuite',
+        permanent: 'Sans expiration',
+        perMonth: 'Par mois',
         oneYear: '1 an',
-        freeMemberPlan: 'Free Member',
-        driveMemberPlan: 'AmaAme Member',
+        freeMemberPlan: 'Abonnement gratuit',
+        driveMemberPlan: 'Abonnement AmaAme',
         hanaProPlan: 'HanaAme Pro',
         hanaMaxPlan: 'HanaAme Max',
         hanaUltraPlan: 'HanaAme Ultra',
-        sakuraMemberPlan: 'SakuraAme Member',
-        sendingQuotaPlan: 'Sending Quota Package',
-        subEmailPlan: 'Sub-Email Expansion Pack',
+        sakuraMemberPlan: 'Abonnement SakuraAme',
+        sendingQuotaPlan: 'Pack de quota d’envoi',
+        subEmailPlan: 'Pack d’extension de sous-boîtes mail',
         tableAiProPlan: 'Yume IA / HanaAme Pro',
         tableAiMaxPlan: 'Yume IA / HanaAme Max',
         tableAiUltraPlan: 'Yume IA / HanaAme Ultra',
-        tableDriveMemberPlan: 'Yume Drive / AmaAme Member',
-        tableMailMemberPlan: 'Yume Mail / SakuraAme Member',
-        tableMailQuotaPlan: 'Yume Mail / Sending Quota Package',
-        tableMailSubEmailPlan: 'Yume Mail / Sub-Email Expansion Pack',
+        tableDriveMemberPlan: 'Yume Drive / Abonnement AmaAme',
+        tableMailMemberPlan: 'Yume Mail / Abonnement SakuraAme',
+        tableMailQuotaPlan: 'Yume Mail / Pack de quota d’envoi',
+        tableMailSubEmailPlan: 'Yume Mail / Pack d’extension de sous-boîtes mail',
+        aiScope: 'Abonnement Yume IA',
         driveScope: 'Abonnement Yume Drive',
-        sakuraScope: 'Abonnement mail',
+        sakuraScope: 'Abonnement Yume Mail',
+        sendingQuotaScope: 'Quota d’envoi supplémentaire pour Yume Mail',
+        subEmailScope: 'Sous-boîtes mail supplémentaires pour Yume Mail',
+        notApplicable: 'Non applicable',
         quota20: '20 crédits d’envoi',
         subEmail3: '3 sous-boîtes mail',
-        usage2Cycle: '$2 / cycle',
-        usage30Cycle: '$30 / cycle',
-        usage75Cycle: '$75 / cycle',
-        usage200Cycle: '$200 / cycle',
+        usage2Cycle: '$2 par cycle de facturation',
+        usage30Cycle: '$30 par cycle de facturation',
+        usage75Cycle: '$75 par cycle de facturation',
+        usage200Cycle: '$200 par cycle de facturation',
         searchName: 'Yume Recherche',
         searchDesc: 'Point d’entrée de recherche pour l’écosystème Yume.',
         searchFeature1: 'Portail de recherche web',
@@ -454,24 +530,24 @@ const pricingText = {
         officialFeature2: 'Conditions et annonces',
         officialFeature3: 'Accès public au site',
         driveName: 'Yume Drive / AmaAme',
-        driveDesc: 'Service membre de stockage cloud.',
+        driveDesc: 'Service d’abonnement de stockage cloud.',
         driveFeature1: 'Stockage privé de fichiers',
         driveFeature2: 'Périmètre de service basé sur l’usage du stockage',
         driveFeature3: 'Seuil de remboursement lié à 20 % d’utilisation du stockage',
         aiName: 'Yume IA / HanaAme',
-        aiDesc: 'Service membre pour conversations IA et productivité.',
+        aiDesc: 'Service d’abonnement pour les conversations IA et la productivité.',
         aiFeature1: 'Accès aux conversations IA',
         aiFeature2: 'Assistance pour les tâches quotidiennes',
         aiFeature3: 'Seuil de remboursement lié à 20 conversations',
         mailName: 'Yume Mail / SakuraAme',
-        mailDesc: 'Service membre de messagerie pour les utilisateurs Yume.',
+        mailDesc: 'Service d’abonnement de messagerie pour les utilisateurs Yume.',
         mailFeature1: 'Service de boîte mail',
         mailFeature2: 'Envoi et réception pris en charge',
         mailFeature3: 'Seuil de remboursement lié à 20 e-mails',
         designName: 'Personnalisation de site Yume',
-        designDesc: 'Personnalisation visuelle, frontend et contenu pour les pages liées à Yume.',
+        designDesc: 'Personnalisation visuelle, front-end et éditoriale pour les pages liées à Yume.',
         designFeature1: 'Adaptation interface et contenu',
-        designFeature2: 'Implémentation responsive',
+        designFeature2: 'Mise en œuvre de pages adaptatives',
         designFeature3: 'Estimation par projet',
         supportName: 'Support dédié',
         supportDesc: 'Aide dédiée pour configuration, migration et dépannage.',
@@ -480,14 +556,29 @@ const pricingText = {
         supportFeature3: 'Estimation selon le périmètre'
     },
     ja: {
-        metaTitle: 'Yume 料金',
-        metaDescription: 'Yumeの商品・サービス料金カタログ。',
+        metaTitle: '雨夢料金',
+        metaDescription: '雨夢の商品・サービス料金カタログ。',
+        selectLanguage: '言語を選択',
+        selectTheme: 'テーマを選択',
+        brandName: '雨夢Official',
+        loading: '読み込み中……',
+        loadingFiles: 'ファイルを読み込み中……',
+        loadingComplete: '読み込み完了',
+        loadingProgress: '読み込み進捗',
+        footerPrefix: 'Copyright © {year} ',
+        footerCompany: 'Yume Internet LLC',
+        footerSuffix: '。無断転載を禁じます。',
         themeAuto: '自動',
         themeDark: 'ダーク',
         themeLight: 'ライト',
+        pageNavigation: 'ページナビゲーション',
+        previousSection: '前のページ',
+        nextSection: '次のページ',
+        previousCards: '前の製品プラン',
+        nextCards: '次の製品プラン',
         kicker: '料金',
         title: '商品とサービス',
-        subtitle: 'Yumeエコシステムの公開サービス、会員サービス、カスタム作業を確認できる料金カタログです。',
+        subtitle: '雨夢エコシステムの公開サービス、会員サービス、カスタム作業を確認できる料金カタログです。',
         contact: 'サポートに連絡',
         backHome: 'ホームへ戻る',
         summaryPublicLabel: '公開アクセス',
@@ -496,17 +587,17 @@ const pricingText = {
         summaryMemberValue: '見積',
         summaryCustomLabel: 'カスタム作業',
         summaryCustomValue: '見積',
-        summaryFreeLabel: 'Free Plan',
+        summaryFreeLabel: '無料プラン',
         summaryFreeValue: '全製品',
         summaryDriveLabel: '雨夢ドライブ',
         summaryPlanLabel: '雨夢知能',
         summaryMailLabel: '雨夢メール',
         productsTitle: '製品プラン',
-        productsIntro: 'すべての製品にFree Planがあります。有料プランでは上限や会員特典を拡張できます。',
+        productsIntro: 'すべての製品に無料プランがあります。有料プランでは上限や会員特典を拡張できます。',
         purchaseTitle: '購入',
         purchaseIntro: '会員権限グループ、送信枠、サブメールボックス追加パック。',
         tablePlan: 'プラン',
-        tableScope: '内容',
+        tableScope: '説明',
         tablePeriod: '有効期間',
         tablePrice: '価格',
         tableUsage: '利用枠',
@@ -523,43 +614,47 @@ const pricingText = {
         free: '無料',
         quote: '見積',
         openService: 'サービスを開く',
-        askQuote: '見積を依頼',
+        askQuote: '見積もりを依頼',
         priceFreeCadence: '公開アクセス',
         priceQuoteCadence: '現在の提供状況と請求詳細はお問い合わせください',
         badgePublic: '公開',
         badgeMember: '会員',
         badgeCustom: 'カスタム',
         badgeProduct: '製品',
-        freePlan: 'Free Plan',
-        permanent: '永久',
-        perMonth: '月',
+        freePlan: '無料プラン',
+        permanent: '無期限',
+        perMonth: '毎月',
         oneYear: '1年',
-        freeMemberPlan: 'Free Member',
-        driveMemberPlan: '雨夢ドライブ / 天雨会員',
-        hanaProPlan: 'HanaAme Pro',
-        hanaMaxPlan: 'HanaAme Max',
-        hanaUltraPlan: 'HanaAme Ultra',
-        sakuraMemberPlan: 'SakuraAme Member',
-        sendingQuotaPlan: 'Sending Quota Package',
-        subEmailPlan: 'Sub-Email Expansion Pack',
-        tableAiProPlan: '雨夢知能 / HanaAme Pro',
-        tableAiMaxPlan: '雨夢知能 / HanaAme Max',
-        tableAiUltraPlan: '雨夢知能 / HanaAme Ultra',
+        freeMemberPlan: '無料会員',
+        driveMemberPlan: '天雨会員',
+        hanaProPlan: '花雨会員 Pro',
+        hanaMaxPlan: '花雨会員 Max',
+        hanaUltraPlan: '花雨会員 Ultra',
+        sakuraMemberPlan: '桜雨会員',
+        sendingQuotaPlan: '送信枠パッケージ',
+        subEmailPlan: 'サブメール拡張パック',
+        tableAiProPlan: '雨夢知能 / 花雨会員 Pro',
+        tableAiMaxPlan: '雨夢知能 / 花雨会員 Max',
+        tableAiUltraPlan: '雨夢知能 / 花雨会員 Ultra',
         tableDriveMemberPlan: '雨夢ドライブ / 天雨会員',
-        tableMailMemberPlan: '雨夢メール / SakuraAme Member',
+        tableMailMemberPlan: '雨夢メール / 桜雨会員',
         tableMailQuotaPlan: '雨夢メール / 送信枠パッケージ',
         tableMailSubEmailPlan: '雨夢メール / サブメール拡張パック',
-        driveScope: 'ドライブ会員',
-        sakuraScope: 'メール会員',
-        quota20: '20件',
-        subEmail3: '3個',
-        usage2Cycle: '$2 / 周期',
-        usage30Cycle: '$30 / 周期',
-        usage75Cycle: '$75 / 周期',
-        usage200Cycle: '$200 / 周期',
+        aiScope: '雨夢知能会員',
+        driveScope: '雨夢ドライブ会員',
+        sakuraScope: '雨夢メール会員',
+        sendingQuotaScope: '雨夢メールの追加送信枠',
+        subEmailScope: '雨夢メールのサブメールボックス追加',
+        notApplicable: '該当なし',
+        quota20: '送信20通分',
+        subEmail3: 'サブメールボックス3個',
+        usage2Cycle: '1請求期間あたり$2',
+        usage30Cycle: '1請求期間あたり$30',
+        usage75Cycle: '1請求期間あたり$75',
+        usage200Cycle: '1請求期間あたり$200',
         searchName: '雨夢検索',
-        searchDesc: 'Yumeエコシステムの検索入口です。',
-        searchFeature1: 'Web検索ポータル',
+        searchDesc: '雨夢エコシステムの検索入口です。',
+        searchFeature1: 'ウェブ検索ポータル',
         searchFeature2: '日常利用向け',
         searchFeature3: '有料プラン不要',
         accountName: '雨夢アカウント',
@@ -572,24 +667,24 @@ const pricingText = {
         officialFeature1: '製品とサービスの入口',
         officialFeature2: '規約とお知らせ',
         officialFeature3: '公開サイトアクセス',
-        driveName: '雨夢ドライブ / AmaAme',
+        driveName: '雨夢ドライブ / 天雨',
         driveDesc: 'クラウドストレージ会員サービスです。',
         driveFeature1: 'プライベートファイル保存',
         driveFeature2: '保存容量の利用状況に基づくサービス範囲',
         driveFeature3: '返金基準は20%のストレージ利用を参照',
-        aiName: '雨夢知能 / HanaAme',
+        aiName: '雨夢知能 / 花雨',
         aiDesc: 'AI会話と生産性支援の会員サービスです。',
         aiFeature1: 'AI会話アクセス',
         aiFeature2: '日常タスクのアシスタント支援',
         aiFeature3: '返金基準は20回の会話を参照',
-        mailName: '雨夢メール / SakuraAme',
-        mailDesc: 'Yumeユーザー向けメール会員サービスです。',
+        mailName: '雨夢メール / 桜雨',
+        mailDesc: '雨夢ユーザー向けメール会員サービスです。',
         mailFeature1: 'メールボックスサービス',
         mailFeature2: '送受信サポート',
         mailFeature3: '返金基準は20通のメールを参照',
-        designName: 'Yumeサイトカスタマイズ',
-        designDesc: 'Yume関連ページのビジュアル、フロントエンド、コンテンツを調整します。',
-        designFeature1: 'UIとコンテンツの調整',
+        designName: '雨夢サイトカスタマイズ',
+        designDesc: '雨夢関連ページのビジュアル、フロントエンド、コンテンツを調整します。',
+        designFeature1: 'インターフェースとコンテンツの調整',
         designFeature2: 'レスポンシブページ実装',
         designFeature3: 'プロジェクト単位の見積',
         supportName: '専用サポート',
@@ -675,13 +770,13 @@ const pricingProducts = {
 };
 
 const pricingTableRows = [
-    { plan: 'tableAiProPlan', usage: 'usage30Cycle', period: 'perMonth', price: '$19.99', scope: '' },
-    { plan: 'tableAiMaxPlan', usage: 'usage75Cycle', period: 'perMonth', price: '$49.99', scope: '' },
-    { plan: 'tableAiUltraPlan', usage: 'usage200Cycle', period: 'perMonth', price: '$99.99', scope: '' },
-    { plan: 'tableDriveMemberPlan', usage: 'driveScope', period: 'perMonth', price: '$14.99', scope: '' },
-    { plan: 'tableMailMemberPlan', usage: 'sakuraScope', period: 'perMonth', price: '$7.99', scope: '' },
-    { plan: 'tableMailQuotaPlan', usage: 'quota20', period: 'oneYear', price: '$2.00', scope: '' },
-    { plan: 'tableMailSubEmailPlan', usage: 'subEmail3', period: 'permanent', price: '$5.99', scope: '' }
+    { plan: 'tableAiProPlan', usage: 'usage30Cycle', period: 'perMonth', price: '$19.99', scope: 'aiScope' },
+    { plan: 'tableAiMaxPlan', usage: 'usage75Cycle', period: 'perMonth', price: '$49.99', scope: 'aiScope' },
+    { plan: 'tableAiUltraPlan', usage: 'usage200Cycle', period: 'perMonth', price: '$99.99', scope: 'aiScope' },
+    { plan: 'tableDriveMemberPlan', usage: 'notApplicable', period: 'perMonth', price: '$14.99', scope: 'driveScope' },
+    { plan: 'tableMailMemberPlan', usage: 'notApplicable', period: 'perMonth', price: '$7.99', scope: 'sakuraScope' },
+    { plan: 'tableMailQuotaPlan', usage: 'quota20', period: 'oneYear', price: '$2.00', scope: 'sendingQuotaScope' },
+    { plan: 'tableMailSubEmailPlan', usage: 'subEmail3', period: 'permanent', price: '$5.99', scope: 'subEmailScope' }
 ];
 
 const pricingRefundText = {
@@ -830,6 +925,145 @@ function applyPricingBackground() {
     bg.setAttribute('src', src);
 }
 
+const pricingLoadingTimeoutMs = 12000;
+
+function waitForPricingDomReady() {
+    if (document.readyState !== 'loading') return Promise.resolve();
+
+    return new Promise((resolve) => {
+        document.addEventListener('DOMContentLoaded', resolve, { once: true });
+    });
+}
+
+function waitForPricingWindowLoad() {
+    if (document.readyState === 'complete') return Promise.resolve();
+
+    return new Promise((resolve) => {
+        window.addEventListener('load', resolve, { once: true });
+    });
+}
+
+function waitForPricingImage(image, resourceName) {
+    if (!image) {
+        return Promise.reject(new Error(`${resourceName} element is missing`));
+    }
+
+    const imageSource = image.currentSrc || image.getAttribute('src');
+    if (!imageSource) {
+        return Promise.reject(new Error(`${resourceName} source is missing`));
+    }
+
+    if (image.complete) {
+        return image.naturalWidth > 0
+            ? Promise.resolve()
+            : Promise.reject(new Error(`${resourceName} failed to load`));
+    }
+
+    return new Promise((resolve, reject) => {
+        image.addEventListener('load', resolve, { once: true });
+        image.addEventListener('error', () => {
+            reject(new Error(`${resourceName} failed to load`));
+        }, { once: true });
+    });
+}
+
+function settlePricingResource(promise, resourceName) {
+    return new Promise((resolve, reject) => {
+        let settled = false;
+        const timer = window.setTimeout(() => {
+            if (settled) return;
+            settled = true;
+            reject(new Error(`${resourceName} timed out`));
+        }, pricingLoadingTimeoutMs);
+
+        Promise.resolve(promise).then(
+            (value) => {
+                if (settled) return;
+                settled = true;
+                window.clearTimeout(timer);
+                resolve(value);
+            },
+            (error) => {
+                if (settled) return;
+                settled = true;
+                window.clearTimeout(timer);
+                reject(error);
+            }
+        );
+    });
+}
+
+const pricingLoading = (() => {
+    const pendingTasks = [];
+    let currentProgress = 0;
+    let finishing = false;
+
+    function setProgress(value, textKey) {
+        const nextProgress = Math.max(currentProgress, Math.min(100, Math.round(value)));
+        const progressText = `${nextProgress}%`;
+        const loadingText = document.getElementById('loading-text');
+        const progressBar = document.getElementById('loading-progress-bar');
+        const progressWrap = document.querySelector('#loading-box .loading-progress');
+        const percent = document.getElementById('loading-percent');
+
+        currentProgress = nextProgress;
+
+        if (progressBar) progressBar.style.width = progressText;
+        if (progressWrap) {
+            progressWrap.style.setProperty('--progress-value', progressText);
+            progressWrap.setAttribute('aria-valuenow', String(nextProgress));
+        }
+        if (percent) {
+            percent.textContent = progressText;
+            percent.dataset.progressText = progressText;
+        }
+        if (loadingText && textKey) loadingText.textContent = pricingT(textKey);
+    }
+
+    function track(promise, doneProgress, textKey, resourceName) {
+        const task = settlePricingResource(promise, resourceName)
+            .catch((error) => {
+                console.warn(`Pricing loader: ${error.message}`);
+                return null;
+            })
+            .finally(() => {
+                setProgress(doneProgress, textKey);
+            });
+
+        pendingTasks.push(task);
+        return task;
+    }
+
+    async function finish() {
+        if (finishing) return;
+        finishing = true;
+
+        await Promise.allSettled(pendingTasks);
+        setProgress(100, 'loadingComplete');
+        await new Promise((resolve) => window.setTimeout(resolve, 360));
+
+        const loadingBox = document.getElementById('loading-box');
+        if (loadingBox) {
+            loadingBox.classList.add('loaded');
+            loadingBox.setAttribute('aria-hidden', 'true');
+        }
+        document.body.setAttribute('aria-busy', 'false');
+
+        await new Promise((resolve) => window.setTimeout(resolve, 760));
+        if (loadingBox) loadingBox.hidden = true;
+    }
+
+    setProgress(6, 'loading');
+
+    return {
+        setProgress,
+        track,
+        finish
+    };
+})();
+
+window.pricingLoading = pricingLoading;
+
 function renderPricingRefundNote() {
     const copy = pricingRefundT();
 
@@ -847,25 +1081,21 @@ function renderPricingFooter() {
     if (!footer) return;
 
     const currentYear = new Date().getFullYear();
+    const power = document.createElement('div');
+    const company = document.createElement('a');
+    const lrc = document.createElement('div');
 
-    if (pricingLang === 'zh-cn') {
-        footer.innerHTML = `
-            <div class="power">
-                版权所有 &copy; ${currentYear}
-                <a href="https://www.yume.zone/">美国雨梦互联网有限公司</a> 保留所有权利。本页面为在中国大陆使用而设计。
-            </div>
-            <div id="lrc"></div>
-        `;
-        return;
-    }
+    power.className = 'power';
+    company.href = 'https://www.yume.zone/';
+    company.textContent = pricingT('footerCompany');
+    lrc.id = 'lrc';
 
-    footer.innerHTML = `
-        <div class="power">
-            Copyright &copy; ${currentYear}
-            <a href="https://www.yume.zone/">Yume Internet LLC</a>. All Rights Reserved.
-        </div>
-        <div id="lrc"></div>
-    `;
+    power.append(
+        document.createTextNode(pricingT('footerPrefix').replace('{year}', String(currentYear))),
+        company,
+        document.createTextNode(pricingT('footerSuffix'))
+    );
+    footer.replaceChildren(power, lrc);
 }
 
 function renderPricingCards() {
@@ -906,9 +1136,9 @@ function renderPricingTable() {
     tableBody.innerHTML = pricingTableRows.map((row) => `
         <tr>
             <td>${pricingT(row.plan)}</td>
-            <td>${pricingT(row.usage)}</td>
-            <td>${pricingT(row.period)}</td>
             <td>${pricingT(row.price)}</td>
+            <td>${pricingT(row.period)}</td>
+            <td>${pricingT(row.usage)}</td>
             <td>${pricingT(row.scope)}</td>
         </tr>
     `).join('');
@@ -924,6 +1154,10 @@ function updatePricingText() {
 
     document.querySelectorAll('[data-i18n]').forEach((element) => {
         element.textContent = pricingT(element.dataset.i18n);
+    });
+
+    document.querySelectorAll('[data-i18n-aria-label]').forEach((element) => {
+        element.setAttribute('aria-label', pricingT(element.dataset.i18nAriaLabel));
     });
 
     document.querySelectorAll('.translate').forEach((option) => {
@@ -1044,6 +1278,17 @@ function clampPricingIndex(index, sections = getPricingSections()) {
     return Math.max(0, Math.min(sections.length - 1, index));
 }
 
+function syncPricingPagerControls(sections = getPricingSections()) {
+    const maxIndex = sections.length - 1;
+
+    document.querySelectorAll('[data-pricing-page-direction]').forEach((button) => {
+        const direction = Number(button.dataset.pricingPageDirection);
+        button.disabled = !sections.length
+            || (direction < 0 && pricingPagerState.index <= 0)
+            || (direction > 0 && pricingPagerState.index >= maxIndex);
+    });
+}
+
 function nearestPricingIndex(sections = getPricingSections()) {
     const page = getPricingPage();
     const currentTop = page.scrollTop;
@@ -1070,6 +1315,8 @@ function setPricingSectionState(index) {
         section.classList.toggle('is-before', sectionIndex < nextIndex);
         section.classList.toggle('is-after', sectionIndex > nextIndex);
     });
+
+    syncPricingPagerControls(sections);
 }
 
 function normalizePricingWheelDelta(event) {
@@ -1140,26 +1387,123 @@ function scrollToPricingSection(index, instant = false) {
     return true;
 }
 
+function requestPricingPage(index) {
+    const sections = getPricingSections();
+
+    if (!sections.length || pricingPagerState.animating) return false;
+
+    const nextIndex = clampPricingIndex(index, sections);
+    if (nextIndex === pricingPagerState.index) {
+        syncPricingPagerControls(sections);
+        return false;
+    }
+
+    return scrollToPricingSection(nextIndex);
+}
+
+function getPricingRailButtons(rail) {
+    return Array.from(document.querySelectorAll('[data-pricing-rail-direction]'))
+        .filter((button) => button.getAttribute('aria-controls') === rail.id);
+}
+
+function syncPricingRailControls(rail) {
+    const maxScrollLeft = Math.max(0, rail.scrollWidth - rail.clientWidth);
+    const atStart = rail.scrollLeft <= 2;
+    const atEnd = rail.scrollLeft >= maxScrollLeft - 2;
+
+    getPricingRailButtons(rail).forEach((button) => {
+        const direction = Number(button.dataset.pricingRailDirection);
+        button.disabled = maxScrollLeft <= 2
+            || (direction < 0 && atStart)
+            || (direction > 0 && atEnd);
+    });
+}
+
+function scrollPricingRailByCard(rail, direction) {
+    const maxScrollLeft = Math.max(0, rail.scrollWidth - rail.clientWidth);
+    if (maxScrollLeft <= 2) return false;
+
+    const viewportLeft = rail.getBoundingClientRect().left;
+    const positions = [...new Set(
+        Array.from(rail.querySelectorAll('.price-card')).map((card) => {
+            const rawPosition = rail.scrollLeft + card.getBoundingClientRect().left - viewportLeft;
+            const clampedPosition = Math.max(0, Math.min(maxScrollLeft, Math.round(rawPosition)));
+
+            if (clampedPosition <= 8) return 0;
+            if (maxScrollLeft - clampedPosition <= 8) return maxScrollLeft;
+            return clampedPosition;
+        })
+    )];
+    const currentPosition = rail.scrollLeft;
+    const targetPosition = direction > 0
+        ? positions.find((position) => position > currentPosition + 2) ?? maxScrollLeft
+        : positions.slice().reverse().find((position) => position < currentPosition - 2) ?? 0;
+
+    if (Math.abs(targetPosition - currentPosition) <= 2) return false;
+
+    rail.scrollTo({ left: targetPosition, behavior: 'smooth' });
+    return true;
+}
+
 function bindPricingRails() {
     document.querySelectorAll('.pricing-card-viewport, .pricing-table-wrap').forEach((rail) => {
-        if (rail.dataset.pricingWheelBound === 'true') return;
+        if (rail.dataset.pricingWheelBound !== 'true') {
+            let controlFrame = 0;
 
-        rail.dataset.pricingWheelBound = 'true';
-        rail.addEventListener('wheel', (event) => {
-            if (rail.scrollWidth <= rail.clientWidth) return;
-            if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
+            rail.dataset.pricingWheelBound = 'true';
+            rail.addEventListener('wheel', (event) => {
+                if (rail.scrollWidth <= rail.clientWidth) return;
+                if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
 
-            const delta = normalizePricingWheelDelta(event);
-            const maxScrollLeft = rail.scrollWidth - rail.clientWidth;
-            const nextScrollLeft = Math.max(0, Math.min(maxScrollLeft, rail.scrollLeft + delta));
+                const delta = normalizePricingWheelDelta(event);
+                const maxScrollLeft = rail.scrollWidth - rail.clientWidth;
+                const nextScrollLeft = Math.max(0, Math.min(maxScrollLeft, rail.scrollLeft + delta));
 
-            if (nextScrollLeft === rail.scrollLeft) return;
+                if (nextScrollLeft === rail.scrollLeft) return;
 
-            event.preventDefault();
-            event.stopPropagation();
-            rail.scrollLeft = nextScrollLeft;
-        }, { passive: false });
+                event.preventDefault();
+                event.stopPropagation();
+                rail.scrollLeft = nextScrollLeft;
+            }, { passive: false });
+
+            rail.addEventListener('scroll', () => {
+                cancelAnimationFrame(controlFrame);
+                controlFrame = requestAnimationFrame(() => syncPricingRailControls(rail));
+            }, { passive: true });
+        }
+
+        syncPricingRailControls(rail);
     });
+
+    document.querySelectorAll('[data-pricing-rail-direction]').forEach((button) => {
+        if (button.dataset.pricingRailBound === 'true') return;
+
+        button.dataset.pricingRailBound = 'true';
+        button.addEventListener('click', () => {
+            const rail = document.getElementById(button.getAttribute('aria-controls'));
+            if (!rail) return;
+
+            scrollPricingRailByCard(rail, Number(button.dataset.pricingRailDirection));
+        });
+    });
+}
+
+function bindPricingPageControls() {
+    const controls = document.querySelector('.pricing-page-controls');
+    if (!controls) return;
+
+    document.querySelectorAll('[data-pricing-page-direction]').forEach((button) => {
+        if (button.dataset.pricingPageBound === 'true') return;
+
+        button.dataset.pricingPageBound = 'true';
+        button.addEventListener('click', () => {
+            const direction = Number(button.dataset.pricingPageDirection);
+            requestPricingPage(pricingPagerState.index + direction);
+        });
+    });
+
+    syncPricingPagerControls();
+    controls.hidden = false;
 }
 
 function bindPricingPager() {
@@ -1189,7 +1533,7 @@ function bindPricingPager() {
 
         if (pricingPagerState.animating) return;
 
-        scrollToPricingSection(pricingPagerState.index + direction);
+        requestPricingPage(pricingPagerState.index + direction);
     }, { passive: false });
 
     page.addEventListener('scroll', () => {
@@ -1222,13 +1566,13 @@ function bindPricingPager() {
 
         if (canScrollPricingSection(section, direction)) return;
 
-        scrollToPricingSection(pricingPagerState.index + direction);
+        requestPricingPage(pricingPagerState.index + direction);
     }, { passive: true });
 
     document.addEventListener('keydown', (event) => {
         if (!document.body.classList.contains('pricing-page')) return;
         if (event.metaKey || event.ctrlKey || event.altKey) return;
-        if (event.target.closest('input, textarea, select, [contenteditable="true"]')) return;
+        if (event.target.closest('button, input, textarea, select, [contenteditable="true"]')) return;
 
         const nextKeys = new Set(['ArrowDown', 'PageDown', ' ']);
         const prevKeys = new Set(['ArrowUp', 'PageUp']);
@@ -1256,11 +1600,12 @@ function bindPricingPager() {
 
         if (direction && scrollPricingSection(section, direction, scrollAmount)) return;
 
-        if (!pricingPagerState.animating) scrollToPricingSection(nextIndex);
+        requestPricingPage(nextIndex);
     });
 
     window.addEventListener('resize', () => {
         scrollToPricingSection(pricingPagerState.index, true);
+        document.querySelectorAll('.pricing-card-viewport').forEach(syncPricingRailControls);
     });
 }
 
@@ -1272,4 +1617,42 @@ document.addEventListener('DOMContentLoaded', () => {
     updatePricingText();
     bindPricingMenus();
     bindPricingPager();
+    bindPricingPageControls();
+});
+
+async function startPricingLoading() {
+    await waitForPricingDomReady();
+    pricingLoading.setProgress(52, 'loadingFiles');
+
+    pricingLoading.track(
+        waitForPricingWindowLoad(),
+        64,
+        'loadingFiles',
+        'window load'
+    );
+    pricingLoading.track(
+        document.fonts ? document.fonts.ready : Promise.resolve(),
+        78,
+        'loadingFiles',
+        'fonts'
+    );
+    pricingLoading.track(
+        waitForPricingImage(document.querySelector('.pricing-brand img'), 'logo'),
+        86,
+        'loadingFiles',
+        'logo'
+    );
+    pricingLoading.track(
+        waitForPricingImage(document.getElementById('bg'), 'background'),
+        94,
+        'loadingFiles',
+        'background'
+    );
+
+    await pricingLoading.finish();
+}
+
+startPricingLoading().catch((error) => {
+    console.error('Pricing loader failed to initialize', error);
+    pricingLoading.finish();
 });

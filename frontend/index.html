@@ -12,10 +12,10 @@
     <!-- 引入样式 -->
     <link rel="preload" href="/img/logo.png" as="image">
     <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/css/style.css?v=liquid-glass-ui-7">
+    <link rel="stylesheet" type="text/css" href="/css/style.css?v=liquid-glass-ui-8">
     <link rel="stylesheet" type="text/css" href="/css/mobile.css?v=liquid-glass-ui-7">
     <link rel="stylesheet" type="text/css" href="/css/font.css">
-    <link rel="stylesheet" type="text/css" href="/css/loading.css?v=liquid-glass-ui-6">
+    <link rel="stylesheet" type="text/css" href="/css/loading.css?v=liquid-glass-ui-8">
     <link rel="stylesheet" type="text/css" href="/css/animation.css">
     <link rel="stylesheet" type="text/css" href="/css/cursor.css">
     <link rel="icon" href="/favicon.ico">
@@ -46,7 +46,7 @@
                 <p class="loading-title" key="OFFICIAL">雨夢Official</p>
                 <div class="loading-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
                     <div class="loading-progress-bar" id="loading-progress-bar"></div>
-                    <span id="loading-percent">0%</span>
+                    <span id="loading-percent" data-progress-text="0%">0%</span>
                 </div>
                 <span id="loading-text" key="LOADING">加载中</span>
             </div>
@@ -279,7 +279,10 @@
                                 </span>
                                 <span class="remaining" id="dayRemaining" key="REMAINING"></span>
                             </div>
-                            <div class="progress"><div class="progress-bar"></div></div>
+                            <div class="progress">
+                                <div class="progress-bar"></div>
+                                <span class="progress-percent" data-progress-text="0%">0%</span>
+                            </div>
                             </div>
                             <!-- 本周 -->
                             <div class="capsule-item" id="weekProgress">
@@ -291,7 +294,10 @@
                                 </span>
                                 <span class="remaining" id="weekRemaining" key="REMAINING"></span>
                             </div>
-                            <div class="progress"><div class="progress-bar"></div></div>
+                            <div class="progress">
+                                <div class="progress-bar"></div>
+                                <span class="progress-percent" data-progress-text="0%">0%</span>
+                            </div>
                             </div>
                             <!-- 本月 -->
                             <div class="capsule-item" id="monthProgress">
@@ -303,7 +309,10 @@
                                 </span>
                                 <span class="remaining" id="monthRemaining" key="REMAINING"></span>
                             </div>
-                            <div class="progress"><div class="progress-bar"></div></div>
+                            <div class="progress">
+                                <div class="progress-bar"></div>
+                                <span class="progress-percent" data-progress-text="0%">0%</span>
+                            </div>
                             </div>
                             <!-- 本年 -->
                             <div class="capsule-item" id="yearProgress">
@@ -315,7 +324,10 @@
                                 </span>
                                 <span class="remaining" id="yearRemaining" key="REMAINING"></span>
                             </div>
-                            <div class="progress"><div class="progress-bar"></div></div>
+                            <div class="progress">
+                                <div class="progress-bar"></div>
+                                <span class="progress-percent" data-progress-text="0%">0%</span>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -528,8 +540,8 @@
     <script src="/js/swiper-bundle.min.js"></script>
     <script type="text/javascript" src="/js/link.js"></script>
     <script type="text/javascript" src="/js/lang.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
-    <script type="text/javascript" src="/js/time.js"></script>
+    <script type="text/javascript" src="/js/main.js?v=progress-contrast-1"></script>
+    <script type="text/javascript" src="/js/time.js?v=progress-contrast-1"></script>
     <script type="text/javascript" src="/js/js.cookie.js"></script>
     <script type="text/javascript" src="/js/set.js"></script>
     <script type="text/javascript" src="/js/cursor.js"></script>

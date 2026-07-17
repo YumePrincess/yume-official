@@ -1,13 +1,23 @@
 function updateProgress(id, value, percent, remainingValue, unitKey) {
-    document.getElementById(id + 'Value').innerHTML = value;
+    const item = document.getElementById(id);
+    if (!item) return;
 
-    let bar = document.querySelector(`#${id} .progress-bar`);
-    bar.style.width = percent + '%';
-    bar.innerHTML = percent + '%';
+    const numericPercent = Math.max(0, Math.min(100, Number(percent) || 0));
+    const progressValue = `${numericPercent}%`;
+    const progressText = `${percent}%`;
+    const progress = item.querySelector('.progress');
+    const bar = item.querySelector('.progress-bar');
+    const label = item.querySelector('.progress-percent');
+
+    document.getElementById(id + 'Value').textContent = value;
+    bar.style.width = progressValue;
+    progress.style.setProperty('--progress-value', progressValue);
+    label.textContent = progressText;
+    label.dataset.progressText = progressText;
 
     // 剩余时间多语言
-    let text = translate("REMAINING") + " " + remainingValue + " " + translate(unitKey);
-    document.getElementById(id.replace("Progress", "Remaining")).innerHTML = text;
+    const text = translate("REMAINING") + " " + remainingValue + " " + translate(unitKey);
+    document.getElementById(id.replace("Progress", "Remaining")).textContent = text;
 }
 
 // 初始化并每秒刷新

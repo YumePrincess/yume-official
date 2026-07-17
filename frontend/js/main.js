@@ -217,6 +217,7 @@ const yumeLoading = (() => {
 
     function setProgress(value, text) {
         const nextProgress = Math.max(currentProgress, Math.min(100, Math.round(value)));
+        const progressText = `${nextProgress}%`;
         currentProgress = nextProgress;
 
         const progressBar = document.getElementById('loading-progress-bar');
@@ -224,9 +225,15 @@ const yumeLoading = (() => {
         const percent = document.getElementById('loading-percent');
         const loadingText = document.getElementById('loading-text');
 
-        if (progressBar) progressBar.style.width = `${nextProgress}%`;
-        if (progressWrap) progressWrap.setAttribute('aria-valuenow', String(nextProgress));
-        if (percent) percent.textContent = `${nextProgress}%`;
+        if (progressBar) progressBar.style.width = progressText;
+        if (progressWrap) {
+            progressWrap.style.setProperty('--progress-value', progressText);
+            progressWrap.setAttribute('aria-valuenow', String(nextProgress));
+        }
+        if (percent) {
+            percent.textContent = progressText;
+            percent.dataset.progressText = progressText;
+        }
         if (text && loadingText) loadingText.textContent = text;
     }
 
