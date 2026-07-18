@@ -443,7 +443,7 @@ function updateContent() {
             return null;
         });
 
-    const weatherTask = getJsonWithSessionCache('geowea', '/api/geowea', 10 * 60 * 1000)
+    const weatherTask = getJsonWithSessionCache('geowea', 'https://api.yume.zone/api/geowea', 10 * 60 * 1000)
         .then(data => {
             const weather = data.weather || {};
             const code = weather.code;
@@ -1046,7 +1046,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 从 Worker 获取公告信息（让 Worker 决定是否有效）
         async function fetchAnnouncement() {
         try {
-            const res = await fetchWithTimeout("/api/announcement", { cache: "no-store" });
+            const res = await fetchWithTimeout("https://api.yume.zone/api/announcement", { cache: "no-store" });
             const data = await res.json();
 
             const { md } = data;

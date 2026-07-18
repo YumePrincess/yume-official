@@ -12,7 +12,7 @@
     "deploy:official": "wrangler deploy --config wrangler.jsonc",
     "deploy:search": "wrangler deploy --config wrangler.search.jsonc",
     "deploy:pricing": "wrangler deploy --config wrangler.pricing.jsonc",
-    "deploy:api": "wrangler deploy --config wrangler.api.jsonc"
+    "deploy:aio-api": "wrangler deploy --config wrangler.api.jsonc"
   },
   "devDependencies": {
     "wrangler": "4.112.0"

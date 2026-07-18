@@ -811,7 +811,7 @@ function requestDeepLTranslation(text, targetLang) {
   const translateFetch = typeof fetchWithTimeout === 'function'
     ? fetchWithTimeout
     : (input, init) => fetch(input, init);
-  const promise = translateFetch('/api/translate', {
+  const promise = translateFetch('https://api.yume.zone/api/translate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({

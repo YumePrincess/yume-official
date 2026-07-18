@@ -1,5 +1,5 @@
 {
-  "name": "yume-api",
+  "name": "yume-aio-api",
   "main": "backend/worker.js",
   "compatibility_date": "2026-07-18",
   "compatibility_flags": ["nodejs_compat"],
@@ -13,20 +13,21 @@
   },
   "routes": [
     {
-      "pattern": "yume.zone/api/*",
-      "zone_name": "yume.zone"
-    },
+      "pattern": "api.yume.zone",
+      "custom_domain": true
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "ratelimits": [
     {
-      "pattern": "www.yume.zone/api/*",
-      "zone_name": "yume.zone"
-    },
-    {
-      "pattern": "search.yume.zone/api/*",
-      "zone_name": "yume.zone"
-    },
-    {
-      "pattern": "pricing.yume.zone/api/*",
-      "zone_name": "yume.zone"
+      "name": "AI_RATE_LIMITER",
+      "namespace_id": "2026071801",
+      "simple": {
+        "limit": 20,
+        "period": 60
+      }
     }
   ],
   "r2_buckets": [
@@ -36,9 +37,12 @@
     }
   ],
   "secrets": {
-    "required": ["DEEPL_API_KEY"]
+    "required": ["DEEPL_API_KEY", "AI_API_KEY"]
   },
   "vars": {
-    "ANNOUNCEMENTS_CONFIG_KEY": "announcements/config.json"
+    "ANNOUNCEMENTS_CONFIG_KEY": "announcements/config.json",
+    "AI_GATEWAY_ID": "default",
+    "AI_CHAT_MODELS": "@cf/openai/gpt-oss-20b",
+    "AI_EMBEDDING_MODELS": "@cf/baai/bge-m3"
   }
 }

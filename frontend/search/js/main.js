@@ -346,7 +346,7 @@ function renderWeatherFailure() {
     $('.weather').addClass('weather-error').text(translate('WEATHER_LOAD_FAILED'));
 }
 
-const geoWeatherApiUrl = '/api/geowea';
+const geoWeatherApiUrl = 'https://api.yume.zone/api/geowea';
 
 const weatherCodeTranslations = {
     unknown: { en: "Unknown weather", "zh-cn": "未知天气", "zh-tw": "未知天氣", fr: "Météo inconnue", ja: "不明な天気" },

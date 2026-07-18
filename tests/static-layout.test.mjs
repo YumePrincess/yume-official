@@ -132,17 +132,41 @@ test('three static configs are asset-only and the API config has no assets', asy
   }
 
   const apiConfig = await readConfig('wrangler.api.jsonc');
+  assert.equal(apiConfig.name, 'yume-aio-api');
   assert.equal(apiConfig.main, 'backend/worker.js');
   assert.equal('assets' in apiConfig, false);
-  assert.deepEqual(
-    apiConfig.routes.map((route) => route.pattern),
-    [
-      'yume.zone/api/*',
-      'www.yume.zone/api/*',
-      'search.yume.zone/api/*',
-      'pricing.yume.zone/api/*',
-    ]
-  );
+  assert.deepEqual(apiConfig.routes, [
+    { pattern: 'api.yume.zone', custom_domain: true },
+  ]);
+  assert.deepEqual(apiConfig.ai, { binding: 'AI' });
+  assert.equal(apiConfig.vars.AI_GATEWAY_ID, 'default');
+  assert.equal(apiConfig.vars.AI_CHAT_MODELS, '@cf/openai/gpt-oss-20b');
+  assert.equal(apiConfig.vars.AI_EMBEDDING_MODELS, '@cf/baai/bge-m3');
+  assert.deepEqual(apiConfig.secrets.required, ['DEEPL_API_KEY', 'AI_API_KEY']);
+  assert.deepEqual(apiConfig.ratelimits, [
+    {
+      name: 'AI_RATE_LIMITER',
+      namespace_id: '2026071801',
+      simple: { limit: 20, period: 60 },
+    },
+  ]);
+});
+
+test('official and search use only the dedicated Yume API hostname', async () => {
+  const sourceFiles = [
+    'frontend/official/js/main.js',
+    'frontend/official/js/lang.js',
+    'frontend/search/js/main.js',
+    'frontend/search/js/lang.js',
+  ];
+  const source = (await Promise.all(
+    sourceFiles.map((relativePath) => readFile(path.join(projectRoot, relativePath), 'utf8'))
+  )).join('\n');
+
+  assert.match(source, /https:\/\/api\.yume\.zone\/api\/announcement/);
+  assert.match(source, /https:\/\/api\.yume\.zone\/api\/geowea/);
+  assert.match(source, /https:\/\/api\.yume\.zone\/api\/translate/);
+  assert.doesNotMatch(source, /["']\/api\/(announcement|geowea|translate)/);
 });
 
 test('the shared language and theme preference module stays identical', async () => {
