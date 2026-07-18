@@ -50,17 +50,36 @@ npx wrangler deploy --dry-run --config wrangler.pricing.jsonc
 npx wrangler deploy --dry-run --config wrangler.api.jsonc
 ```
 
-## First migration
+## Runtime secret
 
-The API project is new and does not inherit secrets from the previous combined Worker. Create a replacement DeepL key **without revoking the old key yet**, then attach the replacement to `yume-api`:
+The DeepL key is a runtime secret of `yume-api`; it is not a Workers Builds variable. Attach a current key directly to the Worker before deploying API changes:
 
 ```bash
 npx wrangler secret put DEEPL_API_KEY --config wrangler.api.jsonc
 ```
 
-Deploy the API route first while the current combined Worker still owns all four domains. Verify `/api/translate` through all four hostnames, then revoke the old DeepL key. This order avoids an API interruption during the cutover.
+Verify that the secret name exists without printing its value:
 
-After the API is verified, replace the frontend origins. Keep the first migration commands in this order so that each domain always has an owner:
+```bash
+npx wrangler secret list --config wrangler.api.jsonc
+```
+
+## GitHub automatic deployment
+
+Connect each existing Cloudflare Worker to the same GitHub repository, `YumePrincess/yume-all-in-one`, from **Worker → Settings → Builds**. Use `main` as the production branch, `/` as the root directory, leave non-production branch builds disabled, and keep the default include watch path `*` so shared files and generated Official aliases always rebuild together.
+
+Workers Builds does not honor `build.command` from Wrangler configuration. Set these commands explicitly in the dashboard:
+
+| Worker | Build command | Deploy command |
+| --- | --- | --- |
+| `yume-official` | `npm run check` | `npm run deploy:official` |
+| `yume-search` | `npm run check` | `npm run deploy:search` |
+| `yume-pricing` | `npm run check` | `npm run deploy:pricing` |
+| `yume-api` | `npm run check` | `npm run deploy:api` |
+
+Do not add `DEEPL_API_KEY` as a build variable: build variables are not available to the running Worker. Keep it under **yume-api → Settings → Variables and Secrets** as an encrypted runtime secret.
+
+For a manual deployment, keep this order:
 
 ```bash
 npm run deploy:api
@@ -69,14 +88,6 @@ npm run deploy:search
 npm run deploy:pricing
 ```
 
-Wrangler intentionally preserves existing Worker secrets unless they are explicitly deleted. Once the static `yume-official` deployment and the new API have been verified, remove the obsolete secret from the former combined project:
-
-```bash
-npx wrangler secret delete DEEPL_API_KEY --config wrangler.jsonc
-```
-
-The three static build commands target separate output directories, so one deployment cannot delete another site's build output. The initial domain migration should still be performed serially in the order above.
-
-Deploy Search and Pricing immediately after Official during the first migration because the Official deployment removes their old Custom Domain associations from the former combined project. If Cloudflare reports that either Custom Domain is still attached to the old project, detach that association in **Workers & Pages → Settings → Domains & Routes**, then rerun the matching deployment.
+The three static build commands target separate output directories, so one deployment cannot delete another site's build output. Keep manual full-stack deployments serial and in the order above.
 
 After deployment, requests for missing static files such as `/missing.js` must return the styled static 404 without appearing in `yume-api` invocation logs. A missing `/api/*` endpoint is intentionally handled by `yume-api` and returns JSON 404.
