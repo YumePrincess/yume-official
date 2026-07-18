@@ -1,0 +1,21 @@
+@font-face {
+    font-family: "Pacifico-Regular";
+    src: url('../font/Pacifico-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "UnidreamLED";
+    src: url('../font/UnidreamLED.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: "MiSans";
+    src: url('../font/MiSans-Regular.woff') format('woff');
+}
+
+.icon-28px {
+    width: 28px;
+    height: 28px;
+    vertical-align: middle;
+    flex-shrink: 0;
+}

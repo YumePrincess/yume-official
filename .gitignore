@@ -86,6 +86,8 @@ web_modules/
 .env.staging.local
 .env.*.local
 .env.local
+.dev.vars
+.dev.vars.*
 
 # Local application config
 /config.yaml

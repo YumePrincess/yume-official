@@ -2,11 +2,21 @@ export default {
   async fetch(request, env, ctx) {
     try {
       const url = new URL(request.url);
-      const protectedOrigin = getProtectedApiOrigin(request, url);
-      const isProtectedApi = PROTECTED_API_PATHS.has(url.pathname);
+      const isApiRequest = url.pathname.startsWith("/api/");
+
+      if (!isApiRequest) {
+        return buildResponse(
+          { error: "Not Found", path: url.pathname },
+          404,
+          getPublicCorsOrigin(request)
+        );
+      }
 
       // OPTIONS 预检
-      if (url.pathname.startsWith("/api/") && request.method === "OPTIONS") {
+      if (request.method === "OPTIONS") {
+        const protectedOrigin = getProtectedApiOrigin(request, url);
+        const isProtectedApi = PROTECTED_API_PATHS.has(url.pathname);
+
         if (isProtectedApi && !protectedOrigin.allowed) {
           return buildResponse({ error: "Forbidden" }, 403, "");
         }
@@ -22,30 +32,27 @@ export default {
       // ----------------------
       // 路由分发
       // ----------------------
-      if (url.pathname.startsWith("/api/")) {
-        if (isProtectedApi && !protectedOrigin.allowed) {
-          return buildResponse({ error: "Forbidden" }, 403, "");
-        }
+      const protectedOrigin = getProtectedApiOrigin(request, url);
+      const isProtectedApi = PROTECTED_API_PATHS.has(url.pathname);
 
-        return handleApiRequest(
-          request,
-          env,
-          isProtectedApi ? protectedOrigin.corsOrigin : getPublicCorsOrigin(request),
-          ctx
-        );
+      if (isProtectedApi && !protectedOrigin.allowed) {
+        return buildResponse({ error: "Forbidden" }, 403, "");
       }
 
-      if (url.pathname === "/pricing") {
-        const pricingUrl = new URL(request.url);
-        pricingUrl.pathname = "/pricing/index.html";
-        const pricingResponse = await env.ASSETS.fetch(new Request(pricingUrl.toString(), request));
-        return withAssetCacheHeaders(pricingResponse, pricingUrl);
-      }
-
-      const assetResponse = await env.ASSETS.fetch(request);
-      return withAssetCacheHeaders(assetResponse, url);
+      return await handleApiRequest(
+        request,
+        env,
+        isProtectedApi ? protectedOrigin.corsOrigin : getPublicCorsOrigin(request),
+        ctx
+      );
     } catch (err) {
-      return buildResponse({ error: err.message || "Internal Error" }, 500);
+      console.error(
+        JSON.stringify({
+          message: "Unhandled Worker request error",
+          error: err?.message || String(err),
+        })
+      );
+      return buildResponse({ error: "Internal Error" }, 500);
     }
   },
 };
@@ -53,11 +60,27 @@ export default {
 const ANNOUNCEMENTS_CONFIG_KEY = "announcements/config.json";
 const PROTECTED_API_PATHS = new Set(["/api/geoip", "/api/geowea", "/api/translate"]);
 const ALLOWED_ORIGIN_DOMAINS = ["yume.zone", "princess.work"];
-const INTERNAL_CACHE_URL = "https://cache.yume.zone";
+const API_METHODS = new Map([
+  ["/announcement", ["GET"]],
+  ["/translate", ["POST"]],
+  ["/geoip", ["GET"]],
+  ["/geowea", ["GET"]],
+]);
 
 async function handleApiRequest(request, env, allowOrigin, ctx) {
   const url = new URL(request.url);
   const route = url.pathname.slice("/api".length);
+  const allowedMethods = API_METHODS.get(route);
+
+  if (allowedMethods && !allowedMethods.includes(request.method)) {
+    const response = buildResponse(
+      { error: "Method Not Allowed", path: url.pathname },
+      405,
+      allowOrigin
+    );
+    response.headers.set("Allow", allowedMethods.join(", "));
+    return response;
+  }
 
   if (route === "/announcement" && request.method === "GET") {
     return handleAnnouncement(env, allowOrigin);
@@ -159,47 +182,6 @@ function isAllowedHostname(hostname) {
   });
 }
 
-function withAssetCacheHeaders(response, url) {
-  if (!response.ok) {
-    return response;
-  }
-
-  const pathname = url.pathname;
-  const extension = pathname.split(".").pop()?.toLowerCase();
-  const immutableExtensions = new Set([
-    "avif",
-    "gif",
-    "ico",
-    "jpg",
-    "jpeg",
-    "mp3",
-    "png",
-    "svg",
-    "ttf",
-    "webp",
-    "woff",
-    "woff2",
-  ]);
-  const shortCacheExtensions = new Set(["css", "js", "json", "map", "md"]);
-
-  if (!extension || pathname.endsWith(".html")) {
-    return response;
-  }
-
-  const headers = new Headers(response.headers);
-  if (immutableExtensions.has(extension)) {
-    headers.set("Cache-Control", "public, max-age=604800, stale-while-revalidate=86400");
-  } else if (shortCacheExtensions.has(extension)) {
-    headers.set("Cache-Control", "public, max-age=3600, stale-while-revalidate=86400");
-  }
-
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  });
-}
-
 // ----------------------
 // 系统公告
 // ----------------------
@@ -297,7 +279,11 @@ async function handleTranslate(request, env, allowOrigin, ctx) {
   const contentType = request.headers.get("Content-Type") || "";
 
   if (contentType.includes("application/json")) {
-    body = await request.json();
+    try {
+      body = await request.json();
+    } catch {
+      return buildResponse({ error: "Invalid JSON" }, 400, allowOrigin);
+    }
   } else if (contentType.includes("application/x-www-form-urlencoded")) {
     const form = await request.formData();
     body = Object.fromEntries(form);
@@ -307,6 +293,10 @@ async function handleTranslate(request, env, allowOrigin, ctx) {
       400,
       allowOrigin
     );
+  }
+
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return buildResponse({ error: "Invalid request body" }, 400, allowOrigin);
   }
 
   const { text, target_lang } = body;

@@ -1,0 +1,44 @@
+{
+  "name": "yume-api",
+  "main": "backend/worker.js",
+  "compatibility_date": "2026-07-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true
+    }
+  },
+  "routes": [
+    {
+      "pattern": "yume.zone/api/*",
+      "zone_name": "yume.zone"
+    },
+    {
+      "pattern": "www.yume.zone/api/*",
+      "zone_name": "yume.zone"
+    },
+    {
+      "pattern": "search.yume.zone/api/*",
+      "zone_name": "yume.zone"
+    },
+    {
+      "pattern": "pricing.yume.zone/api/*",
+      "zone_name": "yume.zone"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "r2",
+      "bucket_name": "yume-public"
+    }
+  ],
+  "secrets": {
+    "required": ["DEEPL_API_KEY"]
+  },
+  "vars": {
+    "ANNOUNCEMENTS_CONFIG_KEY": "announcements/config.json"
+  }
+}
