@@ -26,6 +26,7 @@ import {
   listFolderContents,
   normalizeFolderPath,
 } from '../utils/storage';
+import { markBucketUsageDirty } from '../utils/bucket-usage';
 
 function applyNoStorePreviewHeaders(headers: Headers, etag?: string | null, uploadedAt?: string | null): void {
   if (etag) headers.set('etag', etag);
@@ -94,6 +95,7 @@ async function handleDirectUpload(request: Request, env: Env): Promise<Response>
   };
 
   await replaceFileByKey(env, meta);
+  await markBucketUsageDirty(env);
 
   return json(meta, 201);
 }
@@ -163,6 +165,7 @@ async function handleMultipartComplete(request: Request, env: Env): Promise<Resp
   };
 
   await replaceFileByKey(env, meta);
+  await markBucketUsageDirty(env);
 
   return json(meta, 201);
 }
@@ -264,6 +267,10 @@ export async function deleteFiles(request: Request, env: Env): Promise<Response>
     deleted++;
   }
 
+  if (deleted > 0) {
+    await markBucketUsageDirty(env);
+  }
+
   return json({ deleted, totalSizeRemoved });
 }
 
@@ -307,6 +314,7 @@ export async function rename(request: Request, env: Env): Promise<Response> {
   meta.name = newName;
   meta.key = newKey;
   await saveFile(env, meta);
+  await markBucketUsageDirty(env);
 
   return json(meta);
 }
@@ -336,6 +344,9 @@ export async function deleteFolder(request: Request, env: Env): Promise<Response
   await deleteFolderShareStateForTree(env, folder);
   const deletedFolders = await deleteFolderTreeRecords(env, folder);
   const deletedFiles = await deleteFilesByFolderTree(env, folder);
+  if (filesInTree.length > 0) {
+    await markBucketUsageDirty(env);
+  }
 
   return json({
     deleted: folder,
@@ -377,6 +388,7 @@ export async function renameFolder(request: Request, env: Env): Promise<Response
 
   await renameFolderRecords(env, oldName, newName);
   await renameFolderShareState(env, oldName, newName);
+  await markBucketUsageDirty(env);
   return json({ folder: newName });
 }
 
@@ -446,6 +458,10 @@ export async function moveFiles(request: Request, env: Env): Promise<Response> {
     meta.folder = targetFolder;
     await saveFile(env, meta);
     moved++;
+  }
+
+  if (moved > 0) {
+    await markBucketUsageDirty(env);
   }
 
   return json({ moved });

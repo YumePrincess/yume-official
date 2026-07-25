@@ -9,6 +9,7 @@ import * as stats from './api/stats';
 import * as settings from './api/settings';
 import * as download from './handlers/download';
 import { handleWebDav } from './handlers/webdav';
+import { markBucketUsageDirty } from './utils/bucket-usage';
 // @ts-ignore backend/worker.js is an existing JS Worker module reused here.
 import backendApiWorker from '../backend/worker.js';
 
@@ -126,7 +127,7 @@ export default {
       if (path.startsWith('/api/')) {
         const authResponse = await authMiddleware(request, env);
         if (authResponse) return authResponse;
-        return await handleApiRoutes(request, env, url, path, method);
+        return await handleApiRoutes(request, env, url, path, method, ctx);
       }
 
       // Serve static assets (css, js, images, fonts) without auth — needed by all pages
@@ -156,6 +157,7 @@ export default {
       .filter((value): value is string => !!value);
 
     if (keys.length === 0) return;
+    await markBucketUsageDirty(env);
     await purgePublicObjectUrls(keys, env);
   },
 } satisfies ExportedHandler<Env>;
@@ -324,6 +326,7 @@ async function handleApiRoutes(
   url: URL,
   path: string,
   method: string,
+  ctx: ExecutionContext,
 ): Promise<Response> {
   if (path === '/api/files' && method === 'GET') {
     return files.list(request, env);
@@ -415,7 +418,7 @@ async function handleApiRoutes(
   }
 
   if (path === '/api/stats' && method === 'GET') {
-    return stats.getStats(request, env);
+    return stats.getStats(request, env, ctx);
   }
 
   if (path === '/api/settings' && method === 'GET') {

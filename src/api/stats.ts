@@ -1,14 +1,14 @@
 import { Env } from '../utils/types';
 import { json } from '../utils/response';
 import { getAllFiles } from '../utils/db';
+import { getBucketUsage } from '../utils/bucket-usage';
 
-export async function getStats(request: Request, env: Env): Promise<Response> {
+export async function getStats(request: Request, env: Env, ctx?: ExecutionContext): Promise<Response> {
   const files = await getAllFiles(env);
+  const usage = await getBucketUsage(env, ctx);
 
-  let totalSize = 0;
   let totalDownloads = 0;
   for (const f of files) {
-    totalSize += f.size;
     totalDownloads += f.downloads;
   }
 
@@ -22,8 +22,8 @@ export async function getStats(request: Request, env: Env): Promise<Response> {
     .slice(0, 5);
 
   return json({
-    totalFiles: files.length,
-    totalSize,
+    totalFiles: usage.totalFiles,
+    totalSize: usage.totalSize,
     totalDownloads,
     recentUploads,
     topDownloaded,
