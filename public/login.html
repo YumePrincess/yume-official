@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <meta name="darkreader-lock">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Yume AIO Backend — Login</title>
+  <script>try{var _b=JSON.parse(document.getElementById('branding-data')?.textContent||'{}');if(_b.siteName)document.title=_b.siteName+' — Login'}catch{}</script>
+  <script src="/js/preferences.js?v=20260718.3"></script>
+  <link rel="stylesheet" href="/css/tailwind.css?v=20260718.3">
+  <style>
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.5s ease-out; }
+    @keyframes shake { 10%,90% { transform: translateX(-1px); } 20%,80% { transform: translateX(2px); } 30%,50%,70% { transform: translateX(-3px); } 40%,60% { transform: translateX(3px); } }
+    .shake { animation: shake 0.5s ease-in-out; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner { animation: spin 0.6s linear infinite; }
+  </style>
+  <link rel="stylesheet" href="/css/app.css?v=20260718.4">
+</head>
+<body style="font-family:var(--font-body)" class="min-h-screen flex items-center justify-center p-4" data-i18n-page="page.login">
+<div class="page-background" data-darkreader-ignore aria-hidden="true">
+  <img class="page-background-image" data-darkreader-ignore src="/img/yume-background.webp" alt="">
+</div>
+  <div class="fade-up w-full max-w-sm">
+    <div class="text-center mb-8">
+      <div id="brand-icon" class="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-transparent border border-accent-400/20 mb-4">
+        <svg class="w-8 h-8 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 12.75v3m0 0l-1.5-1.5m1.5 1.5l1.5-1.5"/>
+        </svg>
+      </div>
+      <h1 id="brand-name" class="text-2xl font-bold text-[var(--text-primary)]">Yume AIO Backend</h1>
+      <p class="text-[var(--text-muted)] text-sm mt-1" data-i18n="login.poweredBy">Power by Yume</p>
+    </div>
+
+    <div id="error-box" class="hidden mb-4 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center"></div>
+
+    <a
+      id="oidc-login-link"
+      href="/auth/oidc/start"
+      class="hidden w-full mb-3 py-3 px-4 rounded-md bg-transparent border border-accent-400 text-accent-400 hover:bg-accent-400/10 hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] font-medium transition-all focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] items-center justify-center gap-2"
+    >
+      <span id="oidc-login-icon" class="oidc-login-icon" aria-hidden="true">
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0"/></svg>
+      </span>
+      <span id="oidc-login-text">Continue</span>
+    </a>
+
+    <form id="login-form" class="bg-[var(--bg-secondary)] border border-[var(--border)] rounded-lg p-6 shadow-2xl">
+      <div class="mb-5">
+        <label for="password" class="block text-sm font-medium text-[var(--text-secondary)] mb-2" data-i18n="ui.password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Enter your password"
+          data-i18n-placeholder="login.passwordPlaceholder"
+          required
+          autofocus
+          class="w-full px-4 py-3 rounded-md bg-[var(--bg-tertiary)] border border-[var(--border-light)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-accent-400 focus:border-transparent transition-all"
+        >
+      </div>
+
+      <button
+        type="submit"
+        id="submit-btn"
+        class="w-full py-3 px-4 rounded-md bg-transparent border border-accent-400 text-accent-400 hover:bg-accent-400/10 hover:shadow-[0_0_20px_rgba(0,229,255,0.15)] font-medium transition-all focus:outline-none focus:ring-2 focus:ring-accent-400 focus:ring-offset-2 focus:ring-offset-[var(--bg-primary)] disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+      >
+        <span id="btn-text" data-i18n="login.signIn">Sign In</span>
+        <svg id="btn-spinner" class="hidden spinner w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+      </button>
+    </form>
+
+    <footer id="footer" class="site-footer" data-yume-footer></footer>
+  </div>
+
+  <script src="/js/i18n.js?v=20260718.4"></script>
+  <script>
+    (function() {
+      try {
+        var b = JSON.parse(document.getElementById('branding-data')?.textContent || '{}');
+        if (b.siteName) document.getElementById('brand-name').textContent = b.siteName;
+        if (b.siteIconUrl) {
+          var iconEl = document.getElementById('brand-icon');
+          iconEl.innerHTML = '<img src="' + b.siteIconUrl + '" class="w-12 h-12 object-contain">';
+        }
+        // Note: Do NOT overwrite the "Powered by" attribution footer
+      } catch {}
+    })();
+
+    const authConfig = JSON.parse(document.getElementById('auth-config')?.textContent || '{"oidcEnabled":false,"oidcProviderName":"Account","oidcIconUrl":"","oidcAutoLogin":true}');
+    const queryParams = new URLSearchParams(window.location.search);
+    const oidcAutoLoginSuppressed = 'yumePublicOidcAutoLoginSuppressed';
+    const oidcProviderName = authConfig.oidcProviderName || 'Account';
+    const form = document.getElementById('login-form');
+    const errorBox = document.getElementById('error-box');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const oidcLoginLink = document.getElementById('oidc-login-link');
+    const oidcLoginIcon = document.getElementById('oidc-login-icon');
+    const oidcLoginText = document.getElementById('oidc-login-text');
+
+    const fallbackText = {
+      'login.oidcSignIn': 'Continue with {provider}',
+      'login.signingIn': 'Signing in...',
+      'login.signIn': 'Sign In',
+      'login.invalidPassword': 'Invalid password',
+      'login.connectionError': 'Connection error. Please try again.',
+      'login.unauthorizedEmail': 'This {provider} account is not authorized for this site.',
+      'login.emailUnverified': 'Please verify your {provider} account email first.',
+      'login.missingEmail': '{provider} did not return an email address.',
+      'login.oidcFailed': '{provider} sign-in failed. Please try again.',
+      'login.invalidState': 'The sign-in session expired. Please try again.',
+      'login.oidcMisconfigured': '{provider} is not configured correctly.',
+      'login.oidcSessionExpired': 'Your {provider} account session ended. Please sign in again.',
+    };
+
+    function tr(key, vars) {
+      let text = window.YumeI18n ? window.YumeI18n.t(key, vars) : (fallbackText[key] || key);
+      vars = vars || {};
+      return text.replace(/\{(\w+)\}/g, (_, name) => Object.prototype.hasOwnProperty.call(vars, name) ? String(vars[name]) : '');
+    }
+
+    function showError(message) {
+      errorBox.textContent = message;
+      errorBox.classList.remove('hidden');
+    }
+
+    const errorKey = queryParams.get('error');
+    const errorMap = {
+      unauthorized_email: 'login.unauthorizedEmail',
+      email_unverified: 'login.emailUnverified',
+      missing_email: 'login.missingEmail',
+      oidc_failed: 'login.oidcFailed',
+      invalid_state: 'login.invalidState',
+      oidc_misconfigured: 'login.oidcMisconfigured',
+      oidc_session_expired: 'login.oidcSessionExpired',
+    };
+
+    function updateAuthUi() {
+      if (authConfig.oidcEnabled) {
+        form.classList.add('hidden');
+        oidcLoginLink.classList.remove('hidden');
+        oidcLoginLink.classList.add('flex');
+        oidcLoginText.textContent = tr('login.oidcSignIn', { provider: oidcProviderName });
+        if (authConfig.oidcIconUrl && !oidcLoginIcon.querySelector('img')) {
+          const icon = document.createElement('img');
+          icon.src = authConfig.oidcIconUrl;
+          icon.alt = '';
+          icon.referrerPolicy = 'no-referrer';
+          icon.style.display = 'none';
+          icon.addEventListener('load', () => {
+            oidcLoginIcon.querySelector('svg')?.remove();
+            icon.style.removeProperty('display');
+          }, { once: true });
+          icon.addEventListener('error', () => icon.remove(), { once: true });
+          oidcLoginIcon.prepend(icon);
+        }
+      }
+      if (errorKey && errorMap[errorKey]) {
+        showError(tr(errorMap[errorKey], { provider: oidcProviderName }));
+      }
+    }
+
+    function canAttemptSilentOidcLogin() {
+      if (!authConfig.oidcEnabled || !authConfig.oidcAutoLogin) return false;
+      if (errorKey || queryParams.get('silent') === '1') return false;
+      try {
+        if (sessionStorage.getItem(oidcAutoLoginSuppressed)) return false;
+      } catch {
+        return false;
+      }
+      return true;
+    }
+
+    function attemptSilentOidcLogin() {
+      if (!canAttemptSilentOidcLogin()) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = '/auth/oidc/silent?returnTo=' + encodeURIComponent('/admin');
+      iframe.title = '';
+      iframe.tabIndex = -1;
+      iframe.setAttribute('aria-hidden', 'true');
+      iframe.style.cssText = 'position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0;left:-9999px;top:-9999px;';
+      document.body.appendChild(iframe);
+      setTimeout(() => iframe.remove(), 15000);
+    }
+
+    oidcLoginLink.addEventListener('click', () => {
+      try {
+        sessionStorage.removeItem(oidcAutoLoginSuppressed);
+      } catch {}
+    });
+
+    updateAuthUi();
+    window.addEventListener('yume-language-change', updateAuthUi);
+    attemptSilentOidcLogin();
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errorBox.classList.add('hidden');
+      submitBtn.disabled = true;
+      btnText.textContent = tr('login.signingIn');
+      btnSpinner.classList.remove('hidden');
+
+      try {
+        const res = await fetch('/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams(new FormData(form)),
+          credentials: 'same-origin',
+          redirect: 'follow',
+        });
+
+        if (res.redirected) {
+          window.location.href = res.url;
+          return;
+        }
+
+        if (res.ok) {
+          window.location.href = '/admin';
+          return;
+        }
+
+        await res.json().catch(() => ({}));
+        showError(res.status === 401 || res.status === 400
+          ? tr('login.invalidPassword')
+          : tr('login.connectionError'));
+        form.classList.add('shake');
+        setTimeout(() => form.classList.remove('shake'), 500);
+      } catch {
+        showError(tr('login.connectionError'));
+      } finally {
+        submitBtn.disabled = false;
+        btnText.textContent = tr('login.signIn');
+        btnSpinner.classList.add('hidden');
+      }
+    });
+  </script>
+</body>
+</html>

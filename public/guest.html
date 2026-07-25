@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <meta name="darkreader-lock">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+  <title>Yume AIO Backend</title>
+  <script>try{var _b=JSON.parse(document.getElementById('branding-data')?.textContent||'{}');if(_b.siteName)document.title=_b.siteName+' — Shared Files'}catch{}</script>
+  <script src="/js/preferences.js?v=20260718.3"></script>
+  <link rel="stylesheet" href="/css/tailwind.css?v=20260718.3">
+  <link rel="stylesheet" href="/css/app.css?v=20260718.4">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
+  <style>
+    [x-cloak] { display: none !important; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .fade-up { animation: fadeUp 0.3s ease-out; }
+    .guest-row { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-bottom: 1px solid var(--border); transition: background 0.1s; }
+    .guest-row:last-child { border-bottom: none; }
+    .guest-row:hover { background: var(--bg-tertiary); }
+    .guest-row .row-actions { opacity: 0; transition: opacity 0.15s; }
+    .guest-row:hover .row-actions { opacity: 1; }
+    @media (max-width: 640px) { .guest-row .row-actions { opacity: 1; } }
+    .sort-header { cursor: pointer; user-select: none; transition: color 0.1s; }
+    .sort-header:hover { color: var(--text-primary); }
+    .icon-box { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .action-btn { padding: 6px; border-radius: 6px; transition: background 0.1s, color 0.1s; color: var(--text-muted); background: none; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .action-btn:hover { background: var(--bg-hover); color: var(--text-primary); }
+    /* dl-btn: moved to app.css */
+  </style>
+</head>
+<body class="min-h-screen flex flex-col" style="font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary)" data-i18n-page="guest.sharedFiles">
+<div class="page-background" data-darkreader-ignore aria-hidden="true">
+  <img class="page-background-image" data-darkreader-ignore src="/img/yume-background.webp" alt="">
+</div>
+
+<div x-data="guestPage()" x-init="init()">
+
+  <!-- HEADER -->
+  <header class="border-b px-4 py-3" style="background:var(--bg-secondary);border-color:var(--border)">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <img class="brand-bar-image" :src="branding.logoBarImageUrl || 'https://www.yume.zone/assets/img/yumeaio.png'" :alt="branding.siteName">
+      <div class="flex items-center gap-2">
+        <div class="language-container" @click.away="languageMenuOpen = false">
+          <button @click="languageMenuOpen = !languageMenuOpen" class="language-icon" :title="t('ui.language')" :aria-label="t('ui.language')">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 100-18 9 9 0 000 18z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.6 9h16.8M3.6 15h16.8M12 3c2.1 2.4 3.15 5.4 3.15 9S14.1 18.6 12 21M12 3C9.9 5.4 8.85 8.4 8.85 12S9.9 18.6 12 21"/></svg>
+            <span class="hidden sm:inline" x-text="languageLabel(currentLanguage)"></span>
+            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+          </button>
+          <div x-show="languageMenuOpen" x-transition class="language-dropdown" x-cloak>
+            <template x-for="lang in availableLanguages" :key="lang">
+              <button type="button" class="language-option" :class="{'active': currentLanguage === lang}" @click="setLanguage(lang)">
+                <span x-text="languageLabel(lang)"></span>
+              </button>
+            </template>
+          </div>
+        </div>
+        <button @click="toggleDark()" class="p-2 rounded-lg transition-colors" style="color:var(--text-muted)" :title="t('ui.theme')" :aria-label="t('ui.theme')">
+          <svg x-show="darkMode" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+          <svg x-show="!darkMode" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+        </button>
+        <a x-show="showLogin" href="/login" class="text-xs px-3 py-1.5 rounded-lg border transition-colors" style="color:var(--text-muted);border-color:var(--border)" data-i18n="ui.admin" x-cloak>Admin</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1 max-w-5xl mx-auto w-full px-4 py-5">
+    <div class="fade-up">
+
+      <!-- BREADCRUMB -->
+      <div class="flex flex-wrap items-center gap-2 mb-4">
+        <button class="folder-tag" :class="{ active: !currentPath }" @click="navigateTo('')">
+          <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/></svg>
+          <span x-text="t('ui.home')"></span>
+        </button>
+        <template x-for="(seg, idx) in pathSegments" :key="idx">
+          <div class="flex items-center gap-2">
+            <span class="text-xs" style="color:var(--text-muted)">&rsaquo;</span>
+            <button class="folder-tag" :class="{ active: idx === pathSegments.length - 1 }" @click="navigateTo(pathSegments.slice(0, idx + 1).join('/'))" x-text="seg"></button>
+          </div>
+        </template>
+      </div>
+
+      <!-- TOOLBAR -->
+      <div class="flex items-center gap-3 mb-4" x-show="!loading && (folders.length > 0 || allFiles.length > 0)" x-cloak>
+        <div class="relative flex-1 max-w-xs">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none" style="color:var(--text-muted)" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+          <input type="search" x-model="searchQuery" placeholder="Search files..." data-i18n-placeholder="ui.searchFiles" class="w-full text-sm pl-10 pr-3 py-2">
+        </div>
+        <span class="text-xs whitespace-nowrap hidden sm:inline" style="color:var(--text-muted)" x-text="fileCountLabel"></span>
+      </div>
+
+      <!-- LOADING -->
+      <div x-show="loading" class="flex items-center justify-center py-20">
+        <svg class="w-8 h-8 text-accent-500 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+      </div>
+
+      <!-- EMPTY STATE -->
+      <div x-show="!loading && folders.length === 0 && allFiles.length === 0" x-cloak class="text-center py-20">
+        <svg class="w-16 h-16 mx-auto mb-4" style="color:var(--text-muted);opacity:0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
+        <p class="text-lg font-medium mb-1" style="color:var(--text-secondary)" data-i18n="guest.noSharedFiles">No shared files</p>
+        <p class="text-sm" style="color:var(--text-muted)" data-i18n="guest.noSharedFilesHelp">Nothing has been shared publicly yet.</p>
+      </div>
+
+      <!-- SEARCH NO RESULTS -->
+      <div x-show="!loading && searchQuery && filteredFiles.length === 0 && filteredFolders.length === 0 && (allFiles.length > 0 || folders.length > 0)" x-cloak class="text-center py-16">
+        <svg class="w-12 h-12 mx-auto mb-3" style="color:var(--text-muted);opacity:0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+        <p class="text-sm" style="color:var(--text-muted)" x-text="t('guest.noMatches', { query: searchQuery })"></p>
+      </div>
+
+      <!-- FILE LIST -->
+      <div x-show="!loading && (folders.length > 0 || filteredFiles.length > 0)" x-cloak class="rounded-md border overflow-hidden" style="background:var(--bg-secondary);border-color:var(--border)">
+
+        <!-- TABLE HEADER -->
+        <div class="flex items-center gap-3 px-3 py-2 text-xs font-medium border-b" style="color:var(--text-muted);border-color:var(--border);background:var(--bg-primary)" x-show="filteredFiles.length > 0">
+          <div class="w-8 flex-shrink-0"></div>
+          <div class="flex-1 min-w-0 sort-header flex items-center gap-1" @click="toggleSort('name')">
+            <span x-text="t('ui.name')"></span> <span x-show="sortBy==='name'" x-text="sortAsc?'▲':'▼'" class="text-accent-400"></span>
+          </div>
+          <div class="w-20 text-right sort-header hidden sm:flex items-center justify-end gap-1" @click="toggleSort('size')">
+            <span x-text="t('ui.size')"></span> <span x-show="sortBy==='size'" x-text="sortAsc?'▲':'▼'" class="text-accent-400"></span>
+          </div>
+          <div class="w-28 text-right sort-header hidden md:flex items-center justify-end gap-1" @click="toggleSort('date')">
+            <span x-text="t('ui.added')"></span> <span x-show="sortBy==='date'" x-text="sortAsc?'▲':'▼'" class="text-accent-400"></span>
+          </div>
+          <div class="w-[88px] sm:w-[120px] flex-shrink-0"></div>
+        </div>
+
+        <!-- FOLDER ROWS -->
+        <template x-for="f in filteredFolders" :key="f">
+          <div class="guest-row cursor-pointer" @click="navigateTo(f)">
+            <div class="icon-box" style="background:rgba(96,165,250,0.12)">
+              <svg class="w-5 h-5 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-sm font-medium truncate block" style="color:var(--text-primary)" x-text="f.split('/').pop()"></span>
+            </div>
+            <div class="w-20 text-right hidden sm:block"><span class="text-xs" style="color:var(--text-muted)" x-text="t('type.folder')"></span></div>
+            <div class="w-28 hidden md:block"></div>
+            <div class="w-[88px] sm:w-[120px] flex-shrink-0 flex justify-end">
+              <svg class="w-4 h-4" style="color:var(--text-muted)" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+            </div>
+          </div>
+        </template>
+
+        <!-- FILE ROWS -->
+        <template x-for="file in filteredFiles" :key="file.id">
+          <div class="guest-row cursor-pointer" @dblclick="previewFile(file)">
+            <div class="icon-box flex-shrink-0" :style="'background:' + getIconBg(file.type, file.name)">
+              <div x-html="getFileIcon(file.type, file.name)"></div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <span class="text-sm font-medium truncate block" style="color:var(--text-primary)" x-text="file.name" :title="file.name"></span>
+              <span class="text-xs sm:hidden" style="color:var(--text-muted)" x-text="formatBytes(file.size)"></span>
+            </div>
+            <div class="w-20 text-right hidden sm:block">
+              <span class="text-xs" style="color:var(--text-muted)" x-text="formatBytes(file.size)"></span>
+            </div>
+            <div class="w-28 text-right hidden md:block">
+              <span class="text-xs" style="color:var(--text-muted)" x-text="formatDate(file.uploadedAt)"></span>
+            </div>
+            <div class="row-actions w-[88px] sm:w-[120px] flex-shrink-0 flex items-center justify-end gap-1">
+              <button @click.stop="copyLink(file)" class="action-btn" :title="t('ui.copyDownloadLink')" :aria-label="t('ui.copyDownloadLink')">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.857-9.858a4.5 4.5 0 00-6.364 0l-4.5 4.5a4.5 4.5 0 006.364 6.364l1.757-1.757"/></svg>
+              </button>
+              <a :href="getDownloadUrl(file)" class="dl-btn" @click.stop :title="t('ui.downloadFile')" :aria-label="t('ui.downloadFile')">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg>
+                <span class="hidden sm:inline" data-i18n="ui.download">Download</span>
+              </a>
+            </div>
+          </div>
+        </template>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- PREVIEW MODAL -->
+  <div x-show="previewModal.show" x-transition.opacity class="preview-backdrop" @click.self="previewModal.show = false" @keydown.escape.window="previewModal.show = false" x-cloak>
+    <div class="preview-panel" @click.stop>
+      <div class="preview-header">
+        <div class="flex items-center gap-2 min-w-0">
+          <span x-html="previewModal.file ? getFileIcon(previewModal.file.type, previewModal.file.name) : ''"></span>
+          <span class="truncate font-medium text-sm" x-text="previewModal.file?.name"></span>
+          <span class="text-xs flex-shrink-0" style="color:var(--text-muted)" x-text="formatBytes(previewModal.file?.size)"></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <a :href="previewModal.file ? getDownloadUrl(previewModal.file) : '#'" class="btn-secondary text-xs" data-i18n="ui.download" @click.stop>Download</a>
+          <button @click="previewModal.show = false" class="p-1.5 rounded-lg hover:bg-gray-700" :title="t('ui.close')" :aria-label="t('ui.close')">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="preview-body">
+        <div x-show="previewModal.loading" class="flex items-center justify-center py-20">
+          <svg class="spinner w-8 h-8 text-accent-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
+        </div>
+        <div x-show="!previewModal.loading" x-html="previewModal.content"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div x-show="toastVisible" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0 -translate-y-1" class="fixed top-4 right-4 z-50 flex items-center gap-2 px-4 py-3 rounded-md text-sm font-medium shadow-lg" style="background:#065f46;color:#a7f3d0;border:1px solid #059669" x-cloak>
+    <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+    <span x-text="toastMsg"></span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer id="footer" class="site-footer" data-yume-footer></footer>
+</div>
+
+<script src="/js/i18n.js?v=20260718.4"></script>
+<script>
+function guestPage() {
+  return {
+    loading: true,
+    currentPath: '',
+    folders: [],
+    allFiles: [],
+    searchQuery: '',
+    sortBy: 'name',
+    sortAsc: true,
+    darkMode: true,
+    languageMenuOpen: false,
+    currentLanguage: window.YumeI18n ? window.YumeI18n.getLanguageChoice() : 'auto',
+    availableLanguages: window.YumeI18n ? window.YumeI18n.languages : ['auto', 'en', 'fr', 'ja', 'zh-CN', 'zh-TW'],
+    showLogin: false,
+    branding: { siteName: 'Yume AIO Backend', siteIconUrl: '', logoBarImageUrl: 'https://www.yume.zone/assets/img/yumeaio.png' },
+    toastVisible: false,
+    toastMsg: '',
+    previewModal: { show: false, file: null, content: '', loading: false },
+    _tt: null,
+
+    get pathSegments() { return this.currentPath ? this.currentPath.split('/') : []; },
+
+    get filteredFolders() {
+      if (!this.searchQuery) return this.folders;
+      var q = this.searchQuery.toLowerCase();
+      return this.folders.filter(function(f) { return f.split('/').pop().toLowerCase().indexOf(q) >= 0; });
+    },
+
+    get filteredFiles() {
+      var files = this.allFiles;
+      if (this.searchQuery) {
+        var q = this.searchQuery.toLowerCase();
+        files = files.filter(function(f) { return f.name.toLowerCase().indexOf(q) >= 0; });
+      }
+      var by = this.sortBy, asc = this.sortAsc;
+      return files.slice().sort(function(a, b) {
+        var v = by === 'size' ? a.size - b.size : by === 'date' ? a.uploadedAt.localeCompare(b.uploadedAt) : a.name.localeCompare(b.name);
+        return asc ? v : -v;
+      });
+    },
+
+    get fileCountLabel() {
+      var fc = this.filteredFiles.length, dc = this.filteredFolders.length;
+      var s = this.t('guest.fileCount', { files: fc });
+      if (dc) s += ' \u00b7 ' + this.t('guest.folderCount', { folders: dc });
+      return s;
+    },
+
+    t(key, vars) {
+      this.currentLanguage;
+      return window.YumeI18n ? window.YumeI18n.t(key, vars) : key;
+    },
+
+    languageLabel(language) {
+      if (language === 'auto' && window.YumeI18n) return window.YumeI18n.getAutoLanguageLabel();
+      return (window.YumeI18n && window.YumeI18n.labels[language]) || language;
+    },
+
+    setLanguage(language) {
+      if (window.YumeI18n) {
+        window.YumeI18n.setLanguage(language, true);
+        this.currentLanguage = window.YumeI18n.getLanguageChoice();
+      } else {
+        this.currentLanguage = language;
+      }
+      this.languageMenuOpen = false;
+    },
+
+    init() { this.setupLanguageEvents(); this.setupThemeEvents(); this.applyBranding(); this.loadDarkMode(); this.loadView(); },
+
+    setupLanguageEvents() {
+      var self = this;
+      function syncLanguage(event) {
+        self.currentLanguage = event && event.detail && event.detail.choice
+          ? event.detail.choice
+          : (window.YumeI18n ? window.YumeI18n.getLanguageChoice() : self.currentLanguage);
+      }
+      syncLanguage();
+      window.addEventListener('yume-language-change', syncLanguage);
+    },
+
+    applyBranding() {
+      try {
+        var d = document.getElementById('branding-data');
+        if (!d) return;
+        var b = JSON.parse(d.textContent || '{}');
+        if (b.siteName) this.branding.siteName = b.siteName;
+        if (b.siteIconUrl) this.branding.siteIconUrl = b.siteIconUrl;
+        if (b.logoBarImageUrl) this.branding.logoBarImageUrl = b.logoBarImageUrl;
+      } catch(e) {}
+    },
+
+    loadDarkMode() {
+      var preferences = window.YumePreferences;
+      var resolvedTheme = preferences
+        ? preferences.applyTheme(preferences.getThemeChoice())
+        : (document.documentElement.classList.contains('light') ? 'light' : 'dark');
+      this.darkMode = resolvedTheme === 'dark';
+    },
+
+    setupThemeEvents() {
+      var self = this;
+      window.addEventListener('yume-theme-change', function(event) {
+        self.darkMode = (!event.detail || event.detail.theme !== 'light');
+      });
+    },
+
+    applyThemeMode(isDark) {
+      var html = document.documentElement;
+      html.classList.toggle('dark', isDark);
+      html.classList.toggle('light', !isDark);
+      html.dataset.theme = isDark ? 'dark' : 'light';
+      html.style.colorScheme = isDark ? 'dark light' : 'light dark';
+    },
+
+    toggleDark() {
+      var nextTheme = this.darkMode ? 'light' : 'dark';
+      if (window.YumePreferences) {
+        window.YumePreferences.setThemeChoice(nextTheme);
+        this.darkMode = window.YumePreferences.applyTheme(nextTheme) === 'dark';
+      } else {
+        this.darkMode = nextTheme === 'dark';
+        this.applyThemeMode(this.darkMode);
+      }
+    },
+
+    navigateTo(path) { this.currentPath = path; this.searchQuery = ''; this.loadView(); },
+
+    loadView() {
+      var self = this;
+      self.loading = true; self.folders = []; self.allFiles = [];
+      if (!self.currentPath) {
+        fetch('/api/public/shared').then(function(r) { return r.json(); }).then(function(data) {
+          self.loading = false;
+          if (data.settings && data.settings.showLoginButton) self.showLogin = true;
+          self.folders = data.sharedFolders || [];
+          self.allFiles = data.files || [];
+        }).catch(function() { self.loading = false; });
+      } else {
+        fetch('/api/public/folder?path=' + encodeURIComponent(self.currentPath)).then(function(r) {
+          if (!r.ok) throw new Error(); return r.json();
+        }).then(function(data) {
+          self.loading = false;
+          self.folders = data.subfolders || [];
+          self.allFiles = data.files || [];
+        }).catch(function() { self.loading = false; });
+      }
+    },
+
+    toggleSort(col) {
+      if (this.sortBy === col) this.sortAsc = !this.sortAsc;
+      else { this.sortBy = col; this.sortAsc = col !== 'date'; }
+    },
+
+    getDownloadUrl(file) {
+      return file.token ? '/s/' + file.token + '/download' : '/' + encodeURI(file.folder + '/' + file.name);
+    },
+
+    getPreviewUrl(file) {
+      return '/api/public/preview/' + encodeURIComponent(file.id);
+    },
+
+    async previewFile(file) {
+      if (!file) return;
+      var type = file.type || '';
+      var previewUrl = this.getPreviewUrl(file);
+      this.previewModal = { show: true, file: file, content: '', loading: true };
+
+      try {
+        if (type.startsWith('image/')) {
+          this.previewModal.content = '<img src="' + this._escAttr(previewUrl) + '" class="preview-media" alt="' + this._escAttr(file.name) + '">';
+        } else if (type.startsWith('video/')) {
+          this.previewModal.content = '<video controls autoplay class="preview-media"><source src="' + this._escAttr(previewUrl) + '" type="' + this._escAttr(type) + '"></video>';
+        } else if (type.startsWith('audio/')) {
+          this.previewModal.content = '<div class="preview-audio-wrap"><audio controls autoplay class="w-full"><source src="' + this._escAttr(previewUrl) + '" type="' + this._escAttr(type) + '"></audio></div>';
+        } else if (type === 'application/pdf') {
+          this.previewModal.content = '<iframe src="' + this._escAttr(previewUrl) + '" class="preview-iframe"></iframe>';
+        } else if (type.startsWith('text/') || this.isCodeFile(file.name)) {
+          var res = await fetch(previewUrl);
+          if (!res.ok) throw new Error('Preview failed');
+          var text = await res.text();
+          this.previewModal.content = '<pre class="preview-code"><code>' + this._escHtml(text.slice(0, 100000)) + '</code></pre>';
+        } else {
+          this.previewModal.content = '<div class="preview-unsupported"><div class="mb-3">' + this.getFileIcon(type, file.name) + '</div><p class="text-sm" style="color:var(--text-secondary)">' + this._escHtml(this.t('ui.previewUnavailable')) + '</p></div>';
+        }
+      } catch(e) {
+        this.previewModal.content = '<div class="preview-unsupported"><p class="text-sm" style="color:var(--danger)">' + this._escHtml(this.t('ui.previewUnavailable')) + '</p></div>';
+      }
+      this.previewModal.loading = false;
+    },
+
+    isCodeFile(name) {
+      return /\.(js|ts|tsx|jsx|py|rb|go|rs|java|c|cpp|h|sh|bash|yaml|yml|toml|json|xml|sql|graphql|md|html|css|scss|less)$/i.test(name || '');
+    },
+
+    _escHtml(value) {
+      var d = document.createElement('div');
+      d.textContent = String(value ?? '');
+      return d.innerHTML;
+    },
+
+    _escAttr(value) {
+      return this._escHtml(value).replace(/"/g, '&quot;');
+    },
+
+    copyLink(file) {
+      var url = location.origin + this.getDownloadUrl(file), self = this;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(url).then(function() { self.toast(self.t('share.linkCopied')); });
+      } else {
+        var t = document.createElement('textarea'); t.value = url; t.style.cssText = 'position:fixed;opacity:0';
+        document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); self.toast(self.t('share.linkCopied')); } catch(e) {}
+        document.body.removeChild(t);
+      }
+    },
+
+    toast(m) {
+      this.toastMsg = m; this.toastVisible = true;
+      if (this._tt) clearTimeout(this._tt);
+      var self = this; this._tt = setTimeout(function() { self.toastVisible = false; }, 2200);
+    },
+
+    formatBytes(b) {
+      if (!b) return '0 B';
+      var k = 1024, u = ['B','KB','MB','GB','TB'], i = Math.floor(Math.log(b) / Math.log(k));
+      return parseFloat((b / Math.pow(k, i)).toFixed(1)) + ' ' + u[i];
+    },
+
+    formatDate(iso) {
+      this.currentLanguage;
+      if (!iso) return '';
+      return new Intl.DateTimeFormat(document.documentElement.lang || navigator.language, {
+        year: 'numeric', month: 'short', day: 'numeric'
+      }).format(new Date(iso));
+    },
+
+    getIconBg(type, name) {
+      var n = (name || '').toLowerCase();
+      if (!type) return 'rgba(148,163,184,0.1)';
+      if (type.startsWith('image/')) return 'rgba(244,114,182,0.1)';
+      if (type.startsWith('video/')) return 'rgba(167,139,250,0.1)';
+      if (type.startsWith('audio/')) return 'rgba(52,211,153,0.1)';
+      if (type === 'application/pdf') return 'rgba(239,68,68,0.1)';
+      if (/zip|tar|rar|gzip|x-7z/.test(type)) return 'rgba(251,191,36,0.1)';
+      if (/\.(apk|aab)$/.test(n)) return 'rgba(52,211,153,0.1)';
+      if (/\.(exe|msi|dmg|pkg|deb|rpm|ipa)$/.test(n)) return 'rgba(167,139,250,0.1)';
+      if (/spreadsheet/.test(type) || /\.(csv|xls|xlsx)$/.test(n)) return 'rgba(52,211,153,0.1)';
+      if (/document/.test(type) || /\.(doc|docx|odt|rtf)$/.test(n)) return 'rgba(96,165,250,0.1)';
+      if (type.startsWith('text/') || /javascript|json/.test(type)) return 'rgba(249,115,22,0.1)';
+      return 'rgba(148,163,184,0.1)';
+    },
+
+    getFileIcon(type, name) {
+      var n = (name || '').toLowerCase();
+      var ic = function(color, path) { return '<svg class="w-[18px] h-[18px]" style="color:' + color + '" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">' + path + '</svg>'; };
+      if (type && type.startsWith('image/')) return ic('#f472b6', '<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5A2.25 2.25 0 0022.5 18.75V5.25A2.25 2.25 0 0020.25 3H3.75A2.25 2.25 0 001.5 5.25v13.5A2.25 2.25 0 003.75 21z"/>');
+      if (type && type.startsWith('video/')) return ic('#a78bfa', '<path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"/>');
+      if (type && type.startsWith('audio/')) return ic('#34d399', '<path stroke-linecap="round" stroke-linejoin="round" d="M9 9l10.5-3m0 6.553v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 11-.99-3.467l2.31-.66a2.25 2.25 0 001.632-2.163zm0 0V2.25L9 5.25v10.303m0 0v3.75a2.25 2.25 0 01-1.632 2.163l-1.32.377a1.803 1.803 0 01-.99-3.467l2.31-.66A2.25 2.25 0 009 15.553z"/>');
+      if (type === 'application/pdf') return ic('#ef4444', '<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>');
+      if (type && /zip|tar|rar|gzip|x-7z/.test(type)) return ic('#fbbf24', '<path stroke-linecap="round" stroke-linejoin="round" d="M20.25 7.5l-.625 10.632a2.25 2.25 0 01-2.247 2.118H6.622a2.25 2.25 0 01-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z"/>');
+      if (/\.(apk|aab)$/.test(n)) return ic('#34d399', '<path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/>');
+      if (/\.(exe|msi|dmg|pkg|deb|rpm|ipa)$/.test(n)) return ic('#a78bfa', '<path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25z"/>');
+      if ((type && /spreadsheet/.test(type)) || /\.(csv|xls|xlsx)$/.test(n)) return ic('#34d399', '<path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125"/>');
+      if ((type && /document/.test(type)) || /\.(doc|docx|odt|rtf)$/.test(n)) return ic('#60a5fa', '<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>');
+      if (type && (type.startsWith('text/') || /javascript|json/.test(type))) return ic('#f97316', '<path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/>');
+      return ic('#94a3b8', '<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>');
+    }
+  }
+}
+</script>
+</body>
+</html>

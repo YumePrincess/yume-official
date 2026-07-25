@@ -1,0 +1,92 @@
+{
+  "name": "yume-all-in-one-backend",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-07-18",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [
+    {
+      "pattern": "aio.example.com",
+      "custom_domain": true,
+      "enabled": true,
+      "previews_enabled": false
+    }
+  ],
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "not_found_handling": "none",
+    "run_worker_first": true
+  },
+  "r2_buckets": [
+    {
+      "binding": "VAULT_BUCKET",
+      "bucket_name": "yume-oss"
+    }
+  ],
+  "ai": {
+    "binding": "AI"
+  },
+  "d1_databases": [
+    {
+      "binding": "VAULT_DB",
+      "database_name": "yume-all-in-one-backend",
+      "database_id": "YOUR_D1_DATABASE_ID",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "queues": {
+    "consumers": [
+      {
+        "queue": "yume-oss-cache-purge",
+        "max_batch_size": 100,
+        "max_batch_timeout": 5
+      }
+    ]
+  },
+  "ratelimits": [
+    {
+      "name": "AI_RATE_LIMITER",
+      "namespace_id": "YOUR_AI_RATE_LIMIT_NAMESPACE_ID",
+      "simple": {
+        "limit": 20,
+        "period": 60
+      }
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": true
+    }
+  },
+  "secrets": {
+    "required": ["DEEPL_API_KEY", "AI_API_KEY"]
+  },
+  "vars": {
+    "ENVIRONMENT": "production",
+    "R2_PUBLIC_BASE_URL": "https://oss.example.com",
+    "ANNOUNCEMENTS_CONFIG_KEY": "announcements/config.json",
+    "AI_GATEWAY_ID": "default",
+    "AI_CHAT_MODELS": "@cf/openai/gpt-oss-20b",
+    "AI_EMBEDDING_MODELS": "@cf/baai/bge-m3",
+    "OIDC_ENABLED": "true",
+    "OIDC_NAME": "Yume Account",
+    "OIDC_PROVIDER_NAME": "Yume Account",
+    "OIDC_ICON": "https://www.example.com/logo.png",
+    "OIDC_ISSUER": "https://accounts.example.com",
+    "OIDC_CLIENT_ID": "YOUR_OIDC_CLIENT_ID",
+    "OIDC_REDIRECT_URI": "",
+    "OIDC_POST_LOGOUT_REDIRECT_URI": "",
+    "OIDC_SCOPES": "openid email profile",
+    "OIDC_ALLOWED_EMAILS": "admin@example.com,owner@example.com",
+    "OIDC_EMAIL_CLAIM": "email",
+    "OIDC_REQUIRE_VERIFIED_EMAIL": "true",
+    "OIDC_TOKEN_AUTH_METHOD": "client_secret_post",
+    "OIDC_AUTO_LOGIN": "true",
+    "OIDC_SESSION_CHECK_INTERVAL_SECONDS": "5"
+  }
+}
