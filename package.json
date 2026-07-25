@@ -3,16 +3,19 @@
   "version": "1.0.0",
   "license": "MIT",
   "description": "Yume AIO Backend on Cloudflare Workers, R2, and D1",
-  "packageManager": "npm@12.0.1",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "build": "npm run build:css",
-    "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./public/css/tailwind.css --minify",
+    "build": "node ./node_modules/@tailwindcss/cli/dist/index.mjs -i ./src/styles/tailwind.css -o ./public/css/tailwind.css --minify",
+    "build:css": "node ./node_modules/@tailwindcss/cli/dist/index.mjs -i ./src/styles/tailwind.css -o ./public/css/tailwind.css --minify",
     "predev": "npm run build",
-    "dev": "wrangler dev",
+    "dev": "node ./node_modules/wrangler/bin/wrangler.js dev",
     "predeploy": "npm run build",
-    "deploy": "wrangler deploy",
-    "types": "wrangler types",
-    "tail": "wrangler tail"
+    "deploy": "node ./node_modules/wrangler/bin/wrangler.js deploy",
+    "types": "node ./node_modules/wrangler/bin/wrangler.js types",
+    "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit",
+    "tail": "node ./node_modules/wrangler/bin/wrangler.js tail"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260724.1",
