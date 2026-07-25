@@ -376,7 +376,8 @@ function guestPage() {
     },
 
     getPreviewUrl(file) {
-      return '/api/public/preview/' + encodeURIComponent(file.id);
+      var version = encodeURIComponent((file && (file.uploadedAt || file.size)) || Date.now());
+      return '/api/public/preview/' + encodeURIComponent(file.id) + '?v=' + version;
     },
 
     async previewFile(file) {

@@ -202,7 +202,7 @@
               </div>
               <div class="w-full aspect-square rounded-lg flex items-center justify-center mb-2 overflow-hidden" style="background:var(--bg-tertiary)">
                 <template x-if="file.type.startsWith('image/')">
-                  <img :src="'/api/files/' + file.id + '/thumbnail'" class="w-full h-full object-contain" loading="lazy" @error="$el.style.display='none'">
+                  <img :src="getFileThumbnailUrl(file)" class="w-full h-full object-contain" loading="lazy" @error="$el.style.display='none'">
                 </template>
                 <template x-if="!file.type.startsWith('image/')">
                   <span class="text-3xl" x-text="getFileIcon(file.type, file.name)"></span>
@@ -647,7 +647,7 @@
       <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
     </button>
     <div class="lightbox-content">
-      <img :src="lightbox.images[lightbox.currentIndex] ? '/api/files/' + lightbox.images[lightbox.currentIndex].id + '/preview' : ''" class="lightbox-img" @click.stop>
+      <img :src="lightbox.images[lightbox.currentIndex] ? getFilePreviewUrl(lightbox.images[lightbox.currentIndex]) : ''" class="lightbox-img" @click.stop>
     </div>
     <button @click="lightboxNext()" class="lightbox-nav lightbox-next" :title="t('ui.next')" :aria-label="t('ui.next')">
       <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>

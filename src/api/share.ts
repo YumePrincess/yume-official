@@ -19,6 +19,14 @@ import {
 } from '../utils/db';
 import { listFolderContents, normalizeFolderPath } from '../utils/storage';
 
+function applyNoStorePreviewHeaders(headers: Headers, etag?: string | null, uploadedAt?: string | null): void {
+  if (etag) headers.set('etag', etag);
+  if (uploadedAt) headers.set('Last-Modified', new Date(uploadedAt).toUTCString());
+  headers.set('Cache-Control', 'private, no-store, no-cache, must-revalidate');
+  headers.set('Pragma', 'no-cache');
+  headers.set('Expires', '0');
+}
+
 function extractFileId(url: URL): string | null {
   const parts = url.pathname.split('/');
   const idx = parts.indexOf('share');
@@ -429,11 +437,10 @@ export async function publicPreview(request: Request, env: Env): Promise<Respons
 
   const headers = new Headers();
   object.writeHttpMetadata(headers);
-  headers.set('etag', object.httpEtag);
   headers.set('Content-Type', meta.type || 'application/octet-stream');
   headers.set('Content-Disposition', 'inline; filename="' + encodeURIComponent(meta.name) + '"');
-  headers.set('Cache-Control', 'public, max-age=14400, s-maxage=86400');
   headers.set('Accept-Ranges', 'bytes');
+  applyNoStorePreviewHeaders(headers, object.httpEtag, meta.uploadedAt);
 
   const rangeHeader = request.headers.get('Range');
   if (rangeHeader) {

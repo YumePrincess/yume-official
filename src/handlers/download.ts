@@ -6,6 +6,14 @@ import { getMimeType } from '../utils/response';
 import { findFileByPath, getFile, getFileByShareToken, incrementDownloads } from '../utils/db';
 import { ensureFileRecordByPath } from '../utils/storage';
 
+function applyNoStorePreviewHeaders(headers: Headers, etag?: string | null, uploadedAt?: string | null): void {
+  if (etag) headers.set('etag', etag);
+  if (uploadedAt) headers.set('Last-Modified', new Date(uploadedAt).toUTCString());
+  headers.set('Cache-Control', 'private, no-store, no-cache, must-revalidate');
+  headers.set('Pragma', 'no-cache');
+  headers.set('Expires', '0');
+}
+
 function extractToken(url: URL): string | null {
   const parts = url.pathname.split('/');
   const sIdx = parts.indexOf('s');
@@ -134,10 +142,9 @@ export async function handleFolderSharePreview(request: Request, env: Env): Prom
 
   const headers = new Headers();
   object.writeHttpMetadata(headers);
-  headers.set('etag', object.httpEtag);
   headers.set('Content-Type', meta.type || 'application/octet-stream');
   headers.set('Content-Disposition', 'inline');
-  headers.set('Cache-Control', 'public, max-age=14400, s-maxage=86400');
+  applyNoStorePreviewHeaders(headers, object.httpEtag, meta.uploadedAt);
 
   return new Response(object.body, { headers });
 }
@@ -214,9 +221,9 @@ export async function handlePreview(request: Request, env: Env): Promise<Respons
 
     const headers = new Headers();
     object.writeHttpMetadata(headers);
-    headers.set('etag', object.httpEtag);
     headers.set('Content-Type', result.meta.type || 'application/octet-stream');
     headers.set('Accept-Ranges', 'bytes');
+    applyNoStorePreviewHeaders(headers, object.httpEtag, result.meta.uploadedAt);
 
     return handleRangeRequest(request, env, result.meta, object, headers);
   }
@@ -226,11 +233,10 @@ export async function handlePreview(request: Request, env: Env): Promise<Respons
 
   const headers = new Headers();
   object.writeHttpMetadata(headers);
-  headers.set('etag', object.httpEtag);
   headers.set('Content-Type', result.meta.type || 'application/octet-stream');
   headers.set('Content-Disposition', 'inline');
-  headers.set('Cache-Control', 'public, max-age=14400, s-maxage=86400');
   headers.set('Accept-Ranges', 'bytes');
+  applyNoStorePreviewHeaders(headers, object.httpEtag, result.meta.uploadedAt);
 
   return new Response(object.body, { headers });
 }

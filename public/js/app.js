@@ -770,6 +770,21 @@ function cloudvault() {
       }
     },
 
+    getFileVersionToken(file) {
+      if (!file) return String(Date.now());
+      return encodeURIComponent(file.uploadedAt || String(file.size || '') || String(Date.now()));
+    },
+
+    getFilePreviewUrl(file) {
+      if (!file) return '';
+      return '/api/files/' + file.id + '/preview?v=' + this.getFileVersionToken(file);
+    },
+
+    getFileThumbnailUrl(file) {
+      if (!file) return '';
+      return '/api/files/' + file.id + '/thumbnail?v=' + this.getFileVersionToken(file);
+    },
+
     async previewFile(file) {
       if (file.type.startsWith('image/')) {
         this.openLightbox(file);
@@ -777,7 +792,7 @@ function cloudvault() {
       }
 
       this.previewModal = { show: true, file, content: '', loading: true };
-      const previewUrl = '/api/files/' + file.id + '/preview';
+      const previewUrl = this.getFilePreviewUrl(file);
 
       try {
         if (file.type.startsWith('video/')) {

@@ -91,7 +91,7 @@
 
     var token = window.location.pathname.split('/').pop();
     var downloadUrl = '/s/' + token + '/download';
-    var previewUrl = '/s/' + token + '/preview';
+    var previewUrl = addVersionToken('/s/' + token + '/preview', file);
     document.getElementById('download-btn').href = downloadUrl;
 
     setupPreview(file, previewUrl);
@@ -168,7 +168,7 @@
       var fileDiv = document.createElement('div');
       fileDiv.className = 'flex items-center gap-3 px-4 py-3 rounded-xl bg-gray-800/50 hover:bg-gray-800 transition-colors group';
 
-      var previewUrl = '/s/' + token + '/folder-preview?fileId=' + file.id;
+      var previewUrl = addVersionToken('/s/' + token + '/folder-preview?fileId=' + encodeURIComponent(file.id), file);
       var isImage = file.type && file.type.startsWith('image/');
       var iconHtml = isImage
         ? '<img src="' + previewUrl + '" class="w-10 h-10 rounded-lg object-cover flex-shrink-0" loading="lazy" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'
@@ -238,6 +238,11 @@
     } else {
       showNoPreview(container, file);
     }
+  }
+
+  function addVersionToken(url, file) {
+    var version = encodeURIComponent((file && (file.uploadedAt || file.size)) || Date.now());
+    return url + (url.indexOf('?') >= 0 ? '&' : '?') + 'v=' + version;
   }
 
   function showNoPreview(container, file) {

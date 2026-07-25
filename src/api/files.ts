@@ -27,6 +27,14 @@ import {
   normalizeFolderPath,
 } from '../utils/storage';
 
+function applyNoStorePreviewHeaders(headers: Headers, etag?: string | null, uploadedAt?: string | null): void {
+  if (etag) headers.set('etag', etag);
+  if (uploadedAt) headers.set('Last-Modified', new Date(uploadedAt).toUTCString());
+  headers.set('Cache-Control', 'private, no-store, no-cache, must-revalidate');
+  headers.set('Pragma', 'no-cache');
+  headers.set('Expires', '0');
+}
+
 function extractId(url: URL): string | null {
   const parts = url.pathname.split('/');
   const idx = parts.indexOf('files');
@@ -459,8 +467,7 @@ export async function thumbnail(request: Request, env: Env): Promise<Response> {
 
   const headers = new Headers();
   object.writeHttpMetadata(headers);
-  headers.set('etag', object.httpEtag);
-  headers.set('Cache-Control', 'public, max-age=14400, s-maxage=86400');
+  applyNoStorePreviewHeaders(headers, object.httpEtag, meta.uploadedAt);
 
   return new Response(object.body, { headers });
 }
@@ -482,11 +489,10 @@ export async function preview(request: Request, env: Env): Promise<Response> {
 
   const headers = new Headers();
   object.writeHttpMetadata(headers);
-  headers.set('etag', object.httpEtag);
   headers.set('Content-Type', meta.type || 'application/octet-stream');
   headers.set('Content-Disposition', 'inline; filename="' + encodeURIComponent(meta.name) + '"');
-  headers.set('Cache-Control', 'private, max-age=3600');
   headers.set('Accept-Ranges', 'bytes');
+  applyNoStorePreviewHeaders(headers, object.httpEtag, meta.uploadedAt);
 
   if (rangeHeader) {
     const match = rangeHeader.match(/bytes=(\d*)-(\d*)/);
