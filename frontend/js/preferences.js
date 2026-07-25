@@ -37,9 +37,7 @@
 
         if ([
             'yume.zone',
-            'www.yume.zone',
-            'search.yume.zone',
-            'pricing.yume.zone'
+            'www.yume.zone'
         ].indexOf(hostname) >= 0) {
             attributes.push('Domain=yume.zone');
         }

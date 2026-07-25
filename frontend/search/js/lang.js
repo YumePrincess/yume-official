@@ -809,7 +809,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // DeepL 翻译函数（支持减少 API 调用）
-const translateApiUrl = 'https://api.yume.zone/api/translate';
+const translateApiUrl = 'https://aio.yume.zone/api/translate';
 const deepLTranslationCache = new Map();
 
 function requestDeepLTranslation(text, targetLang) {

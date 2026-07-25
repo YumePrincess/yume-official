@@ -3,7 +3,7 @@
   "compatibility_date": "2026-07-18",
   "workers_dev": false,
   "build": {
-    "command": "node ./scripts/build-static.mjs --site official"
+    "command": "node ./scripts/build-static.mjs"
   },
   "assets": {
     "directory": "./dist/official",

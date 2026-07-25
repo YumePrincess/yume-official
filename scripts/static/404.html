@@ -565,13 +565,12 @@
       }
 
       function resolveSite() {
-        var hostname = location.hostname.toLowerCase().replace(/\.$/, '');
         var pathname = location.pathname;
         var site = 'official';
 
-        if (hostname === 'search.yume.zone' || pathname === '/search' || pathname.indexOf('/search/') === 0) {
+        if (pathname === '/search' || pathname.indexOf('/search/') === 0) {
           site = 'search';
-        } else if (hostname === 'pricing.yume.zone' || pathname === '/pricing' || pathname.indexOf('/pricing/') === 0) {
+        } else if (pathname === '/pricing' || pathname.indexOf('/pricing/') === 0) {
           site = 'pricing';
         }
 
@@ -580,14 +579,11 @@
           search: 'Yume Search',
           pricing: 'Yume Pricing'
         };
-        var isSiteSubdomain = hostname === 'search.yume.zone' || hostname === 'pricing.yume.zone';
-        var home = isSiteSubdomain
-          ? '/'
-          : site === 'search'
-            ? '/search/'
-            : site === 'pricing'
-              ? '/pricing/'
-              : '/';
+        var home = site === 'search'
+          ? '/search/'
+          : site === 'pricing'
+            ? '/pricing/'
+            : '/';
 
         return { key: site, label: labels[site], home: home };
       }
