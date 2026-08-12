@@ -371,7 +371,7 @@
         -webkit-backdrop-filter: var(--glass-backdrop);
         border-radius: var(--glass-radius-pill);
         font-size: 1.25rem;
-        transition: 0.5s;
+        transition: transform 220ms var(--ease-out), opacity 220ms var(--ease-out);
         width: 60px;
         display: flex;
         justify-content: center;
@@ -472,7 +472,7 @@
 
 .menus .col.right {
     display: block !important;
-    transition: 0.5s;
+    transition: transform 220ms var(--ease-out), opacity 220ms var(--ease-out);
     padding: 0rem 0.75rem;
 }
 
@@ -582,5 +582,30 @@
 
     #aplayer.left-mode .aplayer-list ol li {
         padding-right: 15px !important;
+    }
+}
+
+@media (max-width: 840px) {
+    #wallpaper {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #wallpaper .form-radio {
+        width: auto;
+        min-width: 0;
+        max-width: none;
+        margin: 0;
+    }
+
+    .box-wrapper,
+    .terms-wrapper,
+    .announcement-wrapper {
+        transform: translate(-50%, 0) scale(0.97);
+    }
+
+    .modal-layer.is-open .box-wrapper,
+    .modal-layer.is-open .terms-wrapper,
+    .modal-layer.is-open .announcement-wrapper {
+        transform: translate(-50%, 0) scale(1);
     }
 }

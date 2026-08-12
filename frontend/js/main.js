@@ -677,19 +677,92 @@ $('#switchmenu').on('click', function () {
     }
 });
 
+// 统一管理全屏卡片，确保打开时底部页脚和底层内容不会穿透显示。
+const modalCloseTimers = new WeakMap();
+
+function updateModalBodyState() {
+    const hasVisibleModal = document.querySelector('.modal-layer.is-open, .modal-layer.is-closing');
+    document.body.classList.toggle('modal-open', Boolean(hasVisibleModal));
+}
+
+function setModalState(element, isOpen) {
+    if (!element) return;
+
+    const pendingClose = modalCloseTimers.get(element);
+    if (pendingClose) {
+        window.clearTimeout(pendingClose);
+        modalCloseTimers.delete(element);
+    }
+
+    if (isOpen) {
+        element.style.display = 'block';
+        element.setAttribute('aria-hidden', 'false');
+        element.classList.remove('is-closing');
+        updateModalBodyState();
+
+        requestAnimationFrame(() => {
+            if (element.style.display !== 'none' && !element.classList.contains('is-closing')) {
+                element.classList.add('is-open');
+                updateModalBodyState();
+            }
+        });
+        return;
+    }
+
+    element.setAttribute('aria-hidden', 'true');
+    element.classList.remove('is-open');
+    element.classList.add('is-closing');
+    updateModalBodyState();
+
+    const finishClose = () => {
+        if (element.classList.contains('is-open')) return;
+        element.style.display = 'none';
+        element.classList.remove('is-closing');
+        modalCloseTimers.delete(element);
+        updateModalBodyState();
+    };
+
+    const closeTimer = window.setTimeout(finishClose, 240);
+    modalCloseTimers.set(element, closeTimer);
+}
+
+document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+
+    const openModal = document.querySelector('.modal-layer.is-open');
+    if (!openModal) return;
+
+    setModalState(openModal, false);
+    if (openModal.id === 'box') {
+        $('#row').css('display', 'flex');
+        $('#more').css('display', 'flex');
+    }
+});
+
+document.addEventListener('click', (event) => {
+    const modal = event.target.closest?.('.modal-layer');
+    if (!modal || event.target !== modal) return;
+
+    setModalState(modal, false);
+    if (modal.id === 'box') {
+        $('#row').css('display', 'flex');
+        $('#more').css('display', 'flex');
+    }
+});
+
 //更多弹窗页面
 $('#openmore').on('click', function () {
-    $('#box').css("display", "block");
+    setModalState(document.getElementById('box'), true);
     $('#row').css("display", "none");
     $('#more').css("cssText", "display:none !important");
 });
 $('#openmore1').on('click', function () {
-    $('#box').css("display", "block");
+    setModalState(document.getElementById('box'), true);
     $('#row').css("display", "none");
     $('#more').css("cssText", "display:none !important");
 });
 $('#closemore').on('click', function () {
-    $('#box').css("display", "none");
+    setModalState(document.getElementById('box'), false);
     $('#row').css("display", "flex");
     $('#more').css("display", "flex");
 });
@@ -712,7 +785,7 @@ window.addEventListener('load', function () {
             $("#change1").html(translate('DEFAULT_PAGE_SUBHEADING'));
 
             //移动端隐藏弹窗页面
-            $('#box').css("display", "none");
+            setModalState(document.getElementById('box'), false);
             $('#row').css("display", "flex");
             $('#more').css("display", "flex");
         }
@@ -895,14 +968,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     window.openTerms = function () {
-        termsBox.style.display = "block";
+        setModalState(termsBox, true);
         loadTermsContent(getActiveTermType());
     };
 
     openTermsBtn.addEventListener("click", openTerms);
 
     closeBtn.addEventListener("click", () => {
-        termsBox.style.display = "none";
+        setModalState(termsBox, false);
     });
 
     // 多语言 Markdown 加载
@@ -1020,11 +1093,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 打开与关闭弹窗
         window.openAnnouncement = function () {
-        box.style.display = "block";
+        setModalState(box, true);
     };
 
     closeBtn.addEventListener("click", () => {
-        box.style.display = "none";
+        setModalState(box, false);
     });
 
         // 加载公告 Markdown（多语言）

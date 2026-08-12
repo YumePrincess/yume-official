@@ -50,7 +50,7 @@ Cloudflare Workers Builds 或手动部署都只需要一个项目：
 
 ## Static guarantees
 
-- `wrangler.jsonc` 不包含 `main`，只使用 Workers Static Assets。
+- `wrangler.jsonc` 不包含 `main`、`assets.binding` 或 `assets.run_worker_first`，只使用 Workers Static Assets。
 - 构建产物只有 `dist/official` 一套。
 - Search 与 Pricing 通过 `dist/official/search`、`dist/official/pricing` 发布。
 - 缺失资源返回共享静态 `404.html`。
