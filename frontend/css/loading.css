@@ -162,7 +162,13 @@ div.loaded div.spinner-box {
     width: 64px;
     height: 64px;
     border-radius: 50%;
+    background: transparent !important;
     perspective: 800px;
+    transform: translateZ(0);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    isolation: isolate;
     transition: all 0.7s cubic-bezier(0.42, 0, 0, 1.01);
 }
 
@@ -172,6 +178,10 @@ div.loaded div.spinner-box {
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    background: transparent !important;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .inner.one {

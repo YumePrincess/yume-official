@@ -24,15 +24,14 @@
     --glass-backdrop: blur(3px) saturate(1.1);
     --glass-hover-backdrop: blur(2px) saturate(1.1);
     --page-scrim: rgba(255, 255, 255, 0.08);
-    --loading-overlay: rgba(243, 236, 229, 0.72);
+    --loading-overlay: rgba(255, 255, 255, 0.30);
     --site-text: #1b2f4d;
     --site-text-muted: rgba(27, 47, 77, 0.72);
     --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
     --motion-fast: 140ms;
     --motion-standard: 220ms;
-    --motion-shutter: 180ms;
-    --motion-shutter-total: 300ms;
+    --motion-modal: 360ms;
 }
 
 :root[data-theme="light"] {
@@ -53,7 +52,7 @@
     --glass-menu-hover-shadow: inset -2px -2px 2px rgba(0, 0, 0, 0.1);
     --glass-control-tint: rgba(255, 255, 255, 0.18);
     --page-scrim: rgba(255, 255, 255, 0.08);
-    --loading-overlay: rgba(243, 236, 229, 0.72);
+    --loading-overlay: rgba(255, 255, 255, 0.30);
     --site-text: #1b2f4d;
     --site-text-muted: rgba(27, 47, 77, 0.72);
 }
@@ -76,7 +75,7 @@
     --glass-menu-hover-shadow: inset -2px -2px 2px rgba(255, 255, 255, 0.04);
     --glass-control-tint: rgba(255, 255, 255, 0.08);
     --page-scrim: rgba(0, 0, 0, 0.34);
-    --loading-overlay: rgba(5, 7, 11, 0.72);
+    --loading-overlay: rgba(5, 7, 11, 0.64);
     --site-text: #f4f6fb;
     --site-text-muted: rgba(244, 246, 251, 0.72);
 }
@@ -99,7 +98,7 @@
         --glass-menu-hover-shadow: inset -2px -2px 2px rgba(255, 255, 255, 0.04);
         --glass-control-tint: rgba(255, 255, 255, 0.08);
         --page-scrim: rgba(0, 0, 0, 0.34);
-        --loading-overlay: rgba(5, 7, 11, 0.72);
+        --loading-overlay: rgba(5, 7, 11, 0.64);
         --site-text: #f4f6fb;
         --site-text-muted: rgba(244, 246, 251, 0.72);
     }
@@ -163,6 +162,7 @@ a:hover {
     left: 0;
     width: 100%;
     height: calc(100% - 0px);
+    background: var(--page-background-color) url('/img/MHFJ/1.jpg') center / cover no-repeat;
 }
 
 #bg {
@@ -2786,11 +2786,13 @@ button:focus-visible,
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    overflow: hidden;
     animation: none !important;
-    transition: opacity var(--motion-standard) var(--ease-out),
-        visibility 0s linear var(--motion-standard);
+    transition: opacity var(--motion-modal) var(--ease-out),
+        visibility 0s linear var(--motion-modal);
 }
 
+.modal-layer.is-opening,
 .modal-layer.is-open {
     opacity: 1;
     visibility: visible;
@@ -2800,57 +2802,26 @@ button:focus-visible,
 
 .modal-layer.is-closing {
     opacity: 0;
-    visibility: hidden;
+    visibility: visible;
     pointer-events: none;
-    transition: opacity var(--motion-standard) var(--ease-out),
-        visibility 0s linear var(--motion-shutter-total);
-}
-
-/* 横向百叶窗：打开逐段收起，关闭按相反顺序展开。 */
-.modal-shutters {
-    position: absolute;
-    inset: 0;
-    z-index: 1998;
-    display: grid;
-    grid-template-rows: repeat(8, minmax(0, 1fr));
-    overflow: hidden;
-    pointer-events: none;
-}
-
-.modal-shutter {
-    min-height: 0;
-    box-sizing: border-box;
-    background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 46%, rgba(0, 0, 0, 0.12)),
-        var(--glass-tint);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
-    transform: scaleY(1);
-    transform-origin: center;
-    transition: transform var(--motion-shutter) var(--ease-out);
-    will-change: transform;
-}
-
-.modal-layer.is-open .modal-shutter {
-    transform: scaleY(0.04);
-    transition-delay: var(--shutter-open-delay);
-}
-
-.modal-layer.is-closing .modal-shutter {
-    transition-delay: var(--shutter-close-delay);
+    transition: opacity var(--motion-modal) var(--ease-out),
+        visibility 0s linear var(--motion-modal);
 }
 
 .box-wrapper,
 .terms-wrapper,
 .announcement-wrapper {
     opacity: 0;
-    transform: translate(-50%, 0) scale(0.97);
+    transform: translate(-50%, 0) scale(0.88);
+    transform-origin: 50% 50%;
     animation: none !important;
-    transition: opacity var(--motion-standard) var(--ease-out),
-        transform var(--motion-standard) var(--ease-out);
-    will-change: opacity, transform;
+    transition: opacity var(--motion-modal) var(--ease-out),
+        transform var(--motion-modal) var(--ease-in-out);
 }
 
+.modal-layer.is-opening .box-wrapper,
+.modal-layer.is-opening .terms-wrapper,
+.modal-layer.is-opening .announcement-wrapper,
 .modal-layer.is-open .box-wrapper,
 .modal-layer.is-open .terms-wrapper,
 .modal-layer.is-open .announcement-wrapper {
@@ -2858,14 +2829,13 @@ button:focus-visible,
     transform: translate(-50%, 0) scale(1);
 }
 
-/* 卡片内部内容错开进入，让标题、菜单、正文有连续的阅读节奏。 */
+/* 前后文按阅读顺序错位进入，异步 Markdown 也会复用同一节奏。 */
 .modal-reveal {
     opacity: 0;
     transform: translateY(10px);
     transition: opacity 190ms var(--ease-out),
         transform 190ms var(--ease-out);
     transition-delay: 0ms;
-    will-change: opacity, transform;
 }
 
 .modal-layer.is-open .modal-reveal-pending {
@@ -2883,14 +2853,33 @@ button:focus-visible,
 .modal-layer.is-closing .modal-reveal {
     opacity: 0;
     transform: translateY(-6px);
-    transition-delay: 0ms;
+    transition-delay: var(--modal-reveal-exit-delay, 0ms);
+}
+
+/* 首页与弹层交叉淡入淡出，关闭时不再留下隐藏 body 的死状态。 */
+#row,
+#more,
+.menu,
+#footer {
+    transition: opacity var(--motion-modal) var(--ease-out);
+}
+
+body.modal-opening #row,
+body.modal-opening #more,
+body.modal-opening .menu,
+body.modal-opening #footer {
+    opacity: 0;
+    pointer-events: none !important;
 }
 
 body.modal-open #row,
 body.modal-open #more,
 body.modal-open .menu,
-body.modal-open #footer {
-    visibility: hidden !important;
+body.modal-open #footer,
+body.modal-closing #row,
+body.modal-closing #more,
+body.modal-closing .menu,
+body.modal-closing #footer {
     pointer-events: none !important;
 }
 
@@ -2967,6 +2956,9 @@ body.modal-open #footer {
     .box-wrapper,
     .terms-wrapper,
     .announcement-wrapper,
+    .modal-layer.is-opening .box-wrapper,
+    .modal-layer.is-opening .terms-wrapper,
+    .modal-layer.is-opening .announcement-wrapper,
     .modal-layer.is-open .box-wrapper,
     .modal-layer.is-open .terms-wrapper,
     .modal-layer.is-open .announcement-wrapper {
@@ -2974,20 +2966,23 @@ body.modal-open #footer {
         transition: opacity 180ms ease;
     }
 
+    #row,
+    #more,
+    .menu,
+    #footer {
+        transition-duration: 180ms;
+    }
+
+    body.modal-opening #row,
+    body.modal-opening #more,
+    body.modal-opening .menu,
+    body.modal-opening #footer {
+        opacity: 0;
+    }
+
     .modal-layer.is-closing {
         transition: opacity 180ms ease,
             visibility 0s linear 180ms;
-    }
-
-    .modal-shutter {
-        opacity: 1;
-        transform: scaleY(1);
-        transition: opacity 160ms ease;
-    }
-
-    .modal-layer.is-open .modal-shutter {
-        opacity: 0;
-        transform: scaleY(1);
     }
 
     .modal-reveal,

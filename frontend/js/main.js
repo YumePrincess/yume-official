@@ -198,14 +198,23 @@ function safeLoadingText(key, fallback) {
     }
 }
 
-function waitForImageLoad(img) {
+function waitForImageLoad(img, timeoutMs = 3500) {
     if (!img || !img.getAttribute('src') || img.complete) {
         return Promise.resolve();
     }
 
     return new Promise((resolve) => {
-        img.addEventListener('load', resolve, { once: true });
-        img.addEventListener('error', resolve, { once: true });
+        let settled = false;
+        const settle = () => {
+            if (settled) return;
+            settled = true;
+            window.clearTimeout(timeoutId);
+            resolve();
+        };
+
+        const timeoutId = window.setTimeout(settle, timeoutMs);
+        img.addEventListener('load', settle, { once: true });
+        img.addEventListener('error', settle, { once: true });
     });
 }
 
@@ -259,12 +268,20 @@ const yumeLoading = (() => {
         }
     }
 
+    async function waitForTrackedTasksWithin(maxWaitMs) {
+        await Promise.race([
+            waitForTrackedTasks(),
+            new Promise(resolve => window.setTimeout(resolve, maxWaitMs))
+        ]);
+    }
+
     async function finish() {
         if (finishing) return;
         finishing = true;
 
         setProgress(72, safeLoadingText('LOADTEXT', 'Loading files...'));
-        await waitForTrackedTasks();
+        // 远程天气、翻译和公告不应阻塞首屏；它们完成后仍会正常更新各自卡片。
+        await waitForTrackedTasksWithin(1500);
         setProgress(100, safeLoadingText('LOADCOMPLETE', 'Loading complete'));
 
         setTimeout(function () {
@@ -308,14 +325,23 @@ function downloadJSAtOnload() {
         .catch(console.error);
 }
 
-//加载完成后执行
-window.addEventListener('load', function () {
+let loadingStarted = false;
+
+// 加载完成后执行；如果远程图片阻塞 window.load，也要保证首页按时显示。
+function startLoading() {
+    if (loadingStarted) return;
+    loadingStarted = true;
+
     yumeLoading.setProgress(64, safeLoadingText('LOADTEXT', 'Loading files...'));
     yumeLoading.track(document.fonts ? document.fonts.ready : Promise.resolve(), 78, safeLoadingText('LOADTEXT', 'Loading files...'));
     yumeLoading.track(waitForImageLoad(document.getElementById('bg')), 86, safeLoadingText('LOADTEXT', 'Loading files...'));
     yumeLoading.track(downloadJSAtOnload(), 94, safeLoadingText('LOADTEXT', 'Loading files...'));
     yumeLoading.finish();
-}, false);
+}
+
+window.addEventListener('load', startLoading, false);
+document.addEventListener('DOMContentLoaded', () => window.setTimeout(startLoading, 0), { once: true });
+window.setTimeout(startLoading, 1400);
 
 const weatherCodeTranslations = {
     unknown: { en: "Unknown weather", "zh-cn": "未知天气", "zh-tw": "未知天氣", fr: "Météo inconnue", ja: "不明な天気" },
@@ -679,7 +705,8 @@ $('#switchmenu').on('click', function () {
 
 // 统一管理全屏卡片，确保打开时底部页脚和底层内容不会穿透显示。
 const modalCloseTimers = new WeakMap();
-const modalShutterCount = 8;
+const modalCloseTransitions = new WeakMap();
+const modalMotionPrepared = new WeakSet();
 const modalRevealSelectors = [
     '.box-left > .img-sub-title',
     '.box-left > .accordion',
@@ -690,24 +717,8 @@ const modalRevealSelectors = [
     '.announcement-content > *'
 ];
 
-function prepareModalMotion(element) {
-    if (!element) return;
-
-    if (!element.querySelector('.modal-shutters')) {
-        const shutters = document.createElement('div');
-        shutters.className = 'modal-shutters';
-        shutters.setAttribute('aria-hidden', 'true');
-
-        for (let index = 0; index < modalShutterCount; index += 1) {
-            const shutter = document.createElement('span');
-            shutter.className = 'modal-shutter';
-            shutter.style.setProperty('--shutter-open-delay', `${index * 16}ms`);
-            shutter.style.setProperty('--shutter-close-delay', `${(modalShutterCount - index - 1) * 16}ms`);
-            shutters.appendChild(shutter);
-        }
-
-        element.appendChild(shutters);
-    }
+function prepareModalMotion(element, force = false) {
+    if (!element || (!force && modalMotionPrepared.has(element))) return;
 
     const revealTargets = new Set();
     modalRevealSelectors.forEach((selector) => {
@@ -715,10 +726,16 @@ function prepareModalMotion(element) {
     });
 
     const pendingTargets = [];
-    Array.from(revealTargets).forEach((target, index) => {
+    // 只错位展示前几块内容，长条款正文保持轻量，避免创建大量动画层。
+    const revealTargetList = Array.from(revealTargets).slice(0, 16);
+    revealTargetList.forEach((target, index) => {
         const alreadyPrepared = target.classList.contains('modal-reveal');
         target.classList.add('modal-reveal');
-        target.style.setProperty('--modal-reveal-delay', `${58 + index * 30}ms`);
+        target.style.setProperty('--modal-reveal-delay', `${Math.min(112, 58 + index * 24)}ms`);
+        target.style.setProperty(
+            '--modal-reveal-exit-delay',
+            `${Math.min(96, (revealTargetList.length - index - 1) * 18)}ms`
+        );
 
         if (!alreadyPrepared && element.classList.contains('is-open')) {
             target.classList.add('modal-reveal-pending');
@@ -731,11 +748,47 @@ function prepareModalMotion(element) {
             pendingTargets.forEach((target) => target.classList.remove('modal-reveal-pending'));
         });
     }
+
+    modalMotionPrepared.add(element);
 }
 
 function updateModalBodyState() {
-    const hasVisibleModal = document.querySelector('.modal-layer.is-open, .modal-layer.is-closing');
-    document.body.classList.toggle('modal-open', Boolean(hasVisibleModal));
+    const hasOpenModal = document.querySelector('.modal-layer.is-opening, .modal-layer.is-open');
+    const hasClosingModal = document.querySelector('.modal-layer.is-closing');
+    document.body.classList.toggle('modal-open', Boolean(hasOpenModal));
+    document.body.classList.toggle('modal-opening', Boolean(hasOpenModal));
+    document.body.classList.toggle('modal-closing', Boolean(hasClosingModal));
+}
+
+function cancelModalClose(element) {
+    const pendingTimer = modalCloseTimers.get(element);
+    if (pendingTimer) {
+        window.clearTimeout(pendingTimer);
+        modalCloseTimers.delete(element);
+    }
+
+    const pendingTransition = modalCloseTransitions.get(element);
+    if (pendingTransition) {
+        pendingTransition.wrapper?.removeEventListener('transitionend', pendingTransition.onTransitionEnd);
+        modalCloseTransitions.delete(element);
+    }
+}
+
+function finishModalClose(element) {
+    const pendingTransition = modalCloseTransitions.get(element);
+    if (pendingTransition) {
+        window.clearTimeout(pendingTransition.timer);
+        pendingTransition.wrapper?.removeEventListener('transitionend', pendingTransition.onTransitionEnd);
+        modalCloseTransitions.delete(element);
+    }
+
+    modalCloseTimers.delete(element);
+
+    if (element.classList.contains('is-open') || element.classList.contains('is-opening')) return;
+
+    element.style.display = 'none';
+    element.classList.remove('is-closing');
+    updateModalBodyState();
 }
 
 function setModalState(element, isOpen) {
@@ -743,42 +796,59 @@ function setModalState(element, isOpen) {
 
     prepareModalMotion(element);
 
-    const pendingClose = modalCloseTimers.get(element);
-    if (pendingClose) {
-        window.clearTimeout(pendingClose);
-        modalCloseTimers.delete(element);
-    }
-
     if (isOpen) {
+        const alreadyVisible = element.classList.contains('is-opening') || element.classList.contains('is-open');
+        cancelModalClose(element);
+
+        if (alreadyVisible) {
+            element.style.display = 'block';
+            element.setAttribute('aria-hidden', 'false');
+            updateModalBodyState();
+            return;
+        }
+
         element.style.display = 'block';
         element.setAttribute('aria-hidden', 'false');
-        element.classList.remove('is-closing');
+        element.classList.remove('is-closing', 'is-open', 'is-opening');
+
+        // 先让浏览器提交隐藏态，再切到进入态，避免开关在同一帧内被合并。
+        void element.offsetWidth;
+        element.classList.add('is-opening');
         updateModalBodyState();
 
         requestAnimationFrame(() => {
-            if (element.style.display !== 'none' && !element.classList.contains('is-closing')) {
+            if (element.classList.contains('is-opening') && !element.classList.contains('is-closing')) {
+                element.classList.remove('is-opening');
                 element.classList.add('is-open');
                 updateModalBodyState();
             }
         });
+
         return;
     }
 
+    const isVisible = element.classList.contains('is-opening') || element.classList.contains('is-open');
+    if (!isVisible) return;
+
+    cancelModalClose(element);
     element.setAttribute('aria-hidden', 'true');
-    element.classList.remove('is-open');
+    element.classList.remove('is-opening', 'is-open');
     element.classList.add('is-closing');
     updateModalBodyState();
 
-    const finishClose = () => {
-        if (element.classList.contains('is-open')) return;
-        element.style.display = 'none';
-        element.classList.remove('is-closing');
-        modalCloseTimers.delete(element);
-        updateModalBodyState();
+    const wrapper = element.querySelector('.box-wrapper, .terms-wrapper, .announcement-wrapper');
+    const closeStartedAt = Date.now();
+    const onTransitionEnd = (event) => {
+        if (event.target !== wrapper || event.propertyName !== 'transform') return;
+        // 防止浏览器在状态切换的首帧派发过早的 transitionend，至少保留一段可见的收回过程。
+        if (Date.now() - closeStartedAt < 300) return;
+        finishModalClose(element);
     };
 
-    const closeTimer = window.setTimeout(finishClose, 300);
+    wrapper?.addEventListener('transitionend', onTransitionEnd);
+    const closeTimer = window.setTimeout(() => finishModalClose(element), 520);
     modalCloseTimers.set(element, closeTimer);
+    modalCloseTransitions.set(element, { timer: closeTimer, wrapper, onTransitionEnd });
 }
 
 document.addEventListener('keydown', (event) => {
@@ -788,10 +858,6 @@ document.addEventListener('keydown', (event) => {
     if (!openModal) return;
 
     setModalState(openModal, false);
-    if (openModal.id === 'box') {
-        $('#row').css('display', 'flex');
-        $('#more').css('display', 'flex');
-    }
 });
 
 document.addEventListener('click', (event) => {
@@ -799,27 +865,17 @@ document.addEventListener('click', (event) => {
     if (!modal || event.target !== modal) return;
 
     setModalState(modal, false);
-    if (modal.id === 'box') {
-        $('#row').css('display', 'flex');
-        $('#more').css('display', 'flex');
-    }
 });
 
 //更多弹窗页面
 $('#openmore').on('click', function () {
     setModalState(document.getElementById('box'), true);
-    $('#row').css("display", "none");
-    $('#more').css("cssText", "display:none !important");
 });
 $('#openmore1').on('click', function () {
     setModalState(document.getElementById('box'), true);
-    $('#row').css("display", "none");
-    $('#more').css("cssText", "display:none !important");
 });
 $('#closemore').on('click', function () {
     setModalState(document.getElementById('box'), false);
-    $('#row').css("display", "flex");
-    $('#more').css("display", "flex");
 });
 
 //监听网页宽度
@@ -1062,8 +1118,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 `<p style="color:#ffdddd">${errorText}：${url}</p>`;
         }
 
-        // Markdown 内容是异步插入的，插入后重新登记文字错位节奏。
-        prepareModalMotion(termsBox);
+        // Markdown 异步插入后，重新登记正文的错位进入节奏。
+        prepareModalMotion(termsBox, true);
     }
 
     // Tab 切换
@@ -1173,8 +1229,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 `<p style="color:#ffdddd">${translate("NO_ANNOUNCEMENT")}</p>`;
         }
 
-        // 公告正文是异步插入的，插入后重新登记文字错位节奏。
-        prepareModalMotion(box);
+        // 公告异步插入后，重新登记正文的错位进入节奏。
+        prepareModalMotion(box, true);
     }
 
         // 从 Worker 获取公告信息（让 Worker 决定是否有效）
