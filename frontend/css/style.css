@@ -31,6 +31,8 @@
     --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
     --motion-fast: 140ms;
     --motion-standard: 220ms;
+    --motion-shutter: 180ms;
+    --motion-shutter-total: 300ms;
 }
 
 :root[data-theme="light"] {
@@ -2800,6 +2802,42 @@ button:focus-visible,
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    transition: opacity var(--motion-standard) var(--ease-out),
+        visibility 0s linear var(--motion-shutter-total);
+}
+
+/* 横向百叶窗：打开逐段收起，关闭按相反顺序展开。 */
+.modal-shutters {
+    position: absolute;
+    inset: 0;
+    z-index: 1998;
+    display: grid;
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.modal-shutter {
+    min-height: 0;
+    box-sizing: border-box;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 46%, rgba(0, 0, 0, 0.12)),
+        var(--glass-tint);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.16);
+    transform: scaleY(1);
+    transform-origin: center;
+    transition: transform var(--motion-shutter) var(--ease-out);
+    will-change: transform;
+}
+
+.modal-layer.is-open .modal-shutter {
+    transform: scaleY(0.04);
+    transition-delay: var(--shutter-open-delay);
+}
+
+.modal-layer.is-closing .modal-shutter {
+    transition-delay: var(--shutter-close-delay);
 }
 
 .box-wrapper,
@@ -2807,8 +2845,10 @@ button:focus-visible,
 .announcement-wrapper {
     opacity: 0;
     transform: translate(-50%, 0) scale(0.97);
+    animation: none !important;
     transition: opacity var(--motion-standard) var(--ease-out),
         transform var(--motion-standard) var(--ease-out);
+    will-change: opacity, transform;
 }
 
 .modal-layer.is-open .box-wrapper,
@@ -2816,6 +2856,34 @@ button:focus-visible,
 .modal-layer.is-open .announcement-wrapper {
     opacity: 1;
     transform: translate(-50%, 0) scale(1);
+}
+
+/* 卡片内部内容错开进入，让标题、菜单、正文有连续的阅读节奏。 */
+.modal-reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 190ms var(--ease-out),
+        transform 190ms var(--ease-out);
+    transition-delay: 0ms;
+    will-change: opacity, transform;
+}
+
+.modal-layer.is-open .modal-reveal-pending {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: none;
+}
+
+.modal-layer.is-open .modal-reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: var(--modal-reveal-delay, 58ms);
+}
+
+.modal-layer.is-closing .modal-reveal {
+    opacity: 0;
+    transform: translateY(-6px);
+    transition-delay: 0ms;
 }
 
 body.modal-open #row,
@@ -2904,6 +2972,29 @@ body.modal-open #footer {
     .modal-layer.is-open .announcement-wrapper {
         transform: translate(-50%, 0);
         transition: opacity 180ms ease;
+    }
+
+    .modal-layer.is-closing {
+        transition: opacity 180ms ease,
+            visibility 0s linear 180ms;
+    }
+
+    .modal-shutter {
+        opacity: 1;
+        transform: scaleY(1);
+        transition: opacity 160ms ease;
+    }
+
+    .modal-layer.is-open .modal-shutter {
+        opacity: 0;
+        transform: scaleY(1);
+    }
+
+    .modal-reveal,
+    .modal-layer.is-open .modal-reveal,
+    .modal-layer.is-closing .modal-reveal {
+        transform: none;
+        transition: opacity 160ms ease;
     }
 }
 

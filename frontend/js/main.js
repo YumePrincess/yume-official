@@ -679,6 +679,59 @@ $('#switchmenu').on('click', function () {
 
 // 统一管理全屏卡片，确保打开时底部页脚和底层内容不会穿透显示。
 const modalCloseTimers = new WeakMap();
+const modalShutterCount = 8;
+const modalRevealSelectors = [
+    '.box-left > .img-sub-title',
+    '.box-left > .accordion',
+    '.box-right',
+    '.terms-header > *',
+    '.terms-content > .terms-panel.show > *',
+    '.announcement-header > *',
+    '.announcement-content > *'
+];
+
+function prepareModalMotion(element) {
+    if (!element) return;
+
+    if (!element.querySelector('.modal-shutters')) {
+        const shutters = document.createElement('div');
+        shutters.className = 'modal-shutters';
+        shutters.setAttribute('aria-hidden', 'true');
+
+        for (let index = 0; index < modalShutterCount; index += 1) {
+            const shutter = document.createElement('span');
+            shutter.className = 'modal-shutter';
+            shutter.style.setProperty('--shutter-open-delay', `${index * 16}ms`);
+            shutter.style.setProperty('--shutter-close-delay', `${(modalShutterCount - index - 1) * 16}ms`);
+            shutters.appendChild(shutter);
+        }
+
+        element.appendChild(shutters);
+    }
+
+    const revealTargets = new Set();
+    modalRevealSelectors.forEach((selector) => {
+        element.querySelectorAll(selector).forEach((target) => revealTargets.add(target));
+    });
+
+    const pendingTargets = [];
+    Array.from(revealTargets).forEach((target, index) => {
+        const alreadyPrepared = target.classList.contains('modal-reveal');
+        target.classList.add('modal-reveal');
+        target.style.setProperty('--modal-reveal-delay', `${58 + index * 30}ms`);
+
+        if (!alreadyPrepared && element.classList.contains('is-open')) {
+            target.classList.add('modal-reveal-pending');
+            pendingTargets.push(target);
+        }
+    });
+
+    if (pendingTargets.length > 0) {
+        requestAnimationFrame(() => {
+            pendingTargets.forEach((target) => target.classList.remove('modal-reveal-pending'));
+        });
+    }
+}
 
 function updateModalBodyState() {
     const hasVisibleModal = document.querySelector('.modal-layer.is-open, .modal-layer.is-closing');
@@ -687,6 +740,8 @@ function updateModalBodyState() {
 
 function setModalState(element, isOpen) {
     if (!element) return;
+
+    prepareModalMotion(element);
 
     const pendingClose = modalCloseTimers.get(element);
     if (pendingClose) {
@@ -722,7 +777,7 @@ function setModalState(element, isOpen) {
         updateModalBodyState();
     };
 
-    const closeTimer = window.setTimeout(finishClose, 240);
+    const closeTimer = window.setTimeout(finishClose, 300);
     modalCloseTimers.set(element, closeTimer);
 }
 
@@ -1006,6 +1061,9 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById(`terms-${type}`).innerHTML =
                 `<p style="color:#ffdddd">${errorText}：${url}</p>`;
         }
+
+        // Markdown 内容是异步插入的，插入后重新登记文字错位节奏。
+        prepareModalMotion(termsBox);
     }
 
     // Tab 切换
@@ -1114,6 +1172,9 @@ document.addEventListener("DOMContentLoaded", () => {
             contentPanel.innerHTML =
                 `<p style="color:#ffdddd">${translate("NO_ANNOUNCEMENT")}</p>`;
         }
+
+        // 公告正文是异步插入的，插入后重新登记文字错位节奏。
+        prepareModalMotion(box);
     }
 
         // 从 Worker 获取公告信息（让 Worker 决定是否有效）
