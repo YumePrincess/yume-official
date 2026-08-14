@@ -44,6 +44,13 @@ function extractId(url: URL): string | null {
   return idx >= 0 && parts[idx + 1] ? parts[idx + 1] : null;
 }
 
+const EDITABLE_TEXT_EXTENSIONS = /\.(txt|text|log|md|markdown|yaml|yml|json|toml|ini|cfg|conf|env|properties|csv|tsv|xml|html|htm|css|scss|less|js|mjs|cjs|ts|tsx|jsx|vue|svelte|astro|py|rb|php|lua|pl|pm|go|rs|java|c|cc|cpp|cxx|h|hpp|cs|swift|kt|kts|sh|bash|zsh|fish|ps1|bat|cmd|sql|graphql|gql|proto|tex|r|m|mm|dart|zig|nim|scala|groovy|ex|exs|erl|hrl|hs|fs|fsx|clj|cljs|lock)$/i;
+
+function isEditableTextFile(meta: FileMeta): boolean {
+  return meta.type.startsWith('text/') || meta.type.includes('javascript') ||
+    meta.type.includes('json') || meta.type.includes('xml') || EDITABLE_TEXT_EXTENSIONS.test(meta.name);
+}
+
 export async function upload(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   const action = url.searchParams.get('action');
@@ -526,14 +533,81 @@ export async function preview(request: Request, env: Env): Promise<Response> {
           headers: { 'Content-Range': 'bytes */' + totalSize },
         });
       }
+      const rangedObject = await env.VAULT_BUCKET.get(meta.key, {
+        range: { offset: start, length: end - start + 1 },
+      });
+      if (!rangedObject) return error('File not found in storage', 404);
       headers.set('Content-Range', 'bytes ' + start + '-' + end + '/' + totalSize);
       headers.set('Content-Length', String(end - start + 1));
-      return new Response(object.body, { status: 206, headers });
+      return new Response(rangedObject.body, { status: 206, headers });
     }
   }
 
   headers.set('Content-Length', String(object.size));
   return new Response(object.body, { headers });
+}
+
+// ─── Inline Text Editing (admin) ────────────────────────────────────
+const MAX_EDITABLE_TEXT_BYTES = 5 * 1024 * 1024;
+
+async function readLimitedText(request: Request, maxBytes: number): Promise<string | null> {
+  if (!request.body) return '';
+  const reader = request.body.getReader();
+  const decoder = new TextDecoder();
+  const chunks: string[] = [];
+  let totalBytes = 0;
+
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    totalBytes += value.byteLength;
+    if (totalBytes > maxBytes) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(decoder.decode(value, { stream: true }));
+  }
+
+  chunks.push(decoder.decode());
+  return chunks.join('');
+}
+
+export async function updateTextContent(request: Request, env: Env): Promise<Response> {
+  const url = new URL(request.url);
+  const parts = url.pathname.split('/');
+  const id = parts[parts.indexOf('files') + 1];
+  if (!id) return error('File ID required', 400);
+
+  const meta = await ensureFileRecordById(env, id);
+  if (!meta) return error('File not found', 404);
+  if (!isEditableTextFile(meta)) return error('This file type is not editable', 400);
+
+  const contentLength = Number(request.headers.get('Content-Length') || 0);
+  if (contentLength > MAX_EDITABLE_TEXT_BYTES) return error('Editable files are limited to 5 MB', 413);
+
+  const content = await readLimitedText(request, MAX_EDITABLE_TEXT_BYTES);
+  if (content === null) return error('Editable files are limited to 5 MB', 413);
+
+  const source = await env.VAULT_BUCKET.head(meta.key);
+  if (!source) return error('File not found in storage', 404);
+
+  const contentType = source.httpMetadata?.contentType || meta.type || getMimeType(meta.name);
+  const r2Object = await env.VAULT_BUCKET.put(meta.key, content, {
+    httpMetadata: {
+      ...source.httpMetadata,
+      contentType,
+      contentDisposition: 'attachment; filename="' + meta.name.replace(/["\\\r\n]/g, '_') + '"',
+    },
+    customMetadata: source.customMetadata,
+  });
+
+  meta.size = r2Object.size;
+  meta.type = contentType;
+  meta.uploadedAt = new Date().toISOString();
+  await replaceFileByKey(env, meta);
+  await markBucketUsageDirty(env);
+
+  return json(meta);
 }
 
 const MAX_ZIP_FILES = 1000;

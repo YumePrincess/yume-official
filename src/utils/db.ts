@@ -51,6 +51,7 @@ interface ClashSubscriptionRow {
   id: string;
   file_id: string;
   token: string;
+  name: string;
   expires_at: string | null;
   created_at: string;
 }
@@ -116,6 +117,7 @@ function clashSubscriptionFromRow(row: ClashSubscriptionRow): ClashSubscription 
     id: row.id,
     fileId: row.file_id,
     token: row.token,
+    name: row.name || '',
     expiresAt: row.expires_at,
     createdAt: row.created_at,
   };
@@ -204,14 +206,14 @@ export async function getFilesByIds(env: Env, ids: string[]): Promise<FileMeta[]
 
 export async function getAllClashSubscriptions(env: Env): Promise<ClashSubscription[]> {
   const { results } = await env.VAULT_DB
-    .prepare('SELECT id, file_id, token, expires_at, created_at FROM clash_subscriptions ORDER BY created_at DESC')
+    .prepare('SELECT id, file_id, token, name, expires_at, created_at FROM clash_subscriptions ORDER BY created_at DESC')
     .all<ClashSubscriptionRow>();
   return (results || []).map(clashSubscriptionFromRow);
 }
 
 export async function getClashSubscription(env: Env, id: string): Promise<ClashSubscription | null> {
   const row = await env.VAULT_DB
-    .prepare('SELECT id, file_id, token, expires_at, created_at FROM clash_subscriptions WHERE id = ?')
+    .prepare('SELECT id, file_id, token, name, expires_at, created_at FROM clash_subscriptions WHERE id = ?')
     .bind(id)
     .first<ClashSubscriptionRow>();
   return row ? clashSubscriptionFromRow(row) : null;
@@ -220,13 +222,14 @@ export async function getClashSubscription(env: Env, id: string): Promise<ClashS
 export async function saveClashSubscription(env: Env, subscription: ClashSubscription): Promise<void> {
   await env.VAULT_DB
     .prepare(
-      `INSERT INTO clash_subscriptions (id, file_id, token, expires_at, created_at)
-       VALUES (?, ?, ?, ?, ?)`,
+      `INSERT INTO clash_subscriptions (id, file_id, token, name, expires_at, created_at)
+       VALUES (?, ?, ?, ?, ?, ?)`,
     )
     .bind(
       subscription.id,
       subscription.fileId,
       subscription.token,
+      subscription.name,
       subscription.expiresAt,
       subscription.createdAt,
     )

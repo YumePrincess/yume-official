@@ -3,11 +3,12 @@ import { error, json } from '../utils/response';
 import {
   deleteClashSubscription,
   getAllClashSubscriptions,
-  getAllFiles,
   getClashSubscription,
   getFile,
   saveClashSubscription,
 } from '../utils/db';
+import { getSettings } from './settings';
+import { listAllObjectsInFolderTree } from '../utils/storage';
 
 const TOKEN_VERSION = 1;
 const TOKEN_IV_LENGTH = 12;
@@ -15,6 +16,10 @@ const MAX_BATCH_SIZE = 100;
 
 function isYamlFile(file: FileMeta): boolean {
   return /\.ya?ml$/i.test(file.name);
+}
+
+function isInConfigFolder(file: FileMeta, folder: string): boolean {
+  return file.folder === folder || file.folder.startsWith(folder + '/');
 }
 
 function toBase64Url(bytes: Uint8Array): string {
@@ -102,6 +107,7 @@ function serializeSubscription(request: Request, subscription: ClashSubscription
   return {
     id: subscription.id,
     fileId: subscription.fileId,
+    name: subscription.name || file.name,
     file: publicFile(file),
     url: subscriptionUrl(request, subscription.token),
     expiresAt: subscription.expiresAt,
@@ -111,10 +117,12 @@ function serializeSubscription(request: Request, subscription: ClashSubscription
 }
 
 export async function listFiles(_request: Request, env: Env): Promise<Response> {
-  const files = (await getAllFiles(env))
+  const settings = await getSettings(env);
+  // Only enumerate the configured R2 prefix. Do not scan the entire bucket.
+  const files = (await listAllObjectsInFolderTree(env, settings.clashConfigFolder))
     .filter(isYamlFile)
     .sort((a, b) => a.folder.localeCompare(b.folder) || a.name.localeCompare(b.name));
-  return json({ files: files.map(publicFile) });
+  return json({ folder: settings.clashConfigFolder, files: files.map(publicFile) });
 }
 
 export async function listSubscriptions(request: Request, env: Env): Promise<Response> {
@@ -128,10 +136,25 @@ export async function listSubscriptions(request: Request, env: Env): Promise<Res
 }
 
 export async function createSubscriptions(request: Request, env: Env): Promise<Response> {
-  const body = await request.json<{ fileIds?: string[]; expiresInDays?: number }>();
-  const fileIds = Array.from(new Set((body.fileIds || []).filter((id): id is string => typeof id === 'string' && !!id)));
-  if (fileIds.length === 0) return error('At least one YAML file is required', 400);
-  if (fileIds.length > MAX_BATCH_SIZE) return error('Too many files in one request', 400);
+  const body = await request.json<{
+    fileIds?: string[];
+    files?: Array<{ id?: string; name?: string }>;
+    expiresInDays?: number;
+  }>();
+  const requestedFiles = body.files?.length
+    ? body.files
+    : (body.fileIds || []).map(id => ({ id }));
+  const uniqueRequested = Array.from(
+    new Map(
+      requestedFiles
+        .filter((file): file is { id: string; name?: string } => typeof file?.id === 'string' && !!file.id)
+        .map(file => [file.id, file]),
+    ).values(),
+  );
+  if (uniqueRequested.length === 0) return error('At least one YAML file is required', 400);
+  if (uniqueRequested.length > MAX_BATCH_SIZE) return error('Too many files in one request', 400);
+
+  const settings = await getSettings(env);
 
   const expiresInDays = Number(body.expiresInDays || 0);
   if (!Number.isFinite(expiresInDays) || expiresInDays < 0 || expiresInDays > 3650) {
@@ -139,11 +162,16 @@ export async function createSubscriptions(request: Request, env: Env): Promise<R
   }
 
   const files: FileMeta[] = [];
-  for (const fileId of fileIds) {
-    const file = await getFile(env, fileId);
-    if (!file) return error('File not found: ' + fileId, 404);
+  const subscriptionNames: string[] = [];
+  for (const requested of uniqueRequested) {
+    const file = await getFile(env, requested.id);
+    if (!file) return error('File not found: ' + requested.id, 404);
     if (!isYamlFile(file)) return error('Only .yaml or .yml files can be published', 400);
+    if (!isInConfigFolder(file, settings.clashConfigFolder)) {
+      return error('The selected file is outside the configured Clash folder', 400);
+    }
     files.push(file);
+    subscriptionNames.push((requested.name || '').trim().slice(0, 100) || file.name);
   }
 
   const expiresAt = expiresInDays > 0
@@ -152,11 +180,12 @@ export async function createSubscriptions(request: Request, env: Env): Promise<R
   const createdAt = new Date().toISOString();
   const subscriptions: ClashSubscription[] = [];
 
-  for (const file of files) {
+  for (const [index, file] of files.entries()) {
     const subscription: ClashSubscription = {
       id: crypto.randomUUID(),
       fileId: file.id,
       token: '',
+      name: subscriptionNames[index],
       expiresAt,
       createdAt,
     };
@@ -181,7 +210,12 @@ export async function revokeSubscription(request: Request, env: Env): Promise<Re
 
 export async function serveSubscription(request: Request, env: Env): Promise<Response> {
   const rawToken = new URL(request.url).pathname.slice('/clash/'.length).replace(/\.yaml$/i, '');
-  const token = decodeURIComponent(rawToken);
+  let token: string;
+  try {
+    token = decodeURIComponent(rawToken);
+  } catch {
+    return error('Invalid subscription link', 404);
+  }
   if (!token || token.includes('/')) return error('Invalid subscription link', 404);
 
   const payload = await decryptToken(env, token);

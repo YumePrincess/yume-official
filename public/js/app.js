@@ -5,6 +5,7 @@ function cloudvault() {
     expandedFolders: { '__root__': true },
     _expandVer: 0,
     _folderShareHash: '',
+    activeView: localStorage.getItem('cv-admin-view') || 'files',
     currentFolder: 'root',
     view: localStorage.getItem('cv-view') || 'grid',
     searchQuery: '',
@@ -33,12 +34,14 @@ function cloudvault() {
     renameFolderModal: { show: false, oldName: '', newName: '' },
     deleteFolderModal: { show: false, folder: '' },
     typeFilter: 'all',
-    previewModal: { show: false, file: null, content: '', loading: false },
+    previewModal: { show: false, file: null, content: '', originalContent: '', editContent: '', loading: false, editing: false, saving: false },
+    textSnippets: {},
+    textSnippetLoading: {},
     lightbox: { show: false, images: [], currentIndex: 0 },
     folderShareLinkModal: { show: false, folder: '', token: null, password: '', expiresInDays: 0, hasPassword: false, expiresAt: null },
     clashFiles: [],
     clashSubscriptions: [],
-    clashPanel: { loading: true, publishing: false, expiresInDays: 0, selectedFileIds: new Set() },
+    clashPanel: { loading: true, publishing: false, expiresInDays: 0, selectedFileIds: new Set(), configFolder: '/clash', searchQuery: '', names: {} },
 
     async init() {
       const preferences = window.YumePreferences;
@@ -61,6 +64,14 @@ function cloudvault() {
     t(key, vars = {}) {
       this.currentLanguage;
       return window.YumeI18n ? window.YumeI18n.t(key, vars) : key;
+    },
+
+    switchView(view) {
+      if (view !== 'files' && view !== 'clash') return;
+      this.activeView = view;
+      this.sidebarOpen = false;
+      localStorage.setItem('cv-admin-view', view);
+      if (view === 'clash') this.loadClashData();
     },
 
     languageLabel(language) {
@@ -456,6 +467,12 @@ function cloudvault() {
         if (filesRes && filesRes.ok) {
           const data = await filesRes.json();
           this.clashFiles = data.files || [];
+          this.clashPanel.configFolder = this.displayClashFolder(data.folder || this.clashPanel.configFolder);
+          const names = { ...this.clashPanel.names };
+          for (const file of this.clashFiles) {
+            if (!(file.id in names)) names[file.id] = '';
+          }
+          this.clashPanel.names = names;
           const available = new Set(this.clashFiles.map(file => file.id));
           this.clashPanel.selectedFileIds = new Set(
             [...this.clashPanel.selectedFileIds].filter(id => available.has(id)),
@@ -486,15 +503,53 @@ function cloudvault() {
         : new Set(this.clashFiles.map(file => file.id));
     },
 
+    setClashName(fileId, name) {
+      this.clashPanel.names = { ...this.clashPanel.names, [fileId]: name };
+    },
+
+    displayClashFolder(folder) {
+      const normalized = String(folder || '').trim().replace(/^\/+|\/+$/g, '');
+      return normalized ? '/' + normalized : '/clash';
+    },
+
+    async saveClashConfigFolder() {
+      const folder = String(this.clashPanel.configFolder || '').trim();
+      if (!folder || folder === '/') {
+        this.showToast(this.t('clash.folderSaveFailed'), 'error');
+        return;
+      }
+      try {
+        const res = await this.apiFetch('/api/settings', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ clashConfigFolder: folder }),
+        });
+        if (res && res.ok) {
+          const data = await res.json();
+          this.clashPanel.configFolder = this.displayClashFolder(data.clashConfigFolder || folder);
+          await this.loadClashData();
+          this.showToast(this.t('clash.folderSaved'), 'success');
+        } else {
+          this.showToast(this.t('clash.folderSaveFailed'), 'error');
+        }
+      } catch {
+        this.showToast(this.t('clash.folderSaveFailed'), 'error');
+      }
+    },
+
     async publishClashSubscriptions() {
       const fileIds = [...this.clashPanel.selectedFileIds];
       if (fileIds.length === 0 || this.clashPanel.publishing) return;
+      const files = fileIds.map(id => {
+        const file = this.clashFiles.find(item => item.id === id);
+        return { id, name: String(this.clashPanel.names[id] || file?.name || '').trim() };
+      });
       this.clashPanel.publishing = true;
       try {
         const res = await this.apiFetch('/api/clash/subscriptions', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ fileIds, expiresInDays: Number(this.clashPanel.expiresInDays) || 0 }),
+          body: JSON.stringify({ files, expiresInDays: Number(this.clashPanel.expiresInDays) || 0 }),
         });
         if (res && res.ok) {
           const data = await res.json();
@@ -571,6 +626,16 @@ function cloudvault() {
 
     get hasVisibleItems() {
       return this.currentSubfolders.length > 0 || this.filteredFiles.length > 0;
+    },
+
+    get clashVisibleSubscriptions() {
+      const query = String(this.clashPanel.searchQuery || '').trim().toLowerCase();
+      if (!query) return this.clashSubscriptions;
+      return this.clashSubscriptions.filter(subscription => [
+        subscription.name,
+        subscription.file?.name,
+        subscription.file?.folder,
+      ].some(value => String(value || '').toLowerCase().includes(query)));
     },
 
     get filteredFiles() {
@@ -876,13 +941,50 @@ function cloudvault() {
       return '/api/files/' + file.id + '/thumbnail?v=' + this.getFileVersionToken(file);
     },
 
-    async previewFile(file) {
+    isEditableFile(file) {
+      if (!file) return false;
+      const type = String(file.type || '').toLowerCase();
+      const name = String(file.name || '').toLowerCase();
+      return type.startsWith('text/') || type.includes('javascript') || type.includes('json') || type.includes('xml') ||
+        /\.(txt|text|log|md|markdown|yaml|yml|json|toml|ini|cfg|conf|env|properties|csv|tsv|xml|html|htm|css|scss|less|js|mjs|cjs|ts|tsx|jsx|vue|svelte|astro|py|rb|php|lua|pl|pm|go|rs|java|c|h|cc|cpp|cxx|hpp|cs|swift|kt|kts|sh|bash|zsh|fish|ps1|bat|cmd|sql|graphql|gql|proto|tex|r|m|mm|dart|zig|nim|scala|groovy|ex|exs|erl|hrl|hs|fs|fsx|clj|cljs|lock)$/i.test(name);
+    },
+
+    makeTextSnippet(text) {
+      return String(text || '').replace(/\s+/g, ' ').trim().slice(0, 140);
+    },
+
+    async loadTextSnippet(file) {
+      if (!this.isEditableFile(file) || this.textSnippets[file.id] !== undefined || this.textSnippetLoading[file.id]) return;
+      this.textSnippetLoading = { ...this.textSnippetLoading, [file.id]: true };
+      try {
+        const res = await this.apiFetch('/api/files/' + encodeURIComponent(file.id) + '/preview', {
+          headers: { Range: 'bytes=0-480' },
+        });
+        if (res && res.ok) {
+          const text = await res.text();
+          this.textSnippets = { ...this.textSnippets, [file.id]: this.makeTextSnippet(text) };
+        }
+      } catch {
+        // A snippet is optional; keep the file card usable if it cannot be loaded.
+      } finally {
+        const loading = { ...this.textSnippetLoading };
+        delete loading[file.id];
+        this.textSnippetLoading = loading;
+      }
+    },
+
+    openEditor(file) {
+      this.ctxMenu.show = false;
+      if (this.isEditableFile(file)) this.previewFile(file, true);
+    },
+
+    async previewFile(file, edit = false) {
       if (file.type.startsWith('image/')) {
         this.openLightbox(file);
         return;
       }
 
-      this.previewModal = { show: true, file, content: '', loading: true };
+      this.previewModal = { show: true, file, content: '', originalContent: '', editContent: '', loading: true, editing: false, saving: false };
       const previewUrl = this.getFilePreviewUrl(file);
 
       try {
@@ -895,13 +997,16 @@ function cloudvault() {
         } else if (file.type === 'application/pdf') {
           this.previewModal.content = '<iframe src="' + previewUrl + '" class="preview-iframe"></iframe>';
           this.previewModal.loading = false;
-        } else if (file.type.startsWith('text/') || file.type.includes('javascript') || file.type.includes('json') || file.type.includes('xml') ||
-                   file.name.match(/\.(js|ts|py|rb|go|rs|java|c|cpp|h|sh|yaml|yml|json|toml|md|html|css|sql|swift|kt|php|lua|tsx|jsx)$/i)) {
+        } else if (this.isEditableFile(file)) {
           const res = await this.apiFetch(previewUrl);
           if (!res) return;
           const text = await res.text();
+          this.previewModal.originalContent = text;
+          this.previewModal.editContent = text;
+          this.previewModal.editing = edit;
+          this.textSnippets = { ...this.textSnippets, [file.id]: this.makeTextSnippet(text) };
 
-          if (file.name.endsWith('.md')) {
+          if (/\.(md|markdown)$/i.test(file.name)) {
             this.previewModal.content = '<div class="preview-markdown">' + (typeof marked !== 'undefined' ? marked.parse(text) : '<pre>' + this._escHtml(text) + '</pre>') + '</div>';
           } else {
             const ext = file.name.split('.').pop().toLowerCase();
@@ -921,6 +1026,38 @@ function cloudvault() {
       } catch (e) {
         this.previewModal.content = '<div class="preview-unsupported"><p class="text-sm" style="color:var(--danger)">' + this._escHtml(this.t('dashboard.previewFailed')) + '</p></div>';
         this.previewModal.loading = false;
+      }
+    },
+
+    cancelEditingPreview() {
+      this.previewModal.editContent = this.previewModal.originalContent;
+      this.previewModal.editing = false;
+    },
+
+    async savePreviewContent() {
+      const file = this.previewModal.file;
+      if (!file || !this.previewModal.editing || this.previewModal.saving) return;
+      this.previewModal.saving = true;
+      try {
+        const res = await this.apiFetch('/api/files/' + encodeURIComponent(file.id) + '/content', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+          body: this.previewModal.editContent,
+        });
+        if (!res || !res.ok) {
+          this.showToast(this.t('document.saveFailed'), 'error');
+          return;
+        }
+        const updated = await res.json();
+        this.files = this.files.map(item => item.id === updated.id ? updated : item);
+        this.clashFiles = this.clashFiles.map(item => item.id === updated.id ? updated : item);
+        this.textSnippets = { ...this.textSnippets, [updated.id]: this.makeTextSnippet(this.previewModal.editContent) };
+        this.showToast(this.t('document.saved'), 'success');
+        await this.previewFile(updated, false);
+      } catch {
+        this.showToast(this.t('document.saveFailed'), 'error');
+      } finally {
+        this.previewModal.saving = false;
       }
     },
 
@@ -1127,6 +1264,7 @@ function cloudvault() {
         this.clashPanel.selectedFileIds = new Set();
         this.showNewFolderModal = false;
         this.previewModal.show = false;
+        this.previewModal.editing = false;
         this.lightbox.show = false;
         this.renameFolderModal.show = false;
         this.deleteFolderModal.show = false;
@@ -1192,8 +1330,7 @@ function cloudvault() {
           name?.match(/\.(doc|docx|xls|xlsx|ppt|pptx|csv)$/i)) return 'documents';
       if (type.includes('zip') || type.includes('tar') || type.includes('gzip') || type.includes('rar') ||
           name?.match(/\.(zip|tar|gz|rar|7z)$/i)) return 'archives';
-      if (type.startsWith('text/') || type.includes('javascript') || type.includes('json') || type.includes('xml') ||
-          name?.match(/\.(js|ts|py|rb|go|rs|java|c|cpp|h|sh|yaml|yml|json|toml|md|html|css|sql|swift|kt|php|lua|tsx|jsx)$/i)) return 'code';
+      if (this.isEditableFile({ type, name })) return 'code';
       return 'other';
     },
 
@@ -1218,8 +1355,7 @@ function cloudvault() {
       if (type.includes('spreadsheet') || n.match(/\.(csv|xls|xlsx)$/)) return '\uD83D\uDCCA';
       if (type.includes('presentation') || n.match(/\.(ppt|pptx|key)$/)) return '\uD83D\uDCCA';
       if (type.includes('document') || n.match(/\.(doc|docx|odt|rtf)$/)) return '\uD83D\uDCC3';
-      if (type.startsWith('text/') || type.includes('javascript') || type.includes('json') || type.includes('xml') ||
-          n.match(/\.(js|ts|py|rb|go|rs|java|c|cpp|h|sh|yaml|yml|json|toml|md|html|css|sql|swift|kt|php|lua|tsx|jsx|vue|svelte|zig|nim|dart|r|m|mm|scala|clj|ex|exs|hs|erl|ps1|bat|cmd)$/)) return '\uD83D\uDCDD';
+      if (this.isEditableFile({ type, name })) return '\uD83D\uDCDD';
       return '\uD83D\uDCC4';
     },
   };

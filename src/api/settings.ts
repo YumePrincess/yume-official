@@ -1,15 +1,28 @@
 import { Env, SiteSettings, DEFAULT_SETTINGS } from '../utils/types';
-import { json } from '../utils/response';
+import { error, json } from '../utils/response';
 import { getSetting, putSetting } from '../utils/db';
 
 const SETTINGS_KEY = 'site';
 const SUPPORTED_LANGUAGES = new Set(['auto', 'en', 'fr', 'ja', 'zh-CN', 'zh-TW']);
 
+function normalizeClashConfigFolder(value: string): string | null {
+  const normalized = value.trim().replace(/^\/+|\/+$/g, '');
+  if (!normalized || normalized === 'root' || normalized.includes('..') || normalized.split('/').some(part => !part.trim())) {
+    return null;
+  }
+  return normalized;
+}
+
 export async function getSettings(env: Env): Promise<SiteSettings> {
   const raw = await getSetting(env, SETTINGS_KEY);
   if (!raw) return { ...DEFAULT_SETTINGS };
   try {
-    return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+    const settings = { ...DEFAULT_SETTINGS, ...JSON.parse(raw) } as SiteSettings;
+    const folder = typeof settings.clashConfigFolder === 'string'
+      ? normalizeClashConfigFolder(settings.clashConfigFolder)
+      : null;
+    settings.clashConfigFolder = folder || DEFAULT_SETTINGS.clashConfigFolder;
+    return settings;
   } catch {
     return { ...DEFAULT_SETTINGS };
   }
@@ -43,6 +56,11 @@ export async function handlePutSettings(request: Request, env: Env): Promise<Res
   }
   if (typeof body.language === 'string' && SUPPORTED_LANGUAGES.has(body.language)) {
     current.language = body.language;
+  }
+  if (typeof body.clashConfigFolder === 'string') {
+    const folder = normalizeClashConfigFolder(body.clashConfigFolder);
+    if (!folder) return error('Invalid Clash configuration folder', 400);
+    current.clashConfigFolder = folder;
   }
 
   await putSetting(env, SETTINGS_KEY, JSON.stringify(current));

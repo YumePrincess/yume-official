@@ -362,6 +362,11 @@ async function handleApiRoutes(
     return files.preview(request, env);
   }
 
+  const contentMatch = path.match(/^\/api\/files\/([^/]+)\/content$/);
+  if (contentMatch && method === 'PUT') {
+    return files.updateTextContent(request, env);
+  }
+
   const fileDownloadMatch = path.match(/^\/api\/files\/([^/]+)\/download$/);
   if (fileDownloadMatch && method === 'GET') {
     return files.download(request, env);

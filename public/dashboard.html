@@ -13,7 +13,7 @@
   <script>try{var _b=JSON.parse(document.getElementById('branding-data')?.textContent||'{}');if(_b.siteName)document.title=_b.siteName}catch{}</script>
   <script src="/js/preferences.js?v=20260718.3"></script>
   <link rel="stylesheet" href="/css/tailwind.css?v=20260718.3">
-  <link rel="stylesheet" href="/css/app.css?v=20260718.4">
+  <link rel="stylesheet" href="/css/app.css?v=20260814.1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css">
 </head>
 <body class="min-h-screen admin-page" style="font-family:var(--font-body);background:var(--bg-primary);color:var(--text-primary)">
@@ -31,6 +31,10 @@
           <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
         <img class="brand-bar-image" :src="_branding.logoBarImageUrl || 'https://www.yume.zone/assets/img/yumeaio.png'" :alt="_branding.siteName">
+        <nav class="view-nav" aria-label="Admin sections">
+          <button type="button" class="view-nav-button" :class="{'active': activeView === 'files'}" @click="switchView('files')" x-text="t('nav.fileManagement')"></button>
+          <button type="button" class="view-nav-button" :class="{'active': activeView === 'clash'}" @click="switchView('clash')" x-text="t('nav.clashSubscriptions')"></button>
+        </nav>
       </div>
 
       <div class="flex items-center gap-2">
@@ -70,7 +74,7 @@
   <div class="flex admin-shell">
 
     <!-- SIDEBAR -->
-    <aside class="sidebar w-56 flex-shrink-0 border-r p-0 flex flex-col overflow-hidden" :class="{'open': sidebarOpen}" style="background:var(--bg-secondary);border-color:var(--border)">
+    <aside x-show="activeView === 'files'" class="sidebar w-56 flex-shrink-0 border-r p-0 flex flex-col overflow-hidden" :class="{'open': sidebarOpen}" style="background:var(--bg-secondary);border-color:var(--border)">
       <div class="sidebar-scroll flex-1 min-h-0 p-3 pr-2">
         <div class="sidebar-item tree-item" :class="{'active': currentFolder === 'root'}" data-folder-path="root" style="padding-left:12px">
           <svg class="w-3 h-3 tree-chevron" :class="{'expanded': expandedFolders['__root__']}" data-toggle-folder="__root__" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
@@ -93,7 +97,7 @@
     <main class="flex-1 flex flex-col min-w-0">
 
       <!-- ACTION BAR -->
-      <div class="flex flex-wrap items-center gap-2 p-3 border-b" style="border-color:var(--border)">
+      <div x-show="activeView === 'files'" class="flex flex-wrap items-center gap-2 p-3 border-b" style="border-color:var(--border)">
         <!-- Breadcrumb -->
         <div class="breadcrumb flex items-center gap-1 text-sm mr-auto flex-wrap">
           <a href="#" @click.prevent="navigateFolder('root')" x-text="t('ui.home')"></a>
@@ -151,7 +155,7 @@
       </div>
 
       <!-- CLASH SUBSCRIPTION OPERATION CARD -->
-      <section class="clash-operation-card mx-3 mt-3" aria-labelledby="clash-operation-title">
+      <section x-show="activeView === 'clash'" class="clash-operation-card mx-3 mt-3" aria-labelledby="clash-operation-title">
         <div class="clash-operation-header">
           <div class="flex items-center gap-3 min-w-0">
             <div class="clash-operation-icon" aria-hidden="true">⌁</div>
@@ -169,6 +173,14 @@
         </div>
 
         <div class="p-4">
+          <div class="clash-folder-settings mb-4">
+            <div class="min-w-0">
+              <label class="block text-xs font-medium mb-1" style="color:var(--text-secondary)" x-text="t('clash.folder')"></label>
+              <input type="text" x-model="clashPanel.configFolder" @keydown.enter="saveClashConfigFolder()" class="w-full text-sm" :placeholder="t('clash.folderPlaceholder')">
+              <p class="text-xs mt-1" style="color:var(--text-muted)" x-text="t('clash.folderHelp')"></p>
+            </div>
+            <button @click="saveClashConfigFolder()" class="btn-secondary text-xs flex-shrink-0" x-text="t('ui.save')"></button>
+          </div>
           <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_280px]">
             <div>
               <div class="flex items-center justify-between mb-2">
@@ -189,6 +201,7 @@
                     <span class="min-w-0">
                       <span class="block text-sm truncate" x-text="file.name" :title="file.name"></span>
                       <span class="block text-xs truncate" style="color:var(--text-muted)" x-text="file.folder === 'root' ? t('ui.root') : file.folder"></span>
+                      <input type="text" class="clash-file-name text-xs mt-1" :value="clashPanel.names[file.id] || ''" :placeholder="t('clash.namePlaceholder')" maxlength="100" @click.stop @input="setClashName(file.id, $event.target.value)">
                     </span>
                   </label>
                 </template>
@@ -216,13 +229,17 @@
           <div x-show="clashSubscriptions.length > 0" class="clash-subscriptions mt-4 pt-4">
             <div class="flex items-center justify-between mb-2">
               <h3 class="text-xs font-semibold" x-text="t('clash.published')"></h3>
-              <span class="text-xs" style="color:var(--text-muted)" x-text="t('clash.linkCount', { count: clashSubscriptions.length })"></span>
+              <div class="flex items-center gap-2">
+                <input type="search" class="clash-search text-xs" x-model="clashPanel.searchQuery" :placeholder="t('clash.searchPlaceholder')">
+                <span class="text-xs whitespace-nowrap" style="color:var(--text-muted)" x-text="t('clash.linkCount', { count: clashSubscriptions.length })"></span>
+              </div>
             </div>
             <div class="space-y-2">
-              <template x-for="subscription in clashSubscriptions" :key="subscription.id">
+              <template x-for="subscription in clashVisibleSubscriptions" :key="subscription.id">
                 <div class="clash-subscription-row">
                   <div class="min-w-0">
-                    <p class="text-xs font-medium truncate" x-text="subscription.file.name" :title="subscription.file.name"></p>
+                    <p class="text-xs font-medium truncate" x-text="subscription.name || subscription.file.name" :title="subscription.name || subscription.file.name"></p>
+                    <p class="text-xs truncate mt-0.5" style="color:var(--text-muted)" x-text="subscription.file.name + ' · ' + (subscription.file.folder === 'root' ? t('ui.root') : subscription.file.folder)"></p>
                     <p class="text-xs truncate mt-0.5" style="color:var(--text-muted)" x-text="subscription.expiresAt ? t('clash.expiresAt', { date: formatAbsoluteDate(subscription.expiresAt) }) : t('clash.neverExpires')"></p>
                   </div>
                   <div class="flex items-center gap-2 min-w-0 sm:min-w-[280px]">
@@ -232,13 +249,14 @@
                   </div>
                 </div>
               </template>
+              <div x-show="clashVisibleSubscriptions.length === 0" class="clash-picker-empty" x-text="t('clash.noMatches')"></div>
             </div>
           </div>
         </div>
       </section>
 
       <!-- BULK ACTIONS BAR -->
-      <div x-show="selectedFiles.size > 0" x-transition class="flex items-center gap-3 px-4 py-2 text-sm" style="background:var(--accent-soft)">
+      <div x-show="activeView === 'files' && selectedFiles.size > 0" x-transition class="flex items-center gap-3 px-4 py-2 text-sm" style="background:var(--accent-soft)">
         <span class="font-medium" style="color:var(--accent)" x-text="t('dashboard.selected', { count: selectedFiles.size })"></span>
         <button @click="deleteSelected()" class="btn-danger text-xs" data-i18n="ui.delete">Delete</button>
         <button @click="moveSelected()" class="btn-secondary text-xs" data-i18n="ui.move">Move</button>
@@ -250,7 +268,7 @@
       </div>
 
       <!-- FILE GRID/LIST -->
-      <div class="flex-1 overflow-y-auto p-4">
+      <div x-show="activeView === 'files'" class="flex-1 overflow-y-auto p-4">
         <!-- Loading -->
         <div x-show="loading" class="empty-state">
           <svg class="spinner w-8 h-8 text-accent-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
@@ -281,7 +299,7 @@
           </template>
           <template x-for="file in filteredFiles" :key="'file-' + file.id">
             <div class="file-card p-3" :class="{'selected': selectedFiles.has(file.id), 'selection-mode': selectedFiles.size > 0}"
-              @click="selectFile(file.id, $event)" @dblclick="previewFile(file)" @contextmenu.prevent="openContextMenu($event, file)">
+              @click="selectFile(file.id, $event)" @dblclick="isEditableFile(file) ? openEditor(file) : previewFile(file)" @contextmenu.prevent="openContextMenu($event, file)">
               <div class="check">
                 <div class="w-5 h-5 rounded-md border-2 flex items-center justify-center text-xs" :style="selectedFiles.has(file.id) ? 'background:var(--accent);border-color:var(--accent);color:white' : 'border-color:var(--border-light)'">
                   <svg x-show="selectedFiles.has(file.id)" class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4.5 12.75l6 6 9-13.5"/></svg>
@@ -292,7 +310,10 @@
                   <img :src="getFileThumbnailUrl(file)" class="w-full h-full object-contain" loading="lazy" @error="$el.style.display='none'">
                 </template>
                 <template x-if="!file.type.startsWith('image/')">
-                  <span class="text-3xl" x-text="getFileIcon(file.type, file.name)"></span>
+                  <div class="file-document-visual" x-init="isEditableFile(file) && loadTextSnippet(file)">
+                    <span class="text-3xl" x-text="getFileIcon(file.type, file.name)"></span>
+                    <span x-show="isEditableFile(file) && textSnippets[file.id]" class="file-text-snippet" x-text="textSnippets[file.id]" :title="textSnippets[file.id]"></span>
+                  </div>
                 </template>
               </div>
               <p class="text-xs font-medium truncate" x-text="file.name" :title="file.name"></p>
@@ -347,13 +368,14 @@
                 </tr>
               </template>
               <template x-for="file in filteredFiles" :key="'file-row-' + file.id">
-                <tr class="file-row" :class="{'selected': selectedFiles.has(file.id)}" @click="selectFile(file.id, $event)" @dblclick="previewFile(file)" @contextmenu.prevent="openContextMenu($event, file)">
+                <tr class="file-row" :class="{'selected': selectedFiles.has(file.id)}" x-init="isEditableFile(file) && loadTextSnippet(file)" @click="selectFile(file.id, $event)" @dblclick="isEditableFile(file) ? openEditor(file) : previewFile(file)" @contextmenu.prevent="openContextMenu($event, file)">
                   <td class="py-2 px-3"><input type="checkbox" :checked="selectedFiles.has(file.id)" @click.stop="toggleSelect(file.id)"></td>
                   <td class="py-2 px-3">
                     <div class="flex items-center gap-2">
                       <span x-text="getFileIcon(file.type, file.name)"></span>
                       <div class="min-w-0">
                         <span class="truncate block" x-text="file.name"></span>
+                        <span x-show="isEditableFile(file) && textSnippets[file.id]" class="file-text-snippet list-text-snippet" x-text="textSnippets[file.id]" :title="textSnippets[file.id]"></span>
                         <span x-show="searchQuery && file.folder !== 'root'" class="text-xs block truncate cursor-pointer hover:underline" style="color:var(--text-muted)" x-text="file.folder" @click.stop="navigateFolder(file.folder)"></span>
                       </div>
                     </div>
@@ -380,7 +402,7 @@
   </div>
 
   <!-- DROP ZONE OVERLAY -->
-  <div class="dropzone" :class="{'active': showDropZone}" @drop.prevent="handleDrop($event)" @dragover.prevent @dragleave.prevent="showDropZone = false">
+  <div x-show="activeView === 'files'" class="dropzone" :class="{'active': showDropZone}" @drop.prevent="handleDrop($event)" @dragover.prevent @dragleave.prevent="showDropZone = false">
     <div class="text-center">
       <svg class="w-16 h-16 mx-auto mb-4 text-accent-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/></svg>
       <p class="text-xl font-semibold text-accent-400" data-i18n="dashboard.dropFiles">Drop files to upload</p>
@@ -390,6 +412,7 @@
 
   <!-- CONTEXT MENU -->
   <div x-show="ctxMenu.show" x-transition @click.away="ctxMenu.show = false" class="ctx-menu" :style="'top:'+ctxMenu.y+'px;left:'+ctxMenu.x+'px'">
+    <button x-show="isEditableFile(ctxMenu.file)" @click="openEditor(ctxMenu.file)"><span aria-hidden="true">✎</span> <span x-text="t('document.edit')"></span></button>
     <button @click="shareFile(ctxMenu.file)"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-2.03a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364L5.25 9.12"/></svg> <span x-text="t('ui.share')"></span></button>
     <button @click="downloadFile(ctxMenu.file)"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/></svg> <span x-text="t('ui.download')"></span></button>
     <button @click="copyDirectLink(ctxMenu.file)"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.857-9.858a4.5 4.5 0 00-6.364 0l-4.5 4.5a4.5 4.5 0 006.364 6.364l1.757-1.757"/></svg> <span data-i18n="ui.directLink">Direct Link</span></button>
@@ -711,6 +734,12 @@
         </div>
         <div class="flex items-center gap-2">
           <button @click="downloadFile(previewModal.file)" class="btn-secondary text-xs" x-text="t('ui.download')"></button>
+          <button x-show="!previewModal.loading && !previewModal.editing && isEditableFile(previewModal.file)" @click="previewModal.editing = true" class="btn-secondary text-xs" x-text="t('document.edit')"></button>
+          <button x-show="previewModal.editing" @click="savePreviewContent()" class="btn-primary text-xs" :disabled="previewModal.saving">
+            <span x-show="!previewModal.saving" x-text="t('document.save')"></span>
+            <span x-show="previewModal.saving" x-text="t('document.saving')"></span>
+          </button>
+          <button x-show="previewModal.editing" @click="cancelEditingPreview()" class="btn-secondary text-xs" x-text="t('document.cancel')"></button>
           <button @click="previewModal.show = false" class="p-1.5 rounded-lg hover:bg-gray-700" :title="t('ui.close')" :aria-label="t('ui.close')">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
@@ -720,7 +749,10 @@
         <div x-show="previewModal.loading" class="flex items-center justify-center py-20">
           <svg class="spinner w-8 h-8 text-accent-500" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
         </div>
-        <div x-show="!previewModal.loading" x-html="previewModal.content"></div>
+        <div x-show="!previewModal.loading && previewModal.editing" class="document-editor">
+          <textarea x-model="previewModal.editContent" class="document-editor-textarea" spellcheck="false" :aria-label="t('document.editorLabel')"></textarea>
+        </div>
+        <div x-show="!previewModal.loading && !previewModal.editing" x-html="previewModal.content"></div>
       </div>
     </div>
   </div>
@@ -770,12 +802,12 @@
   </div>
 </div>
 
-<script src="/js/i18n.js?v=20260718.4"></script>
+<script src="/js/i18n.js?v=20260814.1"></script>
 <script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1/prism.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1/plugins/autoloader/prism-autoloader.min.js"></script>
 <script src="/js/upload.js?v=20260718.3"></script>
-<script src="/js/app.js?v=20260718.3"></script>
+<script src="/js/app.js?v=20260814.1"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3/dist/cdn.min.js"></script>
 </body>
 </html>

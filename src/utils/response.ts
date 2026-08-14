@@ -113,8 +113,19 @@ const MIME_MAP: Record<string, string> = {
   '.tar': 'application/x-tar',
   '.gz': 'application/gzip',
   '.txt': 'text/plain',
+  '.text': 'text/plain',
+  '.log': 'text/plain',
   '.md': 'text/markdown',
+  '.markdown': 'text/markdown',
+  '.yaml': 'text/yaml',
+  '.yml': 'text/yaml',
+  '.toml': 'text/plain',
+  '.ini': 'text/plain',
+  '.cfg': 'text/plain',
+  '.conf': 'text/plain',
+  '.env': 'text/plain',
   '.csv': 'text/csv',
+  '.tsv': 'text/tab-separated-values',
   '.xml': 'text/xml',
   '.woff': 'font/woff',
   '.woff2': 'font/woff2',
@@ -132,7 +143,11 @@ export type PreviewType = 'image' | 'video' | 'audio' | 'pdf' | 'text' | 'code' 
 const CODE_EXTENSIONS = new Set([
   '.js', '.ts', '.tsx', '.jsx', '.py', '.rb', '.go', '.rs', '.java',
   '.c', '.cpp', '.h', '.hpp', '.cs', '.swift', '.kt', '.sh', '.bash',
-  '.yaml', '.yml', '.toml', '.ini', '.cfg', '.conf', '.sql', '.graphql',
+  '.yaml', '.yml', '.json', '.toml', '.ini', '.cfg', '.conf', '.env',
+  '.xml', '.html', '.css', '.scss', '.less', '.sql', '.graphql', '.gql',
+  '.php', '.lua', '.pl', '.ps1', '.bat', '.cmd', '.vue', '.svelte',
+  '.dart', '.zig', '.nim', '.scala', '.groovy', '.ex', '.exs', '.erl',
+  '.hs', '.fs', '.fsx', '.clj', '.cljs', '.proto', '.tex',
 ]);
 
 export function getPreviewType(filename: string, mimeType: string): PreviewType {

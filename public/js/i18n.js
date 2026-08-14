@@ -688,6 +688,9 @@
   });
 
   Object.assign(dict.en, {
+    'nav.fileManagement': 'File Management',
+    'nav.clashSubscriptions': 'Clash Subscriptions',
+    'ui.save': 'Save',
     'clash.title': 'Clash Subscription Publisher',
     'clash.subtitle': 'Publish YAML files as standard Clash/Mihomo provider URLs',
     'clash.encrypted': 'Encrypted URL',
@@ -712,9 +715,27 @@
     'clash.revokeFailed': 'Failed to revoke Clash subscription',
     'clash.linkCopied': 'Clash subscription URL copied',
     'clash.copyFailed': 'Failed to copy Clash subscription URL',
+    'clash.folder': 'Configuration folder',
+    'clash.folderPlaceholder': '/clash',
+    'clash.folderHelp': 'Only YAML files under this R2 folder and its subfolders are listed.',
+    'clash.folderSaved': 'Clash configuration folder saved',
+    'clash.folderSaveFailed': 'Failed to save the Clash configuration folder',
+    'clash.namePlaceholder': 'Subscription name (optional)',
+    'clash.searchPlaceholder': 'Search subscriptions',
+    'clash.noMatches': 'No matching subscriptions',
+    'document.edit': 'Edit',
+    'document.save': 'Save changes',
+    'document.saving': 'Saving…',
+    'document.cancel': 'Cancel',
+    'document.saved': 'Document saved',
+    'document.saveFailed': 'Failed to save document',
+    'document.editorLabel': 'Document editor',
   });
 
   Object.assign(dict['zh-CN'], {
+    'nav.fileManagement': '文件管理',
+    'nav.clashSubscriptions': 'Clash订阅',
+    'ui.save': '保存',
     'clash.title': 'Clash 订阅发布',
     'clash.subtitle': '将 YAML 配置发布为标准 Clash/Mihomo 订阅链接',
     'clash.encrypted': '链接已加密',
@@ -739,6 +760,21 @@
     'clash.revokeFailed': '撤销 Clash 订阅失败',
     'clash.linkCopied': 'Clash 订阅链接已复制',
     'clash.copyFailed': '复制 Clash 订阅链接失败',
+    'clash.folder': '配置文件夹',
+    'clash.folderPlaceholder': '/clash',
+    'clash.folderHelp': '只列出该 R2 文件夹及其子文件夹中的 YAML 文件。',
+    'clash.folderSaved': 'Clash 配置文件夹已保存',
+    'clash.folderSaveFailed': '保存 Clash 配置文件夹失败',
+    'clash.namePlaceholder': '订阅名称（可选）',
+    'clash.searchPlaceholder': '搜索订阅',
+    'clash.noMatches': '没有匹配的订阅',
+    'document.edit': '编辑',
+    'document.save': '保存修改',
+    'document.saving': '保存中…',
+    'document.cancel': '取消',
+    'document.saved': '文档已保存',
+    'document.saveFailed': '保存文档失败',
+    'document.editorLabel': '文档编辑器',
   });
 
   var branding = {};

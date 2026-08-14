@@ -60,6 +60,7 @@ export interface ClashSubscription {
   id: string;
   fileId: string;
   token: string;
+  name: string;
   expiresAt: string | null;
   createdAt: string;
 }
@@ -126,6 +127,7 @@ export interface SiteSettings {
   logoBarImageUrl: string;    // URL to header logo bar image
   backgroundImageUrl: string; // URL to custom page background image (empty = bundled default)
   language: string;           // auto, en, fr, ja, zh-CN, zh-TW
+  clashConfigFolder: string;  // R2 folder scanned for Clash YAML files
 }
 
 export const DEFAULT_SETTINGS: SiteSettings = {
@@ -136,4 +138,5 @@ export const DEFAULT_SETTINGS: SiteSettings = {
   logoBarImageUrl: 'https://www.yume.zone/assets/img/yumeaio.png',
   backgroundImageUrl: '',
   language: 'auto',
+  clashConfigFolder: 'clash',
 };
