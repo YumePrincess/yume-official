@@ -13,6 +13,7 @@ import { listAllObjectsInFolderTree } from '../utils/storage';
 const TOKEN_VERSION = 1;
 const TOKEN_IV_LENGTH = 12;
 const MAX_BATCH_SIZE = 100;
+export const SUBSCRIPTION_MATCH_HEADER = 'X-Subscription-Match';
 
 function isYamlFile(file: FileMeta): boolean {
   return /\.ya?ml$/i.test(file.name);
@@ -100,7 +101,13 @@ function publicFile(file: FileMeta): Pick<FileMeta, 'id' | 'name' | 'folder' | '
 }
 
 function subscriptionUrl(request: Request, token: string): string {
-  return new URL('/sub/' + encodeURIComponent(token) + '.yaml', request.url).toString();
+  return new URL('/s/' + encodeURIComponent(token), request.url).toString();
+}
+
+function matchedSubscriptionError(message: string, status = 404): Response {
+  const response = error(message, status);
+  response.headers.set(SUBSCRIPTION_MATCH_HEADER, '1');
+  return response;
 }
 
 function serializeSubscription(request: Request, subscription: ClashSubscription, file: FileMeta) {
@@ -210,7 +217,7 @@ export async function revokeSubscription(request: Request, env: Env): Promise<Re
 
 export async function serveSubscription(request: Request, env: Env): Promise<Response> {
   const pathname = new URL(request.url).pathname;
-  const rawToken = pathname.slice('/sub/'.length).replace(/\.yaml$/i, '');
+  const rawToken = pathname.slice('/s/'.length);
   let token: string;
   try {
     token = decodeURIComponent(rawToken);
@@ -223,25 +230,29 @@ export async function serveSubscription(request: Request, env: Env): Promise<Res
   if (!payload) return error('Invalid subscription link', 404);
 
   const subscription = await getClashSubscription(env, payload.id);
-  if (!subscription || subscription.token !== token) return error('Subscription link has been revoked', 404);
-  if (isExpired(subscription.expiresAt) || isExpired(payload.expiresAt)) return error('Subscription link has expired', 404);
+  if (!subscription || subscription.token !== token) return matchedSubscriptionError('Subscription link has been revoked');
+  if (isExpired(subscription.expiresAt) || isExpired(payload.expiresAt)) return matchedSubscriptionError('Subscription link has expired');
 
   const file = await getFile(env, subscription.fileId);
-  if (!file || !isYamlFile(file)) return error('Subscription source file is unavailable', 404);
+  if (!file || !isYamlFile(file)) return matchedSubscriptionError('Subscription source file is unavailable');
   const object = await env.VAULT_BUCKET.get(file.key);
-  if (!object) return error('Subscription source file is unavailable', 404);
+  if (!object) return matchedSubscriptionError('Subscription source file is unavailable');
 
   const headers = new Headers();
   object.writeHttpMetadata(headers);
-  headers.set('Content-Type', 'application/yaml; charset=utf-8');
-  headers.set('Content-Disposition', 'inline; filename="' + file.name.replace(/["\\\r\n]/g, '_') + '"');
+  headers.set('Content-Type', 'text/yaml; charset=utf-8');
+  headers.set('Content-Disposition', "attachment; filename*=UTF-8''" + encodeURIComponent(file.name));
   headers.set('Content-Length', String(object.size));
   headers.set('Cache-Control', 'no-store, no-cache, must-revalidate');
   headers.set('Pragma', 'no-cache');
   headers.set('X-Content-Type-Options', 'nosniff');
   headers.set('Access-Control-Allow-Origin', '*');
   headers.set('X-Subscription-Encryption', 'AES-256-GCM');
+  headers.set('Profile-Update-Interval', '24');
+  headers.set('Profile-Title', subscription.name || file.name);
+  headers.set('Profile-Web-Page-Url', new URL('/admin', request.url).toString());
+  headers.set(SUBSCRIPTION_MATCH_HEADER, '1');
   if (object.httpEtag) headers.set('ETag', object.httpEtag);
 
-  return new Response(object.body, { headers });
+  return new Response(request.method === 'HEAD' ? null : object.body, { headers });
 }

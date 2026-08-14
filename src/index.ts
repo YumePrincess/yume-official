@@ -81,6 +81,13 @@ export default {
       }
 
       if (path.startsWith('/s/')) {
+        const shareSegments = path.split('/').filter(Boolean);
+        if ((method === 'GET' || method === 'HEAD') && shareSegments.length === 2) {
+          const subscriptionResponse = await clash.serveSubscription(request, env);
+          if (subscriptionResponse.headers.get(clash.SUBSCRIPTION_MATCH_HEADER) === '1') {
+            return subscriptionResponse;
+          }
+        }
         return await handleShareRoutes(request, env, url, path, method);
       }
 
@@ -90,10 +97,6 @@ export default {
         loginHtml = injectBranding(loginHtml, loginSettings);
         loginHtml = injectJsonData(loginHtml, 'auth-config', getPublicAuthConfig(env));
         return htmlPage(loginHtml);
-      }
-
-      if (path.startsWith('/sub/') && method === 'GET') {
-        return await clash.serveSubscription(request, env);
       }
 
       if (isBackendApiRequest(path)) {
