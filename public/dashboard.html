@@ -150,6 +150,93 @@
         </div>
       </div>
 
+      <!-- CLASH SUBSCRIPTION OPERATION CARD -->
+      <section class="clash-operation-card mx-3 mt-3" aria-labelledby="clash-operation-title">
+        <div class="clash-operation-header">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="clash-operation-icon" aria-hidden="true">⌁</div>
+            <div class="min-w-0">
+              <h2 id="clash-operation-title" class="text-sm font-semibold truncate" x-text="t('clash.title')"></h2>
+              <p class="text-xs truncate" style="color:var(--text-muted)" x-text="t('clash.subtitle')"></p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="badge badge-link" x-text="t('clash.encrypted')"></span>
+            <button @click="loadClashData()" class="p-1.5 rounded-lg" style="color:var(--text-muted)" :title="t('ui.refresh')" :aria-label="t('ui.refresh')">
+              <svg class="w-4 h-4" :class="{'spinner': clashPanel.loading}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="p-4">
+          <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_280px]">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <label class="text-xs font-medium" style="color:var(--text-secondary)" x-text="t('clash.selectFiles')"></label>
+                <button x-show="clashFiles.length > 0" @click="toggleAllClashFiles()" class="text-xs" style="color:var(--accent)" x-text="clashPanel.selectedFileIds.size === clashFiles.length ? t('clash.clearSelection') : t('clash.selectAll')"></button>
+              </div>
+              <div class="clash-file-picker">
+                <template x-if="clashPanel.loading && clashFiles.length === 0">
+                  <div class="clash-picker-empty" x-text="t('ui.loading')"></div>
+                </template>
+                <template x-if="!clashPanel.loading && clashFiles.length === 0">
+                  <div class="clash-picker-empty" x-text="t('clash.noFiles')"></div>
+                </template>
+                <template x-for="file in clashFiles" :key="file.id">
+                  <label class="clash-file-option" :class="{'selected': clashPanel.selectedFileIds.has(file.id)}">
+                    <input type="checkbox" :checked="clashPanel.selectedFileIds.has(file.id)" @change="toggleClashFile(file.id)">
+                    <span class="text-lg" aria-hidden="true">☷</span>
+                    <span class="min-w-0">
+                      <span class="block text-sm truncate" x-text="file.name" :title="file.name"></span>
+                      <span class="block text-xs truncate" style="color:var(--text-muted)" x-text="file.folder === 'root' ? t('ui.root') : file.folder"></span>
+                    </span>
+                  </label>
+                </template>
+              </div>
+            </div>
+
+            <div class="clash-publish-settings">
+              <div class="clash-encryption-note">
+                <span class="text-lg" aria-hidden="true">🔐</span>
+                <div>
+                  <p class="text-xs font-medium" x-text="t('clash.encryptionTitle')"></p>
+                  <p class="text-xs mt-0.5" style="color:var(--text-muted)" x-text="t('clash.encryptionHelp')"></p>
+                </div>
+              </div>
+              <label class="block text-xs font-medium mb-1" style="color:var(--text-secondary)" x-text="t('clash.expires')"></label>
+              <input type="number" x-model.number="clashPanel.expiresInDays" min="0" max="3650" class="w-full text-sm" :placeholder="t('share.neverPlaceholder')">
+              <p class="text-xs mt-1" style="color:var(--text-muted)" x-text="t('clash.expiresHelp')"></p>
+              <button @click="publishClashSubscriptions()" class="btn-primary text-xs w-full mt-4" :disabled="clashPanel.publishing || clashPanel.selectedFileIds.size === 0">
+                <span x-show="!clashPanel.publishing" x-text="t('clash.publish', { count: clashPanel.selectedFileIds.size })"></span>
+                <span x-show="clashPanel.publishing" x-text="t('clash.publishing')"></span>
+              </button>
+            </div>
+          </div>
+
+          <div x-show="clashSubscriptions.length > 0" class="clash-subscriptions mt-4 pt-4">
+            <div class="flex items-center justify-between mb-2">
+              <h3 class="text-xs font-semibold" x-text="t('clash.published')"></h3>
+              <span class="text-xs" style="color:var(--text-muted)" x-text="t('clash.linkCount', { count: clashSubscriptions.length })"></span>
+            </div>
+            <div class="space-y-2">
+              <template x-for="subscription in clashSubscriptions" :key="subscription.id">
+                <div class="clash-subscription-row">
+                  <div class="min-w-0">
+                    <p class="text-xs font-medium truncate" x-text="subscription.file.name" :title="subscription.file.name"></p>
+                    <p class="text-xs truncate mt-0.5" style="color:var(--text-muted)" x-text="subscription.expiresAt ? t('clash.expiresAt', { date: formatAbsoluteDate(subscription.expiresAt) }) : t('clash.neverExpires')"></p>
+                  </div>
+                  <div class="flex items-center gap-2 min-w-0 sm:min-w-[280px]">
+                    <input type="text" readonly :value="subscription.url" class="clash-subscription-url text-xs" @click="$el.select()">
+                    <button @click="copyClashLink(subscription.url)" class="btn-secondary text-xs flex-shrink-0" x-text="t('ui.copy')"></button>
+                    <button @click="revokeClashSubscription(subscription.id)" class="btn-danger text-xs flex-shrink-0" x-text="t('ui.revokeLink')"></button>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- BULK ACTIONS BAR -->
       <div x-show="selectedFiles.size > 0" x-transition class="flex items-center gap-3 px-4 py-2 text-sm" style="background:var(--accent-soft)">
         <span class="font-medium" style="color:var(--accent)" x-text="t('dashboard.selected', { count: selectedFiles.size })"></span>

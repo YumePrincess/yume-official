@@ -36,6 +36,9 @@ function cloudvault() {
     previewModal: { show: false, file: null, content: '', loading: false },
     lightbox: { show: false, images: [], currentIndex: 0 },
     folderShareLinkModal: { show: false, folder: '', token: null, password: '', expiresInDays: 0, hasPassword: false, expiresAt: null },
+    clashFiles: [],
+    clashSubscriptions: [],
+    clashPanel: { loading: true, publishing: false, expiresInDays: 0, selectedFileIds: new Set() },
 
     async init() {
       const preferences = window.YumePreferences;
@@ -51,7 +54,7 @@ function cloudvault() {
       this.setupTreeEvents();
 
       await this.fetchFiles();
-      await Promise.all([this.fetchFolders(), this.fetchStats()]);
+      await Promise.all([this.fetchFolders(), this.fetchStats(), this.loadClashData()]);
       this.loading = false;
     },
 
@@ -121,7 +124,7 @@ function cloudvault() {
       window.addEventListener('upload-queue-complete', async () => {
         syncUploads();
         await new Promise(resolve => setTimeout(resolve, 150));
-        await this.refreshCurrentView(false);
+        await Promise.all([this.refreshCurrentView(false), this.loadClashData()]);
         setTimeout(() => {
           window.UploadManager.clearFinished();
           syncUploads();
@@ -441,6 +444,94 @@ function cloudvault() {
       if (!res) return;
       const data = await res.json();
       this.files = data.files || [];
+    },
+
+    async loadClashData() {
+      this.clashPanel.loading = true;
+      try {
+        const [filesRes, subscriptionsRes] = await Promise.all([
+          this.apiFetch('/api/clash/files'),
+          this.apiFetch('/api/clash/subscriptions'),
+        ]);
+        if (filesRes && filesRes.ok) {
+          const data = await filesRes.json();
+          this.clashFiles = data.files || [];
+          const available = new Set(this.clashFiles.map(file => file.id));
+          this.clashPanel.selectedFileIds = new Set(
+            [...this.clashPanel.selectedFileIds].filter(id => available.has(id)),
+          );
+        }
+        if (subscriptionsRes && subscriptionsRes.ok) {
+          const data = await subscriptionsRes.json();
+          this.clashSubscriptions = data.subscriptions || [];
+        }
+      } catch {
+        this.showToast(this.t('clash.loadFailed'), 'error');
+      } finally {
+        this.clashPanel.loading = false;
+      }
+    },
+
+    toggleClashFile(fileId) {
+      const selected = new Set(this.clashPanel.selectedFileIds);
+      if (selected.has(fileId)) selected.delete(fileId);
+      else selected.add(fileId);
+      this.clashPanel.selectedFileIds = selected;
+    },
+
+    toggleAllClashFiles() {
+      const allSelected = this.clashPanel.selectedFileIds.size === this.clashFiles.length;
+      this.clashPanel.selectedFileIds = allSelected
+        ? new Set()
+        : new Set(this.clashFiles.map(file => file.id));
+    },
+
+    async publishClashSubscriptions() {
+      const fileIds = [...this.clashPanel.selectedFileIds];
+      if (fileIds.length === 0 || this.clashPanel.publishing) return;
+      this.clashPanel.publishing = true;
+      try {
+        const res = await this.apiFetch('/api/clash/subscriptions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fileIds, expiresInDays: Number(this.clashPanel.expiresInDays) || 0 }),
+        });
+        if (res && res.ok) {
+          const data = await res.json();
+          this.clashPanel.selectedFileIds = new Set();
+          await this.loadClashData();
+          this.showToast(this.t('clash.publishedToast', { count: (data.subscriptions || []).length }), 'success');
+        } else {
+          this.showToast(this.t('clash.publishFailed'), 'error');
+        }
+      } catch {
+        this.showToast(this.t('clash.publishFailed'), 'error');
+      } finally {
+        this.clashPanel.publishing = false;
+      }
+    },
+
+    async revokeClashSubscription(subscriptionId) {
+      try {
+        const res = await this.apiFetch('/api/clash/subscriptions/' + encodeURIComponent(subscriptionId), { method: 'DELETE' });
+        if (res && res.ok) {
+          this.clashSubscriptions = this.clashSubscriptions.filter(subscription => subscription.id !== subscriptionId);
+          this.showToast(this.t('clash.revoked'), 'success');
+        } else {
+          this.showToast(this.t('clash.revokeFailed'), 'error');
+        }
+      } catch {
+        this.showToast(this.t('clash.revokeFailed'), 'error');
+      }
+    },
+
+    async copyClashLink(url) {
+      try {
+        await navigator.clipboard.writeText(url);
+        this.showToast(this.t('clash.linkCopied'), 'info');
+      } catch {
+        this.showToast(this.t('clash.copyFailed'), 'error');
+      }
     },
 
     async fetchFolders() {
@@ -1033,6 +1124,7 @@ function cloudvault() {
         this.renameModal.show = false;
         this.deleteModal.show = false;
         this.moveModal.show = false;
+        this.clashPanel.selectedFileIds = new Set();
         this.showNewFolderModal = false;
         this.previewModal.show = false;
         this.lightbox.show = false;

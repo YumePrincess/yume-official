@@ -687,6 +687,60 @@
     'page.sharedFile': '共享檔案', 'page.login': '登入'
   });
 
+  Object.assign(dict.en, {
+    'clash.title': 'Clash Subscription Publisher',
+    'clash.subtitle': 'Publish YAML files as standard Clash/Mihomo provider URLs',
+    'clash.encrypted': 'Encrypted URL',
+    'clash.selectFiles': 'Select YAML files',
+    'clash.selectAll': 'Select all',
+    'clash.clearSelection': 'Clear selection',
+    'clash.noFiles': 'No .yaml or .yml files found in R2',
+    'clash.encryptionTitle': 'AES-256-GCM encrypted token',
+    'clash.encryptionHelp': 'The URL does not expose the file ID or R2 object key.',
+    'clash.expires': 'Link expiration (days)',
+    'clash.expiresHelp': 'Set 0 for a link that never expires.',
+    'clash.publish': 'Publish {count} subscription(s)',
+    'clash.publishing': 'Publishing...',
+    'clash.published': 'Published subscriptions',
+    'clash.linkCount': '{count} link(s)',
+    'clash.expiresAt': 'Expires: {date}',
+    'clash.neverExpires': 'Never expires',
+    'clash.loadFailed': 'Failed to load Clash subscriptions',
+    'clash.publishedToast': 'Published {count} Clash subscription(s)',
+    'clash.publishFailed': 'Failed to publish Clash subscriptions',
+    'clash.revoked': 'Clash subscription revoked',
+    'clash.revokeFailed': 'Failed to revoke Clash subscription',
+    'clash.linkCopied': 'Clash subscription URL copied',
+    'clash.copyFailed': 'Failed to copy Clash subscription URL',
+  });
+
+  Object.assign(dict['zh-CN'], {
+    'clash.title': 'Clash 订阅发布',
+    'clash.subtitle': '将 YAML 配置发布为标准 Clash/Mihomo 订阅链接',
+    'clash.encrypted': '链接已加密',
+    'clash.selectFiles': '选择 YAML 配置文件',
+    'clash.selectAll': '全选',
+    'clash.clearSelection': '清除选择',
+    'clash.noFiles': 'R2 中没有找到 .yaml 或 .yml 文件',
+    'clash.encryptionTitle': 'AES-256-GCM 加密令牌',
+    'clash.encryptionHelp': '链接不会暴露文件 ID 或 R2 对象路径。',
+    'clash.expires': '链接有效期（天）',
+    'clash.expiresHelp': '填写 0 表示永不过期。',
+    'clash.publish': '发布 {count} 个订阅',
+    'clash.publishing': '发布中…',
+    'clash.published': '已发布的订阅',
+    'clash.linkCount': '{count} 个链接',
+    'clash.expiresAt': '到期：{date}',
+    'clash.neverExpires': '永不过期',
+    'clash.loadFailed': '加载 Clash 订阅失败',
+    'clash.publishedToast': '已发布 {count} 个 Clash 订阅',
+    'clash.publishFailed': '发布 Clash 订阅失败',
+    'clash.revoked': 'Clash 订阅已撤销',
+    'clash.revokeFailed': '撤销 Clash 订阅失败',
+    'clash.linkCopied': 'Clash 订阅链接已复制',
+    'clash.copyFailed': '复制 Clash 订阅链接失败',
+  });
+
   var branding = {};
   var configuredLanguage = 'auto';
   var activeLanguage = 'en';

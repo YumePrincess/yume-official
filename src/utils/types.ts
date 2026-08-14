@@ -55,6 +55,15 @@ export interface FileMeta {
   downloads: number;
 }
 
+// ─── Clash Subscription ─────────────────────────────────────────────
+export interface ClashSubscription {
+  id: string;
+  fileId: string;
+  token: string;
+  expiresAt: string | null;
+  createdAt: string;
+}
+
 // ─── Share Link Info ──────────────────────────────────────────────────
 export interface ShareInfo {
   fileId: string;

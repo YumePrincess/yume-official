@@ -1,4 +1,4 @@
-import { Env, FileMeta, Session } from './types';
+import { ClashSubscription, Env, FileMeta, Session } from './types';
 
 type DbValue = string | number | null;
 
@@ -43,6 +43,14 @@ interface FolderShareLinkRow {
   token: string;
   folder: string;
   password_hash: string | null;
+  expires_at: string | null;
+  created_at: string;
+}
+
+interface ClashSubscriptionRow {
+  id: string;
+  file_id: string;
+  token: string;
   expires_at: string | null;
   created_at: string;
 }
@@ -98,6 +106,16 @@ function folderShareLinkFromRow(row: FolderShareLinkRow): FolderShareLink {
     token: row.token,
     folder: row.folder,
     passwordHash: row.password_hash,
+    expiresAt: row.expires_at,
+    createdAt: row.created_at,
+  };
+}
+
+function clashSubscriptionFromRow(row: ClashSubscriptionRow): ClashSubscription {
+  return {
+    id: row.id,
+    fileId: row.file_id,
+    token: row.token,
     expiresAt: row.expires_at,
     createdAt: row.created_at,
   };
@@ -182,6 +200,53 @@ export async function getFilesByIds(env: Env, ids: string[]): Promise<FileMeta[]
     if (file) files.push(file);
   }
   return files;
+}
+
+export async function getAllClashSubscriptions(env: Env): Promise<ClashSubscription[]> {
+  const { results } = await env.VAULT_DB
+    .prepare('SELECT id, file_id, token, expires_at, created_at FROM clash_subscriptions ORDER BY created_at DESC')
+    .all<ClashSubscriptionRow>();
+  return (results || []).map(clashSubscriptionFromRow);
+}
+
+export async function getClashSubscription(env: Env, id: string): Promise<ClashSubscription | null> {
+  const row = await env.VAULT_DB
+    .prepare('SELECT id, file_id, token, expires_at, created_at FROM clash_subscriptions WHERE id = ?')
+    .bind(id)
+    .first<ClashSubscriptionRow>();
+  return row ? clashSubscriptionFromRow(row) : null;
+}
+
+export async function saveClashSubscription(env: Env, subscription: ClashSubscription): Promise<void> {
+  await env.VAULT_DB
+    .prepare(
+      `INSERT INTO clash_subscriptions (id, file_id, token, expires_at, created_at)
+       VALUES (?, ?, ?, ?, ?)`,
+    )
+    .bind(
+      subscription.id,
+      subscription.fileId,
+      subscription.token,
+      subscription.expiresAt,
+      subscription.createdAt,
+    )
+    .run();
+}
+
+export async function deleteClashSubscription(env: Env, id: string): Promise<void> {
+  await env.VAULT_DB.prepare('DELETE FROM clash_subscriptions WHERE id = ?').bind(id).run();
+}
+
+export async function deleteClashSubscriptionsByFileId(env: Env, fileId: string): Promise<void> {
+  await env.VAULT_DB.prepare('DELETE FROM clash_subscriptions WHERE file_id = ?').bind(fileId).run();
+}
+
+export async function deleteClashSubscriptionsByFileIds(env: Env, fileIds: string[]): Promise<void> {
+  if (fileIds.length === 0) return;
+  await env.VAULT_DB
+    .prepare(`DELETE FROM clash_subscriptions WHERE file_id IN (${fileIds.map(() => '?').join(', ')})`)
+    .bind(...fileIds)
+    .run();
 }
 
 export async function getFilesInFolderTree(env: Env, folder: string): Promise<FileMeta[]> {

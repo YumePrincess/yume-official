@@ -7,6 +7,7 @@ import * as files from './api/files';
 import * as share from './api/share';
 import * as stats from './api/stats';
 import * as settings from './api/settings';
+import * as clash from './api/clash';
 import * as download from './handlers/download';
 import { handleWebDav } from './handlers/webdav';
 import { markBucketUsageDirty } from './utils/bucket-usage';
@@ -91,6 +92,9 @@ export default {
         return htmlPage(loginHtml);
       }
 
+      if (path.startsWith('/clash/') && method === 'GET') {
+        return await clash.serveSubscription(request, env);
+      }
 
       if (isBackendApiRequest(path)) {
         return backendApiWorker.fetch(request, { ...env, r2: env.VAULT_BUCKET }, ctx);
@@ -370,6 +374,20 @@ async function handleApiRoutes(
 
   if (path === '/api/files/zip' && method === 'POST') {
     return files.zipDownload(request, env);
+  }
+
+  if (path === '/api/clash/files' && method === 'GET') {
+    return clash.listFiles(request, env);
+  }
+  if (path === '/api/clash/subscriptions' && method === 'GET') {
+    return clash.listSubscriptions(request, env);
+  }
+  if (path === '/api/clash/subscriptions' && method === 'POST') {
+    return clash.createSubscriptions(request, env);
+  }
+  const clashSubscriptionMatch = path.match(/^\/api\/clash\/subscriptions\/([^/]+)$/);
+  if (clashSubscriptionMatch && method === 'DELETE') {
+    return clash.revokeSubscription(request, env);
   }
 
   if (path === '/api/folders' && method === 'GET') {

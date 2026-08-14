@@ -4,6 +4,8 @@ import { getSharedFolders, getExcludedFolders, isFolderShared } from './share';
 import {
   createFolderRecord,
   deleteFile,
+  deleteClashSubscriptionsByFileId,
+  deleteClashSubscriptionsByFileIds,
   deleteFilesByFolderTree,
   deleteFolderShareStateForTree,
   deleteFolderTreeRecords,
@@ -262,6 +264,7 @@ export async function deleteFiles(request: Request, env: Env): Promise<Response>
     if (!meta) continue;
 
     await env.VAULT_BUCKET.delete(meta.key);
+    await deleteClashSubscriptionsByFileId(env, meta.id);
     await deleteFile(env, id);
     totalSizeRemoved += meta.size;
     deleted++;
@@ -344,6 +347,7 @@ export async function deleteFolder(request: Request, env: Env): Promise<Response
   await deleteFolderShareStateForTree(env, folder);
   const deletedFolders = await deleteFolderTreeRecords(env, folder);
   const deletedFiles = await deleteFilesByFolderTree(env, folder);
+  await deleteClashSubscriptionsByFileIds(env, filesInTree.map(file => file.id));
   if (filesInTree.length > 0) {
     await markBucketUsageDirty(env);
   }
