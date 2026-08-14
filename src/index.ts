@@ -92,7 +92,7 @@ export default {
         return htmlPage(loginHtml);
       }
 
-      if (path.startsWith('/clash/') && method === 'GET') {
+      if (path.startsWith('/sub/') && method === 'GET') {
         return await clash.serveSubscription(request, env);
       }
 

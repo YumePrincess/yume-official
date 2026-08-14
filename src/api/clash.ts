@@ -100,7 +100,7 @@ function publicFile(file: FileMeta): Pick<FileMeta, 'id' | 'name' | 'folder' | '
 }
 
 function subscriptionUrl(request: Request, token: string): string {
-  return new URL('/clash/' + encodeURIComponent(token) + '.yaml', request.url).toString();
+  return new URL('/sub/' + encodeURIComponent(token) + '.yaml', request.url).toString();
 }
 
 function serializeSubscription(request: Request, subscription: ClashSubscription, file: FileMeta) {
@@ -209,7 +209,8 @@ export async function revokeSubscription(request: Request, env: Env): Promise<Re
 }
 
 export async function serveSubscription(request: Request, env: Env): Promise<Response> {
-  const rawToken = new URL(request.url).pathname.slice('/clash/'.length).replace(/\.yaml$/i, '');
+  const pathname = new URL(request.url).pathname;
+  const rawToken = pathname.slice('/sub/'.length).replace(/\.yaml$/i, '');
   let token: string;
   try {
     token = decodeURIComponent(rawToken);
