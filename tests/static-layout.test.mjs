@@ -36,6 +36,15 @@ test("static build contains the single official asset tree", async () => {
 
   await Promise.all(requiredFiles.map((file) => readFile(new URL(file, import.meta.url))));
 
+  for (const file of ["../frontend/200.html", "../frontend/404.html", "../frontend/500.html"]) {
+    const page = await readFile(new URL(file, import.meta.url), "utf8");
+    assert.doesNotMatch(page, /example\.com/);
+    assert.match(page, /id="cf-hostname"/);
+  }
+
+  const errorPageScript = await readFile(new URL("../frontend/js/cloudflare-error-page.js", import.meta.url), "utf8");
+  assert.match(errorPageScript, /a\.location\.hostname/);
+
   const notFoundFallback = await readFile(new URL("../frontend/404.html", import.meta.url), "utf8");
   assert.match(notFoundFallback, /Error code 500/);
   assert.match(notFoundFallback, /cf-cloudflare-status/);

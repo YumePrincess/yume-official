@@ -17,6 +17,11 @@
   }
 
   function initializeFooter() {
+    var hostname = a.getElementById('cf-hostname');
+    if (hostname && a.location && a.location.hostname) {
+      hostname.textContent = a.location.hostname;
+    }
+
     var footerIp = a.getElementById('cf-footer-item-ip');
     var reveal = a.getElementById('cf-footer-ip-reveal');
     var ip = a.getElementById('cf-footer-ip');
