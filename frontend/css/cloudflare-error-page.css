@@ -1,0 +1,233 @@
+:root {
+  color: #404040;
+  background: #fff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+}
+
+a {
+  color: #2f7bbf;
+  text-decoration: none;
+  transition: color .15s ease;
+}
+
+a:hover {
+  color: #f68b1f;
+}
+
+#cf-wrapper {
+  min-height: 100vh;
+}
+
+.cf-container {
+  width: min(960px, 100%);
+  margin: 0 auto;
+}
+
+.cf-header {
+  padding: 40px 32px 0;
+  margin-bottom: 32px;
+}
+
+.cf-header h1 {
+  display: inline-block;
+  margin-right: 8px;
+  color: #404040;
+  font-size: clamp(36px, 6vw, 60px);
+  font-weight: 300;
+  line-height: 1.25;
+}
+
+.code-label {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 20px;
+  color: #313131;
+  background: #d9d9d9;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.cf-header p {
+  margin-top: 12px;
+  line-height: 1.5;
+}
+
+.status-band {
+  margin: 32px 0;
+  background: linear-gradient(to bottom, #dedede, #ebebeb 3%, #ebebeb 97%, #dedede);
+}
+
+.status-row {
+  display: flex;
+  min-height: 238px;
+}
+
+.status {
+  position: relative;
+  width: 33.333333%;
+  padding: 60px 16px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.status.is-error::after {
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  background: #fff;
+  box-shadow: 0 0 4px 4px #dedede;
+  content: "";
+  transform: rotate(45deg);
+}
+
+.service-icon {
+  display: block;
+  width: 88px;
+  height: 72px;
+  margin: 0 auto 20px;
+  fill: #999;
+}
+
+.service-icon.browser { width: 90px; }
+.service-icon.cloud { width: 112px; }
+.service-icon.server { width: 86px; }
+
+.status-mark {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  margin-left: -24px;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.status-mark.ok { background: #9bca3e; }
+.status-mark.error { background: #bd2426; font-size: 26px; }
+
+.status-location {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status h2,
+.status p {
+  display: inline;
+  font-size: 24px;
+  font-weight: 300;
+  line-height: 1.3;
+}
+
+.status h2 { color: #999; }
+.status.cloudflare h2 { color: #2f7bbf; }
+.status p.ok { color: #9bca3e; }
+.status p.error { color: #bd2426; }
+
+.cf-content {
+  display: flex;
+  gap: 48px;
+  padding: 0 32px 32px;
+  line-height: 1.625;
+}
+
+.cf-content section { width: 50%; }
+
+.cf-content h2 {
+  margin-bottom: 16px;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.cf-content p {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.cf-footer {
+  padding: 40px 32px;
+  border-top: 1px solid #ebebeb;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.cf-footer-item + .cf-footer-item::before {
+  margin: 0 8px;
+  color: #999;
+  content: "•";
+}
+
+.cf-footer-ip-reveal-btn {
+  padding: 0;
+  border: 0;
+  color: #0051c3;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.cf-footer-ip-reveal-btn:hover { color: #ee730a; }
+.hidden { display: none !important; }
+
+@media (max-width: 720px) {
+  .cf-header { padding: 24px 32px 0; margin-bottom: 24px; }
+  .status-row,
+  .cf-content { display: block; }
+  .status {
+    width: 100%;
+    min-height: 0;
+    padding: 28px 32px;
+    border-bottom: 1px solid #dedede;
+    text-align: left;
+  }
+  .status:last-child { border-bottom: 0; }
+  .status.is-error::after,
+  .service-icon { display: none; }
+  .status-mark {
+    top: 24px;
+    right: 0;
+    bottom: auto;
+    left: auto;
+    margin-left: 0;
+  }
+  .cf-content { padding: 0 32px 32px; }
+  .cf-content section { width: 100%; }
+  .cf-content section + section { padding-top: 40px; }
+}
+
+@media (max-width: 639px) {
+  .cf-header h1 { display: block; margin: 0 0 8px; }
+  .cf-footer { padding: 16px 32px; text-align: left; }
+  .cf-footer-item { display: block; margin-bottom: 4px; }
+  .cf-footer-item + .cf-footer-item::before { display: none; }
+}

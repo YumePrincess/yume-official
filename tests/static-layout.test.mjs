@@ -9,9 +9,10 @@ test("deployment is static-assets only", async () => {
   assert.equal("main" in config, false);
   assert.equal("binding" in config.assets, false);
   assert.equal("run_worker_first" in config.assets, false);
-  assert.equal(config.assets.directory, "./dist/official");
+  assert.equal(config.assets.directory, "./frontend");
+  assert.equal(config.assets.not_found_handling, "none");
 
-  const headers = await readFile(new URL("../scripts/static/_headers", import.meta.url), "utf8");
+  const headers = await readFile(new URL("../frontend/_headers", import.meta.url), "utf8");
   assert.match(headers, /\/\*/);
   assert.match(headers, /Access-Control-Allow-Origin: \*/);
   assert.match(headers, /Access-Control-Allow-Methods: GET, HEAD/);
@@ -21,12 +22,21 @@ test("deployment is static-assets only", async () => {
 
 test("static build contains the single official asset tree", async () => {
   const requiredFiles = [
-    "../dist/official/index.html",
-    "../dist/official/search/index.html",
-    "../dist/official/pricing/index.html",
-    "../dist/official/_headers",
-    "../dist/official/_redirects",
+    "../frontend/index.html",
+    "../frontend/search/index.html",
+    "../frontend/pricing/index.html",
+    "../frontend/200.html",
+    "../frontend/500.html",
+    "../frontend/css/cloudflare-error-page.css",
+    "../frontend/js/cloudflare-error-page.js",
+    "../frontend/_headers",
+    "../frontend/_redirects",
   ];
 
   await Promise.all(requiredFiles.map((file) => readFile(new URL(file, import.meta.url))));
+
+  await assert.rejects(
+    readFile(new URL("../frontend/404.html", import.meta.url)),
+    { code: "ENOENT" }
+  );
 });

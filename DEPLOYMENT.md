@@ -5,21 +5,25 @@
 Search 与 Pricing 仍保留独立源码目录，但它们不再拥有独立域名，也不再有独立 Worker。构建后它们作为主站路径的一部分发布：
 
 ```text
-dist/
-└── official/
-    ├── index.html
-    ├── search/
-    └── pricing/
+frontend/
+├── index.html
+├── 200.html
+├── 500.html
+├── search/
+└── pricing/
 ```
+
+`frontend/` 就是最终静态目录，部署时由 Wrangler 直接上传，不再生成 `dist/`。
+站点不提供自定义 `404.html`；缺失资源直接返回 Cloudflare 默认 404。
 
 ## Request matching
 
 | Request | Cloudflare project | Asset path |
 | --- | --- | --- |
-| `yume.zone/*` | `yume-official` | `dist/official/*` |
-| `www.yume.zone/*` | `yume-official` | `dist/official/*` |
-| `www.yume.zone/search/*` | `yume-official` | `dist/official/search/*` |
-| `www.yume.zone/pricing/*` | `yume-official` | `dist/official/pricing/*` |
+| `yume.zone/*` | `yume-official` | `frontend/*` |
+| `www.yume.zone/*` | `yume-official` | `frontend/*` |
+| `www.yume.zone/search/*` | `yume-official` | `frontend/search/*` |
+| `www.yume.zone/pricing/*` | `yume-official` | `frontend/pricing/*` |
 
 旧的 Search / Pricing 独立子域名已于 2026 年 7 月 25 日取消，不应再在本仓库中出现。
 
@@ -51,7 +55,8 @@ Cloudflare Workers Builds 或手动部署都只需要一个项目：
 ## Static guarantees
 
 - `wrangler.jsonc` 不包含 `main`、`assets.binding` 或 `assets.run_worker_first`，只使用 Workers Static Assets。
-- 构建产物只有 `dist/official` 一套。
-- Search 与 Pricing 通过 `dist/official/search`、`dist/official/pricing` 发布。
-- 缺失资源返回共享静态 `404.html`。
+- `assets.directory` 直接指向 `./frontend`，不生成或部署 `dist/`。
+- Search 与 Pricing 通过 `frontend/search`、`frontend/pricing` 发布。
+- `frontend/200.html` 与 `frontend/500.html` 提供参考项目中的 Cloudflare 风格 Working / Internal server error 页面。
+- 不提供自定义 `404.html`，缺失资源交由 Cloudflare 默认 404 处理。
 - 所有旧的 Search / Pricing 独立域名残留都应被替换为 `https://www.yume.zone/search/`、`https://www.yume.zone/pricing/`。
