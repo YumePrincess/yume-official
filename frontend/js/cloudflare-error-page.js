@@ -11,6 +11,16 @@
       happened: 'This site is still working. And it looks great.',
       canDo: 'Visit the site before it crashes someday.'
     },
+    '404': {
+      title: 'Page not found',
+      code: '404',
+      browser: { status: 'ok', text: 'Working' },
+      cloudflare: { status: 'error', text: 'Error' },
+      host: { status: 'ok', location: 'yume.zone', text: 'Working' },
+      source: 'cloudflare',
+      happened: "There is an internal server error on Cloudflare's network.",
+      canDo: 'If you are a visitor of this website, please try again in a few minutes. If you are the owner of this website, check the Cloudflare dashboard for more information.'
+    },
     '500': {
       title: 'Internal server error',
       code: '500',
@@ -53,8 +63,8 @@
       '</div>';
   }
 
-  var key = document.body.getAttribute('data-error-page') || '500';
-  var definition = definitions[key] || definitions['500'];
+  var key = document.body.getAttribute('data-error-page') || '404';
+  var definition = definitions[key] || definitions['404'];
   var moreInformation = definition.hideMoreInformation
     ? ''
     : '<p>Visit <a href="https://www.cloudflare.com/" target="_blank" rel="noopener noreferrer">cloudflare.com</a> for more information.</p>';

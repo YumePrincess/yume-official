@@ -10,7 +10,7 @@ test("deployment is static-assets only", async () => {
   assert.equal("binding" in config.assets, false);
   assert.equal("run_worker_first" in config.assets, false);
   assert.equal(config.assets.directory, "./frontend");
-  assert.equal(config.assets.not_found_handling, "none");
+  assert.equal(config.assets.not_found_handling, "404-page");
 
   const headers = await readFile(new URL("../frontend/_headers", import.meta.url), "utf8");
   assert.match(headers, /\/\*/);
@@ -26,6 +26,7 @@ test("static build contains the single official asset tree", async () => {
     "../frontend/search/index.html",
     "../frontend/pricing/index.html",
     "../frontend/200.html",
+    "../frontend/404.html",
     "../frontend/500.html",
     "../frontend/css/cloudflare-error-page.css",
     "../frontend/js/cloudflare-error-page.js",
@@ -35,8 +36,6 @@ test("static build contains the single official asset tree", async () => {
 
   await Promise.all(requiredFiles.map((file) => readFile(new URL(file, import.meta.url))));
 
-  await assert.rejects(
-    readFile(new URL("../frontend/404.html", import.meta.url)),
-    { code: "ENOENT" }
-  );
+  const notFoundFallback = await readFile(new URL("../frontend/404.html", import.meta.url), "utf8");
+  assert.match(notFoundFallback, /data-error-page="500"/);
 });

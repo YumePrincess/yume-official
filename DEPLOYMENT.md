@@ -8,13 +8,14 @@ Search 与 Pricing 仍保留独立源码目录，但它们不再拥有独立域�
 frontend/
 ├── index.html
 ├── 200.html
+├── 404.html
 ├── 500.html
 ├── search/
 └── pricing/
 ```
 
 `frontend/` 就是最终静态目录，部署时由 Wrangler 直接上传，不再生成 `dist/`。
-站点不提供自定义 `404.html`；缺失资源直接返回 Cloudflare 默认 404。
+缺失资源仍返回 HTTP 404，但使用 `frontend/404.html` 套用 500 Cloudflare 风格错误页，将页面错误码显示为 500。
 
 ## Request matching
 
@@ -58,5 +59,5 @@ Cloudflare Workers Builds 或手动部署都只需要一个项目：
 - `assets.directory` 直接指向 `./frontend`，不生成或部署 `dist/`。
 - Search 与 Pricing 通过 `frontend/search`、`frontend/pricing` 发布。
 - `frontend/200.html` 与 `frontend/500.html` 提供参考项目中的 Cloudflare 风格 Working / Internal server error 页面。
-- 不提供自定义 `404.html`，缺失资源交由 Cloudflare 默认 404 处理。
+- `frontend/404.html` 作为所有未匹配资源的 404 fallback，内容复用 500 页面并将错误源显示为 Cloudflare。
 - 所有旧的 Search / Pricing 独立域名残留都应被替换为 `https://www.yume.zone/search/`、`https://www.yume.zone/pricing/`。
