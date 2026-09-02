@@ -73,32 +73,27 @@ test("terms routes preserve the existing query-driven homepage", async () => {
   assert.doesNotMatch(mainSource, /terms\/manifest\.json/);
 });
 
-test("SMS consent demo is static and publicly routable", async () => {
+test("SMS consent page is static and publicly routable", async () => {
   const redirects = await readFile(new URL("../frontend/_redirects", import.meta.url), "utf8");
-  const demoSource = await readFile(new URL("../frontend/sms-consent/index.html", import.meta.url), "utf8");
-  const demoScript = await readFile(new URL("../frontend/sms-consent/app.js", import.meta.url), "utf8");
+  const consentSource = await readFile(new URL("../frontend/sms-consent/index.html", import.meta.url), "utf8");
+  const consentScript = await readFile(new URL("../frontend/sms-consent/app.js", import.meta.url), "utf8");
 
   assert.match(redirects, /\/sms-consent \/sms-consent\/ 308/);
   assert.match(redirects, /\/sms-consent\/index\.html \/sms-consent\/ 308/);
   assert.doesNotMatch(redirects, /sms-campaign-demo|campaign-demo/);
-  assert.doesNotMatch(demoSource, /sms-campaign-demo|campaign-demo/);
-  assert.match(demoSource, /canonical" href="https:\/\/www\.yume\.zone\/sms-consent\//);
-  assert.match(demoSource, /SMS Opt-In Flow/);
-  assert.match(demoSource, /Public representation of the SMS consent flow used in the Yume Official website and mobile application\./);
-  assert.doesNotMatch(demoSource, /SMS Campaign Demo|Demo only · no messages are sent/);
-  assert.match(demoSource, /Campaign description/);
-  assert.match(demoSource, /Sample message #5/);
-  assert.match(demoSource, /id="sms-consent"/);
-  assert.match(demoSource, /Continue without SMS/);
-  assert.match(demoSource, /transactional and account-related SMS messages/);
-  assert.match(demoSource, /one-time verification codes/);
-  assert.match(demoSource, /Message frequency varies based on account activity/);
-  assert.match(demoSource, /Website: https:\/\/www\.yume\.zone/);
-  assert.match(demoSource, /Terms of Service: https:\/\/www\.yume\.zone\/terms/);
-  assert.match(demoSource, /Public opt-in example: https:\/\/www\.yume\.zone\/sms-consent/);
-  assert.match(demoSource, /Mobile application/);
-  assert.match(demoSource, /href="\/privacy"/);
-  assert.match(demoSource, /href="\/terms"/);
-  assert.doesNotMatch(demoScript, /fetch\s*\(/);
-  assert.doesNotMatch(demoScript, /XMLHttpRequest/);
+  assert.doesNotMatch(consentSource, /sms-campaign-demo|campaign-demo/);
+  assert.match(consentSource, /canonical" href="https:\/\/www\.yume\.zone\/sms-consent\//);
+  assert.match(consentSource, /<title>Yume Official SMS Notifications<\/title>/);
+  assert.match(consentSource, /SMS Notifications/);
+  assert.match(consentSource, /Enter your mobile phone number to receive transactional and account-related SMS messages from Yume Official\./);
+  assert.match(consentSource, /Save SMS Preferences/);
+  assert.match(consentSource, /You may continue using Yume Official without opting in to SMS notifications\./);
+  assert.match(consentSource, /id="sms-consent" name="sms-consent" type="checkbox"/);
+  assert.doesNotMatch(consentSource, /id="sms-consent"[^>]*\bchecked\b/);
+  assert.match(consentSource, /href="\/privacy"/);
+  assert.match(consentSource, /href="\/terms"/);
+  assert.doesNotMatch(consentSource, /Twilio A2P 10DLC|SMS Campaign Demo|Demo only|Campaign submission|Campaign sending number|Replace before submission|This demonstration does not invent|Check for errors|Submit registration|This is a static demonstration|Before you submit|Registration check/);
+  assert.doesNotMatch(consentScript, /Twilio A2P 10DLC|SMS Campaign Demo|Demo only|Campaign submission|Campaign sending number|Check for errors|Submit registration|This is a static demonstration|Before you submit|Registration check/);
+  assert.doesNotMatch(consentScript, /fetch\s*\(/);
+  assert.doesNotMatch(consentScript, /XMLHttpRequest/);
 });
