@@ -1,6 +1,6 @@
 # Privacy Policy
 - **Applicable Entity: Yume Internet LLC (a limited liability company registered in the State of Wyoming, USA)**
-- **Last Updated: July 10, 2026**
+- **Last Updated: September 2, 2026**
 - **Governing Law: This Privacy Policy is governed by the laws of the State of Wyoming, USA, and applicable United States federal law, except where mandatory data protection laws provide otherwise.**
 - **Language Priority: If there is any inconsistency between language versions, the English version prevails.**
 
@@ -116,7 +116,17 @@ Support personnel or contractors may access account records, logs, or user-provi
 
 ---
 
-## VIII. Retention
+## VIII. SMS and Mobile Information
+
+If you choose to enroll in a Yume SMS program through our website or mobile application, we collect your mobile number, your opt-in record, and message-related metadata needed to operate that program. SMS messages may include transactional and account-related messages such as verification codes, account status updates, security alerts, verification updates, application status notifications, and important service notices. **Message frequency varies. Message and data rates may apply.**
+
+SMS consent is voluntary and separate from acceptance of these Terms, this Privacy Policy, account creation, a purchase, or use of the Services. Consent to receive SMS messages is not a condition of purchase or use of the Services. Providing a phone number by itself does not enroll you in an SMS program.
+
+**Mobile information, including phone numbers and SMS opt-in or consent information, will not be sold, rented, or shared with third parties or affiliates for their own marketing or promotional purposes.** We may share this information only with service providers that process it on our instructions to deliver, secure, support, or comply with law relating to the requested SMS program. Those providers may not use it for their own marketing.
+
+For help, reply **HELP** or contact **support@yume.zone**. To stop recurring SMS messages, reply **STOP**. We will honor opt-out requests as required by applicable law.
+
+## IX. Retention
 We retain personal data for as long as reasonably necessary for the purposes described in this Privacy Policy, including providing the Services, maintaining accounts, resolving disputes, enforcing agreements, preventing fraud, complying with law, and maintaining backups.
 
 Retention periods vary depending on the type of data. For example, account data is generally retained while your account is active; transaction and tax records may be retained for legally required periods; security logs may be retained to protect the Services; deleted content may remain in backups for a limited period before deletion cycles complete.
@@ -125,17 +135,17 @@ When personal data is no longer needed, we will delete, anonymize, or otherwise 
 
 ---
 
-## IX. Security
+## X. Security
 We use reasonable administrative, technical, and organizational measures designed to protect personal data, such as access controls, encryption where appropriate, logging, monitoring, least-privilege practices, and security review. However, no online service, storage system, or transmission method is completely secure. You are responsible for using strong passwords, protecting credentials, maintaining backups, and promptly reporting suspicious activity.
 
 ---
 
-## X. International Transfers
+## XI. International Transfers
 We may process and store personal data in the United States and other countries where we or our service providers operate. Data protection laws in those countries may differ from those in your jurisdiction. Where required, we use appropriate safeguards for international transfers, such as contractual protections, security measures, and compliance with applicable transfer rules.
 
 ---
 
-## XI. Your Privacy Rights
+## XII. Your Privacy Rights
 Depending on your location, you may have rights to:
 
 - request access to personal data we hold about you;
@@ -151,22 +161,22 @@ To exercise rights, contact **support@yume.zone**. We may need to verify your id
 
 ---
 
-## XII. Children
+## XIII. Children
 The Services are not directed to children under 13 or the minimum age required by applicable law. If we learn that we collected personal data from a child without required parental consent, we will take appropriate steps to delete it. Parents or guardians may contact us at **support@yume.zone**.
 
 ---
 
-## XIII. Third-Party Links and Services
+## XIV. Third-Party Links and Services
 The Services may contain links to third-party websites, apps, payment pages, social platforms, or integrations. Their privacy practices are governed by their own policies. We encourage you to review those policies before providing personal data to third parties.
 
 ---
 
-## XIV. Changes to This Policy
+## XV. Changes to This Policy
 We may update this Privacy Policy from time to time. The updated version becomes effective when posted, unless a later effective date is stated. For material changes, we may provide notice through the Services, website, email, or other reasonable means.
 
 ---
 
-## XV. Contact
+## XVI. Contact
 If you have questions or requests regarding this Privacy Policy, please contact us:
 
 - **Email:** support@yume.zone

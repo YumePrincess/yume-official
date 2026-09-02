@@ -1,6 +1,6 @@
 # Conditions d’Utilisation
 - **Entité concernée : Yume Internet LLC (société à responsabilité limitée enregistrée dans l’État du Wyoming, États-Unis)**
-- **Dernière mise à jour : 10 juillet 2026**
+- **Dernière mise à jour : 2 septembre 2026**
 - **Droit applicable : Les présentes Conditions sont régies par le droit de l’État du Wyoming, États-Unis, et par le droit fédéral américain applicable, sauf lorsque des règles impératives de protection des consommateurs en disposent autrement.**
 - **Priorité linguistique : En cas de divergence entre les versions linguistiques, la version anglaise prévaut.**
 
@@ -126,31 +126,45 @@ Les travaux personnalisés, l’aide au déploiement, la migration ou le support
 
 ---
 
-## IX. Services tiers
+## IX. SMS et consentement
+
+Yume peut envoyer des SMS transactionnels et liés au compte aux utilisateurs qui s’inscrivent expressément à un programme SMS Yume précis. Ces messages peuvent inclure des codes de vérification, des mises à jour de l’état du compte, des alertes de sécurité, des mises à jour de vérification, des notifications sur l’état d’une demande et des avis importants concernant le service. **La fréquence des messages varie. Des frais de messages et de données peuvent s’appliquer.**
+
+Le consentement SMS est facultatif et doit être recueilli séparément de l’acceptation des présentes Conditions, de la Politique de Confidentialité, de la création d’un compte, d’un achat ou de toute autre action obligatoire. Le consentement à recevoir des SMS n’est pas une condition d’achat ou d’utilisation des Services. La simple fourniture d’un numéro de téléphone ne constitue pas un consentement.
+
+Lorsque notre site web ou notre application mobile collecte un numéro de téléphone pour une inscription SMS, l’avis d’opt-in doit être clair, visible, propre au programme et décoché par défaut. Le programme SMS de Yume utilise le texte CTA suivant :
+
+> En cochant cette case, vous acceptez de recevoir des SMS transactionnels et liés au compte de Yume Official, notamment des codes de vérification à usage unique, des notifications d’état du compte, des alertes de sécurité, des mises à jour de vérification et des notifications d’état de demande. La fréquence varie selon l’activité du compte. Des frais de messages et de données peuvent s’appliquer. Répondez STOP pour vous désinscrire ou HELP pour obtenir de l’aide. Le consentement à recevoir des SMS n’est pas une condition d’achat ou d’utilisation de nos services. Consultez nos [Conditions de service](https://www.yume.zone/terms) et notre [Politique de confidentialité](https://www.yume.zone/privacy).
+
+Les utilisateurs peuvent continuer à utiliser nos Services sans s’inscrire aux SMS.
+
+Répondez **STOP** à tout moment pour vous désinscrire des SMS récurrents. Répondez **HELP** ou contactez **support@yume.zone** pour obtenir de l’aide. La désinscription et la demande d’aide n’affectent pas votre capacité à utiliser les Services, sauf lorsqu’une fonctionnalité exige nécessairement un numéro de téléphone pour la sécurité ou la récupération du compte.
+
+## X. Services tiers
 Les Services peuvent contenir des liens vers, dépendre de ou intégrer des services tiers, prestataires de paiement, fournisseurs cloud, API, outils d’analyse, fournisseurs d’identité, bibliothèques logicielles ou contenus. Ces services sont régis par leurs propres conditions et politiques de confidentialité. Sauf disposition légale contraire, nous ne sommes pas responsables de leur disponibilité, décisions, contenu, sécurité, frais ou pratiques de données.
 
 ---
 
-## X. Confidentialité et protection des données
+## XI. Confidentialité et protection des données
 Votre utilisation des Services est soumise à notre Politique de Confidentialité. Vous reconnaissez que nous pouvons collecter, utiliser, stocker, divulguer, transférer et protéger les informations comme décrit dans cette politique. Si vous soumettez des données personnelles concernant autrui, vous êtes responsable d’obtenir les consentements ou autorisations nécessaires.
 
 ---
 
-## XI. Suspension et résiliation
+## XII. Suspension et résiliation
 Vous pouvez cesser d’utiliser les Services à tout moment. Vous pouvez demander la suppression de votre compte, sous réserve de vérification d’identité, obligations de conservation légale, transactions non résolues, prévention de fraude, besoins de sécurité et cycles de suppression des sauvegardes.
 
 Nous pouvons suspendre ou résilier votre accès si nous estimons raisonnablement que vous avez violé les présentes Conditions, créé un risque juridique ou de sécurité, omis de payer les sommes dues, abusé des remboursements ou promotions, ou utilisé les Services de manière nuisible. La résiliation peut entraîner la perte d’accès aux comptes, données, abonnements, crédits et contenus numériques. Vous restez responsable des montants dus avant la résiliation.
 
 ---
 
-## XII. Exclusions de garantie
+## XIII. Exclusions de garantie
 Dans la mesure maximale permise par la loi, les Services sont fournis « en l’état » et « selon disponibilité ». Nous ne garantissons pas qu’ils seront ininterrompus, exempts d’erreurs, sécurisés, compatibles avec tous les appareils ou exempts de perte de données. Nous ne garantissons pas que contenus, sorties d’IA, résultats de recherche, disponibilité, stockage, livraison ou intégrations tierces répondront à vos attentes.
 
 Certaines juridictions n’autorisent pas certaines exclusions. Dans ces juridictions, les exclusions s’appliquent uniquement dans la mesure permise par la loi.
 
 ---
 
-## XIII. Limitation de responsabilité
+## XIV. Limitation de responsabilité
 Dans la mesure maximale permise par la loi, Yume et ses propriétaires, dirigeants, employés, contractants, fournisseurs et affiliés ne seront pas responsables des dommages indirects, accessoires, spéciaux, consécutifs, exemplaires ou punitifs, ni des pertes de profits, revenus, données, clientèle, opportunité commerciale ou interruption de service.
 
 Dans la mesure maximale permise par la loi, notre responsabilité totale pour toute réclamation liée aux Services ou aux présentes Conditions ne dépassera pas le montant payé à Yume pour le Service spécifique à l’origine de la réclamation au cours des trois mois précédant l’événement, ou 100 USD si aucun paiement n’a été effectué.
@@ -159,24 +173,24 @@ Rien dans les présentes Conditions ne limite une responsabilité qui ne peut ê
 
 ---
 
-## XIV. Indemnisation
+## XV. Indemnisation
 Dans la mesure permise par la loi, vous acceptez d’indemniser et de dégager de toute responsabilité Yume ainsi que ses propriétaires, dirigeants, employés, contractants, fournisseurs et affiliés contre les réclamations, pertes, responsabilités, dommages, coûts et dépenses, y compris honoraires raisonnables d’avocat, découlant de votre Contenu Utilisateur, de votre utilisation des Services, de votre violation des présentes Conditions, de votre violation de la loi ou de votre atteinte aux droits de tiers.
 
 ---
 
-## XV. Droit applicable et règlement des litiges
+## XVI. Droit applicable et règlement des litiges
 Les présentes Conditions sont régies par le droit de l’État du Wyoming et le droit fédéral américain applicable, sans égard aux règles de conflit de lois, sauf lorsque des règles impératives de protection des consommateurs dans votre juridiction en disposent autrement.
 
 Avant toute réclamation formelle, vous acceptez de nous contacter à **support@yume.zone** afin de tenter une résolution amiable. Si aucune résolution n’est possible, les litiges seront traités par les juridictions ou instances compétentes permises par la loi applicable. Chaque partie peut demander une injonction ou mesure équitable en cas d’usage abusif de propriété intellectuelle, accès non autorisé, menace de sécurité ou violation de confidentialité.
 
 ---
 
-## XVI. Modifications des Conditions
+## XVII. Modifications des Conditions
 Nous pouvons mettre à jour ces Conditions. La version mise à jour entre en vigueur lors de sa publication, sauf date ultérieure indiquée. Pour les changements importants, nous pouvons notifier via les Services, le site, l’e-mail ou tout moyen raisonnable. L’utilisation continue des Services après la date d’effet vaut acceptation des Conditions mises à jour.
 
 ---
 
-## XVII. Contact
+## XVIII. Contact
 Pour toute question concernant ces Conditions, contactez-nous :
 
 - **E-mail :** support@yume.zone

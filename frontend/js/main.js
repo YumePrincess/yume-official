@@ -1091,10 +1091,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 多语言 Markdown 加载
     async function loadTermsContent(type) {
-        let fileLang = lang;  // 使用 lang 作为当前语言
-
-        // 正确路径
-        let url = `/terms/${type}/${fileLang}.md`;
+        const fileLang = lang;  // 使用 lang 作为当前语言
+        const url = `/terms/${type}/${fileLang}.md`;
 
         try {
             let response = await fetchWithTimeout(url);
@@ -1122,21 +1120,8 @@ document.addEventListener("DOMContentLoaded", () => {
         prepareModalMotion(termsBox, true);
     }
 
-    // Tab 切换
-    const tabs = document.querySelectorAll(".terms-tab");
     const panels = document.querySelectorAll(".terms-panel");
     const termsMenu = document.querySelector(".terms-menu");
-    const termAliases = {
-        user: "user",
-        terms: "user",
-        privacy: "privacy",
-        refund: "refunds",
-        refunds: "refunds"
-    };
-
-    function normalizeTermType(value) {
-        return termAliases[(value || "").trim().toLowerCase()] || "";
-    }
 
     if (termsMenu) {
         termsMenu.addEventListener("wheel", (event) => {
@@ -1148,6 +1133,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }, { passive: false });
     }
 
+    // Tab 切换
+    const tabs = document.querySelectorAll(".terms-tab");
     tabs.forEach(tab => {
         tab.addEventListener("click", () => {
 
@@ -1166,7 +1153,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // URL 参数自动打开条款
     function openTermsFromURL() {
-        const term = normalizeTermType(getUrlParamIgnoreCase("terms"));
+        const termAliases = {
+            user: "user",
+            terms: "user",
+            privacy: "privacy",
+            refund: "refunds",
+            refunds: "refunds"
+        };
+        const pathAliases = {
+            "/terms": "user",
+            "/terms/": "user",
+            "/user": "user",
+            "/user/": "user",
+            "/terms/user": "user",
+            "/terms/user/": "user",
+            "/privacy": "privacy",
+            "/privacy/": "privacy",
+            "/terms/privacy": "privacy",
+            "/terms/privacy/": "privacy",
+            "/refund": "refunds",
+            "/refund/": "refunds",
+            "/refunds": "refunds",
+            "/refunds/": "refunds",
+            "/terms/refund": "refunds",
+            "/terms/refund/": "refunds",
+            "/terms/refunds": "refunds",
+            "/terms/refunds/": "refunds"
+        };
+        const queryTerm = termAliases[(getUrlParamIgnoreCase("terms") || "").trim().toLowerCase()];
+        const pathTerm = pathAliases[window.location.pathname.toLowerCase()];
+        const term = queryTerm || pathTerm || "";
 
         if (!term) return;
 
@@ -1178,9 +1194,8 @@ document.addEventListener("DOMContentLoaded", () => {
             targetTab.classList.add("active");
 
             panels.forEach(p => p.classList.remove("show"));
-            targetPanel.classList.add("show");
-
             // 加载对应的 Markdown 文件
+            targetPanel.classList.add("show");
             window.openTerms();
         }
     }

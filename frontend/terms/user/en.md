@@ -1,6 +1,6 @@
 # Terms of Service
 - **Applicable Entity: Yume Internet LLC (a limited liability company registered in the State of Wyoming, USA)**
-- **Last Updated: July 10, 2026**
+- **Last Updated: September 2, 2026**
 - **Governing Law: These Terms are governed by the laws of the State of Wyoming, USA, and applicable United States federal law, except where mandatory consumer protection laws provide otherwise.**
 - **Language Priority: If there is any inconsistency between language versions, the English version prevails.**
 
@@ -126,31 +126,45 @@ Custom work, deployment assistance, migration support, or dedicated support may 
 
 ---
 
-## IX. Third-Party Services
+## IX. SMS Messaging and Consent
+
+Yume may send transactional and account-related text messages to users who expressly opt in to a specific Yume SMS program. These messages may include verification codes, account status updates, security alerts, verification updates, application status notifications, and important service notices. **Message frequency varies. Message and data rates may apply.**
+
+SMS consent is optional and must be separate from acceptance of these Terms, the Privacy Policy, account creation, a purchase, or any other required action. Consent to receive SMS messages is not a condition of purchase or use of the Services. Providing a phone number alone does not create consent.
+
+When our website or mobile application collects a phone number for SMS enrollment, the opt-in notice must be clear, conspicuous, campaign-specific, and unchecked by default. The following is the CTA language for the Yume SMS program:
+
+> By checking this box, you agree to receive transactional and account-related SMS messages from Yume Official, including one-time verification codes, account status notifications, security alerts, account verification updates, and account application status notifications. Message frequency varies based on account activity. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent to receive SMS messages is not a condition of purchase or use of our services. See our [Terms of Service](https://www.yume.zone/terms) and [Privacy Policy](https://www.yume.zone/privacy).
+
+Users may continue using our Services without opting in to SMS messaging.
+
+Reply **STOP** at any time to opt out of recurring SMS messages. Reply **HELP** or contact **support@yume.zone** for help. Opt-out and help instructions do not affect your ability to use the Services, except where a specific feature necessarily requires a phone number for security or account recovery.
+
+## X. Third-Party Services
 The Services may link to, rely on, or integrate third-party services, payment processors, cloud providers, APIs, analytics tools, identity providers, software libraries, or content. Third-party services are governed by their own terms and privacy policies. We are not responsible for third-party availability, decisions, content, security, fees, or data practices, except where applicable law provides otherwise.
 
 ---
 
-## X. Privacy and Data Protection
+## XI. Privacy and Data Protection
 Your use of the Services is subject to our Privacy Policy. By using the Services, you acknowledge that we may collect, use, store, disclose, transfer, and protect information as described in that policy. You are responsible for obtaining any required consent before submitting personal data about others through the Services.
 
 ---
 
-## XI. Suspension and Termination
+## XII. Suspension and Termination
 You may stop using the Services at any time. You may request account deletion by contacting us, subject to identity verification, legal retention requirements, unresolved transactions, fraud prevention, security needs, and backup deletion cycles.
 
 We may suspend or terminate your access if we reasonably believe that you violated these Terms, created legal or security risk, failed to pay amounts owed, abused refunds or promotions, or used the Services in a harmful manner. Termination may result in loss of access to accounts, data, memberships, credits, and digital content. You remain responsible for amounts incurred before termination.
 
 ---
 
-## XII. Disclaimers
+## XIII. Disclaimers
 To the maximum extent permitted by law, the Services are provided on an “as is” and “as available” basis. We do not guarantee that the Services will be uninterrupted, error-free, secure, compatible with every device, or free of data loss. We do not guarantee that content, AI outputs, search results, availability, storage, delivery, or third-party integrations will meet your expectations.
 
 Some jurisdictions do not allow certain warranty exclusions. In those jurisdictions, the exclusions apply only to the extent permitted by law.
 
 ---
 
-## XIII. Limitation of Liability
+## XIV. Limitation of Liability
 To the maximum extent permitted by law, Yume and its owners, officers, employees, contractors, suppliers, and affiliates will not be liable for indirect, incidental, special, consequential, exemplary, or punitive damages, or for loss of profits, revenue, data, goodwill, business opportunity, or service interruption.
 
 To the maximum extent permitted by law, our total liability for claims arising out of or relating to the Services or these Terms will not exceed the amount you paid to Yume for the specific Service giving rise to the claim during the three months before the event giving rise to liability, or USD 100 if no payment was made.
@@ -159,24 +173,24 @@ Nothing in these Terms limits liability that cannot be limited under applicable 
 
 ---
 
-## XIV. Indemnification
+## XV. Indemnification
 To the extent permitted by law, you agree to indemnify and hold harmless Yume and its owners, officers, employees, contractors, suppliers, and affiliates from claims, losses, liabilities, damages, costs, and expenses, including reasonable attorneys’ fees, arising from your User Content, your use of the Services, your violation of these Terms, your violation of law, or your infringement of third-party rights.
 
 ---
 
-## XV. Governing Law and Dispute Resolution
+## XVI. Governing Law and Dispute Resolution
 These Terms are governed by the laws of the State of Wyoming and applicable United States federal law, without regard to conflict-of-law rules, except where mandatory consumer protection laws in your jurisdiction provide otherwise.
 
 Before filing a formal claim, you agree to contact us at **support@yume.zone** and attempt to resolve the dispute informally. If informal resolution is unsuccessful, disputes will be handled by courts or other competent forums as permitted by applicable law. Nothing prevents either party from seeking injunctive or equitable relief for misuse of intellectual property, unauthorized access, security threats, or confidentiality violations.
 
 ---
 
-## XVI. Changes to These Terms
+## XVII. Changes to These Terms
 We may update these Terms from time to time. The updated version becomes effective when posted, unless a later effective date is stated. For material changes, we may provide notice through the Services, website, email, or other reasonable means. Continued use of the Services after the effective date means you accept the updated Terms.
 
 ---
 
-## XVII. Contact
+## XVIII. Contact
 If you have questions about these Terms, please contact us:
 
 - **Email:** support@yume.zone

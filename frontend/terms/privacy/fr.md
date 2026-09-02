@@ -1,6 +1,6 @@
 # Politique de Confidentialité
 - **Entité concernée : Yume Internet LLC (société à responsabilité limitée enregistrée dans l’État du Wyoming, États-Unis)**
-- **Dernière mise à jour : 10 juillet 2026**
+- **Dernière mise à jour : 2 septembre 2026**
 - **Droit applicable : La présente Politique est régie par le droit de l’État du Wyoming, États-Unis, et par le droit fédéral américain applicable, sauf lorsque des règles impératives de protection des données en disposent autrement.**
 - **Priorité linguistique : En cas de divergence entre les versions linguistiques, la version anglaise prévaut.**
 
@@ -116,7 +116,17 @@ Le personnel de support ou les contractants peuvent accéder aux dossiers de com
 
 ---
 
-## VIII. Conservation
+## VIII. SMS et informations mobiles
+
+Si vous choisissez de vous inscrire à un programme SMS de Yume via notre site web ou notre application mobile, nous collectons votre numéro de téléphone mobile, votre preuve d’opt-in et les métadonnées de message nécessaires au fonctionnement de ce programme. Les SMS peuvent inclure des messages transactionnels et liés au compte, tels que des codes de vérification, des mises à jour de l’état du compte, des alertes de sécurité, des mises à jour de vérification, des notifications sur l’état d’une demande et des avis importants concernant le service. **La fréquence des messages varie. Des frais de messages et de données peuvent s’appliquer.**
+
+Le consentement SMS est volontaire et distinct de l’acceptation des présentes Conditions, de la présente Politique de Confidentialité, de la création d’un compte, d’un achat ou de l’utilisation des Services. Le consentement à recevoir des SMS n’est pas une condition d’achat ou d’utilisation des Services. La simple fourniture d’un numéro de téléphone ne vous inscrit pas à un programme SMS.
+
+**Les informations mobiles, notamment les numéros de téléphone et les informations d’opt-in ou de consentement SMS, ne seront ni vendues, ni louées, ni partagées avec des tiers ou des sociétés affiliées à leurs propres fins de marketing ou de promotion.** Nous ne pouvons partager ces informations qu’avec des prestataires qui les traitent selon nos instructions pour envoyer, sécuriser ou prendre en charge le programme SMS demandé, ou pour respecter la loi. Ces prestataires ne peuvent pas les utiliser pour leur propre marketing.
+
+Pour obtenir de l’aide, répondez **HELP** ou contactez **support@yume.zone**. Pour arrêter les SMS récurrents, répondez **STOP**. Nous traiterons les demandes de désinscription conformément à la loi applicable.
+
+## IX. Conservation
 Nous conservons les données personnelles aussi longtemps que raisonnablement nécessaire aux finalités décrites dans cette Politique, notamment fournir les Services, maintenir les comptes, résoudre les litiges, faire appliquer les accords, prévenir la fraude, respecter la loi et maintenir les sauvegardes.
 
 Les durées varient selon le type de données. Par exemple, les données de compte sont généralement conservées tant que le compte est actif ; les enregistrements de transaction et fiscaux peuvent être conservés pendant les périodes légales ; les journaux de sécurité peuvent être conservés pour protéger les Services ; les contenus supprimés peuvent rester dans les sauvegardes pendant une période limitée avant la fin des cycles de suppression.
@@ -125,17 +135,17 @@ Lorsque les données ne sont plus nécessaires, nous les supprimons, anonymisons
 
 ---
 
-## IX. Sécurité
+## X. Sécurité
 Nous utilisons des mesures administratives, techniques et organisationnelles raisonnables pour protéger les données personnelles, telles que contrôles d’accès, chiffrement lorsque approprié, journalisation, surveillance, principe du moindre privilège et revues de sécurité. Aucun service en ligne, stockage ou mode de transmission n’est toutefois totalement sécurisé. Vous devez utiliser des mots de passe robustes, protéger vos identifiants, conserver des sauvegardes et signaler rapidement toute activité suspecte.
 
 ---
 
-## X. Transferts internationaux
+## XI. Transferts internationaux
 Nous pouvons traiter et stocker les données personnelles aux États-Unis et dans d’autres pays où nous ou nos prestataires opérons. Les lois de ces pays peuvent différer de celles de votre juridiction. Lorsque requis, nous utilisons des garanties appropriées pour les transferts internationaux, telles que protections contractuelles, mesures de sécurité et respect des règles de transfert applicables.
 
 ---
 
-## XI. Vos droits
+## XII. Vos droits
 Selon votre lieu de résidence, vous pouvez avoir le droit de :
 
 - demander l’accès aux données personnelles que nous détenons ;
@@ -151,22 +161,22 @@ Pour exercer vos droits, contactez **support@yume.zone**. Nous pouvons devoir v�
 
 ---
 
-## XII. Enfants
+## XIII. Enfants
 Les Services ne sont pas destinés aux enfants de moins de 13 ans ou de l’âge minimum prévu par la loi applicable. Si nous apprenons avoir collecté des données personnelles d’un enfant sans consentement requis, nous prendrons des mesures appropriées pour les supprimer. Les parents ou représentants légaux peuvent nous contacter à **support@yume.zone**.
 
 ---
 
-## XIII. Liens et services tiers
+## XIV. Liens et services tiers
 Les Services peuvent contenir des liens vers des sites, applications, pages de paiement, plateformes sociales ou intégrations tiers. Leurs pratiques de confidentialité sont régies par leurs propres politiques. Nous vous encourageons à les consulter avant de fournir des données personnelles à des tiers.
 
 ---
 
-## XIV. Modifications de cette Politique
+## XV. Modifications de cette Politique
 Nous pouvons mettre à jour cette Politique. La version mise à jour entre en vigueur lors de sa publication, sauf date ultérieure indiquée. Pour les changements importants, nous pouvons notifier via les Services, le site, l’e-mail ou tout moyen raisonnable.
 
 ---
 
-## XV. Contact
+## XVI. Contact
 Pour toute question ou demande concernant cette Politique, contactez-nous :
 
 - **E-mail :** support@yume.zone

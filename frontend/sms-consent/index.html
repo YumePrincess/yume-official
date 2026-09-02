@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" class="sms-demo-root">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A public Yume Official SMS consent and Twilio A2P Campaign demonstration for website and mobile application enrollment.">
+    <meta property="og:description" content="A public Yume Official SMS consent and Twilio A2P Campaign demonstration for website and mobile application enrollment.">
+    <meta name="author" content="Yume Official">
+    <link rel="canonical" href="https://www.yume.zone/sms-consent/">
+    <title>Yume Official SMS Campaign Demo</title>
+    <script src="/js/preferences.js?v=20260718-2"></script>
+    <script>YumePreferences.applyTheme(YumePreferences.getThemeChoice());</script>
+    <link rel="preload" href="/img/logo.png" as="image">
+    <link rel="stylesheet" href="/css/font.css">
+    <link rel="stylesheet" href="/sms-consent/style.css?v=sms-cta-2">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/img/icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="/img/logo.png">
+</head>
+<body>
+    <div class="page-background" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="site-header-inner">
+            <a class="brand" href="/" aria-label="Yume Official" data-i18n-aria-label="brandName">
+                <img src="/img/logo.png" alt="" width="38" height="38" decoding="async">
+                <span class="brand-wordmark"><strong>yume</strong><span>.zone</span></span>
+            </a>
+
+            <nav class="site-nav" aria-label="Site navigation" data-i18n-aria-label="siteNavigation">
+                <a href="/pricing/" data-i18n="pricing">Pricing</a>
+                <a href="/terms" data-i18n="terms">Terms</a>
+                <a href="/privacy" data-i18n="privacy">Privacy</a>
+            </nav>
+
+            <div class="preference-controls">
+                <div class="preference-menu" data-preference-menu="language">
+                    <button class="preference-trigger" type="button" aria-expanded="false" aria-haspopup="true" data-preference-trigger="language" data-i18n-aria-label="selectLanguage">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5.828h2.7m3.3 0H9.5m-1.8 0h1.8m-1.8 0V5m1.8.828c-.316 1.131-.98 2.201-1.736 3.141M5.836 11a19 19 0 0 0 1.928-2.03m0 0c-.385-.453-.925-1.184-1.08-1.515m1.08 1.514l1.157 1.203M13.5 19l.833-2m4.167 2l-.833-2m-3.334 0L16 13l1.667 4m-3.334 0h3.334"/><path stroke-linecap="round" d="M14 10V8c0-2.828 0-4.243-.879-5.121C12.243 2 10.828 2 8 2s-4.243 0-5.121.879C2 3.757 2 5.172 2 8s0 4.243.879 5.121C3.757 14 5.172 14 8 14h2"/><path d="M10 16c0-2.828 0-4.243.879-5.121C11.757 10 13.172 10 16 10s5.121.879 5.121 5.121S19.828 22 16 22s-6-.879-6-6Z"/></svg>
+                        <span class="visually-hidden" data-i18n="language">Language</span>
+                    </button>
+                    <div class="preference-popover" role="menu">
+                        <button type="button" role="menuitemradio" data-language-choice="auto" data-i18n="languageAuto">Auto</button>
+                        <button type="button" role="menuitemradio" data-language-choice="en">English (United States)</button>
+                        <button type="button" role="menuitemradio" data-language-choice="fr">Français (France)</button>
+                        <button type="button" role="menuitemradio" data-language-choice="ja">日本語（日本）</button>
+                        <button type="button" role="menuitemradio" data-language-choice="zh-tw">繁體中文（臺灣）</button>
+                        <button type="button" role="menuitemradio" data-language-choice="zh-cn">简体中文（中国大陆）</button>
+                    </div>
+                </div>
+
+                <div class="preference-menu" data-preference-menu="theme">
+                    <button class="preference-trigger" type="button" aria-expanded="false" aria-haspopup="true" data-preference-trigger="theme" data-i18n-aria-label="selectTheme">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M12 16a4 4 0 0 0 0-8z"/><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10s10-4.477 10-10S17.523 2 12 2m0 2v4a4 4 0 1 0 0 8v4a8 8 0 1 0 0-16" clip-rule="evenodd"/></svg>
+                        <span class="visually-hidden" data-i18n="theme">Theme</span>
+                    </button>
+                    <div class="preference-popover" role="menu">
+                        <button type="button" role="menuitemradio" data-theme-choice="auto" data-i18n="themeAuto">Auto</button>
+                        <button type="button" role="menuitemradio" data-theme-choice="dark" data-i18n="themeDark">Dark</button>
+                        <button type="button" role="menuitemradio" data-theme-choice="light" data-i18n="themeLight">Light</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="demo-main">
+        <section class="hero-section" aria-labelledby="page-title">
+            <div class="hero-copy">
+                <p class="eyebrow" data-i18n="eyebrow">Twilio A2P 10DLC · Call to Action</p>
+                <h1 id="page-title"><span data-i18n="titleLead">Yume Official</span><br><span class="hero-accent" data-i18n="titleAccent">SMS Campaign</span></h1>
+                <p class="hero-subtitle" data-i18n="subtitle">A public, reviewable example of the campaign details and the consent experience.</p>
+            </div>
+            <div class="demo-pill">
+                <span class="status-dot" aria-hidden="true"></span>
+                <span data-i18n="demoOnly">Demo only · no messages are sent</span>
+            </div>
+        </section>
+
+        <section class="notice-card" role="note">
+            <div class="notice-icon" aria-hidden="true">i</div>
+            <div>
+                <strong data-i18n="reviewableTitle">Built for a clear review</strong>
+                <p data-i18n="reviewableCopy">This static page makes the brand, message purpose, consent language, message frequency, rates notice, STOP/HELP instructions, and policy links visible in one place.</p>
+            </div>
+        </section>
+
+        <ol class="stepper" aria-label="Demo flow" data-i18n-aria-label="demoFlow">
+            <li class="is-current" data-step-indicator="1"><span>1</span><strong data-i18n="stepReview">Review details</strong></li>
+            <li data-step-indicator="2"><span>2</span><strong data-i18n="stepConsent">Choose consent</strong></li>
+            <li data-step-indicator="3"><span>3</span><strong data-i18n="stepComplete">See confirmation</strong></li>
+        </ol>
+
+        <div class="content-grid">
+            <div class="main-column">
+                <section class="card" id="campaign-details" aria-labelledby="details-title">
+                    <div class="card-heading">
+                        <div>
+                            <p class="section-kicker" data-i18n="sectionKicker">Campaign submission</p>
+                            <h2 id="details-title" data-i18n="detailsTitle">Campaign details</h2>
+                        </div>
+                        <span class="field-count" data-i18n="fieldCount">Review fields</span>
+                    </div>
+
+                    <div class="form-fields">
+                        <div class="field field-wide">
+                            <div class="field-heading"><label for="campaign-description" data-i18n="campaignDescription">Campaign description</label><button type="button" class="copy-button" data-copy-target="campaign-description" data-i18n="copy">Copy</button></div>
+                            <textarea id="campaign-description" readonly>Yume Official sends transactional and account-related SMS messages to users who expressly opt in through our website or mobile application. Messages may include one-time verification codes, account status notifications, security alerts, account verification updates, account application status notifications, and important service notices. Message frequency varies based on account activity. Users may continue using our services without opting in to SMS messaging.</textarea>
+                        </div>
+
+                        <div class="field field-wide">
+                            <div class="field-heading"><label for="sender-number" data-i18n="senderNumber">Campaign sending number</label><span class="required-note" data-i18n="replaceBeforeSubmit">Replace before submission</span></div>
+                            <input id="sender-number" type="text" inputmode="tel" placeholder="+1 XXX XXX XXXX" autocomplete="tel">
+                            <p class="field-note" data-i18n="senderNumberNote">This demonstration does not invent a sender number. Enter the actual Twilio number assigned to the Campaign before using this page as production evidence.</p>
+                        </div>
+
+                        <div class="field field-wide sample-group">
+                            <div class="field-heading"><span class="field-label" data-i18n="sampleMessages">Sample messages</span><span class="field-hint" data-i18n="sampleMessagesHint">2–5 examples · brand and opt-out language included</span></div>
+                            <div class="sample-list">
+                                <div class="sample-item"><label for="sample-1" data-i18n="sample1">Sample message #1</label><div class="copyable"><textarea id="sample-1" readonly>Yume Official: Your verification code is [123456]. It expires in [10] minutes. Reply STOP to opt out of future Yume Official SMS.</textarea><button type="button" class="copy-button" data-copy-target="sample-1" data-i18n="copy">Copy</button></div></div>
+                                <div class="sample-item"><label for="sample-2" data-i18n="sample2">Sample message #2</label><div class="copyable"><textarea id="sample-2" readonly>Yume Official: Your account security settings were updated on [date]. If this was not you, contact support@yume.zone. Reply STOP to opt out.</textarea><button type="button" class="copy-button" data-copy-target="sample-2" data-i18n="copy">Copy</button></div></div>
+                                <div class="sample-item"><label for="sample-3" data-i18n="sample3">Sample message #3</label><div class="copyable"><textarea id="sample-3" readonly>Yume Official: Your account verification status is now [approved/pending]. View your account at https://www.yume.zone/. Reply STOP to opt out.</textarea><button type="button" class="copy-button" data-copy-target="sample-3" data-i18n="copy">Copy</button></div></div>
+                                <div class="sample-item"><label for="sample-4" data-i18n="sample4">Sample message #4</label><div class="copyable"><textarea id="sample-4" readonly>Yume Official: Your application status is [status]. We will send updates as they become available. Reply STOP to opt out.</textarea><button type="button" class="copy-button" data-copy-target="sample-4" data-i18n="copy">Copy</button></div></div>
+                                <div class="sample-item"><label for="sample-5" data-i18n="sample5">Sample message #5</label><div class="copyable"><textarea id="sample-5" readonly>Yume Official: Important service notice for your account: [notice]. For help, reply HELP or contact support@yume.zone. Reply STOP to opt out.</textarea><button type="button" class="copy-button" data-copy-target="sample-5" data-i18n="copy">Copy</button></div></div>
+                            </div>
+                        </div>
+
+                        <fieldset class="field field-wide content-flags">
+                            <legend data-i18n="contentFlags">Select any content your messages may contain</legend>
+                            <label class="check-line"><input type="checkbox" checked><span data-i18n="embeddedLinks">Embedded links</span><small data-i18n="embeddedLinksNote">Sample #3 contains the public Yume URL.</small></label>
+                            <label class="check-line"><input type="checkbox"><span data-i18n="phoneNumbers">Phone numbers</span><small data-i18n="phoneNumbersNote">No phone number is included in the sample messages.</small></label>
+                            <label class="check-line"><input type="checkbox"><span data-i18n="directLending">Content related to direct lending or other loan arrangement</span></label>
+                            <label class="check-line"><input type="checkbox"><span data-i18n="ageGated">Age-gated content as defined by carrier and CTIA guidelines</span><a href="https://api.ctia.org/wp-content/uploads/2023/05/230523-CTIA-Messaging-Principles-and-Best-Practices-FINAL.pdf" target="_blank" rel="noopener" data-i18n="ctiaGuidelines">CTIA guidelines</a></label>
+                        </fieldset>
+
+                        <div class="field link-field">
+                            <div class="field-label" id="privacy-link-label" data-i18n="privacyLink">Provide link to the Campaign's privacy policy</div>
+                            <a id="privacy-link" class="readonly-link" href="/privacy" aria-labelledby="privacy-link-label">https://www.yume.zone/privacy</a>
+                            <p class="field-note" data-i18n="smsPrivacyNote">Mobile information and SMS consent information will not be shared with third parties or affiliates for marketing or promotional purposes.</p>
+                        </div>
+                        <div class="field link-field">
+                            <div class="field-label" id="terms-link-label" data-i18n="termsLink">Provide link to Campaign's terms of service</div>
+                            <a id="terms-link" class="readonly-link" href="/terms" aria-labelledby="terms-link-label">https://www.yume.zone/terms</a>
+                            <p class="field-note" data-i18n="termsLinkNote">The SMS disclosures and opt-out instructions are also available in the public terms.</p>
+                        </div>
+
+                        <div class="field field-wide">
+                            <div class="field-heading"><label for="message-flow" data-i18n="messageFlow">How do end-users consent to receive messages?</label><button type="button" class="copy-button" data-copy-target="message-flow" data-i18n="copy">Copy</button></div>
+                            <textarea id="message-flow" readonly>End users opt in to receive SMS messages from Yume Official through our website or mobile application.
+
+When a user provides or adds a mobile phone number to their Yume Official account, the user is presented with a separate, unchecked SMS consent checkbox. The checkbox is not selected by default, and the user must actively select it to consent to receiving SMS messages.
+
+The consent disclosure states:
+
+“By checking this box, you agree to receive transactional and account-related SMS messages from Yume Official, including one-time verification codes, account status notifications, security alerts, account verification updates, and account application status notifications. Message frequency varies based on account activity. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent to receive SMS messages is not a condition of purchase or use of our services. See our Terms of Service and Privacy Policy.”
+
+Users may continue using our services without opting in to SMS messaging.
+
+Website: https://www.yume.zone
+Privacy Policy: https://www.yume.zone/privacy
+Terms of Service: https://www.yume.zone/terms
+Public opt-in example: https://www.yume.zone/sms-consent</textarea>
+                        </div>
+
+                        <div class="field field-wide public-example-field">
+                            <div class="field-label" id="public-example-label" data-i18n="publicExample">Public opt-in example or screenshot</div>
+                            <a class="readonly-link" href="/sms-consent/" aria-labelledby="public-example-label">https://www.yume.zone/sms-consent</a>
+                            <p class="field-note" data-i18n="publicExampleNote">This is the canonical public page for the website CTA and the shared consent pattern.</p>
+                        </div>
+
+                        <div class="keyword-grid">
+                            <div class="field"><label for="opt-in-keywords" data-i18n="optInKeywords">List all opt-in keywords</label><input id="opt-in-keywords" readonly value="None — web form only"><p class="field-note" data-i18n="optInKeywordsNote">No text-to-join flow is used in this demonstration.</p></div>
+                            <div class="field"><label for="opt-in-message" data-i18n="optInMessage">What is the opt-in message?</label><textarea id="opt-in-message" readonly>Not used — consent is collected through the website or mobile application checkbox represented on this page.</textarea></div>
+                            <div class="field"><label for="opt-out-keywords" data-i18n="optOutKeywords">List all opt-out keywords</label><input id="opt-out-keywords" readonly value="STOP, UNSUBSCRIBE, END, QUIT"></div>
+                            <div class="field"><label for="opt-out-message" data-i18n="optOutMessage">What is the opt-out message?</label><textarea id="opt-out-message" readonly>Yume Official: You are unsubscribed. No further messages will be sent. Reply HELP for help.</textarea></div>
+                            <div class="field"><label for="help-keywords" data-i18n="helpKeywords">List all help keywords</label><input id="help-keywords" readonly value="HELP, INFO, SUPPORT"></div>
+                            <div class="field"><label for="help-message" data-i18n="helpMessage">What is the help message?</label><textarea id="help-message" readonly>Yume Official: Help is available at support@yume.zone. Reply STOP to opt out.</textarea></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card cta-card" id="live-cta" aria-labelledby="cta-title">
+                    <div class="card-heading">
+                        <div>
+                            <p class="section-kicker" data-i18n="sectionKicker">Campaign submission</p>
+                            <h2 id="cta-title" data-i18n="ctaTitle">Try the public CTA</h2>
+                        </div>
+                        <span class="optional-badge" data-i18n="optional">Optional</span>
+                    </div>
+                    <p class="card-intro" data-i18n="ctaIntro">The consent request is explicit and optional. The primary action remains available when SMS consent is not selected.</p>
+
+                    <div class="enrollment-methods">
+                        <div class="method-card">
+                            <span class="method-number" aria-hidden="true">01</span>
+                            <div><strong data-i18n="websiteMethod">Website</strong><p data-i18n="websiteMethodCopy">Users provide or add a mobile phone number to their Yume Official account and see the separate, unchecked consent checkbox beside the CTA.</p></div>
+                        </div>
+                        <div class="method-card">
+                            <span class="method-number" aria-hidden="true">02</span>
+                            <div><strong data-i18n="mobileAppMethod">Mobile application</strong><p data-i18n="mobileAppMethodCopy">The mobile application uses the same separate, unchecked consent step when a user provides or adds a mobile phone number to the account.</p></div>
+                        </div>
+                    </div>
+
+                    <form id="sms-demo-form" novalidate>
+                        <div class="phone-field">
+                            <label for="demo-phone"><span data-i18n="mobileNumber">Mobile phone number</span> <span class="label-optional" data-i18n="optional">Optional</span></label>
+                            <input id="demo-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="[客服电话已脱敏]" data-i18n-placeholder="phonePlaceholder">
+                            <p class="field-note" data-i18n="phoneNote">Used only to illustrate the field in this static demo. No number is stored or submitted.</p>
+                        </div>
+
+                        <label class="consent-control" for="sms-consent">
+                            <input id="sms-consent" type="checkbox">
+                            <span class="fake-checkbox" aria-hidden="true"></span>
+                            <span class="consent-copy"><strong data-i18n="consentLabel">Yes, send me Yume Official account and service updates by text.</strong><span data-i18n="consentDisclosure">By checking this box, you agree to receive transactional and account-related SMS messages from Yume Official, including one-time verification codes, account status notifications, security alerts, account verification updates, and account application status notifications. Message frequency varies based on account activity. Message and data rates may apply. Reply STOP to opt out or HELP for help. Consent to receive SMS messages is not a condition of purchase or use of our services. See our Terms of Service and Privacy Policy.</span><span><a href="/privacy" data-i18n="privacyPolicy">Privacy Policy</a><span aria-hidden="true"> · </span><a href="/terms" data-i18n="termsOfService">Terms of Service</a></span></span>
+                        </label>
+
+                        <div class="cta-actions">
+                            <button class="button primary-button" type="submit" data-i18n="continue">Continue</button>
+                            <button class="button secondary-button" type="button" id="continue-without" data-i18n="continueWithoutSms">Continue without SMS</button>
+                        </div>
+                        <div id="demo-status" class="demo-status" role="status" aria-live="polite" data-i18n="readyStatus">Ready for your choice. This page will not send a message.</div>
+                    </form>
+                </section>
+
+                <section class="card registration-card" aria-labelledby="registration-title">
+                    <div class="card-heading">
+                        <div>
+                            <p class="section-kicker" data-i18n="finalCheckKicker">Before you submit</p>
+                            <h2 id="registration-title" data-i18n="registrationTitle">Registration check</h2>
+                        </div>
+                    </div>
+                    <label class="check-line confirmation-line"><input id="registration-confirmation" type="checkbox"><span data-i18n="confirmation">I confirm the information entered here is ready to submit for review.</span></label>
+                    <div class="registration-actions">
+                        <button class="button primary-button" type="button" id="submit-registration" data-i18n="submitRegistration">Submit registration</button>
+                        <button class="button secondary-button" type="button" id="check-errors" data-i18n="checkErrors">Check for errors</button>
+                    </div>
+                    <div id="registration-status" class="demo-status" role="status" aria-live="polite" data-i18n="registrationReady">This is a static demonstration. No registration will be submitted.</div>
+                </section>
+            </div>
+
+            <aside class="side-column">
+                <section class="side-card sticky-card" aria-labelledby="principles-title">
+                    <p class="section-kicker" data-i18n="sideKicker">CTA essentials</p>
+                    <h2 id="principles-title" data-i18n="principlesTitle">Make the choice easy to understand.</h2>
+                    <ul class="principles-list">
+                        <li><span class="check-mark" aria-hidden="true">✓</span><span data-i18n="principleBrand">The brand is named in every sample message.</span></li>
+                        <li><span class="check-mark" aria-hidden="true">✓</span><span data-i18n="principlePurpose">The message purpose and frequency are stated before consent.</span></li>
+                        <li><span class="check-mark" aria-hidden="true">✓</span><span data-i18n="principleRates">Message and data rates may apply is visible.</span></li>
+                        <li><span class="check-mark" aria-hidden="true">✓</span><span data-i18n="principleStopHelp">STOP and HELP instructions are adjacent to the CTA.</span></li>
+                        <li><span class="check-mark" aria-hidden="true">✓</span><span data-i18n="principlePolicies">Privacy and Terms links are public and easy to reach.</span></li>
+                    </ul>
+                    <div class="side-divider"></div>
+                    <p class="side-note" data-i18n="sideNote">Use your actual sender number, real consent implementation, and production policy URLs when preparing the final Campaign submission.</p>
+                </section>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <span>© 2012–<span id="current-year"></span> Yume</span>
+        <span class="footer-links"><a href="/" data-i18n="backHome">Back to home</a><a href="/privacy" data-i18n="privacy">Privacy</a><a href="/terms" data-i18n="terms">Terms</a></span>
+    </footer>
+
+    <script src="/sms-consent/app.js?v=sms-cta-2"></script>
+</body>
+</html>

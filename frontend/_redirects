@@ -3,5 +3,27 @@
 /search/index.html /search/ 308
 /pricing /pricing/ 308
 /pricing/index.html /pricing/ 308
+/sms-consent /sms-consent/ 308
+/sms-consent/index.html /sms-consent/ 308
+# Keep term routes explicit so future static assets are not caught by a wildcard rewrite.
+# Add the new type's path, alias, and /terms/<type> path when a new terms folder is added.
+/terms /?terms=user 200
+/terms/ /?terms=user 200
+/user /?terms=user 200
+/user/ /?terms=user 200
+/terms/user /?terms=user 200
+/terms/user/ /?terms=user 200
+/privacy /?terms=privacy 200
+/privacy/ /?terms=privacy 200
+/terms/privacy /?terms=privacy 200
+/terms/privacy/ /?terms=privacy 200
+/refund /?terms=refunds 200
+/refund/ /?terms=refunds 200
+/refunds /?terms=refunds 200
+/refunds/ /?terms=refunds 200
+/terms/refund /?terms=refunds 200
+/terms/refund/ /?terms=refunds 200
+/terms/refunds /?terms=refunds 200
+/terms/refunds/ /?terms=refunds 200
 /200 /200.html 308
 /500 /500.html 308
