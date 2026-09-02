@@ -370,9 +370,18 @@ h1 {
 
 .demo-pill {
     align-self: flex-start;
+    max-width: 360px;
+    text-align: left;
+    white-space: normal;
+    line-height: 1.35;
     color: var(--demo-success);
     border-color: color-mix(in srgb, var(--demo-success) 32%, transparent);
     background: color-mix(in srgb, var(--demo-success) 10%, transparent);
+}
+
+.demo-pill .status-dot {
+    flex: 0 0 auto;
+    margin-top: 0.2em;
 }
 
 .status-dot {

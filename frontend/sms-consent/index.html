@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="A public Yume Official SMS consent and Twilio A2P Campaign demonstration for website and mobile application enrollment.">
-    <meta property="og:description" content="A public Yume Official SMS consent and Twilio A2P Campaign demonstration for website and mobile application enrollment.">
+    <meta name="description" content="A public representation of the SMS consent flow used in the Yume Official website and mobile application.">
+    <meta property="og:description" content="A public representation of the SMS consent flow used in the Yume Official website and mobile application.">
     <meta name="author" content="Yume Official">
     <link rel="canonical" href="https://www.yume.zone/sms-consent/">
-    <title>Yume Official SMS Campaign Demo</title>
+    <title>Yume Official SMS Opt-In Flow</title>
     <script src="/js/preferences.js?v=20260718-2"></script>
     <script>YumePreferences.applyTheme(YumePreferences.getThemeChoice());</script>
     <link rel="preload" href="/img/logo.png" as="image">
@@ -68,12 +68,12 @@
         <section class="hero-section" aria-labelledby="page-title">
             <div class="hero-copy">
                 <p class="eyebrow" data-i18n="eyebrow">Twilio A2P 10DLC · Call to Action</p>
-                <h1 id="page-title"><span data-i18n="titleLead">Yume Official</span><br><span class="hero-accent" data-i18n="titleAccent">SMS Campaign</span></h1>
+                <h1 id="page-title"><span data-i18n="titleLead">Yume Official</span><br><span class="hero-accent" data-i18n="titleAccent">SMS Opt-In Flow</span></h1>
                 <p class="hero-subtitle" data-i18n="subtitle">A public, reviewable example of the campaign details and the consent experience.</p>
             </div>
             <div class="demo-pill">
                 <span class="status-dot" aria-hidden="true"></span>
-                <span data-i18n="demoOnly">Demo only · no messages are sent</span>
+                <span data-i18n="demoOnly">Public representation of the SMS consent flow used in the Yume Official website and mobile application.</span>
             </div>
         </section>
 
@@ -81,11 +81,11 @@
             <div class="notice-icon" aria-hidden="true">i</div>
             <div>
                 <strong data-i18n="reviewableTitle">Built for a clear review</strong>
-                <p data-i18n="reviewableCopy">This static page makes the brand, message purpose, consent language, message frequency, rates notice, STOP/HELP instructions, and policy links visible in one place.</p>
+                <p data-i18n="reviewableCopy">This public page makes the brand, message purpose, consent language, message frequency, rates notice, STOP/HELP instructions, and policy links visible in one place.</p>
             </div>
         </section>
 
-        <ol class="stepper" aria-label="Demo flow" data-i18n-aria-label="demoFlow">
+        <ol class="stepper" aria-label="Consent flow" data-i18n-aria-label="demoFlow">
             <li class="is-current" data-step-indicator="1"><span>1</span><strong data-i18n="stepReview">Review details</strong></li>
             <li data-step-indicator="2"><span>2</span><strong data-i18n="stepConsent">Choose consent</strong></li>
             <li data-step-indicator="3"><span>3</span><strong data-i18n="stepComplete">See confirmation</strong></li>
@@ -111,7 +111,7 @@
                         <div class="field field-wide">
                             <div class="field-heading"><label for="sender-number" data-i18n="senderNumber">Campaign sending number</label><span class="required-note" data-i18n="replaceBeforeSubmit">Replace before submission</span></div>
                             <input id="sender-number" type="text" inputmode="tel" placeholder="+1 XXX XXX XXXX" autocomplete="tel">
-                            <p class="field-note" data-i18n="senderNumberNote">This demonstration does not invent a sender number. Enter the actual Twilio number assigned to the Campaign before using this page as production evidence.</p>
+                            <p class="field-note" data-i18n="senderNumberNote">This public representation does not invent a sender number. Enter the actual Twilio number assigned to the Campaign before using this page as production evidence.</p>
                         </div>
 
                         <div class="field field-wide sample-group">
@@ -169,7 +169,7 @@ Public opt-in example: https://www.yume.zone/sms-consent</textarea>
                         </div>
 
                         <div class="keyword-grid">
-                            <div class="field"><label for="opt-in-keywords" data-i18n="optInKeywords">List all opt-in keywords</label><input id="opt-in-keywords" readonly value="None — web form only"><p class="field-note" data-i18n="optInKeywordsNote">No text-to-join flow is used in this demonstration.</p></div>
+                            <div class="field"><label for="opt-in-keywords" data-i18n="optInKeywords">List all opt-in keywords</label><input id="opt-in-keywords" readonly value="None — web form only"><p class="field-note" data-i18n="optInKeywordsNote">No text-to-join flow is used on this public consent page.</p></div>
                             <div class="field"><label for="opt-in-message" data-i18n="optInMessage">What is the opt-in message?</label><textarea id="opt-in-message" readonly>Not used — consent is collected through the website or mobile application checkbox represented on this page.</textarea></div>
                             <div class="field"><label for="opt-out-keywords" data-i18n="optOutKeywords">List all opt-out keywords</label><input id="opt-out-keywords" readonly value="STOP, UNSUBSCRIBE, END, QUIT"></div>
                             <div class="field"><label for="opt-out-message" data-i18n="optOutMessage">What is the opt-out message?</label><textarea id="opt-out-message" readonly>Yume Official: You are unsubscribed. No further messages will be sent. Reply HELP for help.</textarea></div>
@@ -204,7 +204,7 @@ Public opt-in example: https://www.yume.zone/sms-consent</textarea>
                         <div class="phone-field">
                             <label for="demo-phone"><span data-i18n="mobileNumber">Mobile phone number</span> <span class="label-optional" data-i18n="optional">Optional</span></label>
                             <input id="demo-phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="[客服电话已脱敏]" data-i18n-placeholder="phonePlaceholder">
-                            <p class="field-note" data-i18n="phoneNote">Used only to illustrate the field in this static demo. No number is stored or submitted.</p>
+                            <p class="field-note" data-i18n="phoneNote">Used only to illustrate the field in this public consent flow. No number is stored or submitted.</p>
                         </div>
 
                         <label class="consent-control" for="sms-consent">
@@ -233,7 +233,7 @@ Public opt-in example: https://www.yume.zone/sms-consent</textarea>
                         <button class="button primary-button" type="button" id="submit-registration" data-i18n="submitRegistration">Submit registration</button>
                         <button class="button secondary-button" type="button" id="check-errors" data-i18n="checkErrors">Check for errors</button>
                     </div>
-                    <div id="registration-status" class="demo-status" role="status" aria-live="polite" data-i18n="registrationReady">This is a static demonstration. No registration will be submitted.</div>
+                    <div id="registration-status" class="demo-status" role="status" aria-live="polite" data-i18n="registrationReady">This public page is informational. No registration will be submitted.</div>
                 </section>
             </div>
 

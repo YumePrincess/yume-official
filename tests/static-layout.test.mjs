@@ -83,6 +83,9 @@ test("SMS consent demo is static and publicly routable", async () => {
   assert.doesNotMatch(redirects, /sms-campaign-demo|campaign-demo/);
   assert.doesNotMatch(demoSource, /sms-campaign-demo|campaign-demo/);
   assert.match(demoSource, /canonical" href="https:\/\/www\.yume\.zone\/sms-consent\//);
+  assert.match(demoSource, /SMS Opt-In Flow/);
+  assert.match(demoSource, /Public representation of the SMS consent flow used in the Yume Official website and mobile application\./);
+  assert.doesNotMatch(demoSource, /SMS Campaign Demo|Demo only · no messages are sent/);
   assert.match(demoSource, /Campaign description/);
   assert.match(demoSource, /Sample message #5/);
   assert.match(demoSource, /id="sms-consent"/);
