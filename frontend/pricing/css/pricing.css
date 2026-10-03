@@ -79,14 +79,7 @@
     transition: opacity 700ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.pricing-page[aria-busy="true"] #bg {
-    transform: scale(1.1);
-    filter: blur(10px);
-}
 
-.pricing-page[aria-busy="true"] .cover {
-    opacity: 0;
-}
 
 .pricing-main {
     display: block;

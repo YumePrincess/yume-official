@@ -162,12 +162,12 @@ a:hover {
     left: 0;
     width: 100%;
     height: calc(100% - 0px);
-    background: var(--page-background-color) url('/img/MHFJ/1.jpg') center / cover no-repeat;
+    background: var(--page-background-color);
 }
 
 #bg {
-    transform: scale(1.10);
-    filter: blur(10px);
+    transform: scale(1);
+    filter: none;
     position: fixed;
     left: 0;
     top: 0;
@@ -178,12 +178,17 @@ a:hover {
     backface-visibility: hidden;
 }
 
+/* Do not expose partially painted JPEGs while the initial image is downloading. */
+#bg:not(.background-ready) {
+    visibility: hidden;
+}
+
 img.error {
     display: none;
 }
 
 .cover {
-    opacity: 0;
+    opacity: 1;
     position: fixed;
     left: 0;
     top: 0;

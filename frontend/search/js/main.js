@@ -258,9 +258,7 @@ yumeLoading.trackResources([
 yumeLoading.finish();
 
 function revealPage() {
-    $('#bg').css("cssText", "transform: scale(1);filter: blur(0px);transition: ease 1.5s;");
     $('#section').css("cssText", "opacity: 1;transition: ease 1.5s;");
-    $('.cover').css("cssText", "opacity: 1;transition: ease 1.5s;");
 
     //用户欢迎
     iziToast.settings({

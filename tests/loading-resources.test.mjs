@@ -8,6 +8,9 @@ const resourcesSource = await readFile(new URL('../frontend/js/loading-resources
 test('image readiness waits for both network completion and decoding', async () => {
     const image = new EventTarget();
     image.getAttribute = () => '/slow-background.jpg';
+    image.id = 'bg';
+    let backgroundVisible = false;
+    image.classList = { add() { backgroundVisible = true; } };
     image.complete = false;
     image.naturalWidth = 1;
     let finishDecode;
@@ -21,9 +24,11 @@ test('image readiness waits for both network completion and decoding', async () 
     image.dispatchEvent(new Event('load'));
     await Promise.resolve();
     assert.equal(ready, false);
+    assert.equal(backgroundVisible, false);
     finishDecode();
     await task;
     assert.equal(ready, true);
+    assert.equal(backgroundVisible, true);
 });
 
 test('homepage stays below 100% until every registered resource settles', async () => {

@@ -172,8 +172,8 @@ section {
 }
 
 #bg {
-    transform: scale(1.10);
-    filter: blur(10px);
+    transform: scale(1);
+    filter: none;
     position: fixed;
     left: 0;
     top: 0;
@@ -184,12 +184,17 @@ section {
     backface-visibility: hidden;
 }
 
+/* Do not expose partially painted JPEGs while the initial image is downloading. */
+#bg:not(.background-ready) {
+    visibility: hidden;
+}
+
 img.error {
     display: none;
 }
 
 .cover {
-    opacity: 0;
+    opacity: 1;
     position: fixed;
     left: 0;
     top: 0;

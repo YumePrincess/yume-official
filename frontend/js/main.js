@@ -281,8 +281,6 @@ const yumeLoading = (() => {
 window.yumeLoading = yumeLoading;
 
 function revealPage() {
-    $('#bg').css("cssText", "transform: scale(1);filter: blur(0px);transition: ease 1.5s;");
-    $('.cover').css("cssText", "opacity: 1;transition: ease 1.5s;");
     $('#section').css("cssText", "transform: scale(1) !important;opacity: 1 !important;filter: blur(0px) !important");
     $('#change1').html(translate('DEFAULT_PAGE_SUBHEADING'));
 

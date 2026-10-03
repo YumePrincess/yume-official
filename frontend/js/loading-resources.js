@@ -17,6 +17,10 @@
                 return image.decode().catch(function () {});
             }
             // Failed images use the page's existing error/fallback presentation.
+        }).then(function () {
+            if (image.id === 'bg' && image.naturalWidth > 0) {
+                image.classList.add('background-ready');
+            }
         });
     }
 
