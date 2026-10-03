@@ -190,7 +190,7 @@ function getSeDefault() {
 
 // 背景图片；未保存过偏好时默认使用“每日必应”
 var bg_img_preinstall = {
-    "type": "2", // 1:默认壁纸 2:每日必应 3:随机风景 4:随机二次元 5:自定义壁纸
+    "type": "1", // 1:默认壁纸 2:每日必应 3:随机风景 4:随机二次元 5:自定义壁纸
     "path": "", // 自定义图片
 };
 var wallpaper_request_id = 0;
