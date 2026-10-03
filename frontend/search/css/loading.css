@@ -82,7 +82,7 @@ p.loading-title {
 }
 
 .loading-progress {
-    --loading-progress: 0%;
+    --progress-value: 0%;
     position: absolute;
     top: 50px;
     left: 0;
@@ -100,7 +100,7 @@ p.loading-title {
 }
 
 .loading-progress-bar {
-    width: var(--loading-progress);
+    width: var(--progress-value);
     height: 100%;
     border-radius: inherit;
     background: var(--site-text);
@@ -127,14 +127,14 @@ p.loading-title {
 }
 
 #loading-percent::after {
-    content: attr(data-progress);
+    content: attr(data-progress-text);
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--page-background-color);
-    clip-path: inset(0 calc(100% - var(--loading-progress)) 0 0);
+    clip-path: inset(0 calc(100% - var(--progress-value)) 0 0);
     transition: clip-path 0.35s linear;
 }
 
