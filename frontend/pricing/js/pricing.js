@@ -879,8 +879,6 @@ function applyPricingBackground() {
     bg.setAttribute('src', src);
 }
 
-const pricingLoadingTimeoutMs = 12000;
-
 function waitForPricingDomReady() {
     if (document.readyState !== 'loading') return Promise.resolve();
 
@@ -921,32 +919,6 @@ function waitForPricingImage(image, resourceName) {
     });
 }
 
-function settlePricingResource(promise, resourceName) {
-    return new Promise((resolve, reject) => {
-        let settled = false;
-        const timer = window.setTimeout(() => {
-            if (settled) return;
-            settled = true;
-            reject(new Error(`${resourceName} timed out`));
-        }, pricingLoadingTimeoutMs);
-
-        Promise.resolve(promise).then(
-            (value) => {
-                if (settled) return;
-                settled = true;
-                window.clearTimeout(timer);
-                resolve(value);
-            },
-            (error) => {
-                if (settled) return;
-                settled = true;
-                window.clearTimeout(timer);
-                reject(error);
-            }
-        );
-    });
-}
-
 const pricingLoading = (() => {
     const pendingTasks = [];
     let currentProgress = 0;
@@ -975,7 +947,7 @@ const pricingLoading = (() => {
     }
 
     function track(promise, doneProgress, textKey, resourceName) {
-        const task = settlePricingResource(promise, resourceName)
+        const task = Promise.resolve(promise)
             .catch((error) => {
                 console.warn(`Pricing loader: ${error.message}`);
                 return null;
@@ -993,6 +965,7 @@ const pricingLoading = (() => {
         finishing = true;
 
         await Promise.allSettled(pendingTasks);
+        await window.YumeLoadingResources.waitForPageResources();
         setProgress(100, 'loadingComplete');
         await new Promise((resolve) => window.setTimeout(resolve, 360));
 

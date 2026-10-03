@@ -29,7 +29,7 @@ var bg_img_preinstall = {
 // 更改背景图片
 function setBgImgInit() {
     var bg_img = getBgImg();
-    $("input[name='wallpaper-type'][value=" + bg_img["type"] + "]").click();
+    $("input[name='wallpaper-type'][value=" + bg_img["type"] + "]").prop('checked', true);
 
     switch (bg_img["type"]) {
         case "1":
@@ -86,9 +86,12 @@ function setBgImgInit() {
     }
 }
 
+// Select the initial source once, before the loader starts waiting.
+setBgImgInit();
+window.yumeBackgroundReady = window.YumeLoadingResources.waitForImage(document.getElementById('bg'));
+
 $(document).ready(function () {
-    // 壁纸数据加载
-    setBgImgInit();
+    // 背景已在脚本初始化时选定；此处只绑定设置操作。
     // 设置背景图片
     $("#wallpaper").on("click", ".set-wallpaper", function () {
         var type = $(this).val();

@@ -83,7 +83,7 @@ document.addEventListener('visibilitychange', () => {
 });
 
 const loadedScripts = new Map();
-const loadedStylesheets = new Set();
+const loadedStylesheets = new Map();
 
 function loadScriptOnce(src) {
     if (loadedScripts.has(src)) {
@@ -115,16 +115,22 @@ function loadScriptOnce(src) {
 }
 
 function loadStylesheetOnce(href) {
-    if (loadedStylesheets.has(href) || document.querySelector(`link[href="${href}"]`)) {
-        loadedStylesheets.add(href);
-        return;
-    }
-
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = href;
-    document.head.appendChild(link);
-    loadedStylesheets.add(href);
+    if (loadedStylesheets.has(href)) return loadedStylesheets.get(href);
+    const task = new Promise((resolve, reject) => {
+        let link = document.querySelector(`link[href="${href}"]`);
+        if (link?.sheet) return resolve(link);
+        const isNew = !link;
+        if (isNew) {
+            link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+        }
+        link.addEventListener('load', () => resolve(link), { once: true });
+        link.addEventListener('error', reject, { once: true });
+        if (isNew) document.head.appendChild(link);
+    });
+    loadedStylesheets.set(href, task);
+    return task;
 }
 
 function ensureMarked() {
@@ -198,42 +204,8 @@ function safeLoadingText(key, fallback) {
     }
 }
 
-function waitForImageLoad(img, timeoutMs = 3500) {
-    if (!img) {
-        return Promise.resolve();
-    }
-
-    return new Promise((resolve) => {
-        let settled = false;
-        let sourceObserver;
-        const settle = () => {
-            if (settled) return;
-            settled = true;
-            window.clearTimeout(timeoutId);
-            img.removeEventListener('load', settle);
-            img.removeEventListener('error', settle);
-            if (sourceObserver) sourceObserver.disconnect();
-            resolve();
-        };
-
-        const timeoutId = window.setTimeout(settle, timeoutMs);
-        img.addEventListener('load', settle, { once: true });
-        img.addEventListener('error', settle, { once: true });
-
-        if (img.getAttribute('src')) {
-            if (img.complete) settle();
-        } else if ('MutationObserver' in window) {
-            sourceObserver = new MutationObserver(() => {
-                if (img.getAttribute('src') && img.complete) settle();
-            });
-            sourceObserver.observe(img, { attributes: true, attributeFilter: ['src'] });
-        }
-    });
-}
-
 const yumeLoading = (() => {
     const pendingTasks = [];
-    const criticalTasks = [];
     let currentProgress = 0;
     let finishing = false;
 
@@ -259,7 +231,7 @@ const yumeLoading = (() => {
         if (text && loadingText) loadingText.textContent = text;
     }
 
-    function track(promise, doneProgress, text, options = {}) {
+    function track(promise, doneProgress, text) {
         const task = Promise.resolve(promise)
             .catch((err) => {
                 console.error(err);
@@ -270,7 +242,6 @@ const yumeLoading = (() => {
             });
 
         pendingTasks.push(task);
-        if (options.critical) criticalTasks.push(task);
         return task;
     }
 
@@ -283,22 +254,13 @@ const yumeLoading = (() => {
         }
     }
 
-    async function waitForTrackedTasksWithin(maxWaitMs) {
-        await Promise.race([
-            waitForTrackedTasks(),
-            new Promise(resolve => window.setTimeout(resolve, maxWaitMs))
-        ]);
-    }
-
     async function finish() {
         if (finishing) return;
         finishing = true;
 
         setProgress(72, safeLoadingText('LOADTEXT', 'Loading files...'));
-        // 远程天气、翻译和公告不应阻塞首屏；它们完成后仍会正常更新各自卡片。
-        await waitForTrackedTasksWithin(1500);
-        // 背景图属于首屏内容，必须在遮罩退出前加载完，避免图片随后替换底图。
-        await Promise.allSettled(criticalTasks);
+        await waitForTrackedTasks();
+        await window.YumeLoadingResources.waitForPageResources();
         setProgress(100, safeLoadingText('LOADCOMPLETE', 'Loading complete'));
 
         setTimeout(function () {
@@ -336,8 +298,10 @@ function revealPage() {
 
 //延迟加载音乐播放器
 function downloadJSAtOnload() {
-    loadStylesheetOnce('/css/APlayer.min.css');
-    return loadScriptOnce('/js/APlayer.min.js')
+    return Promise.all([
+        loadStylesheetOnce('/css/APlayer.min.css'),
+        loadScriptOnce('/js/APlayer.min.js')
+    ])
         .then(() => loadScriptOnce('/js/music.js'))
         .catch(console.error);
 }
@@ -346,17 +310,12 @@ let loadingStarted = false;
 
 // 加载完成后执行；如果远程图片阻塞 window.load，也要保证首页按时显示。
 function startLoading() {
-    if (loadingStarted) return;
+    if (document.readyState === 'loading' || !window.yumeBackgroundReady || loadingStarted) return;
     loadingStarted = true;
 
     yumeLoading.setProgress(64, safeLoadingText('LOADTEXT', 'Loading files...'));
     yumeLoading.track(document.fonts ? document.fonts.ready : Promise.resolve(), 78, safeLoadingText('LOADTEXT', 'Loading files...'));
-    yumeLoading.track(
-        waitForImageLoad(document.getElementById('bg')),
-        86,
-        safeLoadingText('LOADTEXT', 'Loading files...'),
-        { critical: true }
-    );
+    yumeLoading.track(window.yumeBackgroundReady, 86, safeLoadingText('LOADTEXT', 'Loading files...'));
     yumeLoading.track(downloadJSAtOnload(), 94, safeLoadingText('LOADTEXT', 'Loading files...'));
     yumeLoading.finish();
 }
@@ -639,11 +598,6 @@ $("#telegram").mouseover(function () {
     $("#link-text").html(translate('LINE'));
 });
 $("#twitter").mouseover(function () {
-    $("#link-text").html(translate('GOXTELFACE'));
-}).mouseout(function () {
-    $("#link-text").html(translate('LINE'));
-});
-$("#facebook").mouseover(function () {
     $("#link-text").html(translate('GOXTELFACE'));
 }).mouseout(function () {
     $("#link-text").html(translate('LINE'));

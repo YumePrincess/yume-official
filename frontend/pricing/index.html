@@ -11,60 +11,10 @@
     <title>Yume Pricing</title>
     <script src="./js/preferences.js?v=20260718-2"></script>
     <script>YumePreferences.applyTheme(YumePreferences.getThemeChoice());</script>
-    <style id="loading-critical">
-        #loading-box {
-            position: fixed;
-            inset: 0;
-            z-index: 999998;
-            display: block;
-            visibility: visible;
-            opacity: 1;
-        }
-
-        #loading-box .loading-left-bg,
-        #loading-box .loading-right-bg {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            z-index: 999998;
-            width: 50vw;
-            height: 100%;
-            background: var(--loading-overlay, rgba(5, 7, 11, 0.72));
-        }
-
-        #loading-box .loading-left-bg {
-            left: 0;
-        }
-
-        #loading-box .loading-right-bg {
-            right: 0;
-            display: block;
-        }
-
-        #loading-box > .spinner-box {
-            position: fixed;
-            inset: 0;
-            z-index: 999999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #loading-box:not(.loaded) .loading-left-bg,
-        #loading-box:not(.loaded) .loading-right-bg,
-        #loading-box:not(.loaded) > .spinner-box,
-        #loading-box:not(.loaded) .loader {
-            transition: none !important;
-        }
-
-        #loading-box.loaded {
-            pointer-events: none;
-        }
-    </style>
     <link rel="preload" href="./img/logo.png" as="image">
     <link rel="stylesheet" type="text/css" href="./css/style.css?v=20260718-1">
     <link rel="stylesheet" type="text/css" href="./css/font.css">
-    <link rel="stylesheet" type="text/css" href="./css/loading.css?v=liquid-glass-ui-8">
+    <link rel="stylesheet" type="text/css" href="./css/loading.css?v=20261003-initial-overlay">
     <link rel="stylesheet" type="text/css" href="./css/pricing.css?v=pricing-21">
     <link rel="stylesheet" type="text/css" href="./css/cursor.css">
     <link rel="icon" href="./favicon.ico">
@@ -243,7 +193,8 @@
         <footer id="footer" class="footer pricing-footer"></footer>
     </section>
 
-    <script src="./js/pricing.js?v=20260718-2"></script>
+    <script src="/js/loading-resources.js?v=20261003-1"></script>
+    <script src="./js/pricing.js?v=20261003-resources-1"></script>
     <script src="./js/cursor.js"></script>
 </body>
 </html>

@@ -1,32 +1,33 @@
 @charset "utf-8";
 
+/* The overlay is visible on first paint; only completion starts a transition. */
+#loading-box {
+    position: fixed;
+    inset: 0;
+    z-index: 999998;
+    background: var(--loading-overlay);
+    opacity: 1;
+    visibility: visible;
+    transition: none;
+    animation: none;
+}
+
+#loading-box.loaded {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity var(--motion-standard, 220ms) var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)),
+        visibility 0s var(--motion-standard, 220ms);
+}
+
 #loading-box .loading-left-bg,
 #loading-box .loading-right-bg {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    z-index: 999998;
-    width: 50vw;
-    height: 100%;
-    background: var(--loading-overlay);
-    transition: transform 0.7s cubic-bezier(0.42, 0, 0, 1.01);
-    border: 0;
-    box-shadow: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-}
-
-#loading-box .loading-left-bg {
-    left: 0;
-}
-
-#loading-box .loading-right-bg {
-    right: 0;
-    display: block;
+    display: none;
 }
 
 #loading-box>.spinner-box {
     position: fixed;
+    inset: 0;
     z-index: 999999;
     display: flex;
     justify-content: center;
@@ -143,18 +144,6 @@ p.loading-title {
     background-color: #37474f;
 }
 
-div.loaded div.loading-left-bg {
-    transform: translate(-100%, 0);
-}
-
-div.loaded div.loading-right-bg {
-    transform: translate(100%, 0);
-}
-
-div.loaded div.spinner-box {
-    display: none !important;
-}
-
 .loader {
     position: absolute;
     top: calc(50% - 120px);
@@ -163,7 +152,7 @@ div.loaded div.spinner-box {
     height: 64px;
     border-radius: 50%;
     perspective: 800px;
-    transition: all 0.7s cubic-bezier(0.42, 0, 0, 1.01);
+    transition: none;
 }
 
 .inner {
@@ -222,5 +211,15 @@ div.loaded div.spinner-box {
 
     100% {
         transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #loading-box.loaded {
+        transition: opacity 160ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1)), visibility 0s 160ms;
+    }
+
+    .inner {
+        animation: none;
     }
 }

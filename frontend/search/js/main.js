@@ -168,13 +168,15 @@ const yumeLoading = (() => {
         const loadingText = document.getElementById('loading-text');
 
         if (progressWrap) {
-            progressWrap.style.setProperty('--loading-progress', `${nextProgress}%`);
+            progressWrap.style.setProperty('--progress-value', `${nextProgress}%`);
+            const bar = document.getElementById('loading-progress-bar');
+            if (bar) bar.style.width = `${nextProgress}%`;
             progressWrap.setAttribute('aria-valuenow', String(nextProgress));
         }
         if (percent) {
             const progressText = `${nextProgress}%`;
             percent.textContent = progressText;
-            percent.dataset.progress = progressText;
+            percent.dataset.progressText = progressText;
         }
         if (text && loadingText) loadingText.textContent = text;
     }
@@ -223,6 +225,7 @@ const yumeLoading = (() => {
         finishing = true;
 
         await waitForTrackedTasks();
+        await window.YumeLoadingResources.waitForPageResources();
         setProgress(100, safeLoadingText('LOADCOMPLETE', 'Loading complete'));
 
         setTimeout(function () {
