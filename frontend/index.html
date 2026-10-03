@@ -12,7 +12,7 @@
     <title key="OFFICIAL">雨夢Official</title>
     <script src="/js/preferences.js?v=20260718-2"></script>
     <script>YumePreferences.applyTheme(YumePreferences.getThemeChoice());</script>
-+    <style id="loading-critical">
+    <style id="loading-critical">
         #loading-box {
             position: fixed;
             inset: 0;
@@ -49,6 +49,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+
+        #loading-box:not(.loaded) .loading-left-bg,
+        #loading-box:not(.loaded) .loading-right-bg,
+        #loading-box:not(.loaded) > .spinner-box,
+        #loading-box:not(.loaded) .loader {
+            transition: none !important;
+        }
+
+        #loading-box.loaded {
+            pointer-events: none;
         }
     </style>
     <!-- 引入样式 -->

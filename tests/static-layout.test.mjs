@@ -47,8 +47,15 @@ test("static build contains the single official asset tree", async () => {
     assert.notEqual(criticalStyleIndex, -1);
     assert.notEqual(loadingStylesheetIndex, -1);
     assert.ok(criticalStyleIndex < loadingStylesheetIndex);
+    assert.doesNotMatch(page, /\n\+\s*<style id="loading-critical">/);
     assert.match(page, /#loading-box \{[\s\S]*position: fixed;[\s\S]*z-index: 999998;/);
     assert.match(page, /#loading-box > \.spinner-box \{[\s\S]*z-index: 999999;/);
+    assert.match(page, /#loading-box:not\(\.loaded\)[\s\S]*transition: none !important;/);
+  }
+
+  for (const file of ["../frontend/css/loading.css", "../frontend/search/css/loading.css", "../frontend/pricing/css/loading.css"]) {
+    const loadingStyles = await readFile(new URL(file, import.meta.url), "utf8");
+    assert.match(loadingStyles, /#loading-box\.loaded\s*\{[\s\S]*pointer-events:\s*none;/);
   }
 
   for (const file of ["../frontend/200.html", "../frontend/404.html", "../frontend/500.html"]) {
