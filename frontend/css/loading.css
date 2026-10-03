@@ -81,7 +81,7 @@ p.loading-title {
 }
 
 .loading-progress {
-    --loading-progress: 0%;
+    --progress-value: 0%;
     position: absolute;
     top: 50px;
     left: 0;
@@ -99,12 +99,12 @@ p.loading-title {
 }
 
 .loading-progress-bar {
-    width: var(--loading-progress);
+    width: 0%;
     height: 100%;
     border-radius: inherit;
     background: var(--site-text);
     box-shadow: none;
-    transition: width 0.35s linear;
+    transition: width 0.35s ease;
 }
 
 #loading-percent {
@@ -126,15 +126,15 @@ p.loading-title {
 }
 
 #loading-percent::after {
-    content: attr(data-progress);
+    content: attr(data-progress-text);
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--page-background-color);
-    clip-path: inset(0 calc(100% - var(--loading-progress)) 0 0);
-    transition: clip-path 0.35s linear;
+    clip-path: inset(0 calc(100% - var(--progress-value)) 0 0);
+    transition: clip-path 0.35s ease;
 }
 
 #loading-box .spinner-box .configure-core {
@@ -155,10 +155,6 @@ div.loaded div.spinner-box {
     display: none !important;
 }
 
-#loading-box.loaded {
-    pointer-events: none;
-}
-
 .loader {
     position: absolute;
     top: calc(50% - 120px);
@@ -166,7 +162,13 @@ div.loaded div.spinner-box {
     width: 64px;
     height: 64px;
     border-radius: 50%;
+    background: transparent !important;
     perspective: 800px;
+    transform: translateZ(0);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    isolation: isolate;
     transition: all 0.7s cubic-bezier(0.42, 0, 0, 1.01);
 }
 
@@ -176,6 +178,10 @@ div.loaded div.spinner-box {
     width: 100%;
     height: 100%;
     border-radius: 50%;
+    background: transparent !important;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 .inner.one {
@@ -226,5 +232,45 @@ div.loaded div.spinner-box {
 
     100% {
         transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+@keyframes loading-pulse {
+    0%,
+    100% {
+        opacity: 0.55;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #loading-box .loading-left-bg,
+    #loading-box .loading-right-bg {
+        transition: opacity 160ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    div.loaded div.loading-left-bg,
+    div.loaded div.loading-right-bg {
+        opacity: 0;
+        transform: none;
+        pointer-events: none;
+    }
+
+    .loader {
+        animation: loading-pulse 1.2s ease-in-out infinite;
+    }
+
+    .inner.one,
+    .inner.two,
+    .inner.three {
+        animation: none;
+    }
+
+    .loading-progress-bar,
+    #loading-percent::after {
+        transition: none;
     }
 }

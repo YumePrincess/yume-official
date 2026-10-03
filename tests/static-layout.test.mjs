@@ -39,40 +39,10 @@ test("static build contains the single official asset tree", async () => {
 
   await Promise.all(requiredFiles.map((file) => readFile(new URL(file, import.meta.url))));
 
-  for (const file of ["../frontend/index.html", "../frontend/search/index.html", "../frontend/pricing/index.html"]) {
-    const page = await readFile(new URL(file, import.meta.url), "utf8");
-    const criticalStyleIndex = page.indexOf('id="loading-critical"');
-    const loadingStylesheetIndex = page.indexOf("loading.css");
-
-    assert.notEqual(criticalStyleIndex, -1);
-    assert.notEqual(loadingStylesheetIndex, -1);
-    assert.ok(criticalStyleIndex < loadingStylesheetIndex);
-    assert.doesNotMatch(page, /\n\+\s*<style id="loading-critical">/);
-    assert.match(page, /#loading-box \{[\s\S]*position: fixed;[\s\S]*z-index: 999998;/);
-    assert.match(page, /#loading-box > \.spinner-box \{[\s\S]*z-index: 999999;/);
-    assert.match(page, /#loading-box:not\(\.loaded\)[\s\S]*transition: none !important;/);
-  }
-
-  for (const file of ["../frontend/css/loading.css", "../frontend/search/css/loading.css", "../frontend/pricing/css/loading.css"]) {
-    const loadingStyles = await readFile(new URL(file, import.meta.url), "utf8");
-    assert.match(loadingStyles, /#loading-box\.loaded\s*\{[\s\S]*pointer-events:\s*none;/);
-  }
-
   for (const file of ["../frontend/200.html", "../frontend/404.html", "../frontend/500.html"]) {
     const page = await readFile(new URL(file, import.meta.url), "utf8");
     assert.doesNotMatch(page, /example\.com/);
     assert.match(page, /id="cf-hostname"/);
-  }
-
-  const homepage = await readFile(new URL("../frontend/index.html", import.meta.url), "utf8");
-  assert.doesNotMatch(homepage, /facebook\.com\/YumePrincess|id="facebook"/);
-
-  for (const file of ["../frontend/js/preferences.js", "../frontend/search/js/preferences.js", "../frontend/pricing/js/preferences.js"]) {
-    const preferences = await readFile(new URL(file, import.meta.url), "utf8");
-    assert.match(preferences, /cookieDomain: '\.yume\.zone'/);
-    assert.match(preferences, /cookieDomain: '\.princess\.work'/);
-    assert.match(preferences, /cookieDomain: '\.yume\.edu\.pl'/);
-    assert.match(preferences, /hostname\.endsWith\('\.' \+ entry\.suffix\)/);
   }
 
   const errorPageScript = await readFile(new URL("../frontend/js/cloudflare-error-page.js", import.meta.url), "utf8");

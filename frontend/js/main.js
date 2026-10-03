@@ -198,140 +198,80 @@ function safeLoadingText(key, fallback) {
     }
 }
 
-function waitForDocumentReady() {
-    if (document.readyState !== 'loading') {
-        return Promise.resolve();
-    }
-
-    return new Promise((resolve) => {
-        document.addEventListener('DOMContentLoaded', resolve, { once: true });
-    });
-}
-
-function waitForWindowLoad() {
-    if (document.readyState === 'complete') {
-        return Promise.resolve();
-    }
-
-    return new Promise((resolve) => {
-        window.addEventListener('load', resolve, { once: true });
-    });
-}
-
-function waitForImageLoad(img) {
+function waitForImageLoad(img, timeoutMs = 3500) {
     if (!img) {
         return Promise.resolve();
     }
 
     return new Promise((resolve) => {
+        let settled = false;
         let sourceObserver;
-
         const settle = () => {
+            if (settled) return;
+            settled = true;
+            window.clearTimeout(timeoutId);
             img.removeEventListener('load', settle);
             img.removeEventListener('error', settle);
             if (sourceObserver) sourceObserver.disconnect();
             resolve();
         };
 
-        const checkCurrentSource = () => {
-            if (img.getAttribute('src') && img.complete) settle();
-        };
-
+        const timeoutId = window.setTimeout(settle, timeoutMs);
         img.addEventListener('load', settle, { once: true });
         img.addEventListener('error', settle, { once: true });
 
-        if (!img.getAttribute('src') && 'MutationObserver' in window) {
-            sourceObserver = new MutationObserver(checkCurrentSource);
+        if (img.getAttribute('src')) {
+            if (img.complete) settle();
+        } else if ('MutationObserver' in window) {
+            sourceObserver = new MutationObserver(() => {
+                if (img.getAttribute('src') && img.complete) settle();
+            });
             sourceObserver.observe(img, { attributes: true, attributeFilter: ['src'] });
         }
-
-        checkCurrentSource();
-    });
-}
-
-function loadFullFont() {
-    if (!('FontFace' in window) || !document.fonts) {
-        return Promise.resolve();
-    }
-
-    const font = new FontFace(
-        "MiSans",
-        "url('/font/MiSans-Regular.woff')"
-    );
-
-    return font.load()
-        .then((loadedFont) => {
-            document.fonts.add(loadedFont);
-            return loadedFont;
-        })
-        .catch((err) => {
-            console.warn('Font load failed', err);
-            return null;
-        });
-}
-
-function loadPageFonts() {
-    return loadFullFont().then(() => {
-        return document.fonts ? document.fonts.ready : undefined;
     });
 }
 
 const yumeLoading = (() => {
-    const resourceProgressStart = 8;
-    const resourceProgressEnd = 94;
     const pendingTasks = [];
+    const criticalTasks = [];
     let currentProgress = 0;
     let finishing = false;
-    let resourcesTracked = false;
 
     function setProgress(value, text) {
         const nextProgress = Math.max(currentProgress, Math.min(100, Math.round(value)));
+        const progressText = `${nextProgress}%`;
         currentProgress = nextProgress;
 
+        const progressBar = document.getElementById('loading-progress-bar');
         const progressWrap = document.querySelector('.loading-progress');
         const percent = document.getElementById('loading-percent');
         const loadingText = document.getElementById('loading-text');
 
+        if (progressBar) progressBar.style.width = progressText;
         if (progressWrap) {
-            progressWrap.style.setProperty('--loading-progress', `${nextProgress}%`);
+            progressWrap.style.setProperty('--progress-value', progressText);
             progressWrap.setAttribute('aria-valuenow', String(nextProgress));
         }
         if (percent) {
-            const progressText = `${nextProgress}%`;
             percent.textContent = progressText;
-            percent.dataset.progress = progressText;
+            percent.dataset.progressText = progressText;
         }
         if (text && loadingText) loadingText.textContent = text;
     }
 
-    function trackResources(resources, text) {
-        if (resourcesTracked) return pendingTasks;
-        resourcesTracked = true;
+    function track(promise, doneProgress, text, options = {}) {
+        const task = Promise.resolve(promise)
+            .catch((err) => {
+                console.error(err);
+                return null;
+            })
+            .finally(() => {
+                setProgress(doneProgress, text);
+            });
 
-        const totalWeight = resources.reduce((total, resource) => {
-            return total + Math.max(0, resource.weight || 0);
-        }, 0);
-        let completedWeight = 0;
-
-        resources.forEach((resource) => {
-            const weight = Math.max(0, resource.weight || 0);
-            const task = Promise.resolve(resource.promise)
-                .catch((err) => {
-                    console.warn(`${resource.name || 'Resource'} load failed`, err);
-                    return null;
-                })
-                .finally(() => {
-                    completedWeight += weight;
-                    const ratio = totalWeight ? completedWeight / totalWeight : 1;
-                    const progress = resourceProgressStart
-                        + ratio * (resourceProgressEnd - resourceProgressStart);
-                    setProgress(progress, text);
-                });
-
-            pendingTasks.push(task);
-        });
-
-        return pendingTasks;
+        pendingTasks.push(task);
+        if (options.critical) criticalTasks.push(task);
+        return task;
     }
 
     async function waitForTrackedTasks() {
@@ -343,11 +283,22 @@ const yumeLoading = (() => {
         }
     }
 
+    async function waitForTrackedTasksWithin(maxWaitMs) {
+        await Promise.race([
+            waitForTrackedTasks(),
+            new Promise(resolve => window.setTimeout(resolve, maxWaitMs))
+        ]);
+    }
+
     async function finish() {
         if (finishing) return;
         finishing = true;
 
-        await waitForTrackedTasks();
+        setProgress(72, safeLoadingText('LOADTEXT', 'Loading files...'));
+        // 远程天气、翻译和公告不应阻塞首屏；它们完成后仍会正常更新各自卡片。
+        await waitForTrackedTasksWithin(1500);
+        // 背景图属于首屏内容，必须在遮罩退出前加载完，避免图片随后替换底图。
+        await Promise.allSettled(criticalTasks);
         setProgress(100, safeLoadingText('LOADCOMPLETE', 'Loading complete'));
 
         setTimeout(function () {
@@ -356,35 +307,22 @@ const yumeLoading = (() => {
         }, 360);
     }
 
-    setProgress(resourceProgressStart, safeLoadingText('LOADING', 'Loading...'));
+    setProgress(6, safeLoadingText('LOADING', 'Loading...'));
 
     return {
         setProgress,
-        trackResources,
+        track,
         finish
     };
 })();
 
 window.yumeLoading = yumeLoading;
 
-const loadingResourceText = safeLoadingText('LOADTEXT', 'Loading files...');
-const backgroundLoadTask = window.yumeBackgroundReady
-    || waitForImageLoad(document.getElementById('bg'));
-
-yumeLoading.trackResources([
-    { name: 'Document', weight: 15, promise: waitForDocumentReady() },
-    { name: 'Page resources', weight: 30, promise: waitForWindowLoad() },
-    { name: 'Fonts', weight: 20, promise: loadPageFonts() },
-    { name: 'Background image', weight: 35, promise: backgroundLoadTask }
-], loadingResourceText);
-yumeLoading.finish();
-
 function revealPage() {
     $('#bg').css("cssText", "transform: scale(1);filter: blur(0px);transition: ease 1.5s;");
     $('.cover').css("cssText", "opacity: 1;transition: ease 1.5s;");
     $('#section').css("cssText", "transform: scale(1) !important;opacity: 1 !important;filter: blur(0px) !important");
     $('#change1').html(translate('DEFAULT_PAGE_SUBHEADING'));
-    downloadJSAtOnload();
 
     //用户欢迎
     setTimeout(function () {
@@ -403,6 +341,29 @@ function downloadJSAtOnload() {
         .then(() => loadScriptOnce('/js/music.js'))
         .catch(console.error);
 }
+
+let loadingStarted = false;
+
+// 加载完成后执行；如果远程图片阻塞 window.load，也要保证首页按时显示。
+function startLoading() {
+    if (loadingStarted) return;
+    loadingStarted = true;
+
+    yumeLoading.setProgress(64, safeLoadingText('LOADTEXT', 'Loading files...'));
+    yumeLoading.track(document.fonts ? document.fonts.ready : Promise.resolve(), 78, safeLoadingText('LOADTEXT', 'Loading files...'));
+    yumeLoading.track(
+        waitForImageLoad(document.getElementById('bg')),
+        86,
+        safeLoadingText('LOADTEXT', 'Loading files...'),
+        { critical: true }
+    );
+    yumeLoading.track(downloadJSAtOnload(), 94, safeLoadingText('LOADTEXT', 'Loading files...'));
+    yumeLoading.finish();
+}
+
+window.addEventListener('load', startLoading, false);
+document.addEventListener('DOMContentLoaded', () => window.setTimeout(startLoading, 0), { once: true });
+window.setTimeout(startLoading, 1400);
 
 const weatherCodeTranslations = {
     unknown: { en: "Unknown weather", "zh-cn": "未知天气", "zh-tw": "未知天氣", fr: "Météo inconnue", ja: "不明な天気" },
@@ -682,6 +643,12 @@ $("#twitter").mouseover(function () {
 }).mouseout(function () {
     $("#link-text").html(translate('LINE'));
 });
+$("#facebook").mouseover(function () {
+    $("#link-text").html(translate('GOXTELFACE'));
+}).mouseout(function () {
+    $("#link-text").html(translate('LINE'));
+});
+
 //更多页面切换
 var shoemore = false;
 var previousWidth = null;

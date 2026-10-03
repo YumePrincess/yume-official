@@ -155,10 +155,6 @@ div.loaded div.spinner-box {
     display: none !important;
 }
 
-#loading-box.loaded {
-    pointer-events: none;
-}
-
 .loader {
     position: absolute;
     top: calc(50% - 120px);
