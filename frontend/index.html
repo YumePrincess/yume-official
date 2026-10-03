@@ -12,6 +12,45 @@
     <title key="OFFICIAL">雨夢Official</title>
     <script src="/js/preferences.js?v=20260718-2"></script>
     <script>YumePreferences.applyTheme(YumePreferences.getThemeChoice());</script>
++    <style id="loading-critical">
+        #loading-box {
+            position: fixed;
+            inset: 0;
+            z-index: 999998;
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        #loading-box .loading-left-bg,
+        #loading-box .loading-right-bg {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            z-index: 999998;
+            width: 50vw;
+            height: 100%;
+            background: var(--loading-overlay, rgba(5, 7, 11, 0.72));
+        }
+
+        #loading-box .loading-left-bg {
+            left: 0;
+        }
+
+        #loading-box .loading-right-bg {
+            right: 0;
+            display: block;
+        }
+
+        #loading-box > .spinner-box {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
     <!-- 引入样式 -->
     <link rel="preload" href="/img/logo.png" as="image">
     <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
@@ -154,9 +193,6 @@
                                 </a>
                                 <a href="https://twitter.com/AmaYumePrincess" class="link" id="twitter" show-lang="fr,en,ja,zh-tw" target="_blank">
                                     <svg class="icon-28px-pd8" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m3 21l7.5-7.5m3-3L21 3M8 3H3l13 18h5Z"/></svg>
-                                </a>
-                                <a href="https://facebook.com/YumePrincess" class="link" id="facebook" show-lang="fr,en,ja,zh-tw" target="_blank">
-                                    <svg class="icon-32px-pd8" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><g fill="none"><path d="m12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.018-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M13.5 21.888C18.311 21.164 22 17.013 22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 5.013 3.689 9.165 8.5 9.888V15H9a1.5 1.5 0 0 1 0-3h1.5v-2A3.5 3.5 0 0 1 14 6.5h.5a1.5 1.5 0 0 1 0 3H14a.5.5 0 0 0-.5.5v2H15a1.5 1.5 0 0 1 0 3h-1.5z"/></g></svg>
                                 </a>
                                 <a id="link-text" key="LINE">通过这里联系我</a>
                             </div>
@@ -500,8 +536,8 @@
                 <div class="popup" id="popup">
                     <div class="popup-content">
                         <h3 key="YCARE">雨梦Support</h3>
-                        <p key="FUWUSHIJIAN">服务时间：02:00 - 12:00 (EDT)</p>
-                        <p key="DIANHUAHAOMA">电话号码：+86 (22) 8869 2668</p>
+                        <p key="FUWUSHIJIAN">服务时间：22:00 - 10:00 (EDT)</p>
+                        <p key="DIANHUAHAOMA">电话号码：[客服电话已脱敏]</p>
                         <div class="button-group">
                             <button class="btn cancel-btn" id="cancel-button" key="QUXIAO">取消</button>
                             <button class="btn confirm-btn" id="confirm-button" key="QUEDINGHUJIAO">确定呼叫</button>

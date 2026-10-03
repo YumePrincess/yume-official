@@ -7,6 +7,22 @@
     var themeStorage = 'yume-theme';
     var supportedThemes = ['auto', 'dark', 'light'];
     var supportedLanguages = ['en', 'fr', 'ja', 'zh-cn', 'zh-tw'];
+    var sharedPreferenceDomains = [
+        { suffix: 'yume.zone', cookieDomain: '.yume.zone' },
+        { suffix: 'princess.work', cookieDomain: '.princess.work' },
+        { suffix: 'yume.edu.pl', cookieDomain: '.yume.edu.pl' }
+    ];
+
+    function getSharedPreferenceDomain(hostname) {
+        for (var index = 0; index < sharedPreferenceDomains.length; index += 1) {
+            var entry = sharedPreferenceDomains[index];
+            if (hostname === entry.suffix || hostname.endsWith('.' + entry.suffix)) {
+                return entry.cookieDomain;
+            }
+        }
+
+        return '';
+    }
 
     function readCookie(name) {
         var prefix = name + '=';
@@ -28,6 +44,7 @@
 
     function writeCookie(name, value) {
         var hostname = global.location.hostname.toLowerCase().replace(/\.$/, '');
+        var sharedPreferenceDomain = getSharedPreferenceDomain(hostname);
         var attributes = [
             name + '=' + encodeURIComponent(value),
             'Path=/',
@@ -35,11 +52,8 @@
             'SameSite=Lax'
         ];
 
-        if ([
-            'yume.zone',
-            'www.yume.zone'
-        ].indexOf(hostname) >= 0) {
-            attributes.push('Domain=yume.zone');
+        if (sharedPreferenceDomain) {
+            attributes.push('Domain=' + sharedPreferenceDomain);
         }
 
         if (global.location.protocol === 'https:') {

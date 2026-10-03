@@ -621,12 +621,6 @@ $("#twitter").mouseover(function () {
 }).mouseout(function () {
     $("#link-text").html(translate('LINE'));
 });
-$("#facebook").mouseover(function () {
-    $("#link-text").html(translate('GOXTELFACE'));
-}).mouseout(function () {
-    $("#link-text").html(translate('LINE'));
-});
-
 //更多页面切换
 var shoemore = false;
 var previousWidth = null;
@@ -1006,7 +1000,7 @@ phoneButton.addEventListener('click', (event) => {
 });
 
 confirmButton.addEventListener('click', () => {
-    window.location.href = 'tel:+862288692668';
+    window.location.href = 'tel:[客服电话已脱敏]';
 });
 
 cancelButton.addEventListener('click', () => {

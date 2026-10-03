@@ -11,6 +11,45 @@
     <title>Yume Pricing</title>
     <script src="./js/preferences.js?v=20260718-2"></script>
     <script>YumePreferences.applyTheme(YumePreferences.getThemeChoice());</script>
++    <style id="loading-critical">
+        #loading-box {
+            position: fixed;
+            inset: 0;
+            z-index: 999998;
+            display: block;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        #loading-box .loading-left-bg,
+        #loading-box .loading-right-bg {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            z-index: 999998;
+            width: 50vw;
+            height: 100%;
+            background: var(--loading-overlay, rgba(5, 7, 11, 0.72));
+        }
+
+        #loading-box .loading-left-bg {
+            left: 0;
+        }
+
+        #loading-box .loading-right-bg {
+            right: 0;
+            display: block;
+        }
+
+        #loading-box > .spinner-box {
+            position: fixed;
+            inset: 0;
+            z-index: 999999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
     <link rel="preload" href="./img/logo.png" as="image">
     <link rel="stylesheet" type="text/css" href="./css/style.css?v=20260718-1">
     <link rel="stylesheet" type="text/css" href="./css/font.css">
