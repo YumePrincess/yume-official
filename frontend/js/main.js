@@ -971,7 +971,6 @@ const cancelButton = document.getElementById('cancel-button');
 const wechatButton = document.getElementById('wechat');
 const wechatPopup = document.getElementById('wechat-popup');
 const wechatCancel = document.getElementById('wechat-cancel');
-const wechatLink = document.getElementById('wechat-link');
 
 // 电话弹窗
 phoneButton.addEventListener('click', (event) => {
@@ -1000,10 +999,6 @@ wechatButton.addEventListener('click', (event) => {
 
 wechatCancel.addEventListener('click', () => {
     wechatPopup.classList.remove('show');
-});
-
-wechatLink.addEventListener('click', () => {
-    window.location.href = 'http://weixin.qq.com/r/mp/diDr8ynE73SQrW2Q93Vk';
 });
 
 // 点击遮罩关闭

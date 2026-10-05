@@ -1798,6 +1798,47 @@ footer {
     padding: 6px;
 }
 
+.wechat-popup-content {
+    width: min(calc(100% - 32px), 440px);
+    max-width: 440px;
+    box-sizing: border-box;
+}
+
+.wechat-qr-codes {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 16px;
+    width: 100%;
+    margin: 16px auto 0;
+}
+
+.wechat-qr-item {
+    flex: 1 1 0;
+    min-width: 0;
+    margin: 0;
+}
+
+.wechat-qr-item .wechat-qrcode {
+    width: 100%;
+    max-width: 160px;
+    height: auto;
+    aspect-ratio: 1;
+    box-sizing: border-box;
+    margin: 0 auto 10px;
+    object-fit: contain;
+}
+
+.wechat-qr-item figcaption {
+    color: var(--site-text);
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.wechat-button-group {
+    justify-content: center;
+}
+
 /* v26.2 LINK翻页 */
 .link .swiper {
     width: 100%;
