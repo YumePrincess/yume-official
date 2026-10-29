@@ -961,7 +961,7 @@ for (var day of days) {
     }
 }
 
-// 电话弹窗元素
+// Support contact popup elements
 const phoneButton = document.getElementById('phone');
 const popup = document.getElementById('popup');
 const confirmButton = document.getElementById('confirm-button');
@@ -972,14 +972,14 @@ const wechatButton = document.getElementById('wechat');
 const wechatPopup = document.getElementById('wechat-popup');
 const wechatCancel = document.getElementById('wechat-cancel');
 
-// 电话弹窗
+// Open the support contact popup
 phoneButton.addEventListener('click', (event) => {
     event.preventDefault();
     popup.classList.add('show');
 });
 
 confirmButton.addEventListener('click', () => {
-    window.location.href = 'tel:[客服电话已脱敏]';
+    window.location.href = 'tel:+12025550147';
 });
 
 cancelButton.addEventListener('click', () => {

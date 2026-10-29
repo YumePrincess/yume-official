@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "entries": [
+    {
+      "id": "account_guide",
+      "languages": ["zh-cn","zh-tw"],
+      "keywords": ["账号", "登录", "注册"],
+      "title": "雨梦账号注册与登录说明",
+      "blocks": [
+        { "type": "text", "text": "欢迎使用雨梦账号，这里是注册与登录的基础说明。" },
+        { "type": "br" },
+        { "type": "text", "text": "1. 打开 " },
+        { "type": "link", "text": "雨梦Account用户中心", "url": "https://account.yume.zone" },
+        { "type": "text", "text": "，根据提示进行「登录 / 注册」。" },
+        { "type": "br" },
+        { "type": "image", "src": "https://www.yume.zone/img/logo.png" },
+        { "type": "br" },
+        { "type": "text", "text": "2. 按页面提示完成邮箱验证后，即可登录雨梦全线服务。" }
+      ]
+    }
+  ]
+}

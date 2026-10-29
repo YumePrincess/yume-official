@@ -1,0 +1,21 @@
+{
+  "version": "27.0.3",
+  "resources": {
+    "bg": {
+      "url": "https://www.yume.zone/assets/img/mini-program-bg.png",
+      "md5": "05a5bbbb0caa8fe849e48a61139999c3"
+    },
+    "logo": {
+      "url": "https://www.yume.zone/img/logo.png",
+      "md5": "e72da8288c24f37737f33c08cb2431bf"
+    },
+    "loadingfont": {
+      "url": "https://www.yume.zone/font/UnidreamLED.ttf",
+      "md5": "12fc160800285847a53d4592b2357737"
+    },
+    "font": {
+      "url": "https://www.yume.zone/font/Pacifico-Regular.ttf",
+      "md5": "9b94499ccea3bd82b24cb210733c4b5e"
+    }
+  }
+}
