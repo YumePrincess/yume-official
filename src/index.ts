@@ -33,7 +33,7 @@ export default {
           if (!authHeader || !authHeader.startsWith('Basic ')) {
             return new Response('Unauthorized', {
               status: 401,
-              headers: { 'WWW-Authenticate': 'Basic realm="Yume AIO Backend WebDAV"' },
+              headers: { 'WWW-Authenticate': 'Basic realm="Yume Official Backend WebDAV"' },
             });
           }
           const decoded = atob(authHeader.slice(6));
@@ -57,7 +57,7 @@ export default {
           if (a.byteLength !== b.byteLength || !crypto.subtle.timingSafeEqual(a, b)) {
             return new Response('Unauthorized', {
               status: 401,
-              headers: { 'WWW-Authenticate': 'Basic realm="Yume AIO Backend WebDAV"' },
+              headers: { 'WWW-Authenticate': 'Basic realm="Yume Official Backend WebDAV"' },
             });
           }
         }

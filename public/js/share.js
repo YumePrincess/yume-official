@@ -84,7 +84,7 @@
     document.getElementById('file-date').textContent = formatDate(file.uploadedAt);
     document.getElementById('file-downloads').textContent = t('share.downloads', { count: file.downloads || 0 });
     document.getElementById('file-icon').textContent = getFileIcon(file.type, file.name);
-    var brandName = 'Yume AIO Backend';
+    var brandName = 'Yume Official Backend';
     try { brandName = JSON.parse(document.getElementById('branding-data')?.textContent || '{}').siteName || brandName; } catch {}
     document.title = file.name + ' — ' + brandName;
     document.body.removeAttribute('data-i18n-page');
@@ -100,7 +100,7 @@
 
   function showFolder(data) {
     document.getElementById('folder-view').classList.remove('hidden');
-    var brandName = 'Yume AIO Backend';
+    var brandName = 'Yume Official Backend';
     try { brandName = JSON.parse(document.getElementById('branding-data')?.textContent || '{}').siteName || brandName; } catch {}
     document.title = (data.folderName || t('share.sharedFolder')) + ' — ' + brandName;
     document.body.removeAttribute('data-i18n-page');

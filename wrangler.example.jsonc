@@ -1,5 +1,5 @@
 {
-  "name": "yume-all-in-one-backend",
+  "name": "yume-official-backend",
   // "account_id": "YOUR_CLOUDFLARE_ACCOUNT_ID",
   "main": "src/index.ts",
   "compatibility_date": "2026-07-18",
@@ -32,7 +32,7 @@
   "d1_databases": [
     {
       "binding": "VAULT_DB",
-      "database_name": "yume-all-in-one-backend",
+      "database_name": "yume-official-backend",
       "database_id": "YOUR_D1_DATABASE_ID",
       "migrations_dir": "migrations"
     }

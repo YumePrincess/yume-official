@@ -234,7 +234,7 @@ th{color:#888;font-size:13px}h1{font-size:18px;font-weight:500}</style></head>
 <body><h1>Index of ${escapeHtml(displayPath)}</h1>
 <table><thead><tr><th></th><th>Name</th><th>Size</th><th>Modified</th></tr></thead>
 <tbody>${rows}</tbody></table>
-<p style="color:#555;font-size:12px;margin-top:2rem">Yume AIO Backend WebDAV</p></body></html>`;
+<p style="color:#555;font-size:12px;margin-top:2rem">Yume Official Backend WebDAV</p></body></html>`;
 
   return new Response(html, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 }

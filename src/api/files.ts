@@ -649,7 +649,7 @@ export async function zipDownload(request: Request, env: Env): Promise<Response>
   })));
   const zipName = folder
     ? sanitizeDownloadName((folder === 'root' ? 'root' : folder.split('/').pop() || 'folder') + '.zip')
-    : 'yume-aio-backend-' + new Date().toISOString().slice(0, 10) + '.zip';
+    : 'yume-official-backend-' + new Date().toISOString().slice(0, 10) + '.zip';
 
   return createZipResponse(entries, env, zipName);
 }

@@ -29,8 +29,8 @@ function cloudvault() {
     renameModal: { show: false, file: null, newName: '' },
     deleteModal: { show: false, ids: [] },
     moveModal: { show: false, files: [], targetFolder: 'root' },
-    _branding: JSON.parse(document.getElementById('branding-data')?.textContent || '{"siteName":"Yume AIO Backend","siteIconUrl":"","logoBarImageUrl":"https://www.yume.zone/assets/img/yumeaio.png","backgroundImageUrl":"","language":"auto"}'),
-    settingsModal: { show: false, guestPageEnabled: false, showLoginButton: true, siteName: 'Yume AIO Backend', siteIconUrl: '', logoBarImageUrl: 'https://www.yume.zone/assets/img/yumeaio.png', backgroundImageUrl: '', language: 'auto', _iconError: false },
+    _branding: JSON.parse(document.getElementById('branding-data')?.textContent || '{"siteName":"Yume Official Backend","siteIconUrl":"","logoBarImageUrl":"https://www.yume.zone/assets/img/yumeaio.png","backgroundImageUrl":"","language":"auto"}'),
+    settingsModal: { show: false, guestPageEnabled: false, showLoginButton: true, siteName: 'Yume Official Backend', siteIconUrl: '', logoBarImageUrl: 'https://www.yume.zone/assets/img/yumeaio.png', backgroundImageUrl: '', language: 'auto', _iconError: false },
     renameFolderModal: { show: false, oldName: '', newName: '' },
     deleteFolderModal: { show: false, folder: '' },
     typeFilter: 'all',
@@ -1091,7 +1091,7 @@ function cloudvault() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'yume-aio-backend-' + new Date().toISOString().slice(0, 10) + '.zip';
+        a.download = 'yume-official-backend-' + new Date().toISOString().slice(0, 10) + '.zip';
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
@@ -1188,7 +1188,7 @@ function cloudvault() {
           const data = await res.json();
           this.settingsModal.guestPageEnabled = data.guestPageEnabled || false;
           this.settingsModal.showLoginButton = data.showLoginButton !== false;
-          this.settingsModal.siteName = data.siteName || 'Yume AIO Backend';
+          this.settingsModal.siteName = data.siteName || 'Yume Official Backend';
           this.settingsModal.siteIconUrl = data.siteIconUrl || '';
           this.settingsModal.logoBarImageUrl = data.logoBarImageUrl || 'https://www.yume.zone/assets/img/yumeaio.png';
           this.settingsModal.backgroundImageUrl = data.backgroundImageUrl || '';
@@ -1215,7 +1215,7 @@ function cloudvault() {
         });
         if (res && res.ok) {
           const data = await res.json();
-          this._branding.siteName = data.siteName || 'Yume AIO Backend';
+          this._branding.siteName = data.siteName || 'Yume Official Backend';
           this._branding.siteIconUrl = data.siteIconUrl || '';
           this._branding.logoBarImageUrl = data.logoBarImageUrl || 'https://www.yume.zone/assets/img/yumeaio.png';
           this._branding.backgroundImageUrl = data.backgroundImageUrl || '';

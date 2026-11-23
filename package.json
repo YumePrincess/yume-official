@@ -1,8 +1,8 @@
 {
-  "name": "yume-all-in-one-backend",
+  "name": "yume-official-backend",
   "version": "1.0.0",
   "license": "MIT",
-  "description": "Yume AIO Backend on Cloudflare Workers, R2, and D1",
+  "description": "Yume Official Backend on Cloudflare Workers, R2, and D1",
   "engines": {
     "node": ">=20"
   },

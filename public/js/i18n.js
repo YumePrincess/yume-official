@@ -995,7 +995,7 @@
     if (!document.body) return;
     var key = document.body.getAttribute('data-i18n-page');
     if (!key) return;
-    var siteName = branding.siteName || 'Yume AIO Backend';
+    var siteName = branding.siteName || 'Yume Official Backend';
     document.title = key === 'notFound.title' ? '404 — ' + siteName : siteName + ' — ' + t(key);
   }
 

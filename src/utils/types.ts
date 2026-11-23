@@ -133,7 +133,7 @@ export interface SiteSettings {
 export const DEFAULT_SETTINGS: SiteSettings = {
   guestPageEnabled: false,
   showLoginButton: true,
-  siteName: 'Yume AIO Backend',
+  siteName: 'Yume Official Backend',
   siteIconUrl: '',
   logoBarImageUrl: 'https://www.yume.zone/assets/img/yumeaio.png',
   backgroundImageUrl: '',

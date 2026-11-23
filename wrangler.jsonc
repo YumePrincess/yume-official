@@ -1,5 +1,6 @@
 {
-  "name": "yume-all-in-one-backend",
+  "name": "yume-official-backend",
+  // "account_id": "YOUR_CLOUDFLARE_ACCOUNT_ID",
   "main": "src/index.ts",
   "compatibility_date": "2026-07-18",
   "compatibility_flags": ["nodejs_compat"],
@@ -17,7 +18,7 @@
     "directory": "./public",
     "binding": "ASSETS",
     "not_found_handling": "none",
-    "run_worker_first": true
+    "run_worker_first": ["/", "/admin", "/api/*", "/s/*", "/login", "/auth/*"]
   },
   "r2_buckets": [
     {
@@ -31,20 +32,11 @@
   "d1_databases": [
     {
       "binding": "VAULT_DB",
-      "database_name": "yume-all-in-one-backend",
+      "database_name": "yume-official-backend",
       "database_id": "YOUR_D1_DATABASE_ID",
       "migrations_dir": "migrations"
     }
   ],
-  "queues": {
-    "consumers": [
-      {
-        "queue": "yume-oss-cache-purge",
-        "max_batch_size": 100,
-        "max_batch_timeout": 5
-      }
-    ]
-  },
   "ratelimits": [
     {
       "name": "AI_RATE_LIMITER",
@@ -73,18 +65,19 @@
     "AI_GATEWAY_ID": "default",
     "AI_CHAT_MODELS": "@cf/openai/gpt-oss-20b",
     "AI_EMBEDDING_MODELS": "@cf/baai/bge-m3",
-    "OIDC_ENABLED": "true",
+    "OIDC_ENABLED": "false",
     "OIDC_NAME": "Yume Account",
     "OIDC_PROVIDER_NAME": "Yume Account",
-    "OIDC_ICON": "https://www.example.com/logo.png",
+    "OIDC_ICON": "https://www.yume.zone/img/logo.png",
     "OIDC_ISSUER": "https://accounts.example.com",
     "OIDC_CLIENT_ID": "YOUR_OIDC_CLIENT_ID",
     "OIDC_REDIRECT_URI": "",
     "OIDC_POST_LOGOUT_REDIRECT_URI": "",
     "OIDC_SCOPES": "openid email profile",
+    // Set to "*" to allow every OIDC user with an email claim.
     "OIDC_ALLOWED_EMAILS": "admin@example.com,owner@example.com",
     "OIDC_EMAIL_CLAIM": "email",
-    "OIDC_REQUIRE_VERIFIED_EMAIL": "true",
+    "OIDC_REQUIRE_VERIFIED_EMAIL": "false",
     "OIDC_TOKEN_AUTH_METHOD": "client_secret_post",
     "OIDC_AUTO_LOGIN": "true",
     "OIDC_SESSION_CHECK_INTERVAL_SECONDS": "5"
